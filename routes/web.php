@@ -10,10 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::pattern('slug','(.*)');
+Route::pattern('id','([0-9]*)');
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/admin', function () {
     return view('backend.home.index');
+});
+Route::group(['namespace'=>'Admin','prefix'=>'admin' ],function(){
+    Route::group(['prefix'=>'users'],function(){
+        Route::get('',[
+        'uses' => 'UserController@index',
+        'as' =>'admin.users.index'
+        ]);
+    });
 });
