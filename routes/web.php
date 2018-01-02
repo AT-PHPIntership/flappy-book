@@ -17,3 +17,6 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('backend.home.index');
 });
+Route::get('/admin/books', function(){
+		return view('backend.books.create');
+});
