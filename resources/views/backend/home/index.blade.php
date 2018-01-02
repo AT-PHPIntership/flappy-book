@@ -1,5 +1,5 @@
-@extends('layout.admin.app')
-@section('title-page')
+@extends('backend.layouts.master')
+@section('title')
     Dashboard
 @endsection
 @section('content')
