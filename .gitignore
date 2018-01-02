@@ -12,3 +12,5 @@ yarn-error.log
 .env
 storage/debugbar/
 .env.dusk.local
+bower_components
+.phpintel/
