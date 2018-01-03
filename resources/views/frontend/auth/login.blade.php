@@ -31,13 +31,12 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#">LOGIN</a>
+    <img src="http://asiantech.vn/assets/images/thumbs/logo_header.png" alt="LOGO">
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
-
-    <form action="../../index2.html" method="post">
+    <form action="" method="post">
       <div class="form-group has-feedback">
         <input type="email" name="email" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -61,10 +60,7 @@
         <!-- /.col -->
       </div>
     </form>
-    <!-- /.social-auth-links -->
-
     <a href="#">I forgot my password</a><br>
-
   </div>
   <!-- /.login-box-body -->
 </div>
