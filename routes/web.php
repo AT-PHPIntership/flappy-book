@@ -20,6 +20,3 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     });
     Route::resource('/books', 'BookController');
 });
-Route::get('/admin/books', function(){
-		return view('backend.books.create');
-});
