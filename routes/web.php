@@ -17,6 +17,4 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('backend.home.index');
 });
-Route::get('/login', function() {
-    return view('frontend.auth.login');
-});
+Auth::routes();
