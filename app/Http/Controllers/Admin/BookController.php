@@ -17,4 +17,14 @@ class BookController extends Controller
     {
         return view('backend.books.index');
     }
+
+    /**
+     * Create a new Books instance after a valid registration.
+     *
+     * @return \App\Books
+     */
+    public function create()
+    {
+        return view('backend.books.create');
+    }
 }
