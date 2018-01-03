@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('employ_code', 10);
+            $table->string('employ_code', 10)->index('employ_code');
             $table->string('name', 100);
             $table->string('email', 100)->unique();
             $table->string('team', 10);
@@ -25,7 +25,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('expires_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->index('employ_code');
         });
     }
 
