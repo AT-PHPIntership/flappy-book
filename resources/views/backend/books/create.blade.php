@@ -75,7 +75,7 @@
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
                 <button type="reset" class="btn btn-primary">{{ __('Reset') }}</button>
-                <a href="" >{{ __('Back') }}</a>
+                <button type="button" class="btn btn-primary" onclick="window.history.back();">{{ __('Back') }}</button>
               </div>
             </form>
           </div>
