@@ -18,3 +18,6 @@ Route::get('/admin', function () {
     return view('backend.home.index');
 });
 Auth::routes();
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
