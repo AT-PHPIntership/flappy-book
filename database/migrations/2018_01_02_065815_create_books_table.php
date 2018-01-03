@@ -21,11 +21,12 @@ class CreateBooksTable extends Migration
             $table->text('description');
             $table->year('year');
             $table->string('author', 100);
+            $table->string('price', 15);
             $table->string('picture');
             $table->string('from_person', 10);
             $table->integer('total_rating')->default(0);
             $table->float('rating', 4, 1)->default(0);
-            $table->tinyInteger('is_printed');
+            $table->tinyInteger('is_printed')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
