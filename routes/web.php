@@ -14,9 +14,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
+Route::group(['namespace'=>'Admin', 'prefix'=>'admin' ], function(){
     Route::get('/', function () {
         return view('backend.home.index');
     });
     Route::resource('/books', 'BookController');
+    Route::resource('/users', 'UserController');
 });
