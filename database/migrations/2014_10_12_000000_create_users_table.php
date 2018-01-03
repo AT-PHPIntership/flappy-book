@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('expires_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->index('employ_code');
         });
     }
 
