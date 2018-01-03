@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of user.
      *
      * @return \Illuminate\Http\Response
      */
