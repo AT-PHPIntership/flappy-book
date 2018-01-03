@@ -39,6 +39,8 @@
         </ul>
       </li>
       <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Simple Menu</span></a></li>
+      <li><a href="{{ route('books.index') }}"><i class="fa fa-book"></i> <span>{{ __('Books') }}</span></a></li>
+      <li><a href="{{ route('users.index') }}"><i class="fa fa-user-circle"></i> <span>{{ __('Users') }}</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->
