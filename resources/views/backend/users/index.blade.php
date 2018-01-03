@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Dashboard
+    {{ __('Dashboard') }}
 @endsection
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -8,12 +8,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        List Users
+        {{ __('List Users') }}
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Users</a></li>
-        <li class="active">List</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('Home') }}</a></li>
+        <li><a href="#">{{ __('Users') }}</a></li>
+        <li class="active">{{ __('List') }}</li>
       </ol>
     </section>
 
@@ -27,12 +27,12 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                  <tr>
-                  <th>No</th>
-                  <th>Employee Code</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Donate</th>
-                  <th>Borrowed</th>
+                  <th>{{ __('No') }}</th>
+                  <th>{{ __('Employee Code') }}</th>
+                  <th>{{ __('Name') }}</th>
+                  <th>{{ __('Email') }}</th>
+                  <th>{{ __('Donate') }}</th>
+                  <th>{{ __('Borrowed') }}</th>
                 </tr>
                 </thead>
                 <tbody>
