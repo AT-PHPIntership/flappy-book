@@ -35,11 +35,12 @@
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>{{ __('No') }}</th>
-                  <th>{{ __('Name') }}</th>
-                  <th>{{ __('Author') }}</th>
-                  <th>{{ __('Rate') }}</th>
-                  <th>{{ __('Total borrow') }}</th>
+                  <th width="5%">{{ __('No') }}</th>
+                  <th width="40%">{{ __('Name') }}</th>
+                  <th width="25%">{{ __('Author') }}</th>
+                  <th width="10%">{{ __('Rate') }}</th>
+                  <th width="10%">{{ __('Total borrow') }}</th>
+                  <th width="10%">{{ __('Options') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,6 +51,13 @@
                   <td>Win 95+</td>
                   <td> 4</td>
                   <td>X</td>
+                  <td class="text-center">
+                    <div class="btn-option text-center">
+                      <form method="POST" action="#" class="inline">
+                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o"></button>
+                      </form> 
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td>Trident</td>
