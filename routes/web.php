@@ -18,9 +18,9 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('backend.home.index');
 });
-Route::group(['namespace'=>'Admin','prefix'=>'admin' ],function(){
-    Route::group(['prefix'=>'users'],function(){
-        Route::get('',[
+Route::group(['namespace'=>'Admin', 'prefix'=>'admin' ], function(){
+    Route::group(['prefix'=>'users'], function(){
+        Route::get('', [
         'uses' => 'UserController@index',
         'as' =>'admin.users.index'
         ]);
