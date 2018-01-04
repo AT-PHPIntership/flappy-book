@@ -32,6 +32,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+            @include('backend.layouts.partials.modal')
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -55,7 +56,10 @@
                     <div class="btn-option text-center">
                       <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
                       <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o"></button>
+                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                          data-title="{{ __('Confirm deletion!') }}"
+                          data-confirm="{{ __('Are you sure you want to delete?') }}"
+                        ></button>
                       </form> 
                     </div>
                   </td>
