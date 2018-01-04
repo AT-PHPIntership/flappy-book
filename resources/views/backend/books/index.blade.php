@@ -53,6 +53,7 @@
                   <td>X</td>
                   <td class="text-center">
                     <div class="btn-option text-center">
+                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
                       <form method="POST" action="#" class="inline">
                         <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o"></button>
                       </form> 
