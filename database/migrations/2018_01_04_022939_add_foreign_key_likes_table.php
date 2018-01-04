@@ -14,8 +14,8 @@ class AddForeignKeyLikesTable extends Migration
     public function up()
     {
         Schema::table('likes', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('restrict');
         });
     }
 
