@@ -18,6 +18,7 @@ class BookController extends Controller
     {
         return view('backend.books.index');
     }
+
     /**
      * Show form edit.
      *
@@ -27,6 +28,7 @@ class BookController extends Controller
     {
         return view('backend.books.edit');
     }
+
     /**
      * Request form edit.
      *
@@ -37,5 +39,15 @@ class BookController extends Controller
     public function store(EditBookRequest $request)
     {
         dd($request);
+    }
+
+    /**
+     * Show create book page.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function create()
+    {
+        return view('backend.books.create');
     }
 }
