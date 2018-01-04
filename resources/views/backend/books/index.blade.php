@@ -35,11 +35,33 @@
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>{{ __('No') }}</th>
-                  <th>{{ __('Name') }}</th>
-                  <th>{{ __('Author') }}</th>
-                  <th>{{ __('Rate') }}</th>
-                  <th>{{ __('Total borrow') }}</th>
+                  <th>
+                    {{ __('No') }} 
+                  </th>
+                  <th>
+                    {{ __('Name') }}
+                    <a href="{{ route('books.index', ['filter' => 'name', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th>
+                   {{ __('Author') }}
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th>
+                    {{ __('Rate') }}
+                    <a href="{{ route('books.index', ['filter' => 'rate', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th>
+                    {{ __('Total borrow') }}
+                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
                 </tr>
               </thead>
               <tbody>
