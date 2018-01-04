@@ -15,6 +15,7 @@ class AddForeignKeyBooksTable extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('restrict');
+            $table->foreign('from_person')->references('employ_code')->on('users')->onDelete('restrict');
         });
     }
 
@@ -27,6 +28,7 @@ class AddForeignKeyBooksTable extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->dropForeign('books_category_id_foreign');
+            $table->dropForeign('books_from_person_foreign');
         });
     }
 }

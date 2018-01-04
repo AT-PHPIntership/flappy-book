@@ -15,6 +15,7 @@ class AddForeignKeyCommentsTable extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('parent_id','comments_parent_id_foreign')->references('id')->on('comments')->onDelete('cascade');
         });
     }
 
@@ -27,6 +28,7 @@ class AddForeignKeyCommentsTable extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->dropForeign('comments_user_id_foreign');
+            $table->dropForeign('comments_parent_id_foreign');
         });
     }
 }
