@@ -17,4 +17,14 @@ class BookController extends Controller
     {
         return view('backend.books.index');
     }
+
+    /**
+     * Show create book page.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function create()
+    {
+        return view('backend.books.create');
+    }
 }

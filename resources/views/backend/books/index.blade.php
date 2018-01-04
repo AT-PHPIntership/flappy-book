@@ -36,12 +36,36 @@
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th width="5%">{{ __('No') }}</th>
-                  <th width="40%">{{ __('Name') }}</th>
-                  <th width="25%">{{ __('Author') }}</th>
-                  <th width="10%">{{ __('Rate') }}</th>
-                  <th width="10%">{{ __('Total borrow') }}</th>
-                  <th class="text-center" width="10%">{{ __('Options') }}</th>
+                  <th width="5%">
+                    {{ __('No') }}
+                  </th>
+                  <th width="40%">
+                    {{ __('Name') }}
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th width="25%">
+                   {{ __('Author') }}
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th width="10%">
+                    {{ __('Rate') }}
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th width="10%">
+                    {{ __('Total borrow') }}
+                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th class="text-center" width="10%">
+                    {{ __('Options') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
