@@ -67,8 +67,8 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">{{ __('Image') }}</label>
-                    <input type="file" name="image">
+                    <label for="exampleInputFile">{{ __('Picture') }}</label>
+                    <input type="file" name="picture">
                   </div>
               </div>
               <div class="box-footer">
