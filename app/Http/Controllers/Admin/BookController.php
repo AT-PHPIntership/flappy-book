@@ -19,7 +19,7 @@ class BookController extends Controller
     }
 
     /**
-     * Show Create Book page
+     * Show Form Create Book Page
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
