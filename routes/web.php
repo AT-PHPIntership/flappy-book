@@ -21,6 +21,3 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin' ], function(){
     Route::resource('/books', 'BookController');
     Route::resource('/users', 'UserController');
 });
-Route::get('/admin/books', function () {
-    return view('backend.books.edit');
-});
