@@ -14,7 +14,6 @@ $(document).ready(function(){
       $('#confirm').modal('show');
       $('#delete-btn').one('click', function(){
           form.submit();
-          $('#confirm').modal('hide');
       })
   });
 });

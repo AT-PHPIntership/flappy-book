@@ -41,7 +41,7 @@
                   <th width="25%">{{ __('Author') }}</th>
                   <th width="10%">{{ __('Rate') }}</th>
                   <th width="10%">{{ __('Total borrow') }}</th>
-                  <th width="10%">{{ __('Options') }}</th>
+                  <th class="text-center" width="10%">{{ __('Options') }}</th>
                 </tr>
               </thead>
               <tbody>
