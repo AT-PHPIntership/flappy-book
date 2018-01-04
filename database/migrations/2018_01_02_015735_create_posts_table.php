@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->text('content');
-            $table->tinyInteger('is_findbook')->default(0);
+            $table->tinyInteger('is_findbook')->default(0)->comment('0 is not find book, 1 is find book');
             $table->timestamps();
         });
     }
