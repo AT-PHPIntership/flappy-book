@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="box box-primary">
-            <form role="form" method="" enctype="multipart/form-data">
+            <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
@@ -41,35 +41,35 @@
                   <div class="row">
                     <div class="col-xs-6">
                       <div class="form-group">
-                        <label for="exampleInputTitle">{{ __('Title') }}</label>
-                        <input type="text" class="form-control" name="title" placeholder="{{ __('Title') }}">
+                        <label for="InputTitle">{{ __('Title') }}</label>
+                        <input type="text" id="InputTitle" class="form-control" name="title" placeholder="{{ __('Title') }}">
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPrice">{{ __('Price') }}</label>
-                        <input type="text" class="form-control" name="price" placeholder="{{ __('Price') }}">
+                        <label for="InputPrice">{{ __('Price') }}</label>
+                        <input type="text" id="InputPrice" class="form-control" name="price" placeholder="{{ __('Price') }}">  
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputIDDonator">{{ __('ID Donator') }}</label>
-                        <input type="text" class="form-control" name="iddonator" placeholder="{{ __('ID Donator') }}">
+                        <label for="InputFromPerson">{{ __('From Person') }}</label>
+                        <input type="text" id="InputFromPerson" class="form-control" name="from_person" placeholder="{{ __('ID Donator') }}">   
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputDescription">{{ __('Description') }}</label>
-                        <textarea class="textarea" placeholder="Place some text here"
+                        <label for="InputDescription">{{ __('Description') }}</label>
+                        <textarea class="textarea" id="InputDescription" placeholder="Place some text here"
                           style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputYear">{{ __('Year') }}</label>
-                        <input type="number" class="form-control" name="year" placeholder="">
+                        <label for="InputYear">{{ __('Year') }}</label>
+                        <input type="number" id="InputYear" class="form-control" name="year" placeholder="">
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputAuthor">{{ __('Author') }}</label>
-                        <input type="text" class="form-control" name="author" placeholder="{{ __('Author') }}">
+                        <label for="InputAuthor">{{ __('Author') }}</label>
+                        <input type="text" id="InputAuthor" class="form-control" name="author" placeholder="{{ __('Author') }}">    
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">{{ __('Image') }}</label>
-                    <input type="file" name="image">
+                    <label for="InputFile">{{ __('Picture') }}</label>
+                    <input type="file" name="picture" id="InputFile">
                   </div>
               </div>
               <div class="box-footer">
