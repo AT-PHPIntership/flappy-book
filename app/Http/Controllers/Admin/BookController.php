@@ -19,9 +19,9 @@ class BookController extends Controller
     }
 
     /**
-     * Create a new Books instance after a valid registration.
+     * Show Layout Books
      *
-     * @return \App\Books
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function create()
     {

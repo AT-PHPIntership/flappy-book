@@ -23,26 +23,26 @@
             <form role="form" method="" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="box-body">
-                <div class="form-group">
-                  <label>{{ __('List Category') }}</label>
-                  <div class="row">
-                    <div class="col-xs-2">
-                      <select class="form-control" name="category" >
-                        <option value="">option 1</option>
-                        <option value="">option 2</option>
-                        <option value="">option 3</option>
-                        <option value="">option 4</option>
-                        <option value="">option 5</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-9">
                       <div class="form-group">
                         <label for="exampleInputTitle">{{ __('Title') }}</label>
                         <input type="text" class="form-control" name="title" placeholder="{{ __('Title') }}">
+                      </div>
+                      <div class="form-group">
+                        <label>{{ __('List Category') }}</label>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <select class="form-control" name="category" >
+                              <option value="">option 1</option>
+                              <option value="">option 2</option>
+                              <option value="">option 3</option>
+                              <option value="">option 4</option>
+                              <option value="">option 5</option>
+                            </select>
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPrice">{{ __('Price') }}</label>
@@ -54,8 +54,7 @@
                       </div>
                       <div class="form-group">
                         <label for="exampleInputDescription">{{ __('Description') }}</label>
-                        <textarea class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        <textarea class="textarea form-control" placeholder="Place some text here" name="description"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputYear">{{ __('Year') }}</label>
@@ -74,7 +73,6 @@
               </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
-                <button type="reset" class="btn btn-primary">{{ __('Reset') }}</button>
                 <button type="button" class="btn btn-primary" onclick="window.history.back();">{{ __('Back') }}</button>
               </div>
             </form>
