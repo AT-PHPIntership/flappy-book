@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\Comment;
 use App\Model\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,7 +29,7 @@ class Comment extends Model
     ];
 
     /**
-     * The Comment belong to the with User
+     *  Relationship belongsTo with User
      *
      * @return array
      */
@@ -40,7 +39,7 @@ class Comment extends Model
     }
     
     /**
-     * Get all of the owning commentable models.
+     * Relationship morphTo with Book and Post
      *
      * @return array
      */

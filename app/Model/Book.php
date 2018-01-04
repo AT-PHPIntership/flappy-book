@@ -5,6 +5,7 @@ namespace App\Model;
 use App\Model\Category;
 use App\Model\User;
 use App\Model\Borrow;
+use App\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
@@ -74,6 +75,6 @@ class Book extends Model
      */
     public function comments()
     {
-        return $this->morphMany('App\Comment', 'commentable');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

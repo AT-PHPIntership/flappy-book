@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use App\Model\Post;
 use App\Model\User;
 use App\Model\Like;
+use App\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -35,13 +35,24 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     /**
-     * Relationship hasMany with Like_and_Share
+     * Relationship hasMany with Like
      *
      * @return array
      */
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    /**
+     * Relationship morphMany with Comment
+     *
+     * @return array
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

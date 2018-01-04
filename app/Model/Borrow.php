@@ -30,7 +30,7 @@ class Borrow extends Model
     ];
 
     /**
-     * Relationship belongsTo with Book
+     * Relationship belongsTo with User
      *
      * @return array
      */
