@@ -40,7 +40,7 @@
                   </th>
                   <th>
                     {{ __('Name') }}
-                    <a href="{{ route('books.index', ['filter' => 'name', 'order' => 'asc']) }}" class="pull-right">
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" class="pull-right">
                       <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                     </a>
                   </th>
@@ -52,7 +52,7 @@
                   </th>
                   <th>
                     {{ __('Rate') }}
-                    <a href="{{ route('books.index', ['filter' => 'rate', 'order' => 'asc']) }}" class="pull-right">
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" class="pull-right">
                       <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                     </a>
                   </th>
