@@ -21,10 +21,8 @@
     <!-- Content Header (Page header) -->
     <!-- Main content -->
     <section class="content">
-
       <div class="row">
         <div class="col-md-8">
-
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -54,7 +52,6 @@
                   <b>Books Borrowing</b> <a class="pull-right">HTML5</a>
                 </li>
               </ul>
-
               <a href="javascript:history.back()" class="btn btn-primary btn-block"><b>Back</b></a>
             </div>
             <!-- /.box-body -->
