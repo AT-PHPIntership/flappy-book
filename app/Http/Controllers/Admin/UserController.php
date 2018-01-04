@@ -16,4 +16,13 @@ class UserController extends Controller
     {
         return view('backend.users.index');
     }
+     /**
+     * Display the profile of user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        return view('backend.users.show');
+    }
 }
