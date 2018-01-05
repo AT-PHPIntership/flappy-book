@@ -13,7 +13,8 @@
         <a href="#">
           <i class="fa fa-dashboard"></i> {{ __('books.home') }}</a>
       </li>
-      <li class="active">{{ __('books.books') }}</li>
+      <li><a href="">{{ __('books.books') }}</a></li>
+      <li class="active">{{ __('books.create_book') }}</li>
     </ol>
   </section>
   <section class="content">
@@ -61,10 +62,10 @@
                          <div class="col-xs-2">
                           <label>{{ __('books.unit') }}</label>
                           <select class="form-control" name="unit" >
-                              <option value="0">VND</option>
-                              <option value="1">$</option>
-                              <option value="2">€</option>
-                              <option value="3">¥</option>
+                              <option value="{{ App\Model\Book::TYPE_VND }}">VND</option>
+                              <option value="{{ App\Model\Book::TYPE_DOLAR }}">$</option>
+                              <option value="{{ App\Model\Book::TYPE_EURO }}">€</option>
+                              <option value="{{ App\Model\Book::TYPE_YEN }}">¥</option>
                           </select>
                           @if($errors->first('unit')) 
                             <span class="text-danger">{{ $errors->first('unit') }}</span>

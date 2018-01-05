@@ -27,7 +27,10 @@ class CreateBookRequest extends FormRequest
             'title'       => 'required|min:6',
             'category'    => 'required|exists:category,name',
             'price'       => 'required|numeric',
-            'unit'        => 'in:[0,1,2,3]',
+            'unit'        => 'in:'.book::TYPE_VND.','
+                                  .book::TYPE_DOLAR.','
+                                  .book::TYPE_EURO.','
+                                  .book::TYPE_YEN.',',
             'iddonator'   => 'required',
             'description' => 'required',
             'year'        => 'date_format:"Y"',
