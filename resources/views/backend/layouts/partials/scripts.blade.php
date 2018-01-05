@@ -35,3 +35,5 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="{{ asset('bower_components/admin-lte/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('bower_components/admin-lte/dist/js/demo.js') }}"></script>
+<!-- custom script -->
+<script src="{{ asset('js/main.js') }}"></script>

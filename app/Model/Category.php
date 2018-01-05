@@ -7,19 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     /**
-    * Return value of parameter
-    *
-    * @var array $fillable get value from input tag
-    */
-    protected $fillable = [
-        'title'
-    ];
-
+     * Declare table
+     *
+     * @var string $tabel table name
+     */
+    protected $table = 'categories';
+    
     /**
-     * Get the category's books
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+    ];
+    
+    /**
+     * Relationship hasMany with Book
      *
      * @return array
-    */
+     */
+
     public function books()
     {
         return $this->hasMany(Book::class);
