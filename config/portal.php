@@ -5,6 +5,5 @@ return [
     
     'end_point' => [
         'login' => '/auth/login',
-        'logout' => '',
     ]
 ];
