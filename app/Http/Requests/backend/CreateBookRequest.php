@@ -25,14 +25,14 @@ class CreateBookRequest extends FormRequest
     {
         return [
             'title'       => 'required|min:6',
-            'category'    => 'required',
+            'category'    => 'required|exists:category,name',
             'price'       => 'required|numeric',
-            'unit'        => 'required',
+            'unit'        => 'in:[0,1,2,3]',
             'iddonator'   => 'required',
             'description' => 'required',
-            'year'        => 'numeric|min:1000|max:3000',
+            'year'        => 'date_format:"Y"',
             'author'      => 'required',
-            'picture'     => 'require|image|mimes:png,jpg,jpeg',
+            'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
     }
 }
