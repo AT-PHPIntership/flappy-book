@@ -1,6 +1,6 @@
 <?php
 return [
-    'list_users' => 'List Users',  
+    'list_users' => 'List Users',
     'users' => 'Users',
     'home' => 'Home',
     'list' => 'List',

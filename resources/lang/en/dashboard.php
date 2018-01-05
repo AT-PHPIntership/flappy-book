@@ -1,6 +1,6 @@
 <?php
 return [
-    'online' => 'Online',    
+    'online' => 'Online',
     'main_navigation' => 'MAIN NAVIGATION',
     'dashboard' => 'Dashboard',
     'books' => 'Books',
