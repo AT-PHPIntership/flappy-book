@@ -28,7 +28,7 @@ class EditBookRequest extends FormRequest
             'price' => 'required|numberic',
             'from_person' => 'required',
             'description' => 'required|string',
-            'year' => 'required','numberic',
+            'year' => 'numberic|date_format:"Y"',
             'author' => 'required',
             'image' => 'image|max:10240',
         ];
