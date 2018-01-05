@@ -32,14 +32,40 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+            @include('backend.layouts.partials.modal')
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>{{ __('No') }}</th>
-                  <th>{{ __('Name') }}</th>
-                  <th>{{ __('Author') }}</th>
-                  <th>{{ __('Rate') }}</th>
-                  <th>{{ __('Total borrow') }}</th>
+                  <th width="5%">
+                    {{ __('No') }}
+                  </th>
+                  <th width="40%">
+                    {{ __('Name') }}
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th width="25%">
+                   {{ __('Author') }}
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th width="10%">
+                    {{ __('Rate') }}
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th width="10%">
+                    {{ __('Total borrow') }}
+                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => 'asc']) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    </a>
+                  </th>
+                  <th class="text-center" width="10%">
+                    {{ __('Options') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -50,6 +76,17 @@
                   <td>Win 95+</td>
                   <td> 4</td>
                   <td>X</td>
+                  <td class="text-center">
+                    <div class="btn-option text-center">
+                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
+                      <form method="POST" action="#" class="inline">
+                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                          data-title="{{ __('Confirm deletion!') }}"
+                          data-confirm="{{ __('Are you sure you want to delete?') }}"
+                        ></button>
+                      </form> 
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td>Trident</td>
