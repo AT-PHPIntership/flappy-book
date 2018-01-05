@@ -94,8 +94,7 @@ class LoginController extends Controller
             $user->access_token = $userResponse->access_token;
             if ($user['team'] == config('constants.ACCOUNT_ADMIN')) {
                 $user->is_admin = 1;
-            }
-            else {
+            } else {
                 $user->is_admin = 0;
             }
             # Save User, update token
@@ -103,12 +102,10 @@ class LoginController extends Controller
             # Set login for user
             Auth::login($user, $request->filled('remember'));
             if ($user->is_admin == 1) {
-               return redirect("/admin"); 
-            }
-            else {
+                return redirect("/admin");
+            } else {
                 return redirect("/");
             }
-            
         }
     }
     
