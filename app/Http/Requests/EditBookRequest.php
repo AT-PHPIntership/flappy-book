@@ -24,13 +24,15 @@ class EditBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:2',
-            'price' => 'required|numberic',
-            'from_person' => 'required',
-            'description' => 'required|string',
-            'year' => 'numberic|date_format:"Y"',
-            'author' => 'required',
-            'image' => 'image|max:10240',
+            'title'       => 'required|min:8',
+            'category'    => 'required|exists:category,name',
+            'price'       => 'required|numeric',
+            'unit'        => 'in:[0,1,2,3]',
+            'iddonator'   => 'required',
+            'description' => 'required',
+            'year'        => 'date_format:"Y"',
+            'author'      => 'required',
+            'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
     }
 }

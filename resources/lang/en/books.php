@@ -1,0 +1,23 @@
+<?php
+return [
+    'edit_book' => 'Edit Book',
+    'home' => 'Home',
+    'books' => 'Books',
+    'title' => 'Title',
+    'Title' => 'Title',
+    'category' => 'Category',
+    'price' => 'Price',
+    'Price' => 'Price',
+    'unit' => 'Unit',
+    'VND' => 'VND',
+    'id_donator' => 'ID Donator',
+    'ID_Donator' => 'ID Donator',
+    'description' => 'Description',
+    'place_some_text_here' => 'Place some text here',
+    'author' => 'Author',
+    'Author' => 'Author',
+    'year' => 'Year',
+    'picture' => 'Picture',
+    'update' => 'Update',
+    'back' => 'Back',
+];
