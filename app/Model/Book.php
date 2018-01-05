@@ -2,20 +2,26 @@
 
 namespace App\Model;
 
-use App\Model\Category;
-use App\Model\User;
-use App\Model\Borrow;
-use App\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
+    use SoftDeletes;
+    
     /**
      * Declare table
      *
      * @var string $tabel table name
      */
     protected $table = 'books';
+    
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
     
     /**
      * The attributes that are mass assignable.

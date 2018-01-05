@@ -1,17 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
-use App\Model\Borrow;
-use App\Model\Book;
-use App\Model\Post;
-use App\Model\Comment;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use SoftDeletes, Notifiable;
 
     /**
     * Declare table
@@ -20,6 +17,13 @@ class User extends Authenticatable
     */
     protected $table = 'users';
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['expired_at'];
+    
     /**
      * The attributes that are mass assignable.
      *

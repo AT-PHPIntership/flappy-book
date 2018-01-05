@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\Post;
-use App\Model\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model

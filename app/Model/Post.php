@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\User;
-use App\Model\Like;
-use App\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
