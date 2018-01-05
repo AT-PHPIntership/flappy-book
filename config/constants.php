@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'status' => 'successfully'
+    'INVALID_USER' => 'successfully',
+    'ACCOUNT_ADMIN' => 'PHP'
 ];
