@@ -13,7 +13,8 @@
         <a href="#">
           <i class="fa fa-dashboard"></i> {{ __('books.home') }}</a>
       </li>
-      <li class="active">{{ __('books.books') }}</li>
+      <li class=""><a href="">{{ __('books.books') }}</a></li>
+      <li class="active">{{ __('books.edit_book') }}</li>
     </ol>
   </section>
   <section class="content">
