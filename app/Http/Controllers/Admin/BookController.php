@@ -8,6 +8,17 @@ use App\Model\Category;
 
 class BookController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('backend.books.index');
+    }
+
     /**
      * Show the form for creating a new book.
      *
