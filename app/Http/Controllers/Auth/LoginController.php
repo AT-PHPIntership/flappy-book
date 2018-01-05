@@ -80,7 +80,7 @@ class LoginController extends Controller
         }
         
         # Check status API response
-        if ($portalResponse->meta->status == 'successfully') {
+        if ($portalResponse->meta->status == config('constants.status')) {
             $userResponse = $portalResponse->data->user;
             
             # Collect user data from response
