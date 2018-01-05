@@ -20,7 +20,7 @@ class BookController extends Controller
     }
 
     /**
-     * Show create book page.
+     * Show the form for creating a new book.
      *
      * @return \Illuminate\Http\Response
      */
