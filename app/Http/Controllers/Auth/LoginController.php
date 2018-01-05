@@ -30,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -78,33 +78,34 @@ class LoginController extends Controller
                 ->withInput()
                 ->withErrors(['email' => trans('portal.messages.' . $portalResponse->meta->messages)]);
         }
-        
         # Check status API response
-        if ($portalResponse->meta->status == 'successfully') {
+        if ($portalResponse->meta->status == config('constants.INVALID_USER')) {
             $userResponse = $portalResponse->data->user;
-            
             # Collect user data from response
             $user = [
-                'employee_code' => $userResponse->employee_code,
+                'employ_code' => $userResponse->employee_code,
                 'email' => $request->email,
+                'name' =>$userResponse->name,
+                'team' =>$userResponse->teams[0]->name,
+                'avatar_url' => $userResponse->avatar_url,
             ];
-            
             # Get user from database OR create User
-            $user = User::firstOrNew($user);
-            
-            # Update user info
-            $user->name = $userResponse->name;
-            $user->team = $userResponse->teams[0]->name;
-            $user->avatar_url = $userResponse->avatar_url;
+            $user = User::updateOrCreate($user);
             $user->access_token = $userResponse->access_token;
-            
+            if ($user['team'] == config('constants.ACCOUNT_ADMIN')) {
+                $user->is_admin = 1;
+            } else {
+                $user->is_admin = 0;
+            }
             # Save User, update token
             $user->save();
-            
             # Set login for user
             Auth::login($user, $request->filled('remember'));
-            
-            return redirect("/admin");
+            if ($user->is_admin == 1) {
+                return redirect("/admin");
+            } else {
+                return redirect("/");
+            }
         }
     }
     
