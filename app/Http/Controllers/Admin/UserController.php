@@ -32,10 +32,8 @@ class UserController extends Controller
         ->select($fields)
         ->groupBy('users.id')
         ->paginate(config('define.row_count'));
-        // echo '<pre>';
-        // print_r($users);
-        // echo '</pre>';
-        return view('backend.users.index',['users' => $users]);
+
+        return view('backend.users.index', ['users' =>$users]);
     }
      /**
      * Display the profile of user.
