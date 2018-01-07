@@ -36,7 +36,27 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
+    /**
+     *  Relationship hasMany with Comment
+     *
+     * @return array
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     *  Relationship belongsTo with Comment
+     *
+     * @return array
+     */
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
     /**
      * Relationship morphTo with Book and Post
      *
