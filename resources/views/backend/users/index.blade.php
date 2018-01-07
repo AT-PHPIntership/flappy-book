@@ -42,19 +42,19 @@
                 @foreach ($users as $user)
                 <?php
                     $id = $user['id'];
-                    $employ_code = $user['employ_code'];
+                    $employCode = $user['employ_code'];
                     $name = $user['name'];
                     $email = $user['email'];
-                    $total_borrowed = $user['total_borrowed'];
-                    $total_donated = $user['total_donated'];
+                    $totalBorrowed = $user['total_borrowed'];
+                    $totalDonated = $user['total_donated'];
                 ?>
                 <tr>
                   <td>{{ $number }}</td>
-                  <td>{{ $employ_code }}</td>
+                  <td>{{ $employCode }}</td>
                   <td>{{ $name }}</td>
                   <td>{{ $email }}</td>
-                  <td>{{ $total_donated }}</td>
-                  <td>{{ $total_borrowed }}</td>
+                  <td>{{ $totalDonated }}</td>
+                  <td>{{ $totalBorrowed }}</td>
                 </tr>
                 <?php
                 $number++;
