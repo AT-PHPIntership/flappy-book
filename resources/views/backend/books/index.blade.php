@@ -41,26 +41,26 @@
                   </th>
                   <th width="40%">
                     {{ __('Name') }}
-                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => $order]) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th width="25%">
                    {{ __('Author') }}
-                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => $order]) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th width="10%">
                     {{ __('Rate') }}
-                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => $order]) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th width="10%">
                     {{ __('Total borrow') }}
-                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => $order]) }}" class="pull-right">
+                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center" width="10%">
@@ -69,13 +69,13 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach ($books as $book)
                 <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
+                  <td>{{ $book->id }}</td>
+                  <td>{{ $book->title }}</td>
+                  <td>{{ $book->author }}</td>
+                  <td>{{ $book->rating }}</td>
+                  <td>{{ $book->total_borrow }}</td>
                   <td class="text-center">
                     <div class="btn-option text-center">
                       <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
@@ -88,87 +88,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5.5</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-                  <td>6</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 7</td>
-                  <td>Win XP SP2+</td>
-                  <td>7</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>AOL browser (AOL desktop)</td>
-                  <td>Win XP</td>
-                  <td>6</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Firefox 1.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.7</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Firefox 1.5</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Firefox 2.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Firefox 3.0</td>
-                  <td>Win 2k+ / OSX.3+</td>
-                  <td>1.9</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Camino 1.0</td>
-                  <td>OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Camino 1.5</td>
-                  <td>OSX.3+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr>
+                @endforeach
               </tbody>
             </table>
             <div class="text-right">
