@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['expired_at'];
+    protected $dates = ['expired_at', 'deleted_at'];
     
     /**
      * The attributes that are mass assignable.

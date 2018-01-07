@@ -36,50 +36,37 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                $number = 1;
+                ?>
+                @foreach ($users as $user)
+                <?php
+                    $id = $user['id'];
+                    $employ_code = $user['employ_code'];
+                    $name = $user['name'];
+                    $email = $user['email'];
+                    $total_borrowed = $user['total_borrowed'];
+                    $total_donated = $user['total_donated'];
+                ?>
                 <tr>
-                  <td>1</td>
-                  <td>AT-1802</td>
-                  <td>Tram Pham T.M.</td>
-                  <td>tram.pham@asiantech.com</td>
-                  <td>2</td>
-                  <td>CSS</td>
+                  <td>{{ $number }}</td>
+                  <td>{{ $employ_code }}</td>
+                  <td>{{ $name }}</td>
+                  <td>{{ $email }}</td>
+                  <td>{{ $total_donated }}</td>
+                  <td>{{ $total_borrowed }}</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>AT-1803</td>
-                  <td>Duong N.T</td>
-                  <td>duong.tran@asiantech.com</td>
-                  <td>2</td>
-                  <td>HTML5</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>AT-1804</td>
-                  <td>Hieu L.T.</td>
-                  <td>hieu.le@asiantech.com</td>
-                  <td>2</td>
-                  <td>CSS3</td>
-                </tr>
+                <?php
+                $number++;
+                ?>
+                @endforeach
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
                   <ul class="pagination">
-                    <li class="page-item disabled">
-                      <span class="page-link">Previous</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active">
-                      <span class="page-link">
-                        2
-                        <span class="sr-only">(current)</span>
-                      </span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
+                    {{ $users->links() }}
                   </ul>
                 </nav>
               </div>
