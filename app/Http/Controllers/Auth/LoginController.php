@@ -64,12 +64,21 @@ class LoginController extends Controller
     {
         # Collect data form request
         $data = $request->except('_token');
-        
         try {
             # Try to call API to Portal
             $client = new Client();
             $portal = $client->post(config('portal.base_url_api') . config('portal.end_point.login'), ['form_params' => $data]);
             $portalResponse = json_decode($portal->getBody()->getContents());
+
+            if ($portalResponse->meta->status == config('define.login_msg_success')) {
+                $user = $this->saveUser($portalResponse, $request);
+                if ($user->is_admin == true) {
+                    return redirect("/admin");
+                } else {
+                    return redirect("/");
+                }
+            } else {
+            }
         } catch (ServerException $e) {
             # Catch errors from Portal
             $portalResponse = json_decode($e->getResponse()->getBody()->getContents());
@@ -78,35 +87,46 @@ class LoginController extends Controller
                 ->withInput()
                 ->withErrors(['email' => trans('portal.messages.' . $portalResponse->meta->messages)]);
         }
-        # Check status API response
-        if ($portalResponse->meta->status == config('constants.INVALID_USER')) {
-            $userResponse = $portalResponse->data->user;
-            # Collect user data from response
-            $user = [
-                'employ_code' => $userResponse->employee_code,
-                'email' => $request->email,
-                'name' =>$userResponse->name,
-                'team' =>$userResponse->teams[0]->name,
-                'avatar_url' => $userResponse->avatar_url,
-            ];
-            # Get user from database OR create User
-            $user = User::updateOrCreate($user);
-            $user->access_token = $userResponse->access_token;
-            if ($user['team'] == config('constants.ACCOUNT_ADMIN')) {
-                $user->is_admin = 1;
-            } else {
-                $user->is_admin = 0;
-            }
-            # Save User, update token
-            $user->save();
-            # Set login for user
-            Auth::login($user, $request->filled('remember'));
-            if ($user->is_admin == 1) {
-                return redirect("/admin");
-            } else {
-                return redirect("/");
-            }
-        }
+    }
+    /**
+     * Save data users
+     *
+     * @param App\Http\Controllers\Auth $portalResponse $portalResponse
+     * @param \Illuminate\Http\Request  $request        $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function saveUser($portalResponse, $request)
+    {
+        $userResponse = $portalResponse->data->user;
+        # Collect user data from response
+        $userCondition = [
+            'employ_code' => $userResponse->employee_code,
+            'email' => $request->email,
+        ];
+        $user = [
+            'name' =>$userResponse->name,
+            'team' =>$userResponse->teams[0]->name,
+            'avatar_url' => $userResponse->avatar_url,
+            'access_token' => $userResponse->access_token,
+        ];
+        // dd($user['team']);
+        // dd(User::getRoleByTeam($user['team']));
+        // $test = new User();
+
+        $user['is_admin'] = User::getRoleByTeam($user['team']);
+        // dd($user['is_admin']);
+        // if ($user['team'] == config('constants.ACCOUNT_ADMIN')) {
+        //     $user['is_admin'] = config('constants.IS_ADMIN');
+        // } else {
+        //     $user['is_admin'] = config('constants.NOT_ADMIN');
+        // }
+        # Get user from database OR create User
+        $user = User::updateOrCreate($userCondition, $user);
+        # Set login for user
+        Auth::login($user, $request->filled('remember'));
+
+        return $user;
     }
     
     /**
