@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    {{ __('Dashboard') }}
+    {{ __('users.list_users') }}
 @endsection
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -8,12 +8,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{ __('List Users') }}
+        {{ __('users.list_users') }}
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('Home') }}</a></li>
-        <li><a href="#">{{ __('Users') }}</a></li>
-        <li class="active">{{ __('List') }}</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('users.home') }}</a></li>
+        <li><a href="#">{{ __('users.users') }}</a></li>
+        <li class="active">{{ __('users.list') }}</li>
       </ol>
     </section>
 
@@ -27,12 +27,12 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                  <tr>
-                  <th>{{ __('No') }}</th>
-                  <th>{{ __('Employee Code') }}</th>
-                  <th>{{ __('Name') }}</th>
-                  <th>{{ __('Email') }}</th>
-                  <th>{{ __('Donate') }}</th>
-                  <th>{{ __('Borrowed') }}</th>
+                  <th>{{ __('users.no') }}</th>
+                  <th>{{ __('users.employee_code') }}</th>
+                  <th>{{ __('users.name') }}</th>
+                  <th>{{ __('users.email') }}</th>
+                  <th>{{ __('users.donate') }}</th>
+                  <th>{{ __('users.borrowed') }}</th>
                 </tr>
                 </thead>
                 <tbody>
