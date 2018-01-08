@@ -17,3 +17,21 @@ $(document).ready(function(){
       })
   });
 });
+
+$(document).ready(function(){
+  let url = new URL(document.location);
+  let order = url.searchParams.get('order');
+  let filter = url.searchParams.get('filter');
+
+  $('.sort-element').each(function(){
+    if(filter == $(this).attr('name')) {
+      if (order == 'desc') {
+        $(this).children().attr('class', 'fa fa-sort-amount-desc');
+      } else {
+        $(this).children().attr('class', 'fa fa-sort-amount-asc');
+        url.searchParams.set('order', 'desc');
+        $(this).attr('href', url);
+      }
+    }
+  });
+});
