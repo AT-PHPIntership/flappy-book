@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Category;
 
 class BookController extends Controller
 {
@@ -19,12 +20,13 @@ class BookController extends Controller
     }
 
     /**
-     * Show create book page.
+     * Show the form for creating a new book.
      *
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('backend.books.create');
+        $categories = Category::select('id', 'title')->get();
+        return view('backend.books.create', compact('categories'));
     }
 }

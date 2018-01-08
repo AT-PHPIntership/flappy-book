@@ -38,11 +38,9 @@
                         <div class="col-xs-4">
                           <label>{{ __('List Category') }}</label>
                           <select class="form-control" name="category" >
-                            <option value="">option 1</option>
-                            <option value="">option 2</option>
-                            <option value="">option 3</option>
-                            <option value="">option 4</option>
-                            <option value="">option 5</option>
+                            @foreach ($categories as $category)
+                              <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
                           </select>
                         </div>
                         <div class="col-xs-4">
