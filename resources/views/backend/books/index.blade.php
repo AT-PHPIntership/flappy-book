@@ -28,7 +28,26 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-
+            <div class="pull-left">
+              <a href="{{ route('books.create') }}"><button type="button" class="btn btn-success btn-flat">Add Book</button></a>
+            </div>
+            <div class="pull-right col-xs-6">
+              <form action="">
+                  <div class="col-xs-6">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+                  </div>
+                  <div class="col-xs-4">
+                    <select name="filter" id="filter" class="form-control">
+                      <option value="">All</option>
+                      <option value="">Title</option>
+                      <option value="">Author</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
+                    <button type="button" class="btn btn-primary btn-flat">Search</button>
+                  </div>
+              </form>
+            </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
