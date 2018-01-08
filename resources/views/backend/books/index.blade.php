@@ -34,17 +34,17 @@
             <div class="pull-right col-xs-6">
               <form action="">
                   <div class="col-xs-6">
-                    <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('books.search') }}">
                   </div>
                   <div class="col-xs-4">
                     <select name="filter" id="filter" class="form-control">
-                      <option value="">All</option>
-                      <option value="">Title</option>
-                      <option value="">Author</option>
+                      <option value="">{{ __('books.all') }}</option>
+                      <option value="">{{ __('books.title') }}</option>
+                      <option value="">{{ __('books.author') }}</option>
                     </select>
                   </div>
                   <div class="col-xs-2">
-                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary btn-flat">Search</button>
+                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
                   </div>
               </form>
             </div>

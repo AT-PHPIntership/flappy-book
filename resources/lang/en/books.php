@@ -11,4 +11,8 @@ return [
     'total_borrow' => 'Total Borrow',
     'options' => 'Options',
     'add_book' => 'Add Book',
+    'search' => 'Search',
+    'all' => 'All',
+    'title' => 'Title',
+    'author' => 'Author',
 ];
