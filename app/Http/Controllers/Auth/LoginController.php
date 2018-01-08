@@ -110,17 +110,7 @@ class LoginController extends Controller
             'avatar_url' => $userResponse->avatar_url,
             'access_token' => $userResponse->access_token,
         ];
-        // dd($user['team']);
-        // dd(User::getRoleByTeam($user['team']));
-        // $test = new User();
-
         $user['is_admin'] = User::getRoleByTeam($user['team']);
-        // dd($user['is_admin']);
-        // if ($user['team'] == config('constants.ACCOUNT_ADMIN')) {
-        //     $user['is_admin'] = config('constants.IS_ADMIN');
-        // } else {
-        //     $user['is_admin'] = config('constants.NOT_ADMIN');
-        // }
         # Get user from database OR create User
         $user = User::updateOrCreate($userCondition, $user);
         # Set login for user
