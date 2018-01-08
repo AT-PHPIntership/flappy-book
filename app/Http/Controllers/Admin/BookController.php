@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditBookRequest;
+use App\Model\Category;
 
 class BookController extends Controller
 {
@@ -36,18 +37,19 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(EditBookRequest $request)
+    public function update(EditBookRequest $request, $id)
     {
         dd($request);
     }
 
     /**
-     * Show create book page.
+     * Show the form for creating a new book.
      *
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('backend.books.create');
+        $categories = Category::select('id', 'title')->get();
+        return view('backend.books.create', compact('categories'));
     }
 }

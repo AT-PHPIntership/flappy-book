@@ -9,7 +9,7 @@ return [
     'title' => 'Title',
     'price' => 'Price',
     'unit' => 'Unit',
-    'VND' => 'VND',
+    'vnd' => 'VND',
     'description' => 'Description',
     'id_donator' => 'ID Donator',
     'category' => 'Category',
@@ -21,5 +21,8 @@ return [
     'options' => 'Options',
     'picture' => 'Picture',
     'update' => 'Update',
-    'back' => 'Back'
+    'back' => 'Back',
+    'add_book' => 'Add Book',
+    'search' => 'Search',
+    'all' => 'All',
 ];

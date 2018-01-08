@@ -21,8 +21,9 @@
       <div class="row">
         <div class="col-md-12">
           <div class="box box-primary">
-            <form action="{{route('books.store')}}" role="form" method="POST" enctype="multipart/form-data">
+            <form action="{{route('books.update', 2)}}" role="form" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
+              {{ method_field('PUT') }}
               <div class="box-body">
                 <div class="row">
                   <div class="col-xs-12">

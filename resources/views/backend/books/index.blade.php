@@ -28,7 +28,26 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-
+            <div class="pull-left">
+              <a href="{{ route('books.create') }}"><button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat">{{ __('books.add_book') }}</button></a>
+            </div>
+            <div class="pull-right col-xs-6">
+              <form action="">
+                  <div class="col-xs-6">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('books.search') }}">
+                  </div>
+                  <div class="col-xs-4">
+                    <select name="filter" id="filter" class="form-control">
+                      <option value="">{{ __('books.all') }}</option>
+                      <option value="">{{ __('books.title') }}</option>
+                      <option value="">{{ __('books.author') }}</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
+                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
+                  </div>
+              </form>
+            </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
