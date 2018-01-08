@@ -9,10 +9,10 @@ class Book extends Model
 {
     use SoftDeletes;
 
-    const TYPE_VND = 0;
-    const TYPE_DOLAR = 1;
-    const TYPE_EURO =  2;
-    const TYPE_YEN = 3;
+    const TYPE_VND = 'VND';
+    const TYPE_DOLAR = '$';
+    const TYPE_EURO =  '€';
+    const TYPE_YEN = '¥';
     
     /**
      * Declare table

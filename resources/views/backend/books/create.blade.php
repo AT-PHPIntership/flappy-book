@@ -62,10 +62,10 @@
                          <div class="col-xs-2">
                           <label>{{ __('books.unit') }}</label>
                           <select class="form-control" name="unit" >
-                              <option value="{{ App\Model\Book::TYPE_VND }}">VND</option>
-                              <option value="{{ App\Model\Book::TYPE_DOLAR }}">$</option>
-                              <option value="{{ App\Model\Book::TYPE_EURO }}">€</option>
-                              <option value="{{ App\Model\Book::TYPE_YEN }}">¥</option>
+                              <option value="{{ App\Model\Book::TYPE_VND }}">{{ __('books.listunit.vnd') }}</option>
+                              <option value="{{ App\Model\Book::TYPE_DOLAR }}">{{ __('books.listunit.dolar') }}</option>
+                              <option value="{{ App\Model\Book::TYPE_EURO }}">{{ __('books.listunit.euro') }}</option>
+                              <option value="{{ App\Model\Book::TYPE_YEN }}">{{ __('books.listunit.yen') }}</option>
                           </select>
                           @if($errors->first('unit')) 
                             <span class="text-danger">{{ $errors->first('unit') }}</span>
