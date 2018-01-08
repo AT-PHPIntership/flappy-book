@@ -32,10 +32,10 @@
   <div class="login-logo">
     <img src="{{ asset('images/logo_at.png') }}" alt="LOGO">
   </div>
-  @if ($errors->has('email'))
+  @if ($errors->has('email_or_password'))
     <div class="alert  alert-danger alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <span>{{ $errors->first('email') }}</span>
+      <span>{{ $errors->first('email_or_password') }}</span>
     </div>
     
   @endif
@@ -44,13 +44,23 @@
     <p class="login-box-msg">{{ __('Sign in to start your session')}}</p>
     <form action="{{ route('login') }}" method="POST">
       {{ csrf_field() }}
-      <div class="form-group has-feedback">
-        <input type="email" name="email" class="form-control" placeholder="{{ __('Email')}}" required value="{{ old('email') }}"autofocus>
+      <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
+        <input type="email" name="email" class="form-control" placeholder="{{ __('Email')}}" value="{{ old('email') }}" required autofocus>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+         @if ($errors->has('email'))
+            <span class="help-block">
+                <strong>{{ $errors->first('email') }}</strong>
+            </span>
+          @endif
       </div>
-      <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="{{ __('Password')}}" required >
+      <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
+        <input type="password" name="password" class="form-control" placeholder="{{ __('Password')}}" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+         @if ($errors->has('password'))
+            <span class="help-block">
+                <strong>{{ $errors->first('password') }}</strong>
+            </span>
+        @endif
       </div>
       <div class="row">
         <div class="col-xs-8">

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ServerException;
 use App\Models\User;
+use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -60,7 +61,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginFormValidation $request)
     {
         # Collect data form request
         $data = $request->except('_token');
@@ -85,7 +86,7 @@ class LoginController extends Controller
             return redirect()
                 ->back()
                 ->withInput()
-                ->withErrors(['email' => trans('portal.messages.' . $portalResponse->meta->messages)]);
+                ->withErrors(['email_or_password' => trans('portal.messages.' . $portalResponse->meta->messages)]);
         }
     }
     /**
