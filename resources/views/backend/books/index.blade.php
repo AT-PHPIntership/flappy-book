@@ -69,251 +69,30 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="text-center">1</td>
-                  <td>Internet Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td class="text-center">4</td>
-                  <td class="text-center">X</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">2</td>
-                  <td>Internet Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td class="text-center">5</td>
-                  <td class="text-center">C</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">3</td>
-                  <td>Internet Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td class="text-center">5.5</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">4</td>
-                  <td>Internet Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-                  <td class="text-center">6</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">5</td>
-                  <td>Internet Explorer 7</td>
-                  <td>Win XP SP2+</td>
-                  <td class="text-center">7</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">6</td>
-                  <td>AOL browser (AOL desktop)</td>
-                  <td>Win XP</td>
-                  <td class="text-center">6</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">7</td>
-                  <td>Firefox 1.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td class="text-center">1.7</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">7</td>
-                  <td>Firefox 1.5</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td class="text-center">1.8</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">8</td>
-                  <td>Firefox 2.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td class="text-center">1.8</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">9</td>
-                  <td>Firefox 3.0</td>
-                  <td>Win 2k+ / OSX.3+</td>
-                  <td class="text-center">1.9</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">10</td>
-                  <td>Camino 1.0</td>
-                  <td>OSX.2+</td>
-                  <td class="text-center">1.8</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">11</td>
-                  <td>Camino 1.5</td>
-                  <td>OSX.3+</td>
-                  <td class="text-center">1.8</td>
-                  <td class="text-center">A</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
-                <tr>
+                @foreach ($books as $index => $book)  
+                  <tr>
+                    <td class="text-center">{{ $index + $books->firstItem() }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->author }}</td>
+                    <td class="text-center">{{ $book->rating }}</td>
+                    <td class="text-center">{{ $book->total_borrowed }}</td>
+                    <td class="text-center">
+                      <div class="btn-option text-center">
+                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
+                        <form method="POST" action="{{ route('books.destroy', $book->id) }}" class="inline">
+                          <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                            data-title="{{ __('Confirm deletion!') }}"
+                            data-confirm="{{ __('Are you sure you want to delete?') }}"
+                          ></button>
+                        </form> 
+                      </div>
+                    </td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
             <div class="text-right">
-              <nav aria-label="...">
-                <ul class="pagination">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">2
-                      <span class="sr-only">(current)</span>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                  </li>
-                </ul>
-              </nav>
+              {{ $books->links() }}
             </div>
           </div>
           <!-- /.box-body -->
