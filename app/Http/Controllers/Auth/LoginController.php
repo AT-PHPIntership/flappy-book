@@ -70,7 +70,7 @@ class LoginController extends Controller
             $portalResponse = json_decode($portal->getBody()->getContents());
 
             if ($portalResponse->meta->status == config('define.login_msg_success')) {
-                $user = $this->saveUser($portalResponse, $request); 
+                $user = $this->saveUser($portalResponse, $request);
                 Auth::login($user, $request->filled('remember'));
                 if ($user->is_admin == true) {
                     return redirect("/admin");
