@@ -8,7 +8,7 @@ return [
     'title' => 'Title',
     'author' => 'Author',
     'rating' => 'Rating',
-    'total_borrow' => 'Total Borrow',
+    'total_borrowed' => 'Total Borrowed',
     'options' => 'Options',
     'add_book' => 'Add Book',
     'search' => 'Search',
