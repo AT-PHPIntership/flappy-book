@@ -13,7 +13,9 @@ class UpdateColumnYearBooksTable extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE `books` MODIFY `year` YEAR');
+        if (Schema::hasColumn('books', 'year')) {
+            DB::statement('ALTER TABLE `books` MODIFY `year` YEAR');
+        }
     }
 
     /**
@@ -23,6 +25,8 @@ class UpdateColumnYearBooksTable extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE `books` MODIFY `year` Integer(4)');
+        if (Schema::hasColumn('books', 'year')) {
+            DB::statement('ALTER TABLE `books` MODIFY `year` Integer(4)');
+        }
     }
 }
