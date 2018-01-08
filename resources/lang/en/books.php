@@ -21,6 +21,9 @@ return [
     'picture' => 'Picture',
     'create' => 'Create',
     'back' => 'Back',
+    'add_book' => 'Add Book',
+    'search' => 'Search',
+    'all' => 'All',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',

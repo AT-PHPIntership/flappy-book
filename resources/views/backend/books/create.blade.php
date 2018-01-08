@@ -42,11 +42,9 @@
                         <div class="col-xs-3">
                           <label>{{ __('books.category') }}</label>
                           <select class="form-control" name="category" >
-                            <option value="">option 1</option>
-                            <option value="">option 2</option>
-                            <option value="">option 3</option>
-                            <option value="">option 4</option>
-                            <option value="">option 5</option>
+                            @foreach ($categories as $category)
+                              <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
                           </select>
                           @if($errors->first('category')) 
                             <span class="text-danger">{{ $errors->first('category') }}</span>

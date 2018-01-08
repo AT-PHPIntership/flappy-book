@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    {{ __('Dashboard') }}
+    {{ __('users.detail_user') }}
 @endsection
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -8,12 +8,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{ __('Detail User') }}
+        {{ __('users.detail_user') }}
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('Home') }}</a></li>
-        <li><a href="#">{{ __('Users') }}</a></li>
-        <li class="active">{{ __('User profile') }}</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('users.home') }}</a></li>
+        <li><a href="#">{{ __('users.users') }}</a></li>
+        <li class="active">{{ __('users.user_profile') }}</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -34,25 +34,25 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Employee Code</b> <a class="pull-right">ATI-0282</a>
+                  <b>{{ __('users.employee_code') }}</b> <a class="pull-right">ATI-0282</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Email</b> <a class="pull-right">tram.pham@asiantech.com</a>
+                  <b>{{ __('users.email') }}</b> <a class="pull-right">tram.pham@asiantech.com</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Role</b> <a class="pull-right">User</a>
+                  <b>{{ __('users.role') }}</b> <a class="pull-right">User</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Books Donated</b> <a class="pull-right" href="">2</a>
+                  <b>{{ __('users.books_donated') }}</b> <a class="pull-right" href="">2</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Books Borrowed</b> <a class="pull-right" href="">3</a>
+                  <b>{{ __('users.books_borrowed') }}</b> <a class="pull-right" href="">3</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Books Borrowing</b> <a class="pull-right">HTML5</a>
+                  <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">1</a>
                 </li>
               </ul>
-              <a href="javascript:history.back()" class="btn btn-primary btn-block"><b>Back</b></a>
+              <a href="javascript:history.back()" class="btn btn-primary btn-block"><b>{{ __('users.back')}}</b></a>
             </div>
             <!-- /.box-body -->
           </div>
