@@ -32,10 +32,10 @@
   <div class="login-logo">
     <img src="{{ asset('images/logo_at.png') }}" alt="LOGO">
   </div>
-  @if ($errors->has('email_or_password'))
+  @if ($errors->has('error'))
     <div class="alert  alert-danger alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <span>{{ $errors->first('email_or_password') }}</span>
+      <span>{{ $errors->first('error') }}</span>
     </div>
     
   @endif
