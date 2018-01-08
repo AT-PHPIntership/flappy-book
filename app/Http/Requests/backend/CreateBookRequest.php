@@ -33,7 +33,7 @@ class CreateBookRequest extends FormRequest
                                   .book::TYPE_YEN.',',
             'iddonator'   => 'required',
             'description' => 'required',
-            'year'        => 'date_format:"Y"',
+            'year'        => 'required|date_format:"Y"',
             'author'      => 'required',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
