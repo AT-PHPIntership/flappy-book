@@ -60,26 +60,26 @@
                   </th>
                   <th>
                     {{ __('books.title') }}
-                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" name="title" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th>
                    {{ __('books.author') }}
-                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" name="author" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center">
                     {{ __('books.rating') }}
-                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" name="rating" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center" width="12%">
                     {{ __('books.total_borrow') }}
-                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => 'asc']) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => 'asc']) }}" name="total_borrow" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center" width="15%">
