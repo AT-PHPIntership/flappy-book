@@ -1,6 +1,6 @@
 @extends('backend.layouts.master') 
 @section('title') 
-{{ __('List Books') }} 
+  {{ __('books.list_books') }}
 @endsection 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -8,17 +8,17 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      {{ __('List Books') }}
+      {{ __('books.list_books') }}
     </h1>
     <ol class="breadcrumb">
       <li>
         <a href="#">
-          <i class="fa fa-dashboard"></i> {{ __('Home') }}</a>
+          <i class="fa fa-dashboard"></i> {{ __('books.home') }}</a>
       </li>
       <li>
-        <a href="#">{{ __('Books') }}</a>
+        <a href="#">{{ __('books.books') }}</a>
       </li>
-      <li class="active">{{ __('List') }}</li>
+      <li class="active">{{ __('books.list') }}</li>
     </ol>
   </section>
 
@@ -28,43 +28,62 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-
+            <div class="pull-left">
+              <a href="{{ route('books.create') }}"><button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat">{{ __('books.add_book') }}</button></a>
+            </div>
+            <div class="pull-right col-xs-6">
+              <form action="">
+                  <div class="col-xs-6">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('books.search') }}">
+                  </div>
+                  <div class="col-xs-4">
+                    <select name="filter" id="filter" class="form-control">
+                      <option value="">{{ __('books.all') }}</option>
+                      <option value="">{{ __('books.title') }}</option>
+                      <option value="">{{ __('books.author') }}</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
+                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
+                  </div>
+              </form>
+            </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             @include('backend.layouts.partials.modal')
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="list-books" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th width="5%">
-                    {{ __('No') }}
+                  <th class="text-center" width="5%">
+                    {{ __('books.no') }}
                   </th>
-                  <th width="40%">
-                    {{ __('Name') }}
-                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => $order]) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
+                  <th>
+                    {{ __('books.title') }}
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" name="title" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
-                  <th width="25%">
-                   {{ __('Author') }}
-                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => $order]) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
+                  <th>
+                   {{ __('books.author') }}
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" name="author" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
-                  <th width="10%">
-                    {{ __('Rate') }}
-                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => $order]) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
+                  <th class="text-center">
+                    {{ __('books.rating') }}
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" name="rating" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
-                  <th width="10%">
-                    {{ __('Total borrow') }}
-                    <a href="{{ route('books.index', ['filter' => 'total_borrow', 'order' => $order]) }}" class="pull-right">
-                      <i class="fa fa-sort-amount-{{$order}}" aria-hidden="true"></i>
+                  <th class="text-center" width="12%">
+                    {{ __('books.total_borrowed') }}
+                    <a href="{{ route('books.index', ['filter' => 'total_borrowed', 'order' => 'asc']) }}" name="total_borrowed" class="pull-right sort-element">
+                      <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
-                  <th class="text-center" width="10%">
-                    {{ __('Options') }}
+                  <th class="text-center" width="15%">
+                    {{ __('books.options') }}
                   </th>
                 </tr>
               </thead>
@@ -75,7 +94,7 @@
                   <td>{{ $book->title }}</td>
                   <td>{{ $book->author }}</td>
                   <td>{{ $book->rating }}</td>
-                  <td>{{ $book->total_borrow }}</td>
+                  <td>{{ $book->total_borrowed }}</td>
                   <td class="text-center">
                     <div class="btn-option text-center">
                       <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;

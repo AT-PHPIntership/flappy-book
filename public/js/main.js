@@ -17,3 +17,22 @@ $(document).ready(function(){
       })
   });
 });
+
+$(document).ready(function(){
+  let url = new URL(document.location);
+  let params = url.searchParams;
+  let order = params.get('order');
+  let filter = params.get('filter');
+
+  $('.sort-element').each(function(){
+    if(filter == $(this).attr('name')) {
+      if (order == 'desc') {
+        $(this).children().attr('class', 'fa fa-sort-amount-desc');
+      } else if (order == 'asc'){
+        $(this).children().attr('class', 'fa fa-sort-amount-asc');
+        params.set('order', 'desc');
+        $(this).attr('href', url);
+      }
+    }
+  });
+});

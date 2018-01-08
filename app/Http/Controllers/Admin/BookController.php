@@ -5,33 +5,34 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 use App\Model\Book;
 use App\Model\Borrow;
-use Illuminate\Support\Facades\DB;
+use App\Model\Category;
 
 class BookController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the books.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $field = [
+        $fields = [
             'books.id',
-            'title',
-            'author',
-            'rating',
-            DB::raw('count(borrows.id) total_borrow')
+            'books.title',
+            'books.author',
+            'books.rating',
+            DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
 
         $filterFields = [
             'title',
             'author',
             'rating',
-            'total_borrow'
+            'total_borrowed'
         ];
 
         $orderFields = [
@@ -42,28 +43,31 @@ class BookController extends Controller
         // get value of parameter from url
         $filter = Input::get('filter');
         $order = Input::get('order');
-        $books = [];
+
+        // get list books
+        $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+                     ->select($fields)
+                     ->groupBy('books.id');
 
         // check validate of input
         if ((in_array($filter, $filterFields)) && (in_array($order, $orderFields))) {
-            $books = Book::select($field)
-                                ->join('borrows', 'books.id', '=', 'borrows.book_id')
-                                ->groupBy('books.id')
-                                ->orderBy($filter, $order)
-                                ->paginate(Book::ROW_LIMIT);
+            $books = $books->orderBy($filter, $order);
         }
 
-        $order = ($order == 'asc') ? 'desc' : 'asc';
-        return view('backend.books.index', compact('books', 'order'));
+        // paginate
+        $books = $books->paginate(config('define.row_count'));
+
+        return view('backend.books.index', compact('books'));
     }
 
     /**
-     * Show create book page.
+     * Show the form for creating a new book.
      *
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('backend.books.create');
+        $categories = Category::select('id', 'title')->get();
+        return view('backend.books.create', compact('categories'));
     }
 }

@@ -10,11 +10,6 @@ class Book extends Model
     use SoftDeletes;
     
     /**
-     * Book row limit
-     */
-    const ROW_LIMIT = 10;
-
-    /**
      * Declare table
      *
      * @var string $tabel table name
