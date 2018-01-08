@@ -18,9 +18,9 @@ return [
     'create' => 'Create',
     'back' => 'Back',
     'listunit' => [
-        'vnd' => 'VND',
-        'dolar' => '$',
-        'euro' => '€',
-        'yen' => '¥'
+        \App\Model\Book::TYPE_VND => 'VND',
+        \App\Model\Book::TYPE_DOLAR => '$',
+        \App\Model\Book::TYPE_EURO => '€',
+        \App\Model\Book::TYPE_YEN => '¥'
     ],
 ];
