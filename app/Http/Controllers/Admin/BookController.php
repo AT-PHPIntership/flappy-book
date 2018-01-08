@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditBookRequest;
+use App\Model\Book;
+use App\Model\Category;
 
 class BookController extends Controller
 {
@@ -20,13 +22,21 @@ class BookController extends Controller
     }
 
     /**
-     * Show form edit.
+     * Get categoryFields.
+     *
+     * @param int $id call category have id = $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('backend.books.edit');
+        $categoryFields = [
+             'id',
+             'title'
+         ];
+         $book = Book::findOrFail($id);
+         $categories = Category::select($categoryFields)->get();
+         return view('backend.books.edit', compact('book', 'categories'));
     }
 
     /**
