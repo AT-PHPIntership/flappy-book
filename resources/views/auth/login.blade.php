@@ -42,7 +42,7 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">{{ __('Sign in to start your session')}}</p>
-    <form action="" method="post">
+    <form action="{{ route('login') }}" method="POST">
       {{ csrf_field() }}
       <div class="form-group has-feedback">
         <input type="email" name="email" class="form-control" placeholder="{{ __('Email')}}" required value="{{ old('email') }}"autofocus>
