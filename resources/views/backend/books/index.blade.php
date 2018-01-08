@@ -29,7 +29,7 @@
         <div class="box">
           <div class="box-header">
             <div class="pull-left">
-              <a href="{{ route('books.create') }}"><button type="button" class="btn btn-success btn-flat">Add Book</button></a>
+              <a href="{{ route('books.create') }}"><button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat">{{ __('books.add_book') }}</button></a>
             </div>
             <div class="pull-right col-xs-6">
               <form action="">
@@ -44,7 +44,7 @@
                     </select>
                   </div>
                   <div class="col-xs-2">
-                    <button type="button" class="btn btn-primary btn-flat">Search</button>
+                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary btn-flat">Search</button>
                   </div>
               </form>
             </div>
