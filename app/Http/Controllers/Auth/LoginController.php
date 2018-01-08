@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ServerException;
 use App\Models\User;
+use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -62,30 +63,30 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        # Collect data form request
         $data = $request->except('_token');
         try {
-            # Try to call API to Portal
             $client = new Client();
             $portal = $client->post(config('portal.base_url_api') . config('portal.end_point.login'), ['form_params' => $data]);
             $portalResponse = json_decode($portal->getBody()->getContents());
 
             if ($portalResponse->meta->status == config('define.login_msg_success')) {
-                $user = $this->saveUser($portalResponse, $request);
+                $user = $this->saveUser($portalResponse, $request); 
+                Auth::login($user, $request->filled('remember'));
                 if ($user->is_admin == true) {
                     return redirect("/admin");
                 } else {
                     return redirect("/");
                 }
             } else {
+                redirect('/login')
+                ->withErrors(['error' => trans('portal.messages.server_error')]);
             }
         } catch (ServerException $e) {
-            # Catch errors from Portal
             $portalResponse = json_decode($e->getResponse()->getBody()->getContents());
             return redirect()
                 ->back()
                 ->withInput()
-                ->withErrors(['email' => trans('portal.messages.' . $portalResponse->meta->messages)]);
+                ->withErrors(['error' => trans('portal.messages.' . $portalResponse->meta->messages)]);
         }
     }
     /**
@@ -112,11 +113,7 @@ class LoginController extends Controller
         ];
         $user['is_admin'] = User::getRoleByTeam($user['team']);
         # Get user from database OR create User
-        $user = User::updateOrCreate($userCondition, $user);
-        # Set login for user
-        Auth::login($user, $request->filled('remember'));
-
-        return $user;
+        return User::updateOrCreate($userCondition, $user);
     }
     
     /**
