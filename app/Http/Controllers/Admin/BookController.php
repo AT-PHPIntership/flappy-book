@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use App\Http\Requests\backend\CreateBookRequest;
 use Illuminate\Support\Facades\DB;
 use App\Model\Book;
 use App\Model\Borrow;
@@ -45,8 +46,8 @@ class BookController extends Controller
         $order = Input::get('order');
 
         // get list books
-        $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                     ->select($fields)
+        $books = Book::select($fields)
+                     ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                      ->groupBy('books.id');
 
         // check validate of input
@@ -69,5 +70,18 @@ class BookController extends Controller
     {
         $categories = Category::select('id', 'title')->get();
         return view('backend.books.create', compact('categories'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CategoryRequest $request send request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateBookRequest $request)
+    {
+        $title = $request->title;
+        echo $title;
     }
 }
