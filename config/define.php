@@ -1,4 +1,4 @@
 <?php
 return [
-	'row_count' => 5
+    'row_count' => 5,
 ];
