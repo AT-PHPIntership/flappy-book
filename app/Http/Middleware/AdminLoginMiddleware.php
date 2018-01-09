@@ -23,7 +23,7 @@ class AdminLoginMiddleware
             if ($user->is_admin == User::ROLE_ADMIN) {
                 return $next($request);
             }
-        } 
+        }
         return redirect('/login');
     }
 }
