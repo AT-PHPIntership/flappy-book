@@ -29,6 +29,7 @@ class BookController extends Controller
         $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                      ->select($fields)
                      ->groupBy('books.id')
+                     ->orderBy('id', 'desc')
                      ->paginate(config('define.row_count'));
         return view('backend.books.index', compact('books'));
     }
