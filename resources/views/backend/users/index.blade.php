@@ -33,6 +33,7 @@
                   <th>{{ __('users.email') }}</th>
                   <th>{{ __('users.donate') }}</th>
                   <th>{{ __('users.borrowed') }}</th>
+                  <th class="text-center">{{ __('users.role') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                   <td>tram.pham@asiantech.com</td>
                   <td>2</td>
                   <td>CSS</td>
+                  <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button>
                 </tr>
                 <tr>
                   <td>2</td>
@@ -51,6 +53,7 @@
                   <td>duong.tran@asiantech.com</td>
                   <td>2</td>
                   <td>HTML5</td>
+                  <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-success btn-flat btn-xs" style="width: 45px">{{ __('users.user') }}</button>
                 </tr>
                 <tr>
                   <td>3</td>

@@ -17,4 +17,7 @@ return [
     'books_borrowed' => 'Books Borrowed',
     'books_borrowing' => 'Books Borrowing',
     'back' => 'Back',
+    'role' => 'Role',
+    'admin' => 'Admin',
+    'user' => 'User',
 ];
