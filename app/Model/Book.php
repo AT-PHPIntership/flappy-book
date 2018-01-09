@@ -10,9 +10,9 @@ class Book extends Model
     use SoftDeletes;
     
     /**
-     * Book unit
+     * Book currency unit
      *
-     * @type string
+     * @type int
      */
     const TYPE_VND = 0;
     const TYPE_DOLAR = 1;
