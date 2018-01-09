@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ServerException;
-use App\Models\User;
+use App\Model\User;
 use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
 
