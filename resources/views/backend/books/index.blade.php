@@ -77,7 +77,7 @@
                     </a>
                   </th>
                   <th class="text-center" width="12%">
-                    {{ __('books.total_borrow') }}
+                    {{ __('books.total_borrowed') }}
                     <a href="{{ route('books.index', ['filter' => 'total_borrowed', 'order' => 'asc']) }}" name="total_borrowed" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
