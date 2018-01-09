@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Book extends Model
 {
     use SoftDeletes;
-
-    const TYPE_VND = 0;
-    const TYPE_DOLAR = 1;
-    const TYPE_EURO = 2;
-    const TYPE_YEN = 3;
-    
+    /**
+     * Book unit
+     */
     const TYPE_VND = 0;
     const TYPE_DOLAR = 1;
     const TYPE_EURO =  2;
