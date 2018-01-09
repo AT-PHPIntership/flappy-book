@@ -24,7 +24,7 @@ class LoginFormValidation extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ];
     }
