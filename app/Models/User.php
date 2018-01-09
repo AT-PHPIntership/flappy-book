@@ -7,17 +7,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $table = 'users';
-    const IS_ADMIN = 'PHP';
-
-     /**
-      * Value of role
+    /**
+      * Constant admin team
+      * Set role admin 1
+      * Set role user 0
       *
-      * @var array
+      * @var constants
       */
-    public static $role = [
-       'admin' => 1,
-       'user' => 0,
-    ];
+    const ADMIN_TEAM_NAME = 'PHP';
+    const ROLE_ADMIN = 1;
+    const ROLE_USER = 0;
     /**
      * The attributes that are mass assignable.
      *
@@ -42,6 +41,6 @@ class User extends Authenticatable
      */
     public static function getRoleByTeam($team)
     {
-        return ($team == self::IS_ADMIN);
+        return $team == self::ADMIN_TEAM_NAME ? self::ROLE_ADMIN : self::ROLE_USER;
     }
 }
