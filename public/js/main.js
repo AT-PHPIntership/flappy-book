@@ -23,6 +23,7 @@ $(document).ready(function(){
   let params = url.searchParams;
   let order = params.get('order');
   let filter = params.get('filter');
+  let page = params.get('page');
 
   $('.sort-element').each(function(){
     if(filter == $(this).attr('name')) {
@@ -31,6 +32,7 @@ $(document).ready(function(){
       } else if (order == 'asc'){
         $(this).children().attr('class', 'fa fa-sort-amount-asc');
         params.set('order', 'desc');
+        params.set('page', page);
         $(this).attr('href', url);
       }
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\backend\CreateBookRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Pagination\Paginator;
 use App\Model\Book;
 use App\Model\Borrow;
 use App\Model\Category;
@@ -50,13 +51,15 @@ class BookController extends Controller
                      ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                      ->groupBy('books.id');
 
-        // check validate of input
+        // check validate of input, sort data
         if ((in_array($filter, $filterFields)) && (in_array($order, $orderFields))) {
-            $books = $books->orderBy($filter, $order);
+            $books = $books->orderBy($filter, $order)
+                        ->paginate(config('define.row_count'))
+                        ->appends(['filter' => $filter, 'order' => $order]);
+        } else {
+            $books = $books->orderBy('id', 'desc')
+                        ->paginate(config('define.row_count'));
         }
-
-        // paginate
-        $books = $books->paginate(config('define.row_count'));
 
         return view('backend.books.index', compact('books'));
     }

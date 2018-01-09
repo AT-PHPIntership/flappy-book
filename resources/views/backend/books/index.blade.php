@@ -60,25 +60,25 @@
                   </th>
                   <th>
                     {{ __('books.title') }}
-                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc']) }}" name="title" class="pull-right sort-element">
+                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="title" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th>
                    {{ __('books.author') }}
-                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc']) }}" name="author" class="pull-right sort-element">
+                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="author" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center">
                     {{ __('books.rating') }}
-                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc']) }}" name="rating" class="pull-right sort-element">
+                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="rating" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center" width="12%">
                     {{ __('books.total_borrowed') }}
-                    <a href="{{ route('books.index', ['filter' => 'total_borrowed', 'order' => 'asc']) }}" name="total_borrowed" class="pull-right sort-element">
+                    <a href="{{ route('books.index', ['filter' => 'total_borrowed', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="total_borrowed" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
@@ -88,50 +88,30 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($books as $book)
-                <tr>
-                  <td>{{ $book->id }}</td>
-                  <td>{{ $book->title }}</td>
-                  <td>{{ $book->author }}</td>
-                  <td>{{ $book->rating }}</td>
-                  <td>{{ $book->total_borrowed }}</td>
-                  <td class="text-center">
-                    <div class="btn-option text-center">
-                      <a href="#" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                      <form method="POST" action="#" class="inline">
-                        <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('Confirm deletion!') }}"
-                          data-confirm="{{ __('Are you sure you want to delete?') }}"
-                        ></button>
-                      </form> 
-                    </div>
-                  </td>
-                </tr>
+                @foreach ($books as $index => $book)  
+                  <tr>
+                    <td class="text-center">{{ $index + $books->firstItem() }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->author }}</td>
+                    <td class="text-center">{{ $book->rating }}</td>
+                    <td class="text-center">{{ $book->total_borrowed }}</td>
+                    <td class="text-center">
+                      <div class="btn-option text-center">
+                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
+                        <form method="POST" action="{{ route('books.destroy', $book->id) }}" class="inline">
+                          <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                            data-title="{{ __('Confirm deletion!') }}"
+                            data-confirm="{{ __('Are you sure you want to delete?') }}"
+                          ></button>
+                        </form> 
+                      </div>
+                    </td>
+                  </tr>
                 @endforeach
               </tbody>
             </table>
             <div class="text-right">
-              <nav aria-label="...">
-                <ul class="pagination">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">2
-                      <span class="sr-only">(current)</span>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                  </li>
-                </ul>
-              </nav>
+              {{ $books->links() }}
             </div>
           </div>
           <!-- /.box-body -->
