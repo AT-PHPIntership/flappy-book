@@ -41,7 +41,7 @@
                 <tr>
                   <td>{{ $index + $users->firstItem() }}</td>
                   <td>{{ $user->employ_code }}</td>
-                  <td>{{ $user->name }}</td>
+                  <td><a href="{{ route('users.show', ['id' =>$user->id]) }}">{{ $user->name }}</a></td>
                   <td>{{ $user->email }}</td>
                   <td>{{ $user->books_count }}</td>
                   <td>{{ $user->borrows_count }}</td>
