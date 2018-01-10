@@ -33,7 +33,9 @@
                   <th>{{ __('users.email') }}</th>
                   <th>{{ __('users.donate') }}</th>
                   <th>{{ __('users.borrowed') }}</th>
-                  <th class="text-center">{{ __('users.role') }}</th>
+                  @if(Auth::user()->team == __('users.admin_team_name'))
+                    <th class="text-center">{{ __('users.role') }}</th>
+                  @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -44,7 +46,9 @@
                   <td>tram.pham@asiantech.com</td>
                   <td>2</td>
                   <td>CSS</td>
-                  <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button>
+                  @if(Auth::user()->team == __('users.admin_team_name'))
+                    <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button></td>
+                  @endif
                 </tr>
                 <tr>
                   <td>2</td>
@@ -53,7 +57,9 @@
                   <td>duong.tran@asiantech.com</td>
                   <td>2</td>
                   <td>HTML5</td>
-                  <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-success btn-flat btn-xs" style="width: 45px">{{ __('users.user') }}</button>
+                  @if(Auth::user()->team == __('users.admin_team_name'))
+                    <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-success btn-flat btn-xs" style="width: 45px">{{ __('users.user') }}</button></td>
+                  @endif
                 </tr>
                 <tr>
                   <td>3</td>
@@ -62,6 +68,9 @@
                   <td>hieu.le@asiantech.com</td>
                   <td>2</td>
                   <td>CSS3</td>
+                  @if(Auth::user()->team == __('users.admin_team_name'))
+                    <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-success btn-flat btn-xs" style="width: 45px">{{ __('users.user') }}</button></td>
+                  @endif
                 </tr>
                 </tbody>
               </table>
