@@ -14,3 +14,4 @@ storage/debugbar/
 .env.dusk.local
 bower_components
 .phpintel/
+phpunit.dusk.xml
