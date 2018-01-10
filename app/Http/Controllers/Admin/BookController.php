@@ -36,7 +36,7 @@ class BookController extends Controller
     }
 
     /**
-     * Get categoryFields.
+     * Get data categories.
      *
      * @param int $id call category have id = $id
      *
@@ -44,12 +44,12 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $categoryFields = [
+        $fields = [
              'id',
              'title'
          ];
          $book = Book::findOrFail($id);
-         $categories = Category::select($categoryFields)->get();
+         $categories = Category::select($fields)->get();
          return view('backend.books.edit', compact('book', 'categories'));
     }
 
