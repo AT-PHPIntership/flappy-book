@@ -2,6 +2,6 @@
 return [
     'login_msg_success' => 'successfully',
     'books' => [
-        'row_count' => 10,
+        'limit_rows' => 10,
     ],
 ];
