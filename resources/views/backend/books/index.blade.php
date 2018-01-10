@@ -34,7 +34,7 @@
             <div class="pull-right col-xs-6">
               <form action="{{ route('books.index') }}" method="GET">
                   <div class="col-xs-6">
-                    <input type="text" name="search" id="search" class="form-control" value="{{ app('request')->input('search')}}" placeholder="{{ __('books.search') }}">
+                    <input type="text" name="search" id="search" class="form-control" value="{{ request('search') }}" placeholder="{{ __('books.search') }}">
                   </div>
                   <div class="col-xs-4">
                     <select name="filter" id="filter" class="form-control">

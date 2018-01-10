@@ -16,7 +16,7 @@ class BookController extends Controller
     /**
      * Display a listing of the books.
      *
-     *@param Request $request send request
+     * @param Request $request send request
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,15 +34,19 @@ class BookController extends Controller
         $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                  ->select($fields)
                  ->groupBy('books.id')
-                 ->orderBy('id', 'desc')
-                 ->paginate(config('define.books.limit_rows'));
-        if ($filter == 'Title') {
-            $books = Book::Where('title', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
-        } elseif ($filter == 'All') {
-            $books = Book::Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
-        } else {
-            $books = Book::Where('author', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
+                 ->orderBy('id', 'desc');
+        switch ($filter) {
+            case Book::TYPE_TITLE:
+                $books = Book::Where('title', 'like', '%'.$search.'%');
+                break;
+            case Book::TYPE_AUTHOR:
+                $books = Book::Where('author', 'like', '%'.$search.'%');
+                break;
+            default:
+                $books = Book::Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                break;
         }
+        $books = $books->paginate(config('define.books.limit_rows'));
         return view('backend.books.index', compact('books'));
     }
 
