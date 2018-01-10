@@ -4,4 +4,8 @@ return [
     'books' => [
         'limit_rows' => 10,
     ],
+    'users' => [
+    	'limit_rows' => 10
+    ],
 ];
+
