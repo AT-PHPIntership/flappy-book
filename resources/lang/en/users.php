@@ -20,4 +20,5 @@ return [
     'role' => 'Role',
     'admin' => 'Admin',
     'user' => 'User',
+    'admin_team_name' =>  \App\Model\User::ADMIN_TEAM_NAME,
 ];
