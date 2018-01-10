@@ -37,13 +37,13 @@ class BookController extends Controller
                  ->orderBy('id', 'desc');
         switch ($filter) {
             case Book::TYPE_TITLE:
-                $books = Book::Where('title', 'like', '%'.$search.'%');
+                $books = $books->Where('title', 'like', '%'.$search.'%');
                 break;
             case Book::TYPE_AUTHOR:
-                $books = Book::Where('author', 'like', '%'.$search.'%');
+                $books = $books->Where('author', 'like', '%'.$search.'%');
                 break;
             default:
-                $books = Book::Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                $books = $books->Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
                 break;
         }
         $books = $books->paginate(config('define.books.limit_rows'));
