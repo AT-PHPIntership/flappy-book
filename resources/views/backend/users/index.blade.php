@@ -43,8 +43,8 @@
                   <td>{{ $user->employ_code }}</td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->email }}</td>
-                  <td>{{ $user->total_donated }}</td>
-                  <td>{{ $user->total_borrowed }}</td>
+                  <td>{{ $user->books_count }}</td>
+                  <td>{{ $user->borrows_count }}</td>
                   <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button>
                 </tr>
                 @endforeach

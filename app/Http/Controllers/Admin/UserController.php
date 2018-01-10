@@ -24,14 +24,12 @@ class UserController extends Controller
             'users.email',
             'users.is_admin',
             'users.avatar_url',
-            DB::raw('COUNT(DISTINCT(borrows.id)) AS total_borrowed'),
-            DB::raw('COUNT(DISTINCT(books.id)) AS total_donated'),
         ];
-        $users = User::leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
-        ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
-        ->select($fields)
-        ->groupBy('users.id')
+        $users = User::select($fields)
+        ->withCount(['books', 'borrows'])
+        ->orderBy('id')
         ->paginate(config('define.users.row_count'));
+        
         return view('backend.users.index', ['users' =>$users]);
     }
      /**
