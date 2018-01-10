@@ -23,6 +23,7 @@ class AdminLoginMiddleware
             if ($user->is_admin == User::ROLE_ADMIN) {
                 return $next($request);
             }
+            abort(403, "You don't have permission to access / on this server");
         }
         return redirect('/login');
     }
