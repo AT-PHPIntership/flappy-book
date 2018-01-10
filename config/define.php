@@ -1,5 +1,10 @@
 <?php
 return [
     'login_msg_success' => 'successfully',
-    'row_count' => 5
+    'books' => [
+        'limit_rows' => 10,
+    ],
+    'users' => [
+    	'limit_rows' => 10
+    ],
 ];
