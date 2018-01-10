@@ -88,7 +88,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputDescription">{{ __('books.description') }}</label>
-                    <textarea class="textarea form-control" placeholder="{{ __('books.place_some_text_here') }}" name="description" id="exampleInputDescription">{{ $book->description }}</textarea>
+                    <textarea class="textarea form-control" placeholder="{{ __('books.place_some_text_here') }}" name="description" id="exampleInputDescription">{!! $book->description !!}</textarea>
                     @if($errors->first('description')) 
                       <span class="text-danger">{{ $errors->first('description') }}</span>
                     @endif
