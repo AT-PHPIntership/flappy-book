@@ -21,4 +21,6 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin' ], function(){
     Route::resource('/books', 'BookController');
     Route::resource('/users', 'UserController');
 });
-Auth::routes();
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
