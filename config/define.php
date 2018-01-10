@@ -8,4 +8,3 @@ return [
     	'limit_rows' => 10
     ],
 ];
-
