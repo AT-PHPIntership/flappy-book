@@ -22,7 +22,7 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooks()
     {
-        factory(User::class, 1)->create();
+        $this->makeUserLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin')
@@ -39,7 +39,7 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooksEmpty()
     {
-        factory(User::class, 1)->create();
+        $this->makeUserLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin/books')
@@ -57,6 +57,7 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooksHasRecord()
     {
+        $this->makeUserLogin();
         $this->makeData(2);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
@@ -75,6 +76,7 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooksPagination()
     {
+        $this->makeUserLogin();
         $this->makeData(12);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
@@ -82,18 +84,19 @@ class AdminListBooksTest extends DuskTestCase
                     ->assertSee('List Books');
             // Count row number in one page
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(5, $elements);
+            $this->assertCount(10, $elements);
             $this->assertNotNull($browser->element('.pagination'));
             //Count page number of pagination
             $paginate_element = $browser->elements('.pagination li');
             $number_page = count($paginate_element)- 2;
-            $this->assertTrue($number_page == 3);
+            $this->assertTrue($number_page == 2);
         });
     }
 
     public function testPathPagination()
     {
-        $this->makeData(7);
+        $this->makeUserLogin();
+        $this->makeData(12);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin/books?page=2')
@@ -102,6 +105,22 @@ class AdminListBooksTest extends DuskTestCase
             $this->assertCount(2, $elements);
             $browser->assertQueryStringHas('page', 2);
         });
+    }
+
+    /**
+     * Make user belong team PHP and is admin
+     *
+     * @return void
+     */
+    public function makeUserLogin()
+    {
+        factory(User::class, 1)->create([
+            'employ_code' => 'ATI0297',
+            'name' => 'Minh Dao T.',
+            'email' => 'minh.dao@asiantech.vn',
+            'team' => 'PHP',
+            'is_admin' => '1',
+        ]);
     }
 
     /**
