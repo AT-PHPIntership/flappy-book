@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\backend\CreateBookRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Pagination\Paginator;
 use App\Model\Book;
-use App\Model\Borrow;
 use App\Model\Category;
 
 class BookController extends Controller
@@ -30,7 +29,7 @@ class BookController extends Controller
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
 
-        $filterFields = [
+        $sortFields = [
             'title',
             'author',
             'rating',
@@ -47,21 +46,45 @@ class BookController extends Controller
         $order = Input::get('order');
 
         // get list books
-        $books = Book::select($fields)
-                     ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+        $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+                     ->select($fields)
                      ->groupBy('books.id');
 
         // check validate of input, sort data
-        if ((in_array($filter, $filterFields)) && (in_array($order, $orderFields))) {
+        if ((in_array($filter, $sortFields)) && (in_array($order, $orderFields))) {
             $books = $books->orderBy($filter, $order)
-                        ->paginate(config('define.row_count'))
+                        ->paginate(config('define.books.row_count'))
                         ->appends(['filter' => $filter, 'order' => $order]);
         } else {
             $books = $books->orderBy('id', 'desc')
-                        ->paginate(config('define.row_count'));
+                        ->paginate(config('define.books.row_count'));
         }
 
         return view('backend.books.index', compact('books'));
+    }
+
+    /**
+     * Show form edit.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
+    {
+        return view('backend.books.edit');
+    }
+
+    /**
+     * Update infomation of Book.
+     *
+     * @param App\Http\Requests\EditBookRequest $request form edit book
+     * @param int                               $id      id of book
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditBookRequest $request, $id)
+    {
+        dd($request);
+        dd($id);
     }
 
     /**
