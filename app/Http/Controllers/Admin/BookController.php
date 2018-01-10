@@ -31,7 +31,7 @@ class BookController extends Controller
                      ->select($fields)
                      ->groupBy('books.id')
                      ->orderBy('id', 'desc')
-                     ->paginate(config('define.row_count'));
+                     ->paginate(config('define.books.row_count'));
         return view('backend.books.index', compact('books'));
     }
 
