@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\backend\CreateBookRequest;
 use Illuminate\Support\Facades\DB;
 use App\Model\Book;
@@ -43,6 +44,30 @@ class BookController extends Controller
             $books = Book::Where('author', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
         }
         return view('backend.books.index', compact('books'));
+    }
+
+    /**
+     * Show form edit.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
+    {
+        return view('backend.books.edit');
+    }
+
+    /**
+     * Update infomation of Book.
+     *
+     * @param App\Http\Requests\EditBookRequest $request form edit book
+     * @param int                               $id      id of book
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditBookRequest $request, $id)
+    {
+        dd($request);
+        dd($id);
     }
 
     /**

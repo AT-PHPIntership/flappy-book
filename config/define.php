@@ -5,6 +5,6 @@ return [
         'limit_rows' => 10,
     ],
     'users' => [
-        'row_count' => 10
+    	'limit_rows' => 10
     ],
 ];
