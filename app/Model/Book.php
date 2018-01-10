@@ -13,7 +13,9 @@ class Book extends Model
     const TYPE_DOLAR = 1;
     const TYPE_EURO = 2;
     const TYPE_YEN = 3;
-    
+    const TYPE_ALL = 'All';
+    const TYPE_TITLE = 'Title';
+    const TYPE_AUTHOR = 'Author';
     /**
      * Declare table
      *
