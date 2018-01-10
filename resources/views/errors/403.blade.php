@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>403 Forbidden</title>
+  <meta http-equiv="refresh" content="5;url={{ route('login') }}" />
 </head>
 <body>
   <h2>Forbidden</h2>
