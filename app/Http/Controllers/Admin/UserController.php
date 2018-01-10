@@ -29,8 +29,8 @@ class UserController extends Controller
         ->withCount(['books', 'borrows'])
         ->orderBy('id')
         ->paginate(config('define.users.row_count'));
-        
-        return view('backend.users.index', ['users' =>$users]);
+
+        return view('backend.users.index', ['users' => $users]);
     }
      /**
      * Display the profile of user.

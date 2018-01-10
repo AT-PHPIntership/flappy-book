@@ -12,15 +12,16 @@
 */
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::group(['namespace'=>'Admin', 'prefix'=>'admin' ], function(){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'admin'], function(){
     Route::get('/', function () {
         return view('backend.home.index');
     });
     Route::resource('/books', 'BookController');
     Route::resource('/users', 'UserController');
 });
+
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
