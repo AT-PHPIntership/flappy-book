@@ -38,7 +38,7 @@
                   </div>
                   <div class="col-xs-4">
                     <select name="filter" id="filter" class="form-control">
-                      @foreach( __('books.listsearch') as $key => $search )
+                      @foreach( __('books.list_search') as $key => $search )
                         <option value="{{ $key }}" {{$key == app('request')->input('filter') ? 'selected' : '' }}>{{ $search }}</option>
                       @endforeach
                     </select>

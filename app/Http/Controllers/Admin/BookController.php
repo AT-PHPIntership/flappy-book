@@ -30,16 +30,17 @@ class BookController extends Controller
             'books.rating',
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
-        if (($search == '' && $filter == '') || ($filter == 'All')) {
-            $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                     ->select($fields)
-                     ->groupBy('books.id')
-                     ->orderBy('id', 'desc')
-                     ->paginate(config('define.row_count'));
-        } elseif ($filter == 'Title') {
-            $books = Book::Where('title', 'like', '%'.$request->search.'%')->paginate(config('define.row_count'));
+        $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+                 ->select($fields)
+                 ->groupBy('books.id')
+                 ->orderBy('id', 'desc')
+                 ->paginate(config('define.books.limit_rows'));
+        if ($filter == 'Title') {
+            $books = Book::Where('title', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
+        } elseif ($filter == 'All') {
+            $books = Book::Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
         } else {
-            $books = Book::Where('author', 'like', '%'.$request->search.'%')->paginate(config('define.row_count'));
+            $books = Book::Where('author', 'like', '%'.$search.'%')->paginate(config('define.books.limit_rows'));
         }
         return view('backend.books.index', compact('books'));
     }
