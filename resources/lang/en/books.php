@@ -9,7 +9,7 @@ return [
     'title' => 'Title',
     'price' => 'Price',
     'unit' => 'Unit',
-    'VND' => 'VND',
+    'vnd' => 'VND',
     'description' => 'Description',
     'id_donator' => 'ID Donator',
     'category' => 'Category',
@@ -21,5 +21,17 @@ return [
     'options' => 'Options',
     'picture' => 'Picture',
     'update' => 'Update',
-    'back' => 'Back'
+    'create_book' => 'Create Book',
+    'category' => 'Category',
+    'create' => 'Create',
+    'back' => 'Back',
+    'add_book' => 'Add Book',
+    'search' => 'Search',
+    'all' => 'All',
+    'listunit' => [
+        \App\Model\Book::TYPE_VND => 'VND',
+        \App\Model\Book::TYPE_DOLAR => '$',
+        \App\Model\Book::TYPE_EURO => '€',
+        \App\Model\Book::TYPE_YEN => '¥'
+    ],
 ];
