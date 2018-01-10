@@ -14,7 +14,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['namespace'=>'Admin', 'prefix'=>'admin' , 'middleware'=>'admin'], function(){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'admin'], function(){
     Route::get('/', function () {
         return view('backend.home.index');
     });
