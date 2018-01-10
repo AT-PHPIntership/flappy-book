@@ -12,7 +12,7 @@
 */
 Route::get('/', function () {
     return view('welcome');
-})->name('/');
+})->name('home');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'admin'], function(){
     Route::get('/', function () {
