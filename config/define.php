@@ -1,6 +1,9 @@
 <?php
 return [
-    'login_msg_success' => 'successfully',
+    'login' => [
+        'datetime_format' => 'Y-m-d h:i:s',
+        'msg_success' => 'successfully',
+    ],
     'books' => [
         'limit_rows' => 10,
     ],
