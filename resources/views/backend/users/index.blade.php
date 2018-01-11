@@ -33,57 +33,33 @@
                   <th>{{ __('users.email') }}</th>
                   <th>{{ __('users.donate') }}</th>
                   <th>{{ __('users.borrowed') }}</th>
-                  <th class="text-center">{{ __('users.role') }}</th>
+                  @if(Auth::user()->team == __('users.admin_team_name'))
+                    <th class="text-center">{{ __('users.role') }}</th>
+                  @endif
                 </tr>
                 </thead>
                 <tbody>
+                @foreach ($users as $index => $user)
                 <tr>
-                  <td>1</td>
-                  <td>AT-1802</td>
-                  <td>Tram Pham T.M.</td>
-                  <td>tram.pham@asiantech.com</td>
-                  <td>2</td>
-                  <td>CSS</td>
-                  <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button>
+                    <td>{{ $index + $users->firstItem() }}</td>
+                    <td>{{ $user->employ_code }}</td>
+                    <td><a href="{{ route('users.show', ['id' => $user->id]) }}">{{ $user->name }}</a></td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->books_count }}</td>
+                    <td>{{ $user->borrows_count }}</td>
+                    @if(Auth::user()->team == __('users.admin_team_name'))
+                    <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button></td>
+                    @endif
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>AT-1803</td>
-                  <td>Duong N.T</td>
-                  <td>duong.tran@asiantech.com</td>
-                  <td>2</td>
-                  <td>HTML5</td>
-                  <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-success btn-flat btn-xs" style="width: 45px">{{ __('users.user') }}</button>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>AT-1804</td>
-                  <td>Hieu L.T.</td>
-                  <td>hieu.le@asiantech.com</td>
-                  <td>2</td>
-                  <td>CSS3</td>
-                </tr>
+                @endforeach
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                  <ul class="pagination">
-                    <li class="page-item disabled">
-                      <span class="page-link">Previous</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active">
-                      <span class="page-link">
-                        2
-                        <span class="sr-only">(current)</span>
-                      </span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
+                    <ul class="pagination">
+                        {{ $users->links() }}
+                    </ul>
                 </nav>
               </div>
               <!-- /.pagination -->

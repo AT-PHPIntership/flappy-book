@@ -61,7 +61,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginFormValidation $request)
     {
         $data = $request->except('_token');
         try {

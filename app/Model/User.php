@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['expired_at'];
+    protected $dates = ['expired_at', 'deleted_at'];
 
     /**
      * Constant admin team
@@ -34,6 +34,11 @@ class User extends Authenticatable
     const ADMIN_TEAM_NAME = 'SA';
     const ROLE_ADMIN = 1;
     const ROLE_USER = 0;
+    const TEAM_PHP = 'PHP';
+    const TEAM_IOS = 'IOS';
+    const TEAM_ANDROID = 'ANDROID';
+    const TEAM_BO = 'BO';
+    const TEAM_SA = 'SA';
 
     /**
      * The attributes that are mass assignable.
@@ -77,7 +82,7 @@ class User extends Authenticatable
      */
     public function books()
     {
-        return $this->hasMany(Book::class);
+        return $this->hasMany(Book::class, 'from_person', 'employ_code');
     }
 
     /**
