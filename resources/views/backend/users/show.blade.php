@@ -49,8 +49,8 @@
                   <b>{{ __('users.books_borrowed') }}</b> <a class="pull-right" href="">{{ $user->borrows_count }}</a>
                 </li>
                 <li class="list-group-item">
-                  @if(isset($bookName->title))
-                  <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">{{ $bookName->title }}</a>
+                  @if(isset($user->name_book))
+                  <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">{{ $user->name_book }}</a>
                   @else
                   <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">{{ __('users.none') }}</a>
                   @endif
