@@ -29,7 +29,7 @@ class UserController extends Controller
         $users = User::select($fields)
         ->withCount(['books', 'borrows'])
         ->orderBy('id')
-        ->paginate(config('define.users.row_count'));
+        ->paginate(config('define.users.limit_rows'));
 
         return view('backend.users.index', ['users' => $users]);
     }

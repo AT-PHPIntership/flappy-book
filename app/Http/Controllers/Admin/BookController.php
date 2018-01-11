@@ -16,10 +16,14 @@ class BookController extends Controller
     /**
      * Display a listing of the books.
      *
+     * @param Request $request send request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+        $filter = $request->filter;
         $fields = [
             'books.id',
             'books.title',
@@ -28,10 +32,21 @@ class BookController extends Controller
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
         $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                     ->select($fields)
-                     ->groupBy('books.id')
-                     ->orderBy('id', 'desc')
-                     ->paginate(config('define.row_count'));
+                 ->select($fields)
+                 ->groupBy('books.id')
+                 ->orderBy('id', 'desc');
+        switch ($filter) {
+            case Book::TYPE_TITLE:
+                $books = $books->Where('title', 'like', '%'.$search.'%');
+                break;
+            case Book::TYPE_AUTHOR:
+                $books = $books->Where('author', 'like', '%'.$search.'%');
+                break;
+            default:
+                $books = $books->Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                break;
+        }
+        $books = $books->paginate(config('define.books.limit_rows'));
         return view('backend.books.index', compact('books'));
     }
 
