@@ -1,6 +1,6 @@
 <?php
 return [
-    'title' =>'LIBRARY| Log in',
+    'title' =>'LIBRARY | Log in',
     'start_session' => 'Sign in to start your session',
     'email' => 'Email',
     'password' => 'Password',
