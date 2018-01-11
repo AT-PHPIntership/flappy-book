@@ -17,3 +17,24 @@ $(document).ready(function(){
       })
   });
 });
+$(document).ready(function() {
+ // change display picture after select
+  $('#picture').change(function (){
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#picture-display')
+          .attr('src', e.target.result);
+          .width(150);
+          .height(200);
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  })
+});
+// refresh file input after reload page
+$(window).on('load', function(){
+  if($('#picture').val() != null) {
+    $('#picture').val('');
+  }
+}); 

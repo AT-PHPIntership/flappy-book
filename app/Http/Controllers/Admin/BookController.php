@@ -45,12 +45,12 @@ class BookController extends Controller
     public function edit($id)
     {
         $fields = [
-             'id',
-             'title'
-         ];
-         $book = Book::findOrFail($id);
-         $categories = Category::select($fields)->get();
-         return view('backend.books.edit', compact('book', 'categories'));
+            'id',
+            'title'
+        ];
+        $book = Book::findOrFail($id);
+        $categories = Category::select($fields)->get();
+        return view('backend.books.edit', compact('book', 'categories'));
     }
 
     /**
