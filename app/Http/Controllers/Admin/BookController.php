@@ -97,4 +97,16 @@ class BookController extends Controller
         $title = $request->title;
         echo $title;
     }
+
+    public function destroy(Request $request, Book $book)
+    {
+        $bookDelete = $book->delete();
+        if ($bookDelete) {
+            $request->flash(__('Delete Book Success!'));
+            return redirect()->route('books.index');
+        } else {
+            $request->flash(__('Delete Book Fail!'));
+            return redirect()->route('books.index');
+        }
+    }
 }

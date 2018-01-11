@@ -95,4 +95,23 @@ class Book extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    /**
+     * Override parent boot and Call deleting borrows and comments
+     *
+     * @return void
+     */
+    protected static function boot() 
+    {
+        parent::boot();
+
+        static::deleting(function($books) {
+            foreach ($books->borrows()->get() as $borrow) {
+                $borrow->delete();
+            }
+            foreach ($books->comments()->get() as $comment) {
+                $comment->delete();
+            }
+        });
+    }
 }

@@ -99,6 +99,8 @@
                       <div class="btn-option text-center">
                         <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
                         <form method="POST" action="{{ route('books.destroy', $book->id) }}" class="inline">
+                          {{ csrf_field() }}
+                          {{ method_field('DELETE') }}
                           <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
                             data-title="{{ __('Confirm deletion!') }}"
                             data-confirm="{{ __('Are you sure you want to delete?') }}"
