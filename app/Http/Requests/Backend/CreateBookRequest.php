@@ -26,16 +26,16 @@ class CreateBookRequest extends FormRequest
     {
         return [
             'title'       => 'required|min:6',
-            'category'    => 'required|exists:categories,title',
+            'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
             'unit'        => 'in:'.Book::TYPE_VND.','
                                   .Book::TYPE_DOLAR.','
                                   .Book::TYPE_EURO.','
                                   .Book::TYPE_YEN.',',
-            'iddonator'   => 'required',
+            'from_person' => 'required|max:10',
             'description' => 'required',
             'year'        => 'required|date_format:"Y"',
-            'author'      => 'required',
+            'author'      => 'required:max:255',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
     }

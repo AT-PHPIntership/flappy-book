@@ -41,7 +41,7 @@
                       <div class="row">
                         <div class="col-xs-3">
                           <label>{{ __('books.category') }}</label>
-                          <select class="form-control" name="category" >
+                          <select class="form-control" name="category_id" >
                             @foreach ($categories as $category)
                               <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endforeach
@@ -69,10 +69,10 @@
                           @endif
                         </div>
                         <div class="col-xs-4">
-                          <label for="InputIDDonator">{{ __('books.id_donator') }}</label>
-                          <input type="text" class="form-control" name="iddonator" placeholder="{{ __('books.id_donator') }}" value="{!! old('iddonator') !!}">
-                          @if($errors->first('iddonator')) 
-                            <span class="text-danger">{{ $errors->first('iddonator') }}</span>
+                          <label for="InputFromPerson">{{ __('books.from_person') }}</label>
+                          <input type="text" class="form-control" name="from_person" placeholder="{{ __('books.from_person') }}" value="{!! old('from_person') !!}">
+                          @if($errors->first('from_person')) 
+                            <span class="text-danger">{{ $errors->first('from_person') }}</span>
                           @endif
                         </div>
                       </div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="col-xs-6">
                           <label for="InputYear">{{ __('books.year') }}</label>
-                          <input type="number" class="form-control" name="year" placeholder="" value="{!! old('year') !!}">
+                          <input type="number" class="form-control" name="year" placeholder="{{ __('books.year') }}" value="{!! old('year') !!}">
                           @if($errors->first('year')) 
                             <span class="text-danger">{{ $errors->first('year') }}</span>
                           @endif
