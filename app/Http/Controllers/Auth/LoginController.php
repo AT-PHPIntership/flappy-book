@@ -108,6 +108,7 @@ class LoginController extends Controller
         $user = [
             'name' =>$userResponse->name,
             'team' =>$userResponse->teams[0]->name,
+            'expires_at'=> date(config('define.datetime_format'), strtotime($userResponse->expires_at)),
             'avatar_url' => $userResponse->avatar_url,
             'access_token' => $userResponse->access_token,
         ];
