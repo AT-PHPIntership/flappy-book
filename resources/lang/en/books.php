@@ -34,4 +34,9 @@ return [
         \App\Model\Book::TYPE_EURO => '€',
         \App\Model\Book::TYPE_YEN => '¥'
     ],
+    'list_search' =>[
+        \App\Model\Book::TYPE_ALL => 'Title or Author',
+        \App\Model\Book::TYPE_TITLE => 'Title',
+        \App\Model\Book::TYPE_AUTHOR => 'Author'
+    ],
 ];

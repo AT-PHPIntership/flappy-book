@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\backend\CreateBookRequest;
 use Illuminate\Support\Facades\DB;
@@ -17,10 +16,17 @@ class BookController extends Controller
     /**
      * Display a listing of the books.
      *
+     * @param Request $request send request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+        $filter = $request->filter;
+        $sort   = $request->sort;
+        $order  = $request->order;
+
         $fields = [
             'books.id',
             'books.title',
@@ -41,23 +47,29 @@ class BookController extends Controller
             'desc'
         ];
 
-        // get value of parameter from url
-        $filter = Input::get('filter');
-        $order = Input::get('order');
-
         // get list books
         $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                     ->select($fields)
-                     ->groupBy('books.id');
+                 ->select($fields)
+                 ->groupBy('books.id');
+        switch ($filter) {
+            case Book::TYPE_TITLE:
+                $books = $books->Where('title', 'like', '%'.$search.'%');
+                break;
+            case Book::TYPE_AUTHOR:
+                $books = $books->Where('author', 'like', '%'.$search.'%');
+                break;
+            default:
+                $books = $books->Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                break;
+        }
 
-        // check validate of input, sort data
-        if ((in_array($filter, $sortFields)) && (in_array($order, $orderFields))) {
-            $books = $books->orderBy($filter, $order)
-                        ->paginate(config('define.books.row_count'))
-                        ->appends(['filter' => $filter, 'order' => $order]);
+        if ((in_array($sort, $sortFields)) && (in_array($order, $orderFields))) {
+            $books = $books->orderBy($sort, $order)
+                           ->paginate(config('define.books.limit_rows'))
+                           ->appends(['sort' => $sort, 'order' => $order]);
         } else {
             $books = $books->orderBy('id', 'desc')
-                        ->paginate(config('define.books.row_count'));
+                           ->paginate(config('define.books.limit_rows'));
         }
 
         return view('backend.books.index', compact('books'));

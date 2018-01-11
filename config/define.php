@@ -1,7 +1,13 @@
 <?php
 return [
-    'login_msg_success' => 'successfully',
+    'login' => [
+        'datetime_format' => 'Y-m-d h:i:s',
+        'msg_success' => 'successfully',
+    ],
     'books' => [
-    	'row_count' => 10,
+        'limit_rows' => 10,
+    ],
+    'users' => [
+    	'limit_rows' => 10
     ],
 ];

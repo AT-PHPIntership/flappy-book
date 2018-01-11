@@ -32,19 +32,19 @@
               <a href="{{ route('books.create') }}"><button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat">{{ __('books.add_book') }}</button></a>
             </div>
             <div class="pull-right col-xs-6">
-              <form action="">
+              <form action="{{ route('books.index') }}" method="GET">
                   <div class="col-xs-6">
-                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('books.search') }}">
+                    <input type="text" name="search" id="search" class="form-control" value="{{ request('search') }}" placeholder="{{ __('books.search') }}">
                   </div>
                   <div class="col-xs-4">
                     <select name="filter" id="filter" class="form-control">
-                      <option value="">{{ __('books.all') }}</option>
-                      <option value="">{{ __('books.title') }}</option>
-                      <option value="">{{ __('books.author') }}</option>
+                      @foreach( __('books.list_search') as $key => $search )
+                        <option value="{{ $key }}" {{$key == app('request')->input('filter') ? 'selected' : '' }}>{{ $search }}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="col-xs-2">
-                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
+                    <button type="submit" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
                   </div>
               </form>
             </div>
@@ -60,25 +60,25 @@
                   </th>
                   <th>
                     {{ __('books.title') }}
-                    <a href="{{ route('books.index', ['filter' => 'title', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="title" class="pull-right sort-element">
+                    <a href="" name="title" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th>
                    {{ __('books.author') }}
-                    <a href="{{ route('books.index', ['filter' => 'author', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="author" class="pull-right sort-element">
+                    <a href="" name="author" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center">
                     {{ __('books.rating') }}
-                    <a href="{{ route('books.index', ['filter' => 'rating', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="rating" class="pull-right sort-element">
+                    <a href="" name="rating" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center" width="12%">
                     {{ __('books.total_borrowed') }}
-                    <a href="{{ route('books.index', ['filter' => 'total_borrowed', 'order' => 'asc', 'page' => $books->currentPage()]) }}" name="total_borrowed" class="pull-right sort-element">
+                    <a href="" name="total_borrowed" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
@@ -111,7 +111,7 @@
               </tbody>
             </table>
             <div class="text-right">
-              {{ $books->links() }}
+              {{ $books->appends(['search' => Request::get('search'), 'filter' => Request::get('filter')])->links() }}
             </div>
           </div>
           <!-- /.box-body -->
