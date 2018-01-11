@@ -69,7 +69,7 @@ class LoginController extends Controller
             $portal = $client->post(config('portal.base_url_api') . config('portal.end_point.login'), ['form_params' => $data]);
             $portalResponse = json_decode($portal->getBody()->getContents());
 
-            if ($portalResponse->meta->status == config('define.login.login_msg_success')) {
+            if ($portalResponse->meta->status == config('define.login.msg_success')) {
                 $user = $this->saveUser($portalResponse, $request);
                 Auth::login($user, $request->filled('remember'));
                 if ($user->is_admin == true) {
