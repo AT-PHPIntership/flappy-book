@@ -103,7 +103,8 @@ class AdminListBooksTest extends DuskTestCase
                     ->assertSee('List Books');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(2, $elements);
-            $browser->assertQueryStringHas('page', 2);
+            $browser->assertPathIs('/admin/books')
+                    ->assertQueryStringHas('page', 2);
         });
     }
 
@@ -118,7 +119,7 @@ class AdminListBooksTest extends DuskTestCase
             'employ_code' => 'ATI0297',
             'name' => 'Minh Dao T.',
             'email' => 'minh.dao@asiantech.vn',
-            'team' => 'PHP',
+            'team' => 'SA',
             'is_admin' => '1',
         ]);
     }
