@@ -30,8 +30,8 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-12">
-                        <label for="exampleInputTitle">{{ __('books.title') }}</label>
-                        <input type="text" class="form-control" name="title" id="exampleInputTitle" placeholder="{{ __('books.Title') }}" value="{!! old('title') !!}">
+                        <label for="InputTitle">{{ __('books.title') }}</label>
+                        <input type="text" class="form-control" name="title" id="InputTitle" placeholder="{{ __('books.Title') }}" value="{!! old('title') !!}">
                         @if($errors->first('title')) 
                           <span class="text-danger">{{ $errors->first('title') }}</span>
                         @endif
@@ -54,8 +54,8 @@
                         @endif
                       </div>
                       <div class="col-xs-3">
-                        <label for="exampleInputPrice">{{ __('books.price') }}</label>
-                        <input type="text" class="form-control" name="price" id="exampleInputPrice" placeholder="{{ __('books.Price') }}" value="{!! old('price') !!}">
+                        <label for="InputPrice">{{ __('books.price') }}</label>
+                        <input type="text" class="form-control" name="price" id="InputPrice" placeholder="{{ __('books.Price') }}" value="{!! old('price') !!}">
                         @if($errors->first('price')) 
                           <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
@@ -73,17 +73,17 @@
                         @endif
                       </div>
                       <div class="col-xs-4">
-                        <label for="exampleInputIDDonator">{{ __('books.id_donator') }}</label>
-                        <input type="text" class="form-control" id="exampleInputIDDonator" name="iddonator" placeholder="{{ __('books.ID_Donator') }}" value="{!! old('iddonator') !!}">
-                        @if($errors->first('iddonator')) 
-                          <span class="text-danger">{{ $errors->first('iddonator') }}</span>
+                        <label for="InputFromPerson">{{ __('books.from_person') }}</label>
+                        <input type="text" class="form-control" id="InputFromPerson" name="from_person" placeholder="{{ __('books.from_person') }}" value="{!! old('from_person') !!}">
+                        @if($errors->first('from_person')) 
+                          <span class="text-danger">{{ $errors->first('from_person') }}</span>
                         @endif
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputDescription">{{ __('books.description') }}</label>
-                    <textarea class="textarea form-control" placeholder="{{ __('books.place_some_text_here') }}" name="description" id="exampleInputDescription">{!! old('description') !!}</textarea>
+                    <label for="InputDescription">{{ __('books.description') }}</label>
+                    <textarea class="textarea form-control" placeholder="{{ __('books.place_some_text_here') }}" name="description" id="InputDescription">{!! old('description') !!}</textarea>
                     @if($errors->first('description')) 
                       <span class="text-danger">{{ $errors->first('description') }}</span>
                     @endif
@@ -91,15 +91,15 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-6">
-                        <label for="exampleInputAuthor">{{ __('books.author') }}</label>
-                        <input type="text" class="form-control" name="author" id="exampleInputAuthor" placeholder="{{ __('books.Author') }}" value="{!! old('author') !!}">
+                        <label for="InputAuthor">{{ __('books.author') }}</label>
+                        <input type="text" class="form-control" name="author" id="InputAuthor" placeholder="{{ __('books.Author') }}" value="{!! old('author') !!}">
                         @if($errors->first('author')) 
                           <span class="text-danger">{{ $errors->first('author') }}</span>
                         @endif
                       </div>
                       <div class="col-xs-6">
-                        <label for="exampleInputYear">{{ __('books.year') }}</label>
-                        <input type="number" class="form-control" name="year" id="exampleInputYear" placeholder="" value="{!! old('year') !!}">
+                        <label for="InputYear">{{ __('books.year') }}</label>
+                        <input type="number" class="form-control" name="year" id="InputYear" placeholder="" value="{!! old('year') !!}">
                         @if($errors->first('year')) 
                           <span class="text-danger">{{ $errors->first('year') }}</span>
                         @endif
@@ -109,8 +109,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="exampleInputFile">{{ __('books.picture') }}</label>
-                <input type="file" name="picture" id="exampleInputFile" value="{!! old('picture') !!}">
+                <label for="InputFile">{{ __('books.picture') }}</label>
+                <input type="file" name="picture" id="InputFile" value="{!! old('picture') !!}">
                 @if($errors->first('picture')) 
                   <span class="text-danger">{{ $errors->first('picture') }}</span>
                 @endif
