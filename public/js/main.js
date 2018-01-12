@@ -32,9 +32,3 @@ $(document).ready(function() {
     }
   })
 });
-// refresh file input after reload page
-$(window).on('load', function(){
-  if($('#picture').val() != null) {
-    $('#picture').val('');
-  }
-}); 
