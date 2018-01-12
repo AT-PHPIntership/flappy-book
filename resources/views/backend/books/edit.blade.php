@@ -99,7 +99,7 @@
                       </div>
                       <div class="col-xs-6">
                         <label for="InputYear">{{ __('books.year') }}</label>
-                        <input type="number" class="form-control" name="year" id="InputYear" placeholder="" value="{!! old('year') !!}">
+                        <input type="number" class="form-control" name="year" id="InputYear" placeholder="{{ __('books.year') }}" value="{!! old('year') !!}">
                         @if($errors->first('year')) 
                           <span class="text-danger">{{ $errors->first('year') }}</span>
                         @endif
