@@ -24,9 +24,7 @@ class BookController extends Controller
     {
         $search = $request->search;
         $filter = $request->filter;
-        $sort   = $request->sort;
-        $order  = $request->order;
-
+        
         $fields = [
             'books.id',
             'books.title',
@@ -34,7 +32,7 @@ class BookController extends Controller
             'books.rating',
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
-
+        
         $sortFields = [
             'title',
             'author',
@@ -46,6 +44,9 @@ class BookController extends Controller
             'asc',
             'desc'
         ];
+
+        $sort = in_array($request->sort, $sortFields) ? $request->sort : 'id';
+        $order = in_array($request->order, $orderFields) ? $request->order : 'desc';
 
         // check filter when search
         switch ($filter) {
@@ -63,17 +64,10 @@ class BookController extends Controller
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                  ->select($fields)
-                 ->groupBy('books.id');
-
-        // check sort conditions
-        if ((in_array($sort, $sortFields)) && (in_array($order, $orderFields))) {
-            $books = $books->orderBy($sort, $order);
-        }
-
-        // pagination
-        $books = $books->paginate(config('define.books.limit_rows'))
-                       ->appends(['sort' => $sort, 'order' => $order]);
-
+                 ->groupBy('books.id')
+                 ->orderBy($sort, $order)
+                 ->paginate(config('define.books.limit_rows'))
+                 ->appends(['sort' => $sort, 'order' => $order]);
 
         return view('backend.books.index', compact('books'));
     }
