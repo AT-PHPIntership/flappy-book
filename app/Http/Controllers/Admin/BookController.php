@@ -24,6 +24,7 @@ class BookController extends Controller
     {
         $search = $request->search;
         $filter = $request->filter;
+        
         $fields = [
             'books.id',
             'books.title',
@@ -31,22 +32,43 @@ class BookController extends Controller
             'books.rating',
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
-        $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                 ->select($fields)
-                 ->groupBy('books.id')
-                 ->orderBy('id', 'desc');
+        
+        $sortFields = [
+            'title',
+            'author',
+            'rating',
+            'total_borrowed'
+        ];
+
+        $orderFields = [
+            'asc',
+            'desc'
+        ];
+
+        $sort = in_array($request->sort, $sortFields) ? $request->sort : 'id';
+        $order = in_array($request->order, $orderFields) ? $request->order : 'desc';
+
+        // check filter when search
         switch ($filter) {
             case Book::TYPE_TITLE:
-                $books = $books->Where('title', 'like', '%'.$search.'%');
+                $books = Book::where('title', 'like', '%'.$search.'%');
                 break;
             case Book::TYPE_AUTHOR:
-                $books = $books->Where('author', 'like', '%'.$search.'%');
+                $books = Book::where('author', 'like', '%'.$search.'%');
                 break;
             default:
-                $books = $books->Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                $books = Book::where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
                 break;
         }
-        $books = $books->paginate(config('define.books.limit_rows'));
+        
+        // get list books
+        $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+                 ->select($fields)
+                 ->groupBy('books.id')
+                 ->orderBy($sort, $order)
+                 ->paginate(config('define.books.limit_rows'))
+                 ->appends(['sort' => $sort, 'order' => $order]);
+
         return view('backend.books.index', compact('books'));
     }
 
