@@ -30,10 +30,10 @@ $(document).ready(function(){
         
         if (sort == attrName) {
             if (order == 'desc') {
-                $(this).children().attr('class', 'fa fa-sort-amount-desc');
+                $(this).children().attr('class', 'fa fa-sort-desc');
                 params.set('order', 'asc');
             } else {
-                $(this).children().attr('class', 'fa fa-sort-amount-asc');
+                $(this).children().attr('class', 'fa fa-sort-asc');
                 params.set('order', 'desc');
             }
         } else {

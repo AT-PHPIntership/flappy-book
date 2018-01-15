@@ -47,30 +47,33 @@ class BookController extends Controller
             'desc'
         ];
 
-        // get list books
-        $books = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                 ->select($fields)
-                 ->groupBy('books.id');
+        // check filter when search
         switch ($filter) {
             case Book::TYPE_TITLE:
-                $books = $books->Where('title', 'like', '%'.$search.'%');
+                $books = Book::where('title', 'like', '%'.$search.'%');
                 break;
             case Book::TYPE_AUTHOR:
-                $books = $books->Where('author', 'like', '%'.$search.'%');
+                $books = Book::where('author', 'like', '%'.$search.'%');
                 break;
             default:
-                $books = $books->Where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                $books = Book::where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
                 break;
         }
+        
+        // get list books
+        $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+                 ->select($fields)
+                 ->groupBy('books.id');
 
+        // check sort conditions
         if ((in_array($sort, $sortFields)) && (in_array($order, $orderFields))) {
-            $books = $books->orderBy($sort, $order)
-                           ->paginate(config('define.books.limit_rows'))
-                           ->appends(['sort' => $sort, 'order' => $order]);
-        } else {
-            $books = $books->orderBy('id', 'desc')
-                           ->paginate(config('define.books.limit_rows'));
+            $books = $books->orderBy($sort, $order);
         }
+
+        // pagination
+        $books = $books->paginate(config('define.books.limit_rows'))
+                       ->appends(['sort' => $sort, 'order' => $order]);
+
 
         return view('backend.books.index', compact('books'));
     }
