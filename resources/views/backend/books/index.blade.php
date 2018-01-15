@@ -52,6 +52,12 @@
           <!-- /.box-header -->
           <div class="box-body">
             @include('backend.layouts.partials.modal')
+            @if (Session::has('create_success'))
+              <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span>{{ Session::get('create_success') }}</span>
+              </div>
+            @endif
             <table id="list-books" class="table table-bordered table-hover">
               <thead>
                 <tr>
