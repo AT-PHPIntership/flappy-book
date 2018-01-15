@@ -94,7 +94,43 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
-        $title = $request->title;
-        echo $title;
+        // create book.
+        $book = new Book($request->except(['total_rating', 'rating', 'is_printed']));
+        
+        // save book picture
+        if ($request->hasFile('picture')) {
+            $picture = $request->picture;
+            $folderStore = config('define.books.folder_store');
+            $pictureName = config('define.books.name_prefix') . '-' . $picture->hashName();
+            $picturePath = $folderStore . $pictureName;
+            $picture->move($folderStore, $pictureName);
+            $book->picture = $picturePath;
+        } else {
+            $book->picture = config('define.books.default_image');
+        }
+
+        // generate qrcode
+        $qrCode = Book::orderBy('qrcode', 'desc')->first()->qrcode;
+        if (!isempty($qrCode)) {
+            $qrCodeNumber = substr($qrCode, 3);
+            $qrCodeNumber = $qrCodeNumber + 1;
+            $qrCodeNew = substr($qrCode, 0, strlen($qrCode) - strlen($qrCodeNumber)) . $qrCodeNumber;
+            $book->qrcode = $qrCodeNew;
+        } else {
+            $book->qrcode = config('define.books.default_qrcode');
+        }
+
+        // handle unit field
+        // $book->unit = config('books.{$request->unit}');
+        $book->unit = $request->unit;
+        dd($book);
+
+        if ($book->save()) {
+            Session::flash('message', trans('book.create_success'));
+            return redirect()->route('books.index');
+        } else {
+            Session::flash('message', trans('book.create_failure'));
+            return redirect()->back()->withInput();
+        }
     }
 }
