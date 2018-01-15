@@ -5,15 +5,11 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Model\Book;
-use App\Model\Like;
-use App\Model\Post;
 use App\Model\User;
 use App\Model\Borrow;
 use App\Model\Category;
-use App\Model\Comment;
 use Faker\Factory as Faker;
 
 class SortBooksTest extends DuskTestCase
@@ -21,13 +17,13 @@ class SortBooksTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     * A Dusk test button sort.
+     * A Dusk test check existence of button sort.
      *
      * @return void
      */
     public function testButtonSort()
     {
-        $this->createUserForLogin();   
+        $this->createUserForLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('admin/books');
@@ -37,16 +33,15 @@ class SortBooksTest extends DuskTestCase
     }
 
     /*
-     * A Dusk test for click button  
+     * A Dusk test for click button.
      *
      * @return void
      */
-    
     public function testClickButtonsSort()
     {
         $btnSortNames = ['title', 'author', 'rating', 'total_borrowed'];
-        
-        $this->createUserForLogin();   
+
+        $this->createUserForLogin();
         $this->browse(function (Browser $browser) use ($btnSortNames) {
 
             $browser->loginAs(User::find(1))
@@ -62,9 +57,9 @@ class SortBooksTest extends DuskTestCase
             }
         });
     }
- 
+
    /**
-     * Make data for test.  
+     * Make cases for test.
      *
      * @return void
      */
@@ -86,8 +81,6 @@ class SortBooksTest extends DuskTestCase
      * A Dusk test data.
      *
      * @dataProvider dataForTest
-     * 
-     * @return void
      */
     public function testSortData($name, $columIndex, $order)
     {
@@ -96,11 +89,12 @@ class SortBooksTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
             $browser->loginAs(User::find(1))
                     ->visit('admin/books')
-                    ->resize(1000,1400)
+                    ->resize(1200,1600)
                     ->press('#btn-sort-'.$name);
-
+            $this->assertCount(5, $browser->elements('#list-books tbody tr'));
             if ($order == 'desc') {
                 $browser->press('#btn-sort-'.$name);
+                $this->assertCount(5, $browser->elements('#list-books tbody tr'));
             }
 
             $listBooksSorted = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
@@ -120,7 +114,6 @@ class SortBooksTest extends DuskTestCase
      * A Dusk test data when panigate.
      *
      * @dataProvider dataForTest
-     * 
      * @return void
      */
     public function testSortDataWhenPanigate($name, $columIndex, $order)
@@ -133,8 +126,10 @@ class SortBooksTest extends DuskTestCase
                     ->resize(1200,1600)
                     ->press('#btn-sort-'.$name);
 
+            $this->assertCount(6, $browser->elements('#list-books tbody tr'));
             if ($order == 'desc') {
                 $browser->press('#btn-sort-'.$name);
+                $this->assertCount(6, $browser->elements('#list-books tbody tr'));
             }
 
             $listBooksSorted = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
@@ -152,21 +147,25 @@ class SortBooksTest extends DuskTestCase
         });
     }
 
+    /**
+     * Create admin for login
+     *
+     * @return void
+     */
     public function createUserForLogin()
     {
         factory(User::class, 1)->create([
             'is_admin' => 1,
         ]);
-
     }
 
     /**
-     * Make data  in database for test.  
+     * Make data  in database for test.
      *
      * @return void
      */
     public function makeData($row)
-    {   
+    {
         $faker = Faker::create();
 
         factory(User::class, 2)->create();
@@ -188,20 +187,5 @@ class SortBooksTest extends DuskTestCase
             'book_id' => $faker->randomElement($bookId),
             'user_id' => $faker->randomElement($userId)
         ]);
-
-        // factory(Post::class, 2)->create([
-        //     'user_id' => $faker->randomElement($userId)
-        // ]);
-
-        // factory(Comment::class, 2)->create([
-        //     'user_id' => $faker->randomElement($userId)
-        // ]);
-
-        // $postId = DB::table('posts')->pluck('id')->toArray();
-
-        // factory(Like::class, 2)->create([
-        //     'post_id' => $faker->randomElement($postId),
-        //     'user_id' => $faker->randomElement($userId)
-        // ]);
     }
 }

@@ -26,30 +26,34 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="{{ asset('bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="{{ $user->avatar_url }}" alt="User profile picture">
 
-              <h3 class="profile-username text-center">Tram Pham T.M.</h3>
+              <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
-              <p class="text-muted text-center">PHP Team</p>
+              <p class="text-muted text-center">{{ $user->team }}</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>{{ __('users.employee_code') }}</b> <a class="pull-right">ATI-0282</a>
+                  <b>{{ __('users.employee_code') }}</b> <a class="pull-right">{{ $user->employ_code }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.email') }}</b> <a class="pull-right">tram.pham@asiantech.com</a>
+                  <b>{{ __('users.email') }}</b> <a class="pull-right">{{ $user->email }}</a>
                 </li>
                 <li class="list-group-item">
                   <b>{{ __('users.role') }}</b> <a class="pull-right">User</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.books_donated') }}</b> <a class="pull-right" href="">2</a>
+                  <b>{{ __('users.books_donated') }}</b> <a class="pull-right" href="">{{ $user->books_count }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.books_borrowed') }}</b> <a class="pull-right" href="">3</a>
+                  <b>{{ __('users.books_borrowed') }}</b> <a class="pull-right" href="">{{ $user->borrows_count }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">1</a>
+                  @if(isset($user->name_book))
+                  <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">{{ $user->name_book }}</a>
+                  @else
+                  <b>{{ __('users.books_borrowing') }}</b> <a class="pull-right">{{ __('users.none') }}</a>
+                  @endif
                 </li>
               </ul>
               <a href="javascript:history.back()" class="btn btn-primary btn-block"><b>{{ __('users.back')}}</b></a>
