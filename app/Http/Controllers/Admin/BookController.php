@@ -111,8 +111,8 @@ class BookController extends Controller
 
         // generate qrcode
         $qrCode = Book::orderBy('qrcode', 'desc')->first()->qrcode;
-        if (!isempty($qrCode)) {
-            $qrCodeNumber = substr($qrCode, 3);
+        if (!empty($qrCode)) {
+            $qrCodeNumber = substr($qrCode, 4);
             $qrCodeNumber = $qrCodeNumber + 1;
             $qrCodeNew = substr($qrCode, 0, strlen($qrCode) - strlen($qrCodeNumber)) . $qrCodeNumber;
             $book->qrcode = $qrCodeNew;
@@ -120,16 +120,14 @@ class BookController extends Controller
             $book->qrcode = config('define.books.default_qrcode');
         }
 
-        // handle unit field
-        // $book->unit = config('books.{$request->unit}');
-        $book->unit = $request->unit;
-        dd($book);
+        // get unit field
+        $book->unit = trans('books.listunit')[$request->unit];
 
         if ($book->save()) {
-            Session::flash('message', trans('book.create_success'));
+            $request->session()->flash('create_success', trans('books.create_success'));
             return redirect()->route('books.index');
         } else {
-            Session::flash('message', trans('book.create_failure'));
+            $request->session()->flash('create_failure', trans('books.create_failure'));
             return redirect()->back()->withInput();
         }
     }
