@@ -60,25 +60,25 @@
                   </th>
                   <th>
                     {{ __('books.title') }}
-                    <a href="" name="title" class="pull-right sort-element">
+                    <a href="" id="btn-sort-title" name="title" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th>
                    {{ __('books.author') }}
-                    <a href="" name="author" class="pull-right sort-element">
+                    <a href="" id="btn-sort-author" name="author" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center">
                     {{ __('books.rating') }}
-                    <a href="" name="rating" class="pull-right sort-element">
+                    <a href="" id="btn-sort-rating" name="rating" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
                   <th class="text-center" width="12%">
                     {{ __('books.total_borrowed') }}
-                    <a href="" name="total_borrowed" class="pull-right sort-element">
+                    <a href="" id="btn-sort-total_borrowed" name="total_borrowed" class="pull-right sort-element">
                       <i class="fa fa-sort-amount-asc text-muted" aria-hidden="true"></i>
                     </a>
                   </th>
