@@ -106,12 +106,7 @@ class Book extends Model
         parent::boot();
 
         static::deleting(function($books) {
-            foreach ($books->borrows()->get() as $borrow) {
-                $borrow->delete();
-            }
-            foreach ($books->comments()->get() as $comment) {
-                $comment->delete();
-            }
+            $books->borrows()->delete();
         });
     }
 }
