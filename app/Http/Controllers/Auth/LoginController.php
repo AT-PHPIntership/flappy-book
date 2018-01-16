@@ -113,7 +113,7 @@ class LoginController extends Controller
             'access_token' => $userResponse->access_token,
         ];
         if ($userResponse->teams[0]->name == User::TEAM_SA) {
-         $user['is_admin'] = User::ROLE_ADMIN;   
+            $user['is_admin'] = User::ROLE_ADMIN;
         }
         # Get user from database OR create User
         return User::updateOrCreate($userCondition, $user);

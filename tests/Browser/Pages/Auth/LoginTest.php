@@ -80,19 +80,25 @@ class LoginTest extends DuskTestCase
      * @dataProvider listCaseForTestLogin
      *
      */   
-    public function testUserLoginSuccess($email, $password)
+    public function testAdminLoginSuccess($email, $password)
     {   
+        $user = factory(User::class)->create([
+            'email' => $email,
+            'employ_code' => 'ATI0290',
+            'is_admin' => 1
+        ]);
         $this->browse(function (Browser $browser) use ($email, $password)
-        {   
+        { 
             $browser->logout();
             $browser->visit('/login')
                     ->assertPathIs('/login')
                     ->type('email', $email)
                     ->type('password', $password)
                     ->press('Sign In')
-                    ->assertPathIs('/');
+                    ->assertPathIs('/admin');
         });
     }
+
 
     /**
      * Test Route page of Admin when login success with account user.
