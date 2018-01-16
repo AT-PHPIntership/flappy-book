@@ -9,7 +9,7 @@ class Qrcode extends Model
     /**
      * Declare table
      *
-     * @var string $tabel table name
+     * @var string $table table name
      */
     protected $table = 'qrcodes';
 
