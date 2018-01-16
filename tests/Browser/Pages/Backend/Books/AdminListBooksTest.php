@@ -109,7 +109,7 @@ class AdminListBooksTest extends DuskTestCase
     }
 
     /**
-     * Make user belong team PHP and is admin
+     * Make user belong team SA and is admin
      *
      * @return void
      */
