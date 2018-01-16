@@ -42,3 +42,18 @@ $(document).ready(function(){
         $(this).attr('href', url);
     });
 });
+$(document).ready(function() {
+ // change display picture after select
+  $('#picture').change(function (){
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#picture-display')
+          .attr('src', e.target.result);
+          .width(150);
+          .height(200);
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  })
+});

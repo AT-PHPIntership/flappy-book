@@ -73,13 +73,21 @@ class BookController extends Controller
     }
 
     /**
-     * Show form edit.
+     * Get data categories.
+     *
+     * @param int $id call category have id = $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('backend.books.edit');
+        $fields = [
+            'id',
+            'title'
+        ];
+        $book = Book::findOrFail($id);
+        $categories = Category::select($fields)->get();
+        return view('backend.books.edit', compact('book', 'categories'));
     }
 
     /**
