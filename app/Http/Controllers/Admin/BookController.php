@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\Backend\CreateBookRequest;
-use Illuminate\Support\Facades\DB;
+use DB;
 use App\Model\Book;
+use App\Model\Qrcode;
 use App\Model\Category;
 
 class BookController extends Controller
@@ -125,8 +126,8 @@ class BookController extends Controller
     public function store(CreateBookRequest $request)
     {
         // create book.
-        $book = new Book($request->except(['total_rating', 'rating', 'is_printed']));
-        
+        $book = new Book($request->except(['total_rating', 'rating']));
+
         // save book picture
         if ($request->hasFile('picture')) {
             $picture = $request->picture;
@@ -139,25 +140,31 @@ class BookController extends Controller
             $book->picture = config('define.books.default_image');
         }
 
-        // generate qrcode
-        $qrCode = Book::orderBy('qrcode', 'desc')->first()->qrcode;
-        if (!empty($qrCode)) {
-            $qrCodeNumber = substr($qrCode, 4);
-            $qrCodeNumber = $qrCodeNumber + 1;
-            $qrCodeNew = substr($qrCode, 0, strlen($qrCode) - strlen($qrCodeNumber)) . $qrCodeNumber;
-            $book->qrcode = $qrCodeNew;
-        } else {
-            $book->qrcode = config('define.books.default_qrcode');
-        }
-
         // get unit field
         $book->unit = trans('books.listunit')[$request->unit];
 
+
         if ($book->save()) {
-            $request->session()->flash('create_success', trans('books.create_success'));
+            // generate qrcode_id
+            $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
+            if (!empty($qrCode)) {
+                $code_id = $qrCode->code_id + 1;
+            } else {
+                $code_id = Qrcode::DEFAULT_CODE_ID;
+            }
+
+            // save qrcode
+            $book->qrcodes()->save(
+                new Qrcode([
+                    'code_id' => $code_id,
+                    'prefix' => Qrcode::DEFAULT_CODE_PREFIX,
+                ])
+            );
+
+            $request->session()->flash('create_success', __('books.create_success'));
             return redirect()->route('books.index');
         } else {
-            $request->session()->flash('create_failure', trans('books.create_failure'));
+            $request->session()->flash('create_failure', __('books.create_failure'));
             return redirect()->back()->withInput();
         }
     }
