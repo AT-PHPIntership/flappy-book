@@ -19,7 +19,9 @@ class BooksTableSeeder extends Seeder
         factory(App\Model\Book::class, 15)->create([
             'category_id' => $faker->randomElement($categoryId),
             'from_person' => $faker->randomElement($userId)
-        ]);
+        ])->each(function($u) {
+            $u->qrcode()->save(factory(App\Model\Qrcode::class)->make());
+        });
     }
 }
 
