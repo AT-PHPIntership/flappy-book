@@ -45,8 +45,8 @@
                     <td>{{ $user->employ_code }}</td>
                     <td><a href="{{ route('users.show', ['id' => $user->id]) }}">{{ $user->name }}</a></td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->books_count }}</td>
-                    <td>{{ $user->borrows_count }}</td>
+                    <td><a href="{{ route('books.index', ['uid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_count }}</a></td>
+                    <td><a href="{{ route('books.index', ['uid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->borrows_count }}</a></td>
                     @if(Auth::user()->team == __('users.admin_team_name'))
                     <td class="text-center"><button type="button" name="btn-role" id="btn-role" class="btn btn-danger btn-flat btn-xs" style="width: 45px">{{ __('users.admin') }}</button></td>
                     @endif

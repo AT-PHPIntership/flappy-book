@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\backend\CreateBookRequest;
-use Illuminate\Support\Facades\DB;
+use DB;
 use App\Model\Book;
 use App\Model\Category;
 
@@ -24,7 +24,9 @@ class BookController extends Controller
     {
         $search = $request->search;
         $filter = $request->filter;
-        
+        $uid = $request->uid;
+        $option = $request->option;
+
         $fields = [
             'books.id',
             'books.title',
@@ -57,18 +59,28 @@ class BookController extends Controller
                 $books = Book::where('author', 'like', '%'.$search.'%');
                 break;
             default:
-                $books = Book::where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                $books = Book::where(function ($query) use ($search) {
+                    return $query->where('title', 'like', '%'.$search.'%')
+                               ->orWhere('author', 'like', '%'.$search.'%');
+                });
                 break;
         }
-        
+        $role = $request->has('uid') && $request->has('option') && $option == 'borrowed';
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                 ->select($fields)
-                 ->groupBy('books.id')
-                 ->orderBy($sort, $order)
-                 ->paginate(config('define.books.limit_rows'))
-                 ->appends(['sort' => $sort, 'order' => $order]);
-
+                       ->select($fields)
+                       ->when($role, function ($query) use ($role, $uid) {
+                        return $query->whereIn('books.id', function ($query) use ($uid) {
+                            $query->select('book_id')
+                                  ->from('borrows')
+                                  ->join('users', 'users.id', '=', 'borrows.user_id')
+                                  ->where('users.id', '=', $uid);
+                        });
+                       })
+        ->groupBy('books.id')
+        ->orderBy($sort, $order)
+        ->paginate(config('define.books.limit_rows'))
+        ->appends([ 'uid' => $uid, 'option' => $option, 'sort' => $sort, 'order' => $order]);
         return view('backend.books.index', compact('books'));
     }
 
