@@ -119,7 +119,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CategoryRequest $request send request
+     * @param CreateBookRequest $request send request
      *
      * @return \Illuminate\Http\Response
      */
@@ -141,22 +141,22 @@ class BookController extends Controller
         }
 
         // get unit field
-        $book->unit = trans('books.listunit')[$request->unit];
+        $book->unit = __('books.listunit')[$request->unit];
 
 
         if ($book->save()) {
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
             if (!empty($qrCode)) {
-                $code_id = $qrCode->code_id + 1;
+                $codeNumber = $qrCode->code_id + 1;
             } else {
-                $code_id = Qrcode::DEFAULT_CODE_ID;
+                $codeNumber = Qrcode::DEFAULT_CODE_ID;
             }
 
             // save qrcode
-            $book->qrcodes()->save(
+            $book->qrcode()->save(
                 new Qrcode([
-                    'code_id' => $code_id,
+                    'code_id' => $codeNumber,
                     'prefix' => Qrcode::DEFAULT_CODE_PREFIX,
                 ])
             );

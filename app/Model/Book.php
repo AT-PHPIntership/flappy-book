@@ -100,7 +100,7 @@ class Book extends Model
      *
      * @return array
      */
-    public function qrcodes()
+    public function qrcode()
     {
         return $this->hasOne(Qrcode::class);
     }

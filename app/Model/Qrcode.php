@@ -41,7 +41,7 @@ class Qrcode extends Model
      *
      * @return array
      */
-    public function books()
+    public function book()
     {
         return $this->belongsTo(Book::class, 'book_id');
     }
