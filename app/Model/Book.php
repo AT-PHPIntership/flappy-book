@@ -107,6 +107,7 @@ class Book extends Model
 
         static::deleting(function($books) {
             $books->borrows()->delete();
+            $books->comments()->delete();
         });
     }
 }
