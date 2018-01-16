@@ -5,12 +5,12 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\DB;
 use App\Model\Book;
 use App\Model\User;
 use App\Model\Borrow;
 use App\Model\Category;
 use Faker\Factory as Faker;
+use DB;
 
 class SortBooksTest extends DuskTestCase
 {
@@ -61,7 +61,7 @@ class SortBooksTest extends DuskTestCase
    /**
      * Make cases for test.
      *
-     * @return void
+     * @return array
      */
     public function dataForTest()
     {
@@ -81,6 +81,8 @@ class SortBooksTest extends DuskTestCase
      * A Dusk test data.
      *
      * @dataProvider dataForTest
+     *
+     * @return void
      */
     public function testSortData($name, $columIndex, $order)
     {
@@ -114,6 +116,7 @@ class SortBooksTest extends DuskTestCase
      * A Dusk test data when panigate.
      *
      * @dataProvider dataForTest
+     *
      * @return void
      */
     public function testSortDataWhenPanigate($name, $columIndex, $order)
