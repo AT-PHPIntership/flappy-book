@@ -50,7 +50,7 @@ $factory->define(App\Model\Post::class, function (Faker $faker) {
 $factory->define(App\Model\Comment::class, function (Faker $faker) {
     return [
         'commentable_id' => $faker->numberBetween(1,10),
-        'commentable_type' => $faker->randomElement(['Book', 'Post']),
+        'commentable_type' => $faker->randomElement(['book', 'post']),
         'comment' => $faker->text,
     ];
 });
