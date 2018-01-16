@@ -101,11 +101,11 @@ class Book extends Model
      *
      * @return void
      */
-    protected static function boot() 
+    protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function($books) {
+        static::deleting(function ($books) {
             $books->borrows()->delete();
             $books->comments()->delete();
         });

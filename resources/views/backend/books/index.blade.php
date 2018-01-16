@@ -89,7 +89,7 @@
               </thead>
               <tbody>
                 @foreach ($books as $index => $book)  
-                  <tr>
+                  <tr class="item-{{ $book->id }}">
                     <td class="text-center">{{ $index + $books->firstItem() }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
@@ -98,14 +98,12 @@
                     <td class="text-center">
                       <div class="btn-option text-center">
                         <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                        <form method="POST" action="{{ route('books.destroy', $book->id) }}" class="inline">
-                          {{ csrf_field() }}
-                          {{ method_field('DELETE') }}
-                          <button type="submit" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                            data-title="{{ __('Confirm deletion!') }}"
-                            data-confirm="{{ __('Are you sure you want to delete?') }}"
-                          ></button>
-                        </form> 
+                        <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                          data-title="{{ __('books.confirm_deletion') }}"
+                          data-confirm="{{ __('books.are_you_sure_you_want_to_delete') }} <strong>{{ $book->title }}</strong>"
+                          data-id="{{ $book->id }}"
+                          data-token="{{ csrf_token() }}">
+                        </button>
                       </div>
                     </td>
                   </tr>

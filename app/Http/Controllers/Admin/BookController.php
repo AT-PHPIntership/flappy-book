@@ -98,15 +98,17 @@ class BookController extends Controller
         echo $title;
     }
 
-    public function destroy(Request $request, Book $book)
+    /**
+     * Delete a book and relationship.
+     *
+     * @param Request $request request of ajax
+     *
+     * @return void
+     */
+    public function destroy(Request $request)
     {
-        $bookDelete = $book->delete();
-        if ($bookDelete) {
-            $request->flash(__('Delete Book Success!'));
-            return redirect()->route('books.index');
-        } else {
-            $request->flash(__('Delete Book Fail!'));
-            return redirect()->route('books.index');
-        }
+        $id = $request->id;
+        $book = Book::findOrFail($id);
+        $book->delete();
     }
 }
