@@ -65,11 +65,11 @@ class BookController extends Controller
                 });
                 break;
         }
-        $role = $request->has('uid') && $request->has('option') && $option == 'borrowed';
+        $checkExistOption = $request->has('uid') && $request->has('option') && $option == Book::TYPE_BORROWED;
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                        ->select($fields)
-                       ->when($role, function ($query) use ($role, $uid) {
+                       ->when($checkExistOption, function ($query) use ($checkExistOption, $uid) {
                         return $query->whereIn('books.id', function ($query) use ($uid) {
                             $query->select('book_id')
                                   ->from('borrows')
