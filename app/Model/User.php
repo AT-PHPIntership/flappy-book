@@ -50,10 +50,10 @@ class User extends Authenticatable
        'name',
        'email',
        'team',
+       'expires_at',
        'avatar_url',
        'is_admin',
        'access_token',
-       'expires_at',
     ];
    
     /**
