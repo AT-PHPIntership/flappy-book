@@ -24,7 +24,7 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="list-users" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th>{{ __('users.no') }}</th>
