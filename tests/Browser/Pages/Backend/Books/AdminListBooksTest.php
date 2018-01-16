@@ -16,13 +16,24 @@ class AdminListBooksTest extends DuskTestCase
     use DatabaseMigrations;
     
     /**
+     * Override function setUp() for make user login
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->makeUserLogin();
+    }
+
+    /**
      * Test view Admin List Books if database has record or empty.
      *
      * @return void
      */
     public function testListBooks()
     {
-        $this->makeUserLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin')
@@ -39,7 +50,6 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooksEmpty()
     {
-        $this->makeUserLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin/books')
@@ -57,7 +67,6 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooksHasRecord()
     {
-        $this->makeUserLogin();
         $this->makeData(2);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
@@ -76,7 +85,6 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function testListBooksPagination()
     {
-        $this->makeUserLogin();
         $this->makeData(12);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
@@ -95,7 +103,6 @@ class AdminListBooksTest extends DuskTestCase
 
     public function testPathPagination()
     {
-        $this->makeUserLogin();
         $this->makeData(12);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
