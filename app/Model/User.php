@@ -31,7 +31,7 @@ class User extends Authenticatable
      *
      * @var constants
      */
-    const ADMIN_TEAM_NAME = 'PHP';
+    const ADMIN_TEAM_NAME = 'SA';
     const ROLE_ADMIN = 1;
     const ROLE_USER = 0;
     const TEAM_PHP = 'PHP';
