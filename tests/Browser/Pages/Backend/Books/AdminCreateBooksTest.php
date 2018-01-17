@@ -16,13 +16,23 @@ class AdminCreateBooksTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
+     * Override function setUp() for make user login
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->createUserForLogin();
+    }
+
+    /**
      * Test url create book
      *
      * @return void
      */
     public function testCreateBooksUrl()
     {
-        $this->createUserForLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin/books')
@@ -60,7 +70,6 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testValidateForInput($name, $content, $message)
     {
-        $this->createUserForLogin();
         $this->browse(function (Browser $browser) use ($name, $content, $message)
         {
             $browser->loginAs(User::find(1))
@@ -88,7 +97,6 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testValidateForTextarea()
     {
-        $this->createUserForLogin();
         $this->browse(function (Browser $browser)
         {
             $browser->loginAs(User::find(1))
@@ -115,7 +123,6 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testBackButton()
     {
-        $this->createUserForLogin();
         $this->browse(function (Browser $browser)
         {
             $browser->loginAs(User::find(1))
@@ -134,7 +141,6 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testCreatesBookSuccess()
     {
-        $this->createUserForLogin();
         $this->makeData(5);
         $this->browse(function (Browser $browser)
         {
