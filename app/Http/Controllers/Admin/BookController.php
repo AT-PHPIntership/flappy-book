@@ -115,9 +115,8 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(EditBookRequest $request, $id)
+    public function update(EditBookRequest $request, Book $book)
     {
-        $book = Book::findOrFail($id);
 
         //save image path, move image to directory
         if (isset($request->picture)) {

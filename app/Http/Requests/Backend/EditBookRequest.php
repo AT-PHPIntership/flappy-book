@@ -32,7 +32,7 @@ class EditBookRequest extends FormRequest
                                   .Book::TYPE_DOLAR.','
                                   .Book::TYPE_EURO.','
                                   .Book::TYPE_YEN.',',
-            'from_person' => 'required',
+            'from_person' => 'required|exists:users,employ_code',
             'description' => 'required',
             'year'        => 'date_format:"Y"',
             'author'      => 'required',
