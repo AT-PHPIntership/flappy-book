@@ -140,10 +140,9 @@ class BookController extends Controller
         $bookDelete = $book->delete();
         if ($bookDelete) {
             flash(__('books.delete_book_success'))->success();
-            return redirect()->route('books.index');
         } else {
             flash(__('books.delete_book_fail'))->error();
-            return redirect()->route('books.index');
         }
+        return redirect()->back();        
     }
 }
