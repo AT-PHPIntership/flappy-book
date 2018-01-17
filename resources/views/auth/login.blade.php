@@ -45,7 +45,7 @@
     <form action="{{ route('login') }}" method="POST">
       {{ csrf_field() }}
       <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
-        <input type="email" name="email" class="form-control" placeholder="{{ __('login.email')}}" value="{{ old('email') }}" required autofocus>
+        <input type="email" name="email" class="form-control" placeholder="{{ __('login.email')}}" value="{{ old('email') }}" autofocus>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
          @if ($errors->has('email'))
             <span class="help-block">
@@ -54,7 +54,7 @@
           @endif
       </div>
       <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="{{ __('login.password')}}" required>
+        <input type="password" name="password" class="form-control" placeholder="{{ __('login.password')}}">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
          @if ($errors->has('password'))
             <span class="help-block">
