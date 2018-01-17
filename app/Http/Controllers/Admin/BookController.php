@@ -141,4 +141,22 @@ class BookController extends Controller
         $title = $request->title;
         echo $title;
     }
+
+    /**
+     * Delete a book and relationship.
+     *
+     * @param Book $book object book
+     *
+     * @return void
+     */
+    public function destroy(Book $book)
+    {
+        $bookDelete = $book->delete();
+        if ($bookDelete) {
+            flash(__('books.delete_book_success'))->success();
+        } else {
+            flash(__('books.delete_book_fail'))->error();
+        }
+        return redirect()->back();
+    }
 }
