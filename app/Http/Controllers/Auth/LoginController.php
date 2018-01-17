@@ -112,7 +112,9 @@ class LoginController extends Controller
             'avatar_url' => $userResponse->avatar_url,
             'access_token' => $userResponse->access_token,
         ];
-        $user['is_admin'] = User::getRoleByTeam($user['team']);
+        if ($userResponse->teams[0]->name == User::TEAM_SA) {
+            $user['is_admin'] = User::ROLE_ADMIN;
+        }
         # Get user from database OR create User
         return User::updateOrCreate($userCondition, $user);
     }
@@ -127,9 +129,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         return redirect('/');
     }
 }
