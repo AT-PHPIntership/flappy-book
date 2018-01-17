@@ -65,13 +65,15 @@ class BookController extends Controller
         //check option when click number book on users list
         $userId = $request->uid ? $request->uid : '';
         $option = $request->option? $request->option : '';
-        if ($option == Book::TYPE_BORROWED) {
-            $books = $books->whereIn('books.id', function ($query) use ($userId) {
+        switch ($option) {
+            case Book::TYPE_BORROWED:
+                $books = $books->whereIn('books.id', function ($query) use ($userId) {
                         $query->select('book_id')
                               ->from('borrows')
                               ->join('users', 'users.id', '=', 'borrows.user_id')
                               ->where('users.id', '=', $userId);
-            });
+                });
+                break;
         }
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
