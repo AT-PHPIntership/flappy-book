@@ -24,6 +24,12 @@
 
   <!-- Main content -->
   <section class="content">
+    @if (Session::has('edit_success'))
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span>{{ Session::get('edit_success') }}</span>
+      </div>
+    @endif
     <div class="row">
       <div class="col-xs-12">
         <div class="box">

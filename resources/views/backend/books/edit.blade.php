@@ -18,10 +18,16 @@
     </ol>
   </section>
   <section class="content">
+    @if (Session::has('edit_failure'))
+      <div class="alert  alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span>{{ Session::get('edit_failure') }}</span>
+      </div>
+    @endif
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
-          <form action="{{route('books.update', 2)}}" role="form" method="POST" enctype="multipart/form-data">
+          <form action="{{route('books.update', $book->id)}}" role="form" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <div class="box-body">
@@ -120,7 +126,7 @@
                   <span class="text-danger">{{ $errors->first('picture') }}</span>
                 @endif
                 @if(isset($book->picture))
-                  <img id="picture-display" width="150" height="200" src="{{ $book->picture }}" alt="book-picture">
+                  <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
                 @endif
               </div>
             </div>

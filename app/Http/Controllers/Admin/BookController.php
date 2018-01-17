@@ -9,6 +9,9 @@ use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
 use App\Model\Book;
 use App\Model\Category;
+use File;
+use App\Model\Qrcode;
+use App\Model\User;
 
 class BookController extends Controller
 {
@@ -114,9 +117,47 @@ class BookController extends Controller
      */
     public function update(EditBookRequest $request, $id)
     {
-        dd($request);
-        dd($id);
+        $book = Book::findOrFail($id);
+
+        //save image path, move image to directory
+        if (isset($request->picture)) {
+            $oldPath = $book->picture;
+            if (File::exists($oldPath)) {
+                File::delete($oldPath);
+            }
+            $image = $request->picture;
+            $name = $image->hashName();
+            $folder = config('image.book.path');
+            $image->move($folder, $name);
+
+            $newPath = $folder . $name;
+            $book->picture = $newPath;
+        }
+
+        //save new donator
+        $user = User::where('employ_code', $request->iddonator)->first();
+        if (isset($user)) {
+            $book->from_person = $request->iddonator;
+        }
+
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->category_id = $request->category_id;
+        $book->year = $request->year;
+        $book->price = $request->price;
+        $book->description = $request->description;
+        $book->unit = $request->unit;
+
+        if ($book->save()) {
+            $request->session()->flash('edit_success', __('Edit Succes'));
+            return redirect()->route('books.index');
+        } else {
+            $request->session()->flash('edit_failure', __('Edit Failure'));
+            return redirect()->route('books.edit');
+        }
     }
+
+    
 
     /**
      * Show the form for creating a new book.
