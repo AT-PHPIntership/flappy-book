@@ -42,7 +42,7 @@
                     <div class="row">
                       <div class="col-xs-3">
                         <label>{{ __('books.category') }}</label>
-                        <select class="form-control" name="category" >
+                        <select class="form-control" name="category_id" >
                           @foreach($categories as $category)
                             @if($book->category_id == $category->id)
                               <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
@@ -78,10 +78,10 @@
                         @endif
                       </div>
                       <div class="col-xs-4">
-                        <label for="InputIDDonator">{{ __('books.id_donator') }}</label>
-                        <input type="text" class="form-control" id="InputIDDonator" name="iddonator" placeholder="{{ __('books.id_donator') }}" value="{{ $book->from_person }}">
-                        @if($errors->first('iddonator')) 
-                          <span class="text-danger">{{ $errors->first('iddonator') }}</span>
+                        <label for="InputFromPerson">{{ __('books.from_person') }}</label>
+                        <input type="text" class="form-control" id="InputFromPerson" name="from_person" placeholder="{{ __('books.from_person') }}" value="{!! $book->from_person !!}">
+                        @if($errors->first('from_person')) 
+                          <span class="text-danger">{{ $errors->first('from_person') }}</span>
                         @endif
                       </div>
                     </div>

@@ -29,8 +29,8 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xs-12">
-                          <label for="exampleInputTitle">{{ __('books.title') }}</label>
-                          <input type="text" class="form-control" name="title" placeholder="{{ __('books.Title') }}" value="{!! old('title') !!}">
+                          <label for="InputTitle">{{ __('books.title') }}</label>
+                          <input type="text" class="form-control" name="title" placeholder="{{ __('books.title') }}" value="{!! old('title') !!}">
                           @if($errors->first('title')) 
                             <span class="text-danger">{{ $errors->first('title') }}</span>
                           @endif
@@ -41,7 +41,7 @@
                       <div class="row">
                         <div class="col-xs-3">
                           <label>{{ __('books.category') }}</label>
-                          <select class="form-control" name="category" >
+                          <select class="form-control" name="category_id" >
                             @foreach ($categories as $category)
                               <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endforeach
@@ -51,8 +51,8 @@
                           @endif
                         </div>
                         <div class="col-xs-3">
-                          <label for="exampleInputPrice">{{ __('books.price') }}</label>
-                          <input type="text" class="form-control" name="price" placeholder="{{ __('books.Price') }}" value="{!! old('price') !!}">
+                          <label for="InputPrice">{{ __('books.price') }}</label>
+                          <input type="text" class="form-control" name="price" placeholder="{{ __('books.price') }}" value="{!! old('price') !!}">
                            @if($errors->first('price')) 
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                           @endif
@@ -69,16 +69,16 @@
                           @endif
                         </div>
                         <div class="col-xs-4">
-                          <label for="exampleInputIDDonator">{{ __('books.id_donator') }}</label>
-                          <input type="text" class="form-control" name="iddonator" placeholder="{{ __('books.ID_Donator') }}" value="{!! old('iddonator') !!}">
-                          @if($errors->first('iddonator')) 
-                            <span class="text-danger">{{ $errors->first('iddonator') }}</span>
+                          <label for="InputFromPerson">{{ __('books.from_person') }}</label>
+                          <input type="text" class="form-control" name="from_person" placeholder="{{ __('books.from_person') }}" value="{!! old('from_person') !!}">
+                          @if($errors->first('from_person')) 
+                            <span class="text-danger">{{ $errors->first('from_person') }}</span>
                           @endif
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputDescription">{{ __('books.description') }}</label>
+                      <label for="InputDescription">{{ __('books.description') }}</label>
                       <textarea class="textarea form-control" placeholder="{{ __('books.place_some_text_here') }}" name="description">{!! old('description') !!}</textarea>
                       @if($errors->first('description')) 
                         <span class="text-danger">{{ $errors->first('description') }}</span>
@@ -87,15 +87,15 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xs-6">
-                          <label for="exampleInputAuthor">{{ __('books.author') }}</label>
-                          <input type="text" class="form-control" name="author" placeholder="{{ __('books.Author') }}" value="{!! old('author') !!}">
+                          <label for="InputAuthor">{{ __('books.author') }}</label>
+                          <input type="text" class="form-control" name="author" placeholder="{{ __('books.author') }}" value="{!! old('author') !!}">
                           @if($errors->first('author')) 
                             <span class="text-danger">{{ $errors->first('author') }}</span>
                           @endif
                         </div>
                         <div class="col-xs-6">
-                          <label for="exampleInputYear">{{ __('books.year') }}</label>
-                          <input type="number" class="form-control" name="year" placeholder="" value="{!! old('year') !!}">
+                          <label for="InputYear">{{ __('books.year') }}</label>
+                          <input type="number" class="form-control" name="year" placeholder="{{ __('books.year') }}" value="{!! old('year') !!}">
                           @if($errors->first('year')) 
                             <span class="text-danger">{{ $errors->first('year') }}</span>
                           @endif
@@ -105,7 +105,7 @@
                   </div>
                 </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">{{ __('books.picture') }}</label>
+                    <label for="InputFile">{{ __('books.picture') }}</label>
                     <input type="file" name="picture" value="{!! old('picture') !!}">
                     @if($errors->first('picture')) 
                       <span class="text-danger">{{ $errors->first('picture') }}</span>

@@ -11,7 +11,7 @@ return [
     'unit' => 'Unit',
     'vnd' => 'VND',
     'description' => 'Description',
-    'id_donator' => 'ID Donator',
+    'from_person' => 'From Person',
     'category' => 'Category',
     'place_some_text_here' => 'Place some text here',
     'author' => 'Author',
