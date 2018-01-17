@@ -63,7 +63,7 @@ class BookController extends Controller
                 });
         }
         //check option when click number book on users list
-        $userId = $request->uid ? $request->uid : '';
+        $userId = $request->userid ? $request->userid : '';
         $option = $request->option? $request->option : '';
         switch ($option) {
             case Book::TYPE_BORROWED:
