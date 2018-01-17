@@ -74,6 +74,10 @@ class BookController extends Controller
                               ->where('users.id', '=', $userId);
                 });
                 break;
+            case Book::TYPE_DONATED:
+                $books = $books->join('users', 'users.employ_code', '=', 'books.from_person')
+                               ->where('users.id', '=', $userId);
+                break;
         }
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
