@@ -43,10 +43,10 @@
                   <b>{{ __('users.role') }}</b> <a class="pull-right">User</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.books_donated') }}</b> <a class="pull-right" href="">{{ $user->books_count }}</a>
+                  <b>{{ __('users.books_donated') }}</b> <a class="pull-right" href="{{ route('books.index', ['userid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_count }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.books_borrowed') }}</b> <a class="pull-right" href="">{{ $user->borrows_count }}</a>
+                  <b>{{ __('users.books_borrowed') }}</b> <a class="pull-right" href="{{ route('books.index', ['userid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->borrows_count }}</a>
                 </li>
                 <li class="list-group-item">
                   @if(isset($user->name_book))
