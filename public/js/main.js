@@ -46,7 +46,6 @@ $(document).ready(function() {
       reader.onload = function (e) {
         $('#picture-display')
           .attr('src', e.target.result)
-          .width(150)
           .height(200);
       };
       reader.readAsDataURL(this.files[0]);
