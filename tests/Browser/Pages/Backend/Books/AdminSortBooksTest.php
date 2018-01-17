@@ -12,9 +12,20 @@ use App\Model\Category;
 use Faker\Factory as Faker;
 use DB;
 
-class SortBooksTest extends DuskTestCase
+class AdminSortBooksTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    /**
+     * Override function setUp() for make user login
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->createUserForLogin();
+    }
 
     /**
      * A Dusk test check existence of button sort.
@@ -23,7 +34,6 @@ class SortBooksTest extends DuskTestCase
      */
     public function testButtonSort()
     {
-        $this->createUserForLogin();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('admin/books');
@@ -41,7 +51,6 @@ class SortBooksTest extends DuskTestCase
     {
         $btnSortNames = ['title', 'author', 'rating', 'total_borrowed'];
 
-        $this->createUserForLogin();
         $this->browse(function (Browser $browser) use ($btnSortNames) {
 
             $browser->loginAs(User::find(1))
@@ -86,7 +95,6 @@ class SortBooksTest extends DuskTestCase
      */
     public function testSortData($name, $columIndex, $order)
     {
-        $this->createUserForLogin();
         $this->makeData(5);
         $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
             $browser->loginAs(User::find(1))
@@ -121,7 +129,6 @@ class SortBooksTest extends DuskTestCase
      */
     public function testSortDataWhenPanigate($name, $columIndex, $order)
     {
-        $this->createUserForLogin();
         $this->makeData(16);
         $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
             $browser->loginAs(User::find(1))
@@ -175,20 +182,20 @@ class SortBooksTest extends DuskTestCase
 
         factory(Category::class, 2)->create();
 
-        $categoryId = DB::table('categories')->pluck('id')->toArray();
-        $employCode = DB::table('users')->pluck('employ_code')->toArray();
-        $userId = DB::table('users')->pluck('id')->toArray();
+        $categoryIds = DB::table('categories')->pluck('id')->toArray();
+        $employCodes = DB::table('users')->pluck('employ_code')->toArray();
+        $userIds = DB::table('users')->pluck('id')->toArray();
 
         factory(Book::class, $row)->create([
-            'category_id' => $faker->randomElement($categoryId),
-            'from_person' => $faker->randomElement($employCode)
+            'category_id' => $faker->randomElement($categoryIds),
+            'from_person' => $faker->randomElement($employCodes)
         ]);
 
-        $bookId = DB::table('books')->pluck('id')->toArray();
+        $bookIds = DB::table('books')->pluck('id')->toArray();
 
         factory(Borrow::class, $row)->create([
-            'book_id' => $faker->randomElement($bookId),
-            'user_id' => $faker->randomElement($userId)
+            'book_id' => $faker->randomElement($bookIds),
+            'user_id' => $faker->randomElement($userIds)
         ]);
     }
 }
