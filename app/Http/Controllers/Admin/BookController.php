@@ -85,7 +85,7 @@ class BookController extends Controller
                        ->groupBy('books.id')
                        ->orderBy($sort, $order)
                        ->paginate(config('define.books.limit_rows'))
-                       ->appends(['uid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
+                       ->appends(['userid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
 
         return view('backend.books.index', compact('books'));
     }
