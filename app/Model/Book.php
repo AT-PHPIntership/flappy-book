@@ -21,6 +21,8 @@ class Book extends Model
     const TYPE_ALL = 'All';
     const TYPE_TITLE = 'Title';
     const TYPE_AUTHOR = 'Author';
+    const TYPE_BORROWED = 'borrowed';
+    const TYPE_DONATED = 'donated';
     
     /**
      * Declare table
