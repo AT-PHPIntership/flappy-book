@@ -16,7 +16,6 @@ class UpdateIsAdminToUsersTable extends Migration
         if (Schema::hasColumn('users', 'is_admin')) {
             DB::statement('ALTER TABLE `users` CHANGE `is_admin` `is_admin` TINYINT(4) DEFAULT 0 NOT NULL');
         }
-        
     }
 
     /**
