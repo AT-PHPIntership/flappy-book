@@ -21,6 +21,7 @@ class Book extends Model
     const TYPE_ALL = 'All';
     const TYPE_TITLE = 'Title';
     const TYPE_AUTHOR = 'Author';
+    
     /**
      * Declare table
      *
@@ -73,7 +74,7 @@ class Book extends Model
      */
     public function users()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'from_person', 'employ_code');
     }
 
     /**

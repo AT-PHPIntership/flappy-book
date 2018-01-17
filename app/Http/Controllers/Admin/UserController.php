@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use DB;
 use App\Model\User;
+use App\Model\Book;
+use App\Model\Borrow;
 
 class UserController extends Controller
 {
@@ -35,10 +38,28 @@ class UserController extends Controller
      /**
      * Display the profile of user.
      *
+     * @param int $id id of user
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('backend.users.show');
+        $fields = [
+            'users.id',
+            'users.employ_code',
+            'users.name',
+            'users.team',
+            'users.email',
+            'users.is_admin',
+            'users.avatar_url',
+            DB::raw("(SELECT books.title FROM books WHERE id IN (SELECT borrows.book_id FROM borrows WHERE users.id = borrows.user_id AND borrows.status = " . Borrow::BORROWING . ")) AS name_book")
+        ];
+
+        $user = User::select($fields)
+        ->withCount(['books', 'borrows'])
+        ->where('id', $id)
+        ->firstOrFail();
+
+        return view('backend.users.show', ['user' => $user]);
     }
 }
