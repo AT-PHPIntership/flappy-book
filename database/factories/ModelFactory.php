@@ -20,7 +20,6 @@ $factory->define(App\Model\Category::class, function (Faker $faker) {
   });
 $factory->define(App\Model\Book::class, function (Faker $faker) {
     return [
-        'qrcode' => $faker->ean13,
         'title' => $faker->name,
         'description' => $faker->text,
         'year' => $faker->year(),
@@ -31,7 +30,6 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
         'from_person' => $faker->name,
         'total_rating' => $faker->numberBetween(1,20),
         'rating' => $faker->numberBetween(1,5),
-        'is_printed' => $faker->numberBetween(0,1),
     ];
 });
 $factory->define(App\Model\Borrow::class, function (Faker $faker) {
@@ -67,5 +65,12 @@ $factory->define(App\Model\User::class, function (Faker $faker) {
         'team' => $faker->randomElement([\App\Model\User::TEAM_PHP, \App\Model\User::TEAM_IOS,\App\Model\User::TEAM_ANDROID, \App\Model\User::TEAM_SA, \App\Model\User::TEAM_BO]),
         'avatar_url' => $faker->image,
         'is_admin' => $faker->numberBetween(0,1),
+    ];
+});
+$factory->define(App\Model\Qrcode::class, function (Faker $faker) {
+    return [
+        'prefix' => 'ATB',
+        'code_id' => $faker->numberBetween(0, 5000),
+        'status' => $faker->numberBetween(0, 1),
     ];
 });

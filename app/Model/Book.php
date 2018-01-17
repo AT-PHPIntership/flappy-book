@@ -44,7 +44,6 @@ class Book extends Model
      * @var array
      */
     protected $fillable = [
-        'qrcode',
         'title',
         'category_id',
         'description',
@@ -56,7 +55,6 @@ class Book extends Model
         'from_person',
         'total_rating',
         'rating',
-        'is_printed'
     ];
     
     /**
@@ -97,6 +95,16 @@ class Book extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * Relationship hasOne with Qrcode
+     *
+     * @return array
+     */
+    public function qrcode()
+    {
+        return $this->hasOne(Qrcode::class);
     }
 
     /**
