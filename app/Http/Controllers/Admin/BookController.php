@@ -76,10 +76,10 @@ class BookController extends Controller
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                        ->select($fields)
-                        ->groupBy('books.id')
-                        ->orderBy($sort, $order)
-                        ->paginate(config('define.books.limit_rows'))
-                        ->appends(['uid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
+                       ->groupBy('books.id')
+                       ->orderBy($sort, $order)
+                       ->paginate(config('define.books.limit_rows'))
+                       ->appends(['uid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
 
         return view('backend.books.index', compact('books'));
     }
