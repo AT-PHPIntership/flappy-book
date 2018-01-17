@@ -3,8 +3,6 @@ $(document).ready(function () {
      * Show delete confimation when click button delete
      */
     $('.btn-delete-item').bind('click', function (e) {
-        var id = $(this).data("id");
-        var token = $(this).data("token");
         var form = $(this.form);
         var title = $(this).attr('data-title');
         var body = '<i>' + $(this).attr('data-confirm') + '</i>';
@@ -12,19 +10,7 @@ $(document).ready(function () {
         $('#body-content').html(body);
         $('#confirm').modal('show');
         $('#delete-btn').one('click', function () {
-            $('#confirm').modal('hide');
-            $.ajax({
-                url: "books/" + id,
-                type: 'POST',
-                data: {
-                    "id": id,
-                    "_method": 'DELETE',
-                    "_token": token,
-                },
-                success: function () {
-                    $('.item-' + id).remove();
-                }
-            });
+            form.submit();
         })
     });
 });

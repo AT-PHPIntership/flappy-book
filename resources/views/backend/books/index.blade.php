@@ -24,6 +24,7 @@
 
   <!-- Main content -->
   <section class="content">
+    @include('flash::message')
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
@@ -98,12 +99,14 @@
                     <td class="text-center">
                       <div class="btn-option text-center">
                         <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                        <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('books.confirm_deletion') }}"
-                          data-confirm="{{ __('books.are_you_sure_you_want_to_delete') }} <strong>{{ $book->title }}</strong>"
-                          data-id="{{ $book->id }}"
-                          data-token="{{ csrf_token() }}">
-                        </button>
+                        <form method="POST" action="{{ route('books.destroy', $book->id) }}" class="inline">
+                          {{ csrf_field() }}
+                          {{ method_field('DELETE') }}
+                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                            data-title="{{ __('books.confirm_deletion') }}"
+                            data-confirm="{{ __('books.are_you_sure_you_want_to_delete') }} <strong>{{ $book->title }}</strong>">
+                          </button>
+                        </form> 
                       </div>
                     </td>
                   </tr>
