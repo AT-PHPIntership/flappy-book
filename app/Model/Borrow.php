@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrow extends Model
 {
+    /**
+     * Borrows currency status
+     *
+     * @type int
+     */
+    const BORROWING = 0;
 
     /**
      * Declare table
