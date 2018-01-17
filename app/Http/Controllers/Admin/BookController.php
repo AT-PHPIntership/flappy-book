@@ -25,7 +25,7 @@ class BookController extends Controller
     {
         $search = $request->search;
         $filter = $request->filter;
-        
+
         $fields = [
             'books.id',
             'books.title',
@@ -58,17 +58,31 @@ class BookController extends Controller
                 $books = Book::where('author', 'like', '%'.$search.'%');
                 break;
             default:
-                $books = Book::where('title', 'like', '%'.$search.'%')->orWhere('author', 'like', '%'.$search.'%');
+                $books = Book::where(function ($query) use ($search) {
+                    return $query->where('title', 'like', '%'.$search.'%')
+                               ->orWhere('author', 'like', '%'.$search.'%');
+                });
+        }
+        //check option when click number book on users list
+        $userId = $request->userid ? $request->userid : '';
+        $option = $request->option? $request->option : '';
+        switch ($option) {
+            case Book::TYPE_BORROWED:
+                $books = $books->whereIn('books.id', function ($query) use ($userId) {
+                        $query->select('book_id')
+                              ->from('borrows')
+                              ->join('users', 'users.id', '=', 'borrows.user_id')
+                              ->where('users.id', '=', $userId);
+                });
                 break;
         }
-        
         // get list books
         $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                 ->select($fields)
-                 ->groupBy('books.id')
-                 ->orderBy($sort, $order)
-                 ->paginate(config('define.books.limit_rows'))
-                 ->appends(['sort' => $sort, 'order' => $order]);
+                       ->select($fields)
+                       ->groupBy('books.id')
+                       ->orderBy($sort, $order)
+                       ->paginate(config('define.books.limit_rows'))
+                       ->appends(['userid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
 
         return view('backend.books.index', compact('books'));
     }
@@ -161,11 +175,29 @@ class BookController extends Controller
                 ])
             );
 
-            $request->session()->flash('create_success', __('books.create_success'));
+            flash(__('books.create_success'))->success();
             return redirect()->route('books.index');
         } else {
-            $request->session()->flash('create_failure', __('books.create_failure'));
+            flash(__('books.create_failure'))->error();
             return redirect()->back()->withInput();
         }
+    }
+
+    /**
+     * Delete a book and relationship.
+     *
+     * @param Book $book object book
+     *
+     * @return void
+     */
+    public function destroy(Book $book)
+    {
+        $bookDelete = $book->delete();
+        if ($bookDelete) {
+            flash(__('books.delete_book_success'))->success();
+        } else {
+            flash(__('books.delete_book_fail'))->error();
+        }
+        return redirect()->back();
     }
 }

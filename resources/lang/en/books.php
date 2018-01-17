@@ -30,6 +30,12 @@ return [
     'add_book' => 'Add Book',
     'search' => 'Search',
     'all' => 'All',
+    'delete' => 'Delete',
+    'close' => 'Close',
+    'confirm_deletion' => 'Confirm deletion!',
+    'are_you_sure_you_want_to_delete' => 'Are you sure you want to delete?',
+    'delete_book_success' => 'Delete Book Success!',
+    'delete_book_fail' => 'Delete Book Fail!',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',
