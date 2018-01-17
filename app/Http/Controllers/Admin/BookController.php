@@ -143,6 +143,6 @@ class BookController extends Controller
         } else {
             flash(__('books.delete_book_fail'))->error();
         }
-        return redirect()->back();        
+        return redirect()->back();
     }
 }
