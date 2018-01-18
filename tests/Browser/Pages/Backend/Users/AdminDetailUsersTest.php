@@ -28,17 +28,16 @@ class AdminDetailUsersTest extends DuskTestCase
      *
      * @return void
      */
-    public function testShowRecord()
-    {
-        factory(User::class, 10)->create();
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+    public function testRouteShowDetailUser(){                       
+        $user = User::find(1);
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
                     ->visit('/admin/users')
-                    ->resize(1000,1200)
-                    ->assertPathIs('/admin/users')
-                    ->assertSee('List Users');
-
-        });
+                    ->assertSee('List Users')
+                    ->click('.name-id')
+                    ->visit('admin/users/'.$user->id)
+                    ->assertSee('Detail User');
+        });     
     }
 
     /**
@@ -46,40 +45,42 @@ class AdminDetailUsersTest extends DuskTestCase
      *
      * @return void
      */
-    public function testDetailUser(){
-        factory(User::class, 10)->create();
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit('/admin/users')
-                    ->resize(1000,1200)
-                    ->assertPathIs('/admin/users')
-                    ->assertSee('List Users')
-                    ->click('.name-id')
-                    ->visit('/admin/users/1')
+    public function testLayoutDetailUser()
+   {
+        $user = User::find(1);
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                    ->visit('/admin/users/' . $user->id)
                     ->assertSee('Detail User')
-                    ->assertSee('Hieu Le T.')
+                    ->assertSee('Home')
+                    ->assertSee('Users')
+                    ->assertSee('User Profile')
+                    ->assertSee('Employee Code')
+                    ->assertSee('Email')
+                    ->assertSee('Role')
+                    ->assertSee('Books Donated')
+                    ->assertSee('Books Borrowed')
+                    ->assertSee('Books Borrowing')
                     ->assertSee('Back');
-        });
-    }
+       });
+   }
 
     /**
      * A Dusk testBackListlUser
      *
      * @return void
      */
-     public function testBackListlUser(){
-        factory(User::class, 10)->create();
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit('/admin/users/1')
-                    ->resize(1000,1200)
-                    ->assertPathIs('/admin/users/1')
-                    ->assertSee('Detail User')
-                    ->clickLink('Back')
-                    ->visit('/admin/users')
-                    ->assertSee('List Users');
-        });
-    }
+    public function testShowDetailUser()
+   {
+        $user = User::find(1);
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                    ->visit('/admin/users/' . $user->id);
+                    $this->assertTrue($browser->text('.profile-username') === $user->name);
+                    $this->assertTrue($browser->text('.employee_code') === $user->employee_code);
+                    $this->assertTrue($browser->text('.email') === $user->email);
+       });
+   }
 
     /**
      * Make user belong team SA and is admin
