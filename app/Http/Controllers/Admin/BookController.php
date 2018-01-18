@@ -158,17 +158,13 @@ class BookController extends Controller
             } else {
                 $book->picture = config('define.books.default_image');
             }
-            // $book->title *=100;
+
             // store book
             $book->save();
 
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
-            if (!empty($qrCode)) {
-                $codeNumber = $qrCode->code_id + 1;
-            } else {
-                $codeNumber = Qrcode::DEFAULT_CODE_ID;
-            }
+            $codeNumber = $qrCode ? Qrcode::DEFAULT_CODE_ID : $qrCode->code_id + 1;
 
             // store qrcode
             $book->qrcode()->save(
