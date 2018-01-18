@@ -1,7 +1,7 @@
 <?php
-	return [
-		'book' => [
-			'path' => 'images/books/',
-		]
-	];
-	
+  return [
+    'book' => [
+      'path' => 'images/books/',
+    ]
+  ];
+  
