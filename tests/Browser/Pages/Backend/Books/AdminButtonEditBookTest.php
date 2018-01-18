@@ -24,7 +24,7 @@ class AdminButtonEditBookTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->makeAdminLogin();
+        $this->createAdminUser();
         factory(Category::class, 2)->create();
         factory(User::class, 2)->create();
     }
