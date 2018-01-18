@@ -44,30 +44,18 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
-     * Override function setUp() for make user login
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->makeUserLogin();
-    }
-
-    /**
      * Make user belong team SA and is admin
      *
      * @return void
      */
-    public function makeUserLogin()
+    public function makeAdminLogin()
     {
-        factory(User::class, 1)->create([
+        factory(User::class)->create([
             'employ_code' => 'ATI0297',
             'name' => 'Minh Dao T.',
             'email' => 'minh.dao@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => '1',
+            'team' => \App\Model\User::ADMIN_TEAM_NAME,
+            'is_admin' => \App\Model\User::ROLE_ADMIN,
         ]);
     }
 }

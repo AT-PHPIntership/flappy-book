@@ -16,6 +16,20 @@ class AdminListBooksTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
+     * Override function setUp()
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->makeAdminLogin();
+        factory(Category::class, 2)->create();
+        factory(User::class, 2)->create();
+    }
+
+    /**
      * Test view Admin List Books if database has record or empty.
      *
      * @return void
@@ -115,8 +129,6 @@ class AdminListBooksTest extends DuskTestCase
      */
     public function makeData($row)
     {   
-        factory(Category::class, 2)->create();
-        factory(User::class, 2)->create();
         $categoryId = DB::table('categories')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();

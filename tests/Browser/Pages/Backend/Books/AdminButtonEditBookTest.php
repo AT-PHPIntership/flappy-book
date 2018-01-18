@@ -16,6 +16,20 @@ class AdminButtonEditBookTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
+     * Override function setUp()
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->makeAdminLogin();
+        factory(Category::class, 2)->create();
+        factory(User::class, 2)->create();
+    }
+
+    /**
      * Test admin click button edit book in list books
      *
      * @return void
@@ -42,8 +56,6 @@ class AdminButtonEditBookTest extends DuskTestCase
      */
     public function makeData($row)
     {   
-        factory(Category::class, 2)->create();
-        factory(User::class, 2)->create();
         $categoryId = DB::table('categories')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
