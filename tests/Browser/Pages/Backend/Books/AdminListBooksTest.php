@@ -14,18 +14,6 @@ use Faker\Factory as Faker;
 class AdminListBooksTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    
-    /**
-     * Override function setUp() for make user login
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->makeUserLogin();
-    }
 
     /**
      * Test view Admin List Books if database has record or empty.
@@ -101,6 +89,11 @@ class AdminListBooksTest extends DuskTestCase
         });
     }
 
+    /**
+     * Test view Admin List Books with lastest pagination
+     *
+     * @return void
+     */
     public function testPathPagination()
     {
         $this->makeData(12);
@@ -113,22 +106,6 @@ class AdminListBooksTest extends DuskTestCase
             $browser->assertPathIs('/admin/books')
                     ->assertQueryStringHas('page', 2);
         });
-    }
-
-    /**
-     * Make user belong team SA and is admin
-     *
-     * @return void
-     */
-    public function makeUserLogin()
-    {
-        factory(User::class, 1)->create([
-            'employ_code' => 'ATI0297',
-            'name' => 'Minh Dao T.',
-            'email' => 'minh.dao@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => '1',
-        ]);
     }
 
     /**

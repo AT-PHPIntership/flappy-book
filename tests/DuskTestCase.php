@@ -44,6 +44,18 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
+     * Override function setUp() for make user login
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->makeUserLogin();
+    }
+
+    /**
      * Make user belong team SA and is admin
      *
      * @return void
