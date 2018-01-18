@@ -67,21 +67,18 @@ class UserController extends Controller
     /**
      * Update role user.
      *
-     * @param Request $request send request
+     * @param Interger $userId User Id
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateRole(Request $request)
+    public function updateRole(int $userId)
     {
-        $user = User::find($request->id);
-        if ($user->team != User::ADMIN_TEAM_NAME) {
-            if ($user->is_admin == User::ROLE_USER) {
-                $user->is_admin = User::ROLE_ADMIN;
-            } else {
-                $user->is_admin = User::ROLE_USER;
-            }
+        $user = User::find($userId);
+        if ($user->team != User::ADMIN_TEAM_NAME && \Auth::user()->team == User::ADMIN_TEAM_NAME) {
+            $user->is_admin = $user->is_admin == User::ROLE_USER ? User::ROLE_ADMIN : User::ROLE_USER;
             $user->save();
             return response($user);
         }
+
     }
 }

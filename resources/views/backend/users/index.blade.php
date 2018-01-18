@@ -43,23 +43,23 @@
                 </thead>
                 <tbody>
                 @foreach ($users as $index => $user)
-                <tr>
-                  <td>{{ $index + $users->firstItem() }}</td>
-                  <td>{{ $user->employ_code }}</td>
-                  <td><a href="{{ route('users.show', ['id' => $user->id]) }}">{{ $user->name }}</a></td>
-                  <td>{{ $user->email }}</td>
-                  <td><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_count }}</a></td>
-                  <td><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->borrows_count }}</a></td>
-                  @if(Auth::user()->team == __('users.admin_team_name'))
-                    <td class="text-center"><button type="button" name="btn-role" id="role-user-{{ $user->id }}" data-id="{{ $user->id }}" {{$user->team == __('users.admin_team_name') ? 'disabled' : '' }}
-                    @if($user->is_admin == 0)
-                      class="btn btn-flat btn-xs btn-role" style="width: 45px">{{ __('users.user') }}
-                    @else
-                      class="btn btn-danger btn-flat btn-xs btn-role" style="width: 45px">{{ __('users.admin') }}
+                  <tr>
+                    <td>{{ $index + $users->firstItem() }}</td>
+                    <td>{{ $user->employ_code }}</td>
+                    <td><a href="{{ route('users.show', ['id' => $user->id]) }}">{{ $user->name }}</a></td>
+                    <td>{{ $user->email }}</td>
+                    <td><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_count }}</a></td>
+                    <td><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->borrows_count }}</a></td>
+                    @if(Auth::user()->team == __('users.admin_team_name'))
+                      <td class="text-center"><button type="button" name="btn-role" id="role-user-{{ $user->id }}" data-id="{{ $user->id }}" style="width: 45px" {{$user->team == __('users.admin_team_name') ? 'disabled' : '' }}
+                      @if($user->is_admin == __('users.role_user'))
+                        class="btn btn-flat btn-xs btn-role">{{ __('users.user') }}
+                      @else
+                        class="btn btn-danger btn-flat btn-xs btn-role">{{ __('users.admin') }}
+                      @endif
+                      </button></td>
                     @endif
-                    </button>
-                  @endif
-                </tr>
+                  </tr>
                 @endforeach
                 </tbody>
               </table>
