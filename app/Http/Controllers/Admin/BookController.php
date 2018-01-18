@@ -142,22 +142,26 @@ class BookController extends Controller
         // create book.
         $book = new Book($request->except(['total_rating', 'rating']));
 
-        // save book picture
-        if ($request->hasFile('picture')) {
-            $picture = $request->picture;
-            $folderStore = config('define.books.folder_store');
-            $pictureName = config('define.books.name_prefix') . '-' . $picture->hashName();
-            $picturePath = $folderStore . $pictureName;
-            $picture->move($folderStore, $pictureName);
-            $book->picture = $picturePath;
-        } else {
-            $book->picture = config('define.books.default_image');
-        }
-
         // get unit field
         $book->unit = __('books.listunit')[$request->unit];
 
-        if ($book->save()) {
+        DB::beginTransaction();
+        try {
+            // save book picture
+            if ($request->hasFile('picture')) {
+                $picture = $request->picture;
+                $folderStore = config('define.books.folder_store');
+                $pictureName = config('define.books.name_prefix') . '-' . $picture->hashName();
+                $picturePath = $folderStore . $pictureName;
+                $picture->move($folderStore, $pictureName);
+                $book->picture = $picturePath;
+            } else {
+                $book->picture = config('define.books.default_image');
+            }
+            // $book->title *=100;
+            // store book
+            $book->save();
+            
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
             if (!empty($qrCode)) {
@@ -166,7 +170,7 @@ class BookController extends Controller
                 $codeNumber = Qrcode::DEFAULT_CODE_ID;
             }
 
-            // save qrcode
+            // store qrcode
             $book->qrcode()->save(
                 new Qrcode([
                     'code_id' => $codeNumber,
@@ -174,9 +178,11 @@ class BookController extends Controller
                 ])
             );
 
+            DB::commit();
             flash(__('books.create_success'))->success();
             return redirect()->route('books.index');
-        } else {
+        } catch (\Exception $e) {
+            DB::rollback();
             flash(__('books.create_failure'))->error();
             return redirect()->back()->withInput();
         }
