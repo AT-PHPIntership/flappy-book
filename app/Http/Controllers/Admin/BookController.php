@@ -164,7 +164,7 @@ class BookController extends Controller
 
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
-            $codeNumber = $qrCode ? Qrcode::DEFAULT_CODE_ID : $qrCode->code_id + 1;
+            $codeNumber = $qrCode ? $qrCode->code_id + 1 :  Qrcode::DEFAULT_CODE_ID ;
 
             // store qrcode
             $book->qrcode()->save(
