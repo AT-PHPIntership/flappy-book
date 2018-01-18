@@ -161,7 +161,7 @@ class BookController extends Controller
             // $book->title *=100;
             // store book
             $book->save();
-            
+
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
             if (!empty($qrCode)) {

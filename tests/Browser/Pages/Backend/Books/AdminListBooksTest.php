@@ -14,9 +14,9 @@ use Faker\Factory as Faker;
 class AdminListBooksTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    
+
     /**
-     * Override function setUp() for make user login
+     * Override function setUp()
      *
      * @return void
      */
@@ -24,7 +24,9 @@ class AdminListBooksTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->makeUserLogin();
+        $this->createAdminUser();
+        factory(Category::class, 2)->create();
+        factory(User::class, 2)->create();
     }
 
     /**
@@ -101,6 +103,11 @@ class AdminListBooksTest extends DuskTestCase
         });
     }
 
+    /**
+     * Test view Admin List Books with lastest pagination
+     *
+     * @return void
+     */
     public function testPathPagination()
     {
         $this->makeData(12);
@@ -116,30 +123,12 @@ class AdminListBooksTest extends DuskTestCase
     }
 
     /**
-     * Make user belong team SA and is admin
-     *
-     * @return void
-     */
-    public function makeUserLogin()
-    {
-        factory(User::class, 1)->create([
-            'employ_code' => 'ATI0297',
-            'name' => 'Minh Dao T.',
-            'email' => 'minh.dao@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => '1',
-        ]);
-    }
-
-    /**
      * Make data for test.
      *
      * @return void
      */
     public function makeData($row)
     {   
-        factory(Category::class, 2)->create();
-        factory(User::class, 2)->create();
         $categoryId = DB::table('categories')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
