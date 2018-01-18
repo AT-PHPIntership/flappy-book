@@ -1,0 +1,17 @@
+.vertical-bottom {
+  display: inline-block;
+  vertical-align: bottom;
+  float: none;
+  padding: 0px;
+  margin-right:20px;
+}
+
+#info-user {
+  margin: 5px 0px;
+  border-radius: 10px;
+}
+
+#info-user div {
+  background-color: #d2d6de47;
+  padding: 20px 10px;
+}

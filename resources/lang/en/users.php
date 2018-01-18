@@ -18,6 +18,7 @@ return [
     'books_borrowing' => 'Books Borrowing',
     'back' => 'Back',
     'role' => 'Role',
+    'verify' => 'Verify',
     'admin' => 'Admin',
     'user' => 'User',
     'none' => 'None',

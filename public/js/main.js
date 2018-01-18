@@ -73,3 +73,15 @@ $(document).on('click', '.btn-role', function(e) {
         }
     });
 });
+
+$('#btn-verify-employee-code').on('click', function(e) {
+    let btnVerify = $('#btn-verify-employee-code');
+    let btnCreate = $('#btn-create-book');
+    let fromPerson = $('#from-person-field');
+    let infoUser = $('#info-user');
+
+    let boolean = !btnCreate.attr('disabled');
+    btnCreate.attr('disabled', boolean);
+    fromPerson.attr('readonly', !boolean);
+    infoUser.attr('hidden', false);
+});
