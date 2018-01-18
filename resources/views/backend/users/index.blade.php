@@ -51,7 +51,7 @@
                   <td><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_count }}</a></td>
                   <td><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->borrows_count }}</a></td>
                   @if(Auth::user()->team == __('users.admin_team_name'))
-                    <td class="text-center"><button type="button" name="btn-role" id="role-user-{{ $user->id }}" data-id="{{ $user->id }}" {{$user->team == __('users.admin_team_name') ? 'disabled' : '' }} 
+                    <td class="text-center"><button type="button" name="btn-role" id="role-user-{{ $user->id }}" data-id="{{ $user->id }}" {{$user->team == __('users.admin_team_name') ? 'disabled' : '' }}
                     @if($user->is_admin == 0)
                       class="btn btn-flat btn-xs btn-role" style="width: 45px">{{ __('users.user') }}
                     @else

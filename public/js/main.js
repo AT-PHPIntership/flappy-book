@@ -61,8 +61,7 @@ $(document).on('click', '.btn-role', function(e) {
         type: 'get',
         data: {'id': id},
         success: function (data) {
-            if(data.is_admin == 0) 
-            {
+            if (data.is_admin == 0) {
                 $(role_user_id).attr('class', 'btn btn-flat btn-xs btn-role');
                 $(role_user_id).html($role.user);
             } else {
