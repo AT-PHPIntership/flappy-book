@@ -1,24 +1,20 @@
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-
+$(document).ready(function () {
     /**
-    * Show delete confimation when click button delete
-    */
-    $('.btn-delete-item').bind('click',function(e){
-        e.preventDefault();
+     * Show delete confimation when click button delete
+     */
+    $('.btn-delete-item').bind('click', function (e) {
         var form = $(this.form);
         var title = $(this).attr('data-title');
         var body = '<i>' + $(this).attr('data-confirm') + '</i>';
         $('#title-content').html(title);
         $('#body-content').html(body);
         $('#confirm').modal('show');
-        $('#delete-btn').one('click', function(){
+        $('#delete-btn').one('click', function () {
             form.submit();
         })
     });
 });
-
-$(document).ready(function(){
+$(document).ready(function () {
     let url = new URL(document.location);
     let params = url.searchParams;
     let sort = params.get('sort');
@@ -50,7 +46,6 @@ $(document).ready(function() {
       reader.onload = function (e) {
         $('#picture-display')
           .attr('src', e.target.result)
-          .width(150)
           .height(200);
       };
       reader.readAsDataURL(this.files[0]);

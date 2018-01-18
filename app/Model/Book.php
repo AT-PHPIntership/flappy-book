@@ -106,4 +106,19 @@ class Book extends Model
     {
         return $this->hasOne(Qrcode::class);
     }
+
+    /**
+     * Override parent boot and Call deleting borrows and comments
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($books) {
+            $books->borrows()->delete();
+            $books->comments()->delete();
+        });
+    }
 }

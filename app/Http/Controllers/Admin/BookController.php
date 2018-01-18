@@ -111,7 +111,7 @@ class BookController extends Controller
      * Update infomation of Book.
      *
      * @param App\Http\Requests\EditBookRequest $request form edit book
-     * @param int                               $id      id of book
+     * @param App\Model\Book                    $book    pass book object
      *
      * @return \Illuminate\Http\Response
      */
@@ -180,5 +180,23 @@ class BookController extends Controller
     {
         $title = $request->title;
         echo $title;
+    }
+
+    /**
+     * Delete a book and relationship.
+     *
+     * @param Book $book object book
+     *
+     * @return void
+     */
+    public function destroy(Book $book)
+    {
+        $bookDelete = $book->delete();
+        if ($bookDelete) {
+            flash(__('books.delete_book_success'))->success();
+        } else {
+            flash(__('books.delete_book_fail'))->error();
+        }
+        return redirect()->back();
     }
 }
