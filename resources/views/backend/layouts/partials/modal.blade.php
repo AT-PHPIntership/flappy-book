@@ -8,8 +8,8 @@
         <div class="modal-body" id="body-content">
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-flat btn-danger" id="delete-btn">{{ __('Delete') }}</button>
-            <button type="button" class="btn btn-sm btn-flat btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+            <button type="button" class="btn btn-sm btn-flat btn-danger" id="delete-btn">{{ __('books.delete') }}</button>
+            <button type="button" class="btn btn-sm btn-flat btn-default" data-dismiss="modal">{{ __('books.close') }}</button>
         </div>
     </div>
   </div>
