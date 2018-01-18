@@ -11,7 +11,7 @@ return [
     'unit' => 'Unit',
     'vnd' => 'VND',
     'description' => 'Description',
-    'id_donator' => 'ID Donator',
+    'from_person' => 'From Person',
     'category' => 'Category',
     'place_some_text_here' => 'Place some text here',
     'author' => 'Author',
@@ -32,6 +32,8 @@ return [
     'close' => 'Close',
     'confirm_deletion' => 'Confirm deletion!',
     'are_you_sure_you_want_to_delete' => 'Are you sure you want to delete?',
+    'delete_book_success' => 'Delete Book Success!',
+    'delete_book_fail' => 'Delete Book Fail!',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',

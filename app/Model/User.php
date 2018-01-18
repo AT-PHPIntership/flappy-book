@@ -33,7 +33,6 @@ class User extends Authenticatable
      */
     const ADMIN_TEAM_NAME = 'SA';
     const ROLE_ADMIN = 1;
-    const ROLE_USER = 0;
     const TEAM_PHP = 'PHP';
     const TEAM_IOS = 'IOS';
     const TEAM_ANDROID = 'ANDROID';
@@ -103,17 +102,5 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    /**
-     * Check admin
-     *
-     * @param App\Model\User $team return team
-     *
-     * @return string
-     */
-    public static function getRoleByTeam($team)
-    {
-        return $team == self::ADMIN_TEAM_NAME ? self::ROLE_ADMIN : self::ROLE_USER;
     }
 }
