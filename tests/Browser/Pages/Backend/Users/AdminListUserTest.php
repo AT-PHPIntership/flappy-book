@@ -12,6 +12,8 @@ class AdminListUserTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    protected $numberRecordCreate = 25;
+
     /**
     * Override function setUp() for make user login
     *
@@ -21,8 +23,8 @@ class AdminListUserTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->makeAdminLogin();
-        factory(User::class, 25)->create();
+        $this->createAdminUser();
+        factory(User::class, $this->numberRecordCreate)->create();
     }
 
     /**
@@ -33,7 +35,7 @@ class AdminListUserTest extends DuskTestCase
     public function testListUsers()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
                     ->visit('/admin')
                     ->clickLink('Users')
                     ->assertPathIs('/admin/users')
@@ -49,11 +51,11 @@ class AdminListUserTest extends DuskTestCase
     public function testShowRecord()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
             ->visit('/admin/users')
             ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
-            $this->assertCount(10, $elements);
+            $this->assertCount(config('define.users.limit_rows'), $elements);
             $this->assertNotNull($browser->element('.pagination'));
 
         });
@@ -67,17 +69,17 @@ class AdminListUserTest extends DuskTestCase
     public function testListUsersPagination()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
                     ->visit('/admin/users')
                     ->assertSee('List Users');
             // Count row number in one page
             $elements = $browser->elements('#list-users tbody tr');
-            $this->assertCount(10, $elements);
+            $this->assertCount(config('define.users.limit_rows'), $elements);
             $this->assertNotNull($browser->element('.pagination'));
             //Count page number of pagination
             $paginate_element = $browser->elements('.pagination li');
             $number_page = count($paginate_element)- 2;
-            $this->assertTrue($number_page == 3);
+            $this->assertTrue($number_page == ceil(($this->numberRecordCreate + 1) / (config('define.users.limit_rows'))));
         });
     }
 
@@ -89,13 +91,13 @@ class AdminListUserTest extends DuskTestCase
     public function testPathPagination()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit('/admin/users?page=3')
+            $browser->loginAs(User::first())
+                    ->visit('/admin/users?page='.ceil(($this->numberRecordCreate + 1) / (config('define.users.limit_rows'))))
                     ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
-            $this->assertCount(6, $elements);
+            $this->assertCount(($this->numberRecordCreate +1) % config('define.users.limit_rows'), $elements);
             $browser->assertPathIs('/admin/users');
-            $browser->assertQueryStringHas('page', 3);
+            $browser->assertQueryStringHas('page', ceil(($this->numberRecordCreate + 1) / (config('define.users.limit_rows'))));
         });
     }
 }

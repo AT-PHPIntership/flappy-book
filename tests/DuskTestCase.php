@@ -2,11 +2,12 @@
 
 namespace Tests;
 
+use App\Model\User;
+use Faker\Factory as Faker;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
-use App\Model\User;
 
 abstract class DuskTestCase extends BaseTestCase
 {
@@ -43,16 +44,16 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
-    * Make user belong team SA and is admin
-    *
-    * @return void
-    */
-    public function makeAdminLogin()
+     * Make user belong team SA and is admin
+     *
+     * @return void
+     */
+    public function createAdminUser()
     {
         factory(User::class)->create([
-            'employ_code' => 'ATI0282',
-            'name' => 'Tram Pham T.M.',
-            'email' => 'tram.pham@asiantech.vn',
+            'employ_code' => 'ATI0297',
+            'name' => 'Minh Dao T.',
+            'email' => 'minh.dao@asiantech.vn',
             'team' => User::ADMIN_TEAM_NAME,
             'is_admin' => User::ROLE_ADMIN,
         ]);
