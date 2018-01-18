@@ -20,7 +20,7 @@ class AdminDetailUsersTest extends DuskTestCase
      public function setUp()
      {
          parent::setUp();
-         $this->makeUserLogin();
+         $this->makeAdminLogin();
      }
 
     /**
@@ -81,20 +81,4 @@ class AdminDetailUsersTest extends DuskTestCase
             $this->assertTrue($browser->text('.email') === $user->email);
        });
    }
-
-    /**
-     * Make user belong team SA and is admin
-     *
-     * @return void
-     */
-    public function makeUserLogin()
-    {
-        factory(User::class)->create([
-            'employ_code' => 'ATI0290',
-            'name' => 'Hieu Le T.',
-            'email' => 'hieu.le@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => User::ROLE_ADMIN,
-        ]);
-    }
 }
