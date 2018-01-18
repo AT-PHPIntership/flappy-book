@@ -24,7 +24,7 @@ class AdminDetailUsersTest extends DuskTestCase
      }
 
     /**
-     * A Dusk test ShowRecord
+     * A Dusk test RouteShowDetailUser
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class AdminDetailUsersTest extends DuskTestCase
     }
 
     /**
-     * A Dusk test DetailUser
+     * A Dusk test LayoutDetailUser
      *
      * @return void
      */
@@ -66,7 +66,7 @@ class AdminDetailUsersTest extends DuskTestCase
    }
 
     /**
-     * A Dusk testBackListlUser
+     * A Dusk test ShowDetailUser
      *
      * @return void
      */
@@ -76,9 +76,9 @@ class AdminDetailUsersTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('/admin/users/' . $user->id);
-                    $this->assertTrue($browser->text('.profile-username') === $user->name);
-                    $this->assertTrue($browser->text('.employee_code') === $user->employee_code);
-                    $this->assertTrue($browser->text('.email') === $user->email);
+            $this->assertTrue($browser->text('.profile-username') === $user->name);
+            $this->assertTrue($browser->text('.employee_code') === $user->employ_code);
+            $this->assertTrue($browser->text('.email') === $user->email);
        });
    }
 
@@ -89,12 +89,12 @@ class AdminDetailUsersTest extends DuskTestCase
      */
     public function makeUserLogin()
     {
-        factory(User::class, 1)->create([
+        factory(User::class)->create([
             'employ_code' => 'ATI0290',
             'name' => 'Hieu Le T.',
             'email' => 'hieu.le@asiantech.vn',
             'team' => 'SA',
-            'is_admin' => '1',
+            'is_admin' => User::ROLE_ADMIN,
         ]);
     }
 }
