@@ -18,18 +18,14 @@
     </ol>
   </section>
   <section class="content">
-    @if (Session::has('edit_failure'))
-      <div class="alert  alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span>{{ Session::get('edit_failure') }}</span>
-      </div>
-    @endif
+    @include('flash::message')
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
           <form action="{{route('books.update', $book->id)}}" role="form" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
+            <input type="hidden" name="redirect_to" value="{{ URL::previous() }}">
             <div class="box-body">
               <div class="row">
                 <div class="col-xs-12">

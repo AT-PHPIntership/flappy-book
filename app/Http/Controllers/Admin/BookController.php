@@ -117,7 +117,6 @@ class BookController extends Controller
      */
     public function update(EditBookRequest $request, Book $book)
     {
-
         //save image path, move image to directory
         if (isset($request->picture)) {
             $oldPath = $book->picture;
@@ -148,10 +147,11 @@ class BookController extends Controller
         $book->unit = $request->unit;
 
         if ($book->save()) {
-            $request->session()->flash('edit_success', __('Edit Succes'));
-            return redirect()->route('books.index');
+            $url = $request->redirect_to;
+            flash(__('books.books_edit_success'))->success();
+            return redirect()->to($url);
         } else {
-            $request->session()->flash('edit_failure', __('Edit Failure'));
+            flash('books.books_edit_failer')->error();
             return redirect()->route('books.edit');
         }
     }

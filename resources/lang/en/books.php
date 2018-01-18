@@ -32,6 +32,8 @@ return [
     'close' => 'Close',
     'confirm_deletion' => 'Confirm deletion!',
     'are_you_sure_you_want_to_delete' => 'Are you sure you want to delete?',
+    'books_edit_success' => 'Edit Book Success !',
+    'books_edit_failer' => 'Edit Book Failer !',
     'delete_book_success' => 'Delete Book Success!',
     'delete_book_fail' => 'Delete Book Fail!',
     'listunit' => [
