@@ -14,18 +14,6 @@ use Faker\Factory as Faker;
 class AdminButtonEditBookTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    
-    /**
-     * Override function setUp() for make user login
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->makeUserLogin();
-    }
 
     /**
      * Test admin click button edit book in list books
@@ -45,22 +33,6 @@ class AdminButtonEditBookTest extends DuskTestCase
                     ->assertSee('Edit Book')
                     ->assertPathIs('/admin/books/1/edit');
         });
-    }
-
-    /**
-     * Make user belong team SA and is admin
-     *
-     * @return void
-     */
-    public function makeUserLogin()
-    {
-        factory(User::class, 1)->create([
-            'employ_code' => 'ATI0297',
-            'name' => 'Minh Dao T.',
-            'email' => 'minh.dao@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => '1',
-        ]);
     }
 
     /**

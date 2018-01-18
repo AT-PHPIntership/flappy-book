@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Model\User;
+use Faker\Factory as Faker;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -39,5 +41,21 @@ abstract class DuskTestCase extends BaseTestCase
                 ChromeOptions::CAPABILITY, $options
             )
         );
+    }
+
+    /**
+     * Make user belong team SA and is admin
+     *
+     * @return void
+     */
+    public function makeUserLogin()
+    {
+        factory(User::class, 1)->create([
+            'employ_code' => 'ATI0297',
+            'name' => 'Minh Dao T.',
+            'email' => 'minh.dao@asiantech.vn',
+            'team' => 'SA',
+            'is_admin' => '1',
+        ]);
     }
 }
