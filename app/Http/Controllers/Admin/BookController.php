@@ -157,7 +157,6 @@ class BookController extends Controller
         // get unit field
         $book->unit = __('books.listunit')[$request->unit];
 
-
         if ($book->save()) {
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
