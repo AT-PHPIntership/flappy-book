@@ -8,10 +8,10 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Faker\Factory as Faker;
 use App\Model\User;
 
-
 class AdminListUserTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
     /**
     * Override function setUp() for make user login
     *
@@ -20,13 +20,16 @@ class AdminListUserTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->makeUserLogin();
+
+        $this->makeAdminLogin();
+        factory(User::class, 25)->create();
     }
+
     /**
-     * A Dusk test list users.
-     *
-     * @return void
-     */
+    * A Dusk test list users.
+    *
+    * @return void
+    */
     public function testListUsers()
     {
         $this->browse(function (Browser $browser) {
@@ -45,7 +48,6 @@ class AdminListUserTest extends DuskTestCase
     */
     public function testShowRecord()
     {
-        factory(User::class, 10)->create();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
             ->visit('/admin/users')
@@ -56,6 +58,7 @@ class AdminListUserTest extends DuskTestCase
 
         });
     }
+
     /**
     * Test view Admin List Users with pagination
     *
@@ -63,8 +66,6 @@ class AdminListUserTest extends DuskTestCase
     */
     public function testListUsersPagination()
     {
-
-        factory(User::class, 23)->create();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit('/admin/users')
@@ -79,6 +80,7 @@ class AdminListUserTest extends DuskTestCase
             $this->assertTrue($number_page == 3);
         });
     }
+
     /**
     * Test click page 2 in pagination link
     *
@@ -86,30 +88,14 @@ class AdminListUserTest extends DuskTestCase
     */
     public function testPathPagination()
     {
-        factory(User::class, 14)->create();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
-                    ->visit('/admin/users?page=2')
+                    ->visit('/admin/users?page=3')
                     ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
-            $this->assertCount(5, $elements);
+            $this->assertCount(6, $elements);
             $browser->assertPathIs('/admin/users');
-            $browser->assertQueryStringHas('page', 2);
+            $browser->assertQueryStringHas('page', 3);
         });
-    }
-    /**
-     * Make user belong team SA and is admin
-     *
-     * @return void
-     */
-    public function makeUserLogin()
-    {
-        factory(User::class, 1)->create([
-            'employ_code' => 'ATI0282',
-            'name' => 'Tram Pham T.M.',
-            'email' => 'tram.pham@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => '1',
-        ]);
     }
 }
