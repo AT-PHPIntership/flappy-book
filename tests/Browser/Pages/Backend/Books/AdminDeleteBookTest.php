@@ -24,7 +24,8 @@ class AdminDeleteBookTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->makeUserLogin();
+        $this->createAdminUser();
+        $this->makeData(1);
     }
 
     /**
@@ -34,9 +35,8 @@ class AdminDeleteBookTest extends DuskTestCase
      */
     public function testAdminClickButtonDeleleBook()
     {
-        $this->makeData(1);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
                     ->visit('/admin/books')
                     ->assertSee('List Books')
                     ->click('td button.fa-trash-o')
@@ -51,9 +51,8 @@ class AdminDeleteBookTest extends DuskTestCase
      */
     public function testAdminConfirmCloseOnPopup()
     {
-        $this->makeData(1);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
                     ->visit('/admin/books')
                     ->click('td button.fa-trash-o')
                     ->assertSee('Confirm deletion!')
@@ -69,36 +68,20 @@ class AdminDeleteBookTest extends DuskTestCase
      */
     public function testAdminConfirmDeleteOnPopup()
     {
-        $this->makeData(1);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
                     ->visit('/admin/books');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(1, $elements);
             $browser->click('td button.fa-trash-o')
                     ->assertSee('Confirm deletion!')
                     ->press('Delete')
-                    ->assertDontSee('Confirm deletion!');
+                    ->assertDontSee('Confirm deletion!')
+                    ->assertSee('Delete Book Success!');
             $browser->pause(1000);
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(0, $elements);
         });
-    }
-
-    /**
-     * Make user belong team SA and is admin
-     *
-     * @return void
-     */
-    public function makeUserLogin()
-    {
-        factory(User::class, 1)->create([
-            'employ_code' => 'ATI0297',
-            'name' => 'Minh Dao T.',
-            'email' => 'minh.dao@asiantech.vn',
-            'team' => 'SA',
-            'is_admin' => '1',
-        ]);
     }
 
     /**
