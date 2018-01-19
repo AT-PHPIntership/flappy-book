@@ -34,7 +34,7 @@ class CreateBookRequest extends FormRequest
                                   .Book::TYPE_YEN.',',
             'from_person' => 'required|max:10',
             'description' => 'required',
-            'year'        => 'required|date_format:"Y"',
+            'year'        => 'required|integer|date_format:"Y"|max:'.(date('Y')),
             'author'      => 'required|max:255',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
