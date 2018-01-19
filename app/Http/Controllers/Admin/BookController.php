@@ -9,9 +9,9 @@ use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
 use App\Model\Book;
 use App\Model\Category;
-use File;
 use App\Model\Qrcode;
 use App\Model\User;
+use App\Libraries\ImageUpdate;
 
 class BookController extends Controller
 {
@@ -111,25 +111,19 @@ class BookController extends Controller
      * Update infomation of Book.
      *
      * @param App\Http\Requests\EditBookRequest $request form edit book
-     * @param App\Model\Book                    $book    pass book object
+     * @param App\Model\Book                    $id      pass id object
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(EditBookRequest $request, Book $book)
+    public function update(EditBookRequest $request, $id)
     {
+        $book = Book::findOrFail($id);
+
         //save image path, move image to directory
         if (isset($request->picture)) {
             $oldPath = $book->picture;
-            if (File::exists($oldPath)) {
-                File::delete($oldPath);
-            }
-            $image = $request->picture;
-            $name = $image->hashName();
-            $folder = config('image.book.path');
-            $image->move($folder, $name);
-
-            $newPath = $folder . $name;
-            $book->picture = $newPath;
+            $result  = ImageUpdate::imageUpdate($request->picture, config('image.book.path'), $oldPath);
+            $book->picture = $result;
         }
 
         //save new donator
@@ -138,21 +132,12 @@ class BookController extends Controller
             $book->from_person = $request->iddonator;
         }
 
-        $book->title = $request->title;
-        $book->author = $request->author;
-        $book->category_id = $request->category_id;
-        $book->year = $request->year;
-        $book->price = $request->price;
-        $book->description = $request->description;
-        $book->unit = $request->unit;
-
-        if ($book->save()) {
-            $url = $request->redirect_to;
+        if ($book->update($request->except(['iddonator', 'picture']))) {
             flash(__('books.books_edit_success'))->success();
-            return redirect()->to($url);
+            return redirect()->route("books.index");
         } else {
             flash('books.books_edit_failer')->error();
-            return redirect()->route('books.edit');
+            return redirect()->back()->withInput();
         }
     }
 
