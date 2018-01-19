@@ -29,7 +29,7 @@ class AdminDetailUsersTest extends DuskTestCase
      * @return void
      */
     public function testRouteShowDetailUser(){                       
-        $user = User::find(1);
+        $user = User::first();
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('/admin/users')
@@ -47,7 +47,7 @@ class AdminDetailUsersTest extends DuskTestCase
      */
     public function testLayoutDetailUser()
    {
-        $user = User::find(1);
+        $user = User::first();
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('/admin/users/' . $user->id)
@@ -72,7 +72,7 @@ class AdminDetailUsersTest extends DuskTestCase
      */
     public function testShowDetailUser()
    {
-        $user = User::find(1);
+        $user = User::first();
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('/admin/users/' . $user->id);
