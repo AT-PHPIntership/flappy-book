@@ -140,16 +140,8 @@ class BookController extends Controller
     public function store(CreateBookRequest $request)
     {
         // create book fields.
-        $bookFields = [
-            'title'       => $request->title,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-            'year'        => $request->year,
-            'author'      => $request->author,
-            'price'       => $request->price,
-            'from_person' => $request->from_person,
-            'unit'        => __('books.listunit')[$request->unit],
-        ];
+        $bookFields = $request->all();
+        $bookFields['unit'] =  __('books.listunit')[$request->unit];
 
         DB::beginTransaction();
         try {
