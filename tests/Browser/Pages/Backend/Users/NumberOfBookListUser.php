@@ -17,10 +17,10 @@ class NumberOfBookListUser extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-    * Override function setUp() for make user login
-    *
-    * @return void
-    */
+     * Override function setUp()
+     *
+     * @return void
+     */
     public function setUp()
     {
        parent::setUp();
@@ -64,10 +64,10 @@ class NumberOfBookListUser extends DuskTestCase
     }
 
     /**
-    * Display index user has total donated and borrowed books
-    *
-    * @return void
-    */
+     * Display index user has total donated and borrowed books
+     *
+     * @return void
+     */
     public function testNumberOfBookAtListUser()
     {
         $this->browse(function (Browser $browser) {
@@ -91,14 +91,14 @@ class NumberOfBookListUser extends DuskTestCase
             $this->assertTrue($users->books_donated_count == $totalDonator);
             $this->assertTrue($users->books_borrowed_count == $totalBorrow);
             $browser->assertSee('List Users');
-            });
+        });
     }
 
     /**
-    * Display record of book by user
-    *
-    * @return void
-    */
+     * Display record of book by user
+     *
+     * @return void
+     */
     public function testDetailOfBook()
     {
         $this->browse(function (Browser $browser) {
