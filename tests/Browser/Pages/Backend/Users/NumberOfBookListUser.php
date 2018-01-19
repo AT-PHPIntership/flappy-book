@@ -15,7 +15,7 @@ use Faker\Factory as Faker;
 class NumberOfBookListUser extends DuskTestCase
 {
     use DatabaseMigrations;
-    
+
     /**
     * Override function setUp() for make user login
     *
@@ -26,6 +26,7 @@ class NumberOfBookListUser extends DuskTestCase
        parent::setUp();
 
        $this->createAdminUser();
+       $this->makeData();
     }
 
     /**
@@ -51,13 +52,12 @@ class NumberOfBookListUser extends DuskTestCase
      */
     public function testAddLink()
     {   
-        $this->makeData();
+        // $this->makeData();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
                     ->visit('/admin/users')
-                    ->assertSee('List Users')
-                    ->assertVisible('.number-borrow')
-                    ->visit($browser->attribute('.number-borrow', 'href'))
+                    ->assertVisible('#list-users tbody td:nth-child(6) a ')
+                    ->visit($browser->attribute('#list-users tbody td:nth-child(6) a ', 'href'))
                     ->assertSee('List Books')
                     ->assertQueryStringHas('userid', '1')
                     ->assertQueryStringHas('option', 'borrowed');
@@ -71,9 +71,9 @@ class NumberOfBookListUser extends DuskTestCase
     */
     public function testNumberOfBookAtListUser()
     {
-        $this->makeData();
+        // $this->makeData();
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs(User::first())
                     ->visit('/admin/users');
             $fields = [
             'users.id',
@@ -88,8 +88,8 @@ class NumberOfBookListUser extends DuskTestCase
             ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
             ->groupBy('users.id')
             ->first();
-            $totalDonator = $browser->text('#list-users tbody tr:nth-child(1) td:nth-child(5)');
-            $totalBorrow = $browser->text('#list-users tbody tr:nth-child(1) td:nth-child(6)');
+            $totalDonator = $browser->text('#list-users tbody tr:first-child td:nth-child(5)');
+            $totalBorrow = $browser->text('#list-users tbody tr:first-child td:nth-child(6)');
             $this->assertTrue($users->books_donated_count == $totalDonator);
             $this->assertTrue($users->books_borrowed_count == $totalBorrow);
             $browser->assertSee('List Users');
@@ -103,10 +103,9 @@ class NumberOfBookListUser extends DuskTestCase
     */
     public function testDetailofBook()
     {
-        $this->makeData();
+        // $this->makeData();
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit('/admin/users')  
+            $browser->loginAs(User::first())
                     ->visit('admin/books?userid=1&option=borrowed')
                     ->assertSee('List Books');
             $fields = [
