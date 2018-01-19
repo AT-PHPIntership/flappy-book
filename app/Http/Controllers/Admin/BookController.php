@@ -139,40 +139,43 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
-        // create book.
-        $book = new Book($request->except(['total_rating', 'rating']));
-
-        // get unit field
-        $book->unit = __('books.listunit')[$request->unit];
+        // create book fields.
+        $bookFields = [
+            'title'       => $request->title,
+            'category_id' => $request->category_id,
+            'description' => $request->description,
+            'year'        => $request->year,
+            'author'      => $request->author,
+            'price'       => $request->price,
+            'from_person' => $request->from_person,
+            'unit'        => __('books.listunit')[$request->unit],
+        ];
 
         DB::beginTransaction();
         try {
             // save book picture
             if ($request->hasFile('picture')) {
                 $picture = $request->picture;
-                $folderStore = config('define.books.folder_store');
-                $pictureName = config('define.books.name_prefix') . '-' . $picture->hashName();
-                $picturePath = $folderStore . $pictureName;
+                $folderStore = config('define.books.folder_store_books');
+                $pictureName = config('define.books.image_name_prefix') . '-' . $picture->hashName();
                 $picture->move($folderStore, $pictureName);
-                $book->picture = $picturePath;
+                $bookFields['picture'] = $pictureName;
             } else {
-                $book->picture = config('define.books.default_image');
+                $bookFields['picture'] = config('define.books.default_name_image');
             }
 
             // store book
-            $book->save();
+            $book = Book::create($bookFields);
 
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
             $codeNumber = $qrCode ? $qrCode->code_id + 1 :  Qrcode::DEFAULT_CODE_ID ;
 
             // store qrcode
-            $book->qrcode()->save(
-                new Qrcode([
-                    'code_id' => $codeNumber,
-                    'prefix' => Qrcode::DEFAULT_CODE_PREFIX,
-                ])
-            );
+            $book->qrcode()->create([
+                'code_id' => $codeNumber,
+                'prefix'  => Qrcode::DEFAULT_CODE_PREFIX,
+            ]);
 
             DB::commit();
             flash(__('books.create_success'))->success();
