@@ -32,8 +32,8 @@
                  <tr>
                   <th class="text-center">{{ __('users.no') }}</th>
                   <th class="text-center">{{ __('users.employee_code') }}</th>
-                  <th class="text-center">{{ __('users.name') }}</th>
-                  <th class="text-center">{{ __('users.email') }}</th>
+                  <th>{{ __('users.name') }}</th>
+                  <th>{{ __('users.email') }}</th>
                   <th class="text-center">{{ __('users.donate') }}</th>
                   <th class="text-center">{{ __('users.borrowed') }}</th>
                   @if(Auth::user()->team == __('users.admin_team_name'))
