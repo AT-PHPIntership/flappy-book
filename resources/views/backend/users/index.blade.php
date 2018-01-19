@@ -27,7 +27,7 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="list-users" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th class="text-center">{{ __('users.no') }}</th>
@@ -48,8 +48,8 @@
                     <td class="text-center">{{ $user->employ_code }}</td>
                     <td><a href="{{ route('users.show', ['id' => $user->id]) }}">{{ $user->name }}</a></td>
                     <td>{{ $user->email }}</td>
-                    <td class="text-center"><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_donated_count }}</a></td>
-                    <td class="text-center"><a href="{{ route('books.index', ['userid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->books_borrowed_count }}</a></td>
+                    <td class="text-center"><a class="number-donate" href="{{ route('books.index', ['userid' => $user->id, 'option' => 'donated']) }}">{{ $user->books_donated_count }}</a></td>
+                    <td class="text-center"><a class="number-borrow" href="{{ route('books.index', ['userid' => $user->id, 'option' => 'borrowed']) }}">{{ $user->books_borrowed_count }}</a></td>
                     @if(Auth::user()->team == __('users.admin_team_name'))
                       <td class="text-center"><button type="button" name="btn-role" id="role-user-{{ $user->id }}" data-id="{{ $user->id }}" style="width: 45px" {{$user->team == __('users.admin_team_name') ? 'disabled' : '' }}
                       @if($user->is_admin == __('users.role_user'))
