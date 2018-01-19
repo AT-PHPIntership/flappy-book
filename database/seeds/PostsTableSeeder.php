@@ -15,8 +15,10 @@ class PostsTableSeeder extends Seeder
     {
         $userId = DB::table('users')->pluck('id')->toArray();
         $faker = Faker::create();
-        factory(App\Model\Post::class, 15)->create([
-            'user_id' => $faker->randomElement($userId)
-        ]);
+        for($i = 0; $i <= 15; $i++) {
+            factory(App\Model\Post::class)->create([
+                'user_id' => $faker->randomElement($userId)
+            ]);
+        }
     }
 }
