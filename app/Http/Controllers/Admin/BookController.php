@@ -143,22 +143,21 @@ class BookController extends Controller
         $bookFields = $request->all();
         $bookFields['unit'] =  __('books.listunit')[$request->unit];
 
+        // save book picture
+        if ($request->hasFile('picture')) {
+            $picture = $request->picture;
+            $folderStore = config('define.books.folder_store_books');
+            $pictureName = config('define.books.image_name_prefix') . '-' . $picture->hashName();
+            $picture->move($folderStore, $pictureName);
+            $bookFields['picture'] = $pictureName;
+        } else {
+            $bookFields['picture'] = config('define.books.default_name_image');
+        }
+
         DB::beginTransaction();
         try {
-            // save book picture
-            if ($request->hasFile('picture')) {
-                $picture = $request->picture;
-                $folderStore = config('define.books.folder_store_books');
-                $pictureName = config('define.books.image_name_prefix') . '-' . $picture->hashName();
-                $picture->move($folderStore, $pictureName);
-                $bookFields['picture'] = $pictureName;
-            } else {
-                $bookFields['picture'] = config('define.books.default_name_image');
-            }
-
             // store book
             $book = Book::create($bookFields);
-
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
             $codeNumber = $qrCode ? $qrCode->code_id + 1 :  Qrcode::DEFAULT_CODE_ID ;
@@ -173,6 +172,9 @@ class BookController extends Controller
             flash(__('books.create_success'))->success();
             return redirect()->route('books.index');
         } catch (\Exception $e) {
+            if (isset($pictureName) && \File::exists($folderStore.$pictureName)) {
+                \File::delete($folderStore.$pictureName);
+            }
             DB::rollback();
             flash(__('books.create_failure'))->error();
             return redirect()->back()->withInput();
