@@ -14,7 +14,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">{{ __('dashboard.main_navigation') }}</li>
-      <li class="{{ areActiveRoute(['admin.home.index']) }}">
+      <li class="{{ checkActiveRoutes(['admin.home.index']) }}">
         <a href="{{ route('admin.home.index') }}"><i class="fa fa-dashboard"></i> <span>{{ __('dashboard.dashboard') }}</span></a>
       </li>
       <li class="treeview">
@@ -30,10 +30,10 @@
         </ul>
       </li>
       <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Simple Menu</span></a></li>
-      <li class="{{ areActiveRoute(['books.index','books.create', 'books.edit']) }}">
+      <li class="{{ checkActiveRoutes(['books.index','books.create', 'books.edit']) }}">
         <a href="{{ route('books.index') }}"><i class="fa fa-book"></i> <span>{{ __('dashboard.books') }}</span></a>
       </li>
-      <li class="{{ areActiveRoute(['users.index','users.show', 'users.edit']) }}">
+      <li class="{{ checkActiveRoutes(['users.index','users.show', 'users.edit']) }}">
         <a href="{{ route('users.index') }}"><i class="fa fa-user-circle"></i> <span>{{ __('dashboard.users') }}</span></a>
       </li>
     </ul>

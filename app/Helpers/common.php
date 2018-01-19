@@ -1,24 +1,6 @@
 <?php
 
-if (!function_exists('isActiveRoute')) {
-
-    /**
-     * Active menu side bar when route menu is current route
-     *
-     * @param string $route  route of page
-     * @param string $output active or ''
-     *
-     * @return string
-     */
-    function isActiveRoute($route, $output = "active")
-    {
-        if (Route::currentRouteName() == $route) {
-            return $output;
-        }
-    }
-}
-
-if (!function_exists('areActiveRoute')) {
+if (!function_exists('checkActiveRoutes')) {
 
     /**
      * Active menu side bar when routes menu are current route
@@ -28,7 +10,7 @@ if (!function_exists('areActiveRoute')) {
      *
      * @return string
      */
-    function areActiveRoute(array $routes, $output = "active")
+    function checkActiveRoutes(array $routes, $output = "active")
     {
         if (in_array(Route::currentRouteName(), $routes, true)) {
             return $output;
