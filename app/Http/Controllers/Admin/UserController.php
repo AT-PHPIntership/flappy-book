@@ -62,4 +62,22 @@ class UserController extends Controller
 
         return view('backend.users.show', ['user' => $user]);
     }
+
+
+    /**
+     * Update role user.
+     *
+     * @param Interger $userId User Id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateRole(int $userId)
+    {
+        $user = User::find($userId);
+        if ($user->team != User::ADMIN_TEAM_NAME && \Auth::user()->team == User::ADMIN_TEAM_NAME) {
+            $user->is_admin = $user->is_admin == User::ROLE_USER ? User::ROLE_ADMIN : User::ROLE_USER;
+            $user->save();
+            return response($user);
+        }
+    }
 }

@@ -20,7 +20,7 @@ class AdminDetailUsersTest extends DuskTestCase
      public function setUp()
      {
          parent::setUp();
-         $this->makeAdminLogin();
+         $this->createAdminUser();
      }
 
     /**
