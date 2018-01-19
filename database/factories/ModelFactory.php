@@ -27,7 +27,6 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
         'price' => $faker->numberBetween(1000,9000),
         'unit' => $faker->randomElement([\App\Model\Book::TYPE_VND, \App\Model\Book::TYPE_DOLAR,\App\Model\Book::TYPE_YEN, \App\Model\Book::TYPE_EURO]),
         'picture' => $faker->image,
-        'from_person' => $faker->name,
         'total_rating' => $faker->numberBetween(1,20),
         'rating' => $faker->numberBetween(1,5),
     ];
