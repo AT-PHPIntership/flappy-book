@@ -16,7 +16,7 @@ class LikesTableSeeder extends Seeder
         $postId = DB::table('posts')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('id')->toArray();
         $faker = Faker::create();
-        for($i = 0; $i <= 15; $i++) {
+        for ($i = 0; $i <= 15; $i++) {
             factory(App\Model\Like::class)->create([
                 'post_id' => $faker->randomElement($postId),
                 'user_id' => $faker->randomElement($userId)

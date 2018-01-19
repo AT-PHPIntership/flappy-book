@@ -17,7 +17,7 @@ class BorrowsTableSeeder extends Seeder
         $bookId = DB::table('books')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('id')->toArray();
         $faker = Faker::create();
-        for($i = 0; $i <= 15; $i++) {
+        for ($i = 0; $i <= 15; $i++) {
             factory(App\Model\Borrow::class)->create([
                 'book_id' => $faker->randomElement($bookId),
                 'user_id' => $faker->randomElement($userId)

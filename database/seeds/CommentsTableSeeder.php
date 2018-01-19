@@ -15,7 +15,7 @@ class CommentsTableSeeder extends Seeder
     {
         $userId = DB::table('users')->pluck('id')->toArray();
         $faker = Faker::create();
-        for($i = 0; $i <= 15; $i++) {
+        for ($i = 0; $i <= 15; $i++) {
             factory(App\Model\Comment::class)->create([
                 'user_id' => $faker->randomElement($userId)
             ]);
