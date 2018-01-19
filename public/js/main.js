@@ -52,3 +52,24 @@ $(document).ready(function() {
     }
   })
 });
+
+$(document).on('click', '.btn-role', function(e) {
+    var id = $(this).data('id');
+    var role_user_id = '#' + $(this).attr('id');
+    $.ajax({
+        url: '/admin/users/' + id + '/updateRole',
+        type: 'get',
+        data: {'id': id},
+        success: function (data) {
+            if (data.is_admin == 0) {
+                $(role_user_id).attr('class', 'btn btn-flat btn-xs btn-role');
+                $(role_user_id).html($role.user);
+            } else {
+                $(role_user_id).attr('class', 'btn btn-danger btn-flat btn-xs btn-role');
+                $(role_user_id).html($role.admin);
+            }
+        },
+        error: function () {
+        }
+    });
+});
