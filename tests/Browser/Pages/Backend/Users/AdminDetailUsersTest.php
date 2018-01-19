@@ -32,11 +32,22 @@ class AdminDetailUsersTest extends DuskTestCase
         $user = User::first();
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
-                    ->visit('/admin/users')
-                    ->assertSee('List Users')
-                    ->click('.name-id')
                     ->visit('admin/users/'.$user->id)
                     ->assertSee('Detail User');
+        });     
+    }
+
+    /**
+     * A Dusk test testRouteShowDetailUserNotExists
+     *
+     * @return void
+     */
+    public function testRouteShowDetailUserNotExists(){                      
+        $user = User::first();
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                    ->visit('admin/users/10')
+                    ->assertSee('Sorry, the page you are looking for could not be found.');
         });     
     }
 
