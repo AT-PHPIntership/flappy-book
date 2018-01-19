@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 use File;
 
-class ImageUpdate
+class Image
 {
     /**
      * Update images of Book.
@@ -15,15 +15,13 @@ class ImageUpdate
      *
      * @return string
      */
-    public static function imageUpdate($imgFile, $imgPath, $oldPath)
+    public static function updateImage($imgFile, $imgPath, $oldPath)
     {
         if (File::exists($oldPath)) {
             File::delete($oldPath);
         }
-            $name = $imgFile->hashName();
-            $folder = $imgPath;
-            $imgFile->move($folder, $name);
-            $newPath = $folder . $name;
-            return $newPath;
+        $name = $imgFile->hashName();
+        $imgFile->move($imgPath, $name);
+        return $imgPath . $name;
     }
 }

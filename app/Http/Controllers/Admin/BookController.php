@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
+use Exception;
 use App\Model\Book;
 use App\Model\Category;
 use App\Model\Qrcode;
 use App\Model\User;
-use App\Libraries\ImageUpdate;
+use App\Libraries\Image;
 
 class BookController extends Controller
 {
@@ -118,12 +119,34 @@ class BookController extends Controller
     public function update(EditBookRequest $request, $id)
     {
         $book = Book::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $this->updateBook($book, $request);
+            flash(__('books.books_edit_success'))->success();
+            DB::commit();
+            return redirect()->route("books.index");
+        } catch (Exception $e) {
+            flash(__('books.books_edit_failer'))->error();
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
+    }
+
+    /**
+     * Save infomation of Book.
+     *
+     * @param App\Model\Book                    $book    pass book object
+     * @param App\Http\Requests\EditBookRequest $request picture and iddonator edit book
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function updateBook($book, $request)
+    {
 
         //save image path, move image to directory
         if (isset($request->picture)) {
             $oldPath = $book->picture;
-            $result  = ImageUpdate::imageUpdate($request->picture, config('image.book.path'), $oldPath);
-            $book->picture = $result;
+            $book->picture  = Image::updateImage($request->picture, config('image.book.path'), $oldPath);
         }
 
         //save new donator
@@ -131,16 +154,8 @@ class BookController extends Controller
         if (isset($user)) {
             $book->from_person = $request->iddonator;
         }
-
-        if ($book->update($request->except(['iddonator', 'picture']))) {
-            flash(__('books.books_edit_success'))->success();
-            return redirect()->route("books.index");
-        } else {
-            flash('books.books_edit_failer')->error();
-            return redirect()->back()->withInput();
-        }
+        $book->update($request->except(['iddonator', 'picture']));
     }
-
     
 
     /**
@@ -176,10 +191,13 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        DB::beginTransaction();
         $bookDelete = $book->delete();
         if ($bookDelete) {
+            DB::commit();
             flash(__('books.delete_book_success'))->success();
         } else {
+            DB::rollBack();
             flash(__('books.delete_book_fail'))->error();
         }
         return redirect()->back();
