@@ -51,8 +51,7 @@ class NumberOfBookListUser extends DuskTestCase
      * @return void
      */
     public function testAddLink()
-    {   
-        // $this->makeData();
+    {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
                     ->visit('/admin/users')
@@ -71,23 +70,22 @@ class NumberOfBookListUser extends DuskTestCase
     */
     public function testNumberOfBookAtListUser()
     {
-        // $this->makeData();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
                     ->visit('/admin/users');
             $fields = [
-            'users.id',
-            'users.employ_code',
-            'users.name',
-            'users.email',
-            DB::raw('COUNT(DISTINCT(books.id)) AS books_donated_count'),
-            DB::raw('COUNT(DISTINCT(borrows.book_id)) AS books_borrowed_count'),
+                'users.id',
+                'users.employ_code',
+                'users.name',
+                'users.email',
+                DB::raw('COUNT(DISTINCT(books.id)) AS books_donated_count'),
+                DB::raw('COUNT(DISTINCT(borrows.book_id)) AS books_borrowed_count'),
             ];
             $users = User::select($fields)
-            ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
-            ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
-            ->groupBy('users.id')
-            ->first();
+                           ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
+                           ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
+                           ->groupBy('users.id')
+                           ->first();
             $totalDonator = $browser->text('#list-users tbody tr:first-child td:nth-child(5)');
             $totalBorrow = $browser->text('#list-users tbody tr:first-child td:nth-child(6)');
             $this->assertTrue($users->books_donated_count == $totalDonator);
@@ -97,30 +95,29 @@ class NumberOfBookListUser extends DuskTestCase
     }
 
     /**
-    * display record of book by user
+    * Display record of book by user
     *
     * @return void
     */
-    public function testDetailofBook()
+    public function testDetailOfBook()
     {
-        // $this->makeData();
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
                     ->visit('admin/books?userid=1&option=borrowed')
                     ->assertSee('List Books');
             $fields = [
-            'users.id',
-            'users.employ_code',
-            'users.name',
-            'users.email',
-            DB::raw('COUNT(DISTINCT(books.id)) AS books_donated_count'),
-            DB::raw('COUNT(DISTINCT(borrows.book_id)) AS books_borrowed_count'),
+                'users.id',
+                'users.employ_code',
+                'users.name',
+                'users.email',
+                DB::raw('COUNT(DISTINCT(books.id)) AS books_donated_count'),
+                DB::raw('COUNT(DISTINCT(borrows.book_id)) AS books_borrowed_count'),
             ];
             $users = User::select($fields)
-            ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
-            ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
-            ->groupBy('users.id')
-            ->first();
+                           ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
+                           ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
+                           ->groupBy('users.id')
+                           ->first();
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount($users->books_donated_count, $elements);
             $this->assertCount($users->books_borrowed_count, $elements);
@@ -141,7 +138,6 @@ class NumberOfBookListUser extends DuskTestCase
 
         $userEmploy_code= DB::table('users')->pluck('employ_code')->toArray();
         $userId= DB::table('users')->pluck('id')->toArray();
-
 
         factory(Book::class)->create([
             'category_id' => $faker->randomElement($categoryId),
