@@ -17,11 +17,22 @@ class Image
      */
     public static function updateImage($imgFile, $imgPath, $oldPath)
     {
-        if (File::exists($oldPath)) {
-            File::delete($oldPath);
-        }
+        self::deleteImage($oldPath);
         $name = $imgFile->hashName();
         $imgFile->move($imgPath, $name);
         return $imgPath . $name;
+    }
+    /**
+     * Delete images of Book.
+     *
+     * @param string $oldPath oldpath image
+     *
+     * @return string
+     */
+    public static function deleteImage($oldPath)
+    {
+        if (File::exists($oldPath)) {
+            File::delete($oldPath);
+        }
     }
 }
