@@ -46,7 +46,7 @@ class AdminDetailUsersTest extends DuskTestCase
         $user = User::first();
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
-                    ->visit('admin/users/10')
+                    ->visit('admin/users/user_not_Exists')
                     ->assertSee('Sorry, the page you are looking for could not be found.');
         });     
     }
