@@ -27,7 +27,7 @@ class Image
      *
      * @param string $oldPath oldpath image
      *
-     * @return string
+     * @return void
      */
     public static function deleteImage($oldPath)
     {

@@ -114,7 +114,7 @@ class BookController extends Controller
      * @param App\Http\Requests\EditBookRequest $request form edit book
      * @param App\Model\Book                    $id      pass id object
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function update(EditBookRequest $request, $id)
     {
@@ -138,18 +138,15 @@ class BookController extends Controller
      * @param App\Model\Book                    $book    pass book object
      * @param App\Http\Requests\EditBookRequest $request picture and iddonator edit book
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     private function updateBook($book, $request)
     {
-
-        //save image path, move image to directory
         if (isset($request->picture)) {
             $oldPath = $book->picture;
             $book->picture  = Image::updateImage($request->picture, config('image.book.path'), $oldPath);
         }
 
-        //save new donator
         $user = User::where('employ_code', $request->iddonator)->first();
         if (isset($user)) {
             $book->from_person = $request->iddonator;
@@ -187,16 +184,16 @@ class BookController extends Controller
      *
      * @param Book $book object book
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Book $book)
     {
         DB::beginTransaction();
-        $bookDelete = $book->delete();
-        if ($bookDelete) {
+        try {
+            $book->delete();
             DB::commit();
             flash(__('books.delete_book_success'))->success();
-        } else {
+        } catch (Exception $e) {
             DB::rollBack();
             flash(__('books.delete_book_fail'))->error();
         }
