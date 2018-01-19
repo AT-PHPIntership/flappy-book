@@ -15,9 +15,9 @@ class Image
      *
      * @return string
      */
-    public static function updateImage($imgFile, $imgPath, $oldPath)
+    public static function update($imgFile, $imgPath, $oldPath)
     {
-        self::deleteImage($oldPath);
+        self::delete($oldPath);
         $name = $imgFile->hashName();
         $imgFile->move($imgPath, $name);
         return $imgPath . $name;
@@ -29,7 +29,7 @@ class Image
      *
      * @return void
      */
-    public static function deleteImage($oldPath)
+    public static function delete($oldPath)
     {
         if (File::exists($oldPath)) {
             File::delete($oldPath);

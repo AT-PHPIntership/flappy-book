@@ -126,7 +126,7 @@ class BookController extends Controller
             DB::commit();
             return redirect()->route("books.index");
         } catch (Exception $e) {
-            flash(__('books.books_edit_failer'))->error();
+            flash(__('books.books_edit_failed'))->error();
             DB::rollBack();
             return redirect()->back()->withInput();
         }
@@ -144,7 +144,7 @@ class BookController extends Controller
     {
         if (isset($request->picture)) {
             $oldPath = $book->picture;
-            $book->picture  = Image::updateImage($request->picture, config('image.book.path'), $oldPath);
+            $book->picture  = Image::update($request->picture, config('image.book.path'), $oldPath);
         }
 
         $user = User::where('employ_code', $request->iddonator)->first();
