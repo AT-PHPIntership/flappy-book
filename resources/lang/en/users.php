@@ -8,7 +8,7 @@ return [
     'employee_code' => 'Employee Code',
     'name' => 'Name',
     'email' => 'Email',
-    'donate' => 'Donate',
+    'donate' => 'Donated',
     'borrowed' => 'Borrowed',
     'detail_user' => 'Detail User',
     'user_profile' => 'User Profile',
