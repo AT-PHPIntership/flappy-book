@@ -3,9 +3,6 @@
     {{ __('borrows.list_borrows') }}
 @endsection
 @section('content')
-<script type="text/javascript">
-  $role = {!! json_encode(trans('users')) !!};
-</script>
  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
