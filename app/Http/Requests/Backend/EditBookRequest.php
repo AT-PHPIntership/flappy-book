@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Model\Book;
@@ -26,13 +26,13 @@ class EditBookRequest extends FormRequest
     {
         return [
             'title'       => 'required|min:8',
-            'category'    => 'required|exists:category,name',
+            'category_id' => 'required|exists:category_id',
             'price'       => 'required|numeric',
-            'unit'        => 'in:'.book::TYPE_VND.','
-                                  .book::TYPE_DOLAR.','
-                                  .book::TYPE_EURO.','
-                                  .book::TYPE_YEN.',',
-            'iddonator'   => 'required',
+            'unit'        => 'in:'.Book::TYPE_VND.','
+                                  .Book::TYPE_DOLAR.','
+                                  .Book::TYPE_EURO.','
+                                  .Book::TYPE_YEN.',',
+            'from_person'   => 'required',
             'description' => 'required',
             'year'        => 'date_format:"Y"',
             'author'      => 'required',

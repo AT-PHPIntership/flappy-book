@@ -18,15 +18,10 @@
     </ol>
   </section>
   <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-md-12">
           <div class="box box-primary">
-            @if (Session::has('create_failure'))
-              <div class="alert  alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span>{{ Session::get('create_failure') }}</span>
-              </div>
-            @endif
             <form action="{{route('books.store')}}" role="form" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="box-body">
