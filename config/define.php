@@ -13,4 +13,7 @@ return [
     'users' => [
     	'limit_rows' => 10
     ],
+    'borrows' => [
+        'limit_rows' => 10
+    ],
 ];
