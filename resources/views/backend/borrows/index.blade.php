@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    {{ __('users.list_users') }}
+    {{ __('borrows.list_borrows') }}
 @endsection
 @section('content')
 <script type="text/javascript">

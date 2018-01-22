@@ -7,7 +7,7 @@ return [
     'employee_code' => 'Employee Code',
     'name' => 'Name',
     'email' => 'Email',
-    'books_borrowing' => 'Books Borrowing',
+    'books_borrowing' => 'Book Borrowing',
     'from_date' => 'From Date',
     'end_date' => 'End Date',
 ];
