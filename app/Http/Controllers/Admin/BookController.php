@@ -43,10 +43,10 @@ class BookController extends Controller
             'asc',
             'desc'
         ];
-        
+
         $sort = in_array($request->sort, $sortFields) ? $request->sort : 'id';
         $order = in_array($request->order, $orderFields) ? $request->order : 'desc';
-        $books = Book::search($search ,$filter)
+        $books = Book::search($search, $filter)
             ->select($fields)
             ->groupBy('books.id')
             ->orderby($sort, $order)
