@@ -17,6 +17,13 @@ class AdminSortBooksTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
+     * Logged in user
+     *
+     * @var App\Model\User
+     */
+    protected $user;
+
+    /**
      * Override function setUp() for make user login
      *
      * @return void
@@ -24,7 +31,7 @@ class AdminSortBooksTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->createUserForLogin();
+        $this->user = $this->createAdminUser();
     }
 
     /**
@@ -35,7 +42,7 @@ class AdminSortBooksTest extends DuskTestCase
     public function testButtonSort()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books');
             $elements = $browser->elements('#list-books .sort-element');
             $this->assertCount(4, $elements);
@@ -53,7 +60,7 @@ class AdminSortBooksTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($btnSortNames) {
 
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books');
 
             foreach ($btnSortNames as $name) {
@@ -97,7 +104,7 @@ class AdminSortBooksTest extends DuskTestCase
     {
         $this->makeData(5);
         $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books')
                     ->resize(1200,1600)
                     ->press('#btn-sort-'.$name);
@@ -131,7 +138,7 @@ class AdminSortBooksTest extends DuskTestCase
     {
         $this->makeData(16);
         $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books?page=2')
                     ->resize(1200,1600)
                     ->press('#btn-sort-'.$name);
@@ -155,18 +162,6 @@ class AdminSortBooksTest extends DuskTestCase
                 $this->assertTrue($browser->text($selector) == $listBooksSorted[$i - 1]->$name);
             }
         });
-    }
-
-    /**
-     * Create admin for login
-     *
-     * @return void
-     */
-    public function createUserForLogin()
-    {
-        factory(User::class, 1)->create([
-            'is_admin' => 1,
-        ]);
     }
 
     /**

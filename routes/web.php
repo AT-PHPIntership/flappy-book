@@ -17,9 +17,10 @@ Route::get('/', function () {
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'admin'], function(){
     Route::get('/', function () {
         return view('backend.home.index');
-    });
+    })->name('admin.home.index');
     Route::resource('/books', 'BookController');
     Route::resource('/users', 'UserController');
+    Route::get('/users/{user}/updateRole', 'UserController@updateRole');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

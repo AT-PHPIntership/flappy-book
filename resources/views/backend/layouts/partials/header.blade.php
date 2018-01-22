@@ -20,44 +20,20 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+            <img src="{{ Auth::user()->avatar_url }}" class="user-image" alt="User Image">
             <span class="hidden-xs">{{ Auth::user()->name }}</span>
           </a>
           <ul class="dropdown-menu">
-            <!-- User image -->
-            <li class="user-header">
-              <img src="{{ asset('bower_components/admin-lte/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
-
-              <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
-              </p>
-            </li>
-            <!-- Menu Body -->
-            <li class="user-body">
-              <div class="row">
-                <div class="col-xs-4 text-center">
-                  <a href="#">Followers</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Sales</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Friends</a>
-                </div>
-              </div>
-              <!-- /.row -->
-            </li>
             <!-- Menu Footer-->
-            <li class="user-footer">
+            <li class="user-footer bg-light-blue color-palette">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <a href="{{ route('users.show', Auth::user()->id) }}" class="btn btn-success btn-flat">{{ __('dashboard.profile') }}</a>
               </div>
               <div class="pull-right">
-                <a href="{{ route('logout') }}" class="btn btn-default btn-flat"
+                <a href="{{ route('logout') }}" class="btn btn-warning btn-flat"
                     onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
-                    Sign out
+                    {{ __('dashboard.sign_out') }}
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

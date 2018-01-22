@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\backend;
+namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Model\Book;
 
 class CreateBookRequest extends FormRequest
 {
@@ -25,16 +26,16 @@ class CreateBookRequest extends FormRequest
     {
         return [
             'title'       => 'required|min:6',
-            'category'    => 'required|exists:category,name',
+            'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
-            'unit'        => 'in:'.book::TYPE_VND.','
-                                  .book::TYPE_DOLAR.','
-                                  .book::TYPE_EURO.','
-                                  .book::TYPE_YEN.',',
-            'iddonator'   => 'required',
+            'unit'        => 'in:'.Book::TYPE_VND.','
+                                  .Book::TYPE_DOLAR.','
+                                  .Book::TYPE_EURO.','
+                                  .Book::TYPE_YEN.',',
+            'from_person' => 'required|max:10|exists:users,employ_code',
             'description' => 'required',
             'year'        => 'required|date_format:"Y"',
-            'author'      => 'required',
+            'author'      => 'required|max:100',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
     }
