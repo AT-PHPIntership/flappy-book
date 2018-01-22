@@ -112,14 +112,19 @@
                     </div>
                     <div class="form-group">
                       <div class="row">
-                        <div id="info-user" class="col-xs-6" hidden>
-                          <div class="col-xs-6">
-                            <label for="InputUsername">{{ __('users.name') }}</label>
-                            <input type="text" class="form-control" name="username" value="" readonly>
+                        <div class="get-info-message col-xs-6">
+                          <div class="get-info-success col-xs-12" hidden>
+                            <div class="col-xs-6">
+                              <label for="InputUsername">{{ __('users.name') }}</label>
+                              <input type="text" class="form-control" name="username" value="" readonly>
+                            </div>
+                            <div class="col-xs-6">
+                              <label for="InputEmail">{{ __('users.email') }}</label>
+                              <input type="text" class="form-control" name="email" value="" readonly>
+                            </div>
                           </div>
-                          <div class="col-xs-6">
-                            <label for="InputEmail">{{ __('users.email') }}</label>
-                            <input type="text" class="form-control" name="email" value="" readonly>
+                          <div class="get-info-failure col-xs-12" >
+                            <span class="text-danger"></span>
                           </div>
                         </div>
                       </div>
@@ -127,7 +132,7 @@
                     <div class="form-group">
                       <label for="InputFile">{{ __('books.picture') }}</label>
                       <input type="file" name="picture" value="{!! old('picture') !!}">
-                      @if($errors->first('picture')) 
+                      @if($errors->first('picture'))
                         <span class="text-danger">{{ $errors->first('picture') }}</span>
                       @endif
                     </div>

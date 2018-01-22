@@ -77,11 +77,13 @@ $(document).on('click', '.btn-role', function(e) {
 $('#btn-verify-employee-code').on('click', function(e) {
     let btnVerify = $('#btn-verify-employee-code');
     let btnCreate = $('#btn-create-book');
-    let fromPerson = $('#from-person-field');
-    let infoUser = $('#info-user');
+    let inputField = $('#from-person-field');
+    let successInfo = $('.get-info-success');
+    let failureInfo = $('.get-info-failure');
 
-    let boolean = !btnCreate.attr('disabled');
-    btnCreate.attr('disabled', boolean);
-    fromPerson.attr('readonly', !boolean);
-    infoUser.attr('hidden', false);
+    let boolean = btnCreate.is(':disabled');
+    btnCreate.attr('disabled', !boolean);
+    inputField.attr('readonly', boolean);
+    successInfo.attr('hidden', !boolean);
+    failureInfo.attr('hidden', boolean);
 });
