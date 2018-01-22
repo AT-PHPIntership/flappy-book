@@ -85,37 +85,59 @@ $('#btn-verify-employee-code').on('click', function () {
     let getInfoFailure = $('.get-info-failure');
 
     let boolean = btnCreate.is(':disabled');
+    let error = validateEmployeeCode(inputField.val());
+    if (!error) {
+        if (boolean) {
+            $.ajax({
+                url: '/admin/users/verifyEmployeeCode/'+inputField.val(),
+                type: 'get',
+                success: function (data) {
+                    if (data) {
+                        getInfoSuccess.find('input[name*=username]').val(data.name);
+                        getInfoSuccess.find('input[name*=email]').val(data.email);
+                        btnCreate.prop('disabled', false);
+                        inputField.prop('readonly', true);
+                        btnVerify.html($role.edit);
+                        btnVerify.addClass('btn-success');
 
-    if (boolean) {
-        $.ajax({
-            url: '/admin/users/verifyEmployeeCode/'+inputField.val(),
-            type: 'get',
-            success: function (data) {
-                if (data) {
-                    getInfoSuccess.find('input[name*=username]').val(data.name);
-                    getInfoSuccess.find('input[name*=email]').val(data.email);
-                    btnCreate.prop('disabled', false);
-                    inputField.prop('readonly', true);
-                    btnVerify.html($role.edit);
-                    btnVerify.addClass('btn-success');
-                } else {
-                    getInfoFailure.find('span').html($role.check_employee_code_fail);
+                        getInfoFailure.prop('hidden', true);
+                        getInfoSuccess.prop('hidden', false);
+                    } else {
+                        error = $role.employee_code_not_exist;
+                    }
+                },
+
+                error: function (error) {
+                    error = 'ERROR: ' + error.status;
                 }
+            });
+        } else {
+            btnCreate.prop('disabled', true);
+            inputField.prop('readonly', false);
+            btnVerify.html($role.verify);
+            btnVerify.removeClass('btn-success');
+        }
+    }
 
-                getInfoFailure.prop('hidden', data);
-                getInfoSuccess.prop('hidden', !data);
-            },
-            
-            error: function (error) {
-                getInfoFailure.find('span').html('ERROR: ' + error.status);
-                getInfoFailure.prop('hidden', false);
-                getInfoSuccess.prop('hidden', true);
-            }
-        });
-    } else {
-        btnCreate.prop('disabled', true);
-        inputField.prop('readonly', false);
-        btnVerify.html($role.verify);
-        btnVerify.removeClass('btn-success');
+    if (error) {
+        getInfoFailure.find('span').html(error);
+        getInfoFailure.prop('hidden', false);
+        getInfoSuccess.prop('hidden', true);
     }
 });
+
+/**
+ * function validate employee code
+ */
+function validateEmployeeCode(input) {
+    input = input.trim();
+    // regex check employee code
+    let employeeCodeRegex = new RegExp('^(AT|ATI)(\\d{4})$');
+
+    if (input === '') {
+        return $role.employee_code_is_required;
+    } else if (!employeeCodeRegex.test(input)) {
+        return $role.employee_code_not_match;
+    }
+    return null;
+}

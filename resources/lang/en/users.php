@@ -23,7 +23,9 @@ return [
     'user' => 'User',
     'none' => 'None',
     'edit' => 'Edit',
-    'check_employee_code_fail' => 'This employee code does not exist',
+    'employee_code_not_exist' => 'This employee code does not exist.',
+    'employee_code_not_match' => 'Employee code does not match.',
+    'employee_code_is_required' => 'The employee code field is required.',
     'admin_team_name' =>  \App\Model\User::ADMIN_TEAM_NAME,
     'role_user' =>  \App\Model\User::ROLE_USER,
 ];
