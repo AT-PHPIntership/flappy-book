@@ -8,7 +8,6 @@ use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
 use App\Model\Book;
-use App\Model\Qrcode;
 use App\Model\Category;
 
 class BookController extends Controller
@@ -25,7 +24,6 @@ class BookController extends Controller
     {
         $search = $request->search;
         $filter = $request->filter;
-
         $fields = [
             'books.id',
             'books.title',
@@ -45,24 +43,15 @@ class BookController extends Controller
             'asc',
             'desc'
         ];
-
+        
         $sort = in_array($request->sort, $sortFields) ? $request->sort : 'id';
         $order = in_array($request->order, $orderFields) ? $request->order : 'desc';
-
-        // check filter when search
-        switch ($filter) {
-            case Book::TYPE_TITLE:
-                $books = Book::where('title', 'like', '%'.$search.'%');
-                break;
-            case Book::TYPE_AUTHOR:
-                $books = Book::where('author', 'like', '%'.$search.'%');
-                break;
-            default:
-                $books = Book::where(function ($query) use ($search) {
-                    return $query->where('title', 'like', '%'.$search.'%')
-                               ->orWhere('author', 'like', '%'.$search.'%');
-                });
-        }
+        $books = Book::search($search ,$filter)
+            ->select($fields)
+            ->groupBy('books.id')
+            ->orderby($sort, $order)
+            ->paginate(config('define.books.limit_rows'));
+        $books->appends(['search' => request('search')]);
         //check option when click number book on users list
         $userId = $request->userid ? $request->userid : '';
         $option = $request->option? $request->option : '';
@@ -76,14 +65,6 @@ class BookController extends Controller
                 });
                 break;
         }
-        // get list books
-        $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                       ->select($fields)
-                       ->groupBy('books.id')
-                       ->orderBy($sort, $order)
-                       ->paginate(config('define.books.limit_rows'))
-                       ->appends(['userid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
-
         return view('backend.books.index', compact('books'));
     }
 
@@ -133,52 +114,14 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateBookRequest $request send request
+     * @param CategoryRequest $request send request
      *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateBookRequest $request)
     {
-        // create book fields.
-        $bookFields = $request->all();
-        $bookFields['unit'] =  __('books.listunit')[$request->unit];
-
-        // save book picture
-        if ($request->hasFile('picture')) {
-            $picture = $request->picture;
-            $folderStore = config('define.books.folder_store_books');
-            $pictureName = config('define.books.image_name_prefix') . '-' . $picture->hashName();
-            $picture->move($folderStore, $pictureName);
-            $bookFields['picture'] = $pictureName;
-        } else {
-            $bookFields['picture'] = config('define.books.default_name_image');
-        }
-
-        DB::beginTransaction();
-        try {
-            // store book
-            $book = Book::create($bookFields);
-            // generate qrcode_id
-            $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
-            $codeNumber = $qrCode ? $qrCode->code_id + 1 :  Qrcode::DEFAULT_CODE_ID ;
-
-            // store qrcode
-            $book->qrcode()->create([
-                'code_id' => $codeNumber,
-                'prefix'  => Qrcode::DEFAULT_CODE_PREFIX,
-            ]);
-
-            DB::commit();
-            flash(__('books.create_success'))->success();
-            return redirect()->route('books.index');
-        } catch (\Exception $e) {
-            if (isset($pictureName) && \File::exists($folderStore.$pictureName)) {
-                \File::delete($folderStore.$pictureName);
-            }
-            DB::rollback();
-            flash(__('books.create_failure'))->error();
-            return redirect()->back()->withInput();
-        }
+        $title = $request->title;
+        echo $title;
     }
 
     /**
