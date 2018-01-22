@@ -21,6 +21,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/books', 'BookController');
     Route::resource('/users', 'UserController');
     Route::get('/users/{user}/updateRole', 'UserController@updateRole');
+	Route::get('/users/verifyEmployeeCode/{employeeCode}', 'UserController@verifyEmployeeCode');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

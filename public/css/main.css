@@ -6,12 +6,16 @@
   margin-right:20px;
 }
 
-#info-user {
+.get-info-message {
   margin: 5px 0px;
-  border-radius: 10px;
 }
 
-#info-user div {
-  background-color: #d2d6de47;
+.get-info-message div {
+  background-color: #f9f9f9;
   padding: 20px 10px;
+  border-radius: 5px;
+}
+
+#btn-verify-employee-code {
+  width: 70px;
 }

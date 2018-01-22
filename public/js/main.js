@@ -74,14 +74,48 @@ $(document).on('click', '.btn-role', function(e) {
     });
 });
 
-$('#btn-verify-employee-code').on('click', function(e) {
+/**
+ * Check employee code in data base and portal
+ */
+$('#btn-verify-employee-code').on('click', function () {
     let btnVerify = $('#btn-verify-employee-code');
     let btnCreate = $('#btn-create-book');
-    let fromPerson = $('#from-person-field');
-    let infoUser = $('#info-user');
+    let inputField = $('#from-person-field');
+    let getInfoSuccess = $('.get-info-success');
+    let getInfoFailure = $('.get-info-failure');
 
-    let boolean = !btnCreate.attr('disabled');
-    btnCreate.attr('disabled', boolean);
-    fromPerson.attr('readonly', !boolean);
-    infoUser.attr('hidden', false);
+    let boolean = btnCreate.is(':disabled');
+
+    if (boolean) {
+        $.ajax({
+            url: '/admin/users/verifyEmployeeCode/'+inputField.val(),
+            type: 'get',
+            success: function (data) {
+                if (data) {
+                    getInfoSuccess.find('input[name*=username]').val(data.name);
+                    getInfoSuccess.find('input[name*=email]').val(data.email);
+                    btnCreate.prop('disabled', false);
+                    inputField.prop('readonly', true);
+                    btnVerify.html($role.edit);
+                    btnVerify.addClass('btn-success');
+                } else {
+                    getInfoFailure.find('span').html($role.check_employee_code_fail);
+                }
+
+                getInfoFailure.prop('hidden', data);
+                getInfoSuccess.prop('hidden', !data);
+            },
+            
+            error: function (error) {
+                getInfoFailure.find('span').html('ERROR: ' + error.status);
+                getInfoFailure.prop('hidden', false);
+                getInfoSuccess.prop('hidden', true);
+            }
+        });
+    } else {
+        btnCreate.prop('disabled', true);
+        inputField.prop('readonly', false);
+        btnVerify.html($role.verify);
+        btnVerify.removeClass('btn-success');
+    }
 });

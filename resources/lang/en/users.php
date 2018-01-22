@@ -22,6 +22,8 @@ return [
     'admin' => 'Admin',
     'user' => 'User',
     'none' => 'None',
+    'edit' => 'Edit',
+    'check_employee_code_fail' => 'This employee code does not exist',
     'admin_team_name' =>  \App\Model\User::ADMIN_TEAM_NAME,
     'role_user' =>  \App\Model\User::ROLE_USER,
 ];

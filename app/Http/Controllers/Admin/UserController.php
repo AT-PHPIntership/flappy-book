@@ -83,4 +83,22 @@ class UserController extends Controller
             return response($user);
         }
     }
+
+    /**
+     * Check employee code in databse and Portal
+     *
+     * @param string $employeeCode User employee code
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function verifyEmployeeCode(string $employeeCode)
+    {
+        $fields = [
+            'name',
+            'email',
+        ];
+
+        $user = User::select($fields)->where('employ_code', '=', $employeeCode)->first();
+        return response($user);
+    }
 }
