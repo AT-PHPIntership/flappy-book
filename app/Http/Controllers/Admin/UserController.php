@@ -27,14 +27,18 @@ class UserController extends Controller
             'users.email',
             'users.is_admin',
             'users.avatar_url',
+            DB::raw('COUNT(DISTINCT(books.id)) AS books_donated_count'),
+            DB::raw('COUNT(DISTINCT(borrows.book_id)) AS books_borrowed_count'),
         ];
         $users = User::select($fields)
-        ->withCount(['books', 'borrows'])
-        ->orderBy('id')
+        ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
+        ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
+        ->groupBy('users.id')
         ->paginate(config('define.users.limit_rows'));
 
         return view('backend.users.index', ['users' => $users]);
     }
+
      /**
      * Display the profile of user.
      *
@@ -61,5 +65,22 @@ class UserController extends Controller
         ->firstOrFail();
 
         return view('backend.users.show', ['user' => $user]);
+    }
+
+    /**
+     * Update role user.
+     *
+     * @param Interger $userId User Id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateRole(int $userId)
+    {
+        $user = User::find($userId);
+        if ($user->team != User::ADMIN_TEAM_NAME && \Auth::user()->team == User::ADMIN_TEAM_NAME) {
+            $user->is_admin = $user->is_admin == User::ROLE_USER ? User::ROLE_ADMIN : User::ROLE_USER;
+            $user->save();
+            return response($user);
+        }
     }
 }
