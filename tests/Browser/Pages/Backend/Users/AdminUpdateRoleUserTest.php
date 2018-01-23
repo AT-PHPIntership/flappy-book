@@ -13,6 +13,12 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
+     * user log in
+     * @var App\Model\User
+     */
+    protected $user;
+
+    /**
      * Override function setUp()
      *
      * @return void
@@ -21,7 +27,7 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->createAdminUser();
+        $this->user = $this->createAdminUser();
     }
 
     /**
@@ -33,7 +39,7 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->resize(1600, 1200)
-                    ->loginAs(User::first())
+                    ->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertSee('Role');
         });
@@ -68,7 +74,7 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->resize(1600, 1200)
-                    ->loginAs(User::first())
+                    ->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertVisible('#role-user-1', 'disable');
         });
@@ -90,7 +96,7 @@ class AdminUpdateRoleUserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($userId) {
             $browser->resize(1600, 1200)
-                    ->loginAs(User::first())
+                    ->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertSee('Role')
                     ->assertVisible('#role-user-'.$userId, 'Admin')
@@ -115,7 +121,7 @@ class AdminUpdateRoleUserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($userId) {
             $browser->resize(1600, 1200)
-                    ->loginAs(User::first())
+                    ->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertSee('Role')
                     ->assertVisible('#role-user-'.$userId, 'User')

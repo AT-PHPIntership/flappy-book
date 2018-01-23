@@ -16,12 +16,14 @@ class BooksTableSeeder extends Seeder
         $categoryId = DB::table('categories')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
-        factory(App\Model\Book::class, 15)->create([
-            'category_id' => $faker->randomElement($categoryId),
-            'from_person' => $faker->randomElement($userId)
-        ])->each(function($u) {
-            $u->qrcode()->save(factory(App\Model\Qrcode::class)->make());
-        });
+        for ($i = 0; $i <= 15; $i++) {
+            factory(App\Model\Book::class)->create([
+                'category_id' => $faker->randomElement($categoryId),
+                'from_person' => $faker->randomElement($userId)
+            ])->each(function($u) {
+                $u->qrcode()->save(factory(App\Model\Qrcode::class)->make());
+            });
+        }
     }
 }
 

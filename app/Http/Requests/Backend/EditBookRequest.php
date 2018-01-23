@@ -26,13 +26,13 @@ class EditBookRequest extends FormRequest
     {
         return [
             'title'       => 'required|min:8',
-            'category_id' => 'required|exists:category_id',
+            'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
             'unit'        => 'in:'.Book::TYPE_VND.','
                                   .Book::TYPE_DOLAR.','
                                   .Book::TYPE_EURO.','
                                   .Book::TYPE_YEN.',',
-            'from_person'   => 'required',
+            'from_person' => 'required|exists:users,employ_code',
             'description' => 'required',
             'year'        => 'date_format:"Y"',
             'author'      => 'required',
