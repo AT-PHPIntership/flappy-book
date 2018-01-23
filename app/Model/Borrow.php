@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Borrow extends Model
 {
+    use Sortable;
+
     /**
      * Borrows currency status
      *
@@ -32,6 +35,23 @@ class Borrow extends Model
         'from_date',
         'to_date'
     ];
+
+    /**
+    * Declare table sort
+    *
+    * @var array $sortable table sort
+    */
+    public $sortable = [
+        'from_date',
+        'to_date'
+    ];
+
+    /**
+     * Declare table sort
+     *
+     * @var string $sortableAs
+     */
+    protected $sortableAs = ['employ_code', 'name', 'email', 'title'];
 
     /**
      * Relationship belongsTo with User
