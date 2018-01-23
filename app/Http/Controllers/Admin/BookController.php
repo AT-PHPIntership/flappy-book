@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
+use Exception;
 use App\Model\Book;
 use App\Model\Qrcode;
 use App\Model\Category;
+use App\Model\User;
+use App\Libraries\Image;
 
 class BookController extends Controller
 {
@@ -109,15 +112,48 @@ class BookController extends Controller
      * Update infomation of Book.
      *
      * @param App\Http\Requests\EditBookRequest $request form edit book
-     * @param int                               $id      id of book
+     * @param App\Model\Book                    $id      pass id object
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function update(EditBookRequest $request, $id)
     {
-        dd($request);
-        dd($id);
+        $book = Book::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $this->updateBook($book, $request);
+            flash(__('books.books_edit_success'))->success();
+            DB::commit();
+            return redirect()->route("books.index");
+        } catch (Exception $e) {
+            flash(__('books.books_edit_failed'))->error();
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
     }
+
+    /**
+     * Save infomation of Book.
+     *
+     * @param App\Model\Book                    $book    pass book object
+     * @param App\Http\Requests\EditBookRequest $request picture and iddonator edit book
+     *
+     * @return void
+     */
+    private function updateBook($book, $request)
+    {
+        if (isset($request->picture)) {
+            $oldPath = $book->picture;
+            $book->picture  = Image::update($request->picture, config('image.book.path'), $oldPath);
+        }
+
+        $user = User::where('employ_code', $request->iddonator)->first();
+        if (isset($user)) {
+            $book->from_person = $request->iddonator;
+        }
+        $book->update($request->except(['iddonator', 'picture']));
+    }
+    
 
     /**
      * Show the form for creating a new book.
@@ -186,14 +222,17 @@ class BookController extends Controller
      *
      * @param Book $book object book
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Book $book)
     {
-        $bookDelete = $book->delete();
-        if ($bookDelete) {
+        DB::beginTransaction();
+        try {
+            $book->delete();
+            DB::commit();
             flash(__('books.delete_book_success'))->success();
-        } else {
+        } catch (Exception $e) {
+            DB::rollBack();
             flash(__('books.delete_book_fail'))->error();
         }
         return redirect()->back();
