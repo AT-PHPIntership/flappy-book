@@ -32,10 +32,10 @@ class CreateBookRequest extends FormRequest
                                   .Book::TYPE_DOLAR.','
                                   .Book::TYPE_EURO.','
                                   .Book::TYPE_YEN.',',
-            'from_person' => 'required|max:10',
+            'from_person' => 'required|max:10|exists:users,employ_code',
             'description' => 'required',
             'year'        => 'required|date_format:"Y"',
-            'author'      => 'required|max:255',
+            'author'      => 'required|max:100',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
     }

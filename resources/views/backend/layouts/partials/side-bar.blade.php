@@ -36,6 +36,9 @@
       <li class="{{ checkActiveRoutes(['users.index','users.show', 'users.edit']) }}">
         <a href="{{ route('users.index') }}"><i class="fa fa-user-circle"></i> <span>{{ __('dashboard.users') }}</span></a>
       </li>
+      <li class="{{ checkActiveRoutes(['borrows.index','borrows.show', 'borrows.edit']) }}">
+        <a href="{{ route('borrows.index') }}"><i class="glyphicon glyphicon-list-alt"></i> <span>{{ __('dashboard.borrows') }}</span></a>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->
