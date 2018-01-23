@@ -130,8 +130,8 @@ class Book extends Model
      */
     protected $searchableFields = [
         'columns' => [
-            'title',
-            'author',
+            self::TYPE_TITLE,
+            self::TYPE_AUTHOR,
         ],
         'joins' => [
             'borrows' => ['books.id', 'borrows.id']
