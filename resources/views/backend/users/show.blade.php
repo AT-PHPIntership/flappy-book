@@ -34,10 +34,10 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>{{ __('users.employee_code') }}</b> <a class="pull-right">{{ $user->employ_code }}</a>
+                  <b>{{ __('users.employee_code') }}</b> <a class="employee_code pull-right">{{ $user->employ_code }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>{{ __('users.email') }}</b> <a class="pull-right">{{ $user->email }}</a>
+                  <b>{{ __('users.email') }}</b> <a class="email pull-right">{{ $user->email }}</a>
                 </li>
                 <li class="list-group-item">
                   <b>{{ __('users.role') }}</b> <a class="pull-right">User</a>

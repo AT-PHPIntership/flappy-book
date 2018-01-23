@@ -27,14 +27,18 @@ class UserController extends Controller
             'users.email',
             'users.is_admin',
             'users.avatar_url',
+            DB::raw('COUNT(DISTINCT(books.id)) AS books_donated_count'),
+            DB::raw('COUNT(DISTINCT(borrows.book_id)) AS books_borrowed_count'),
         ];
         $users = User::select($fields)
-        ->withCount(['books', 'borrows'])
-        ->orderBy('id')
+        ->leftJoin('books', 'users.employ_code', '=', 'books.from_person')
+        ->leftJoin('borrows', 'users.id', '=', 'borrows.user_id')
+        ->groupBy('users.id')
         ->paginate(config('define.users.limit_rows'));
 
         return view('backend.users.index', ['users' => $users]);
     }
+
      /**
      * Display the profile of user.
      *
@@ -62,7 +66,6 @@ class UserController extends Controller
 
         return view('backend.users.show', ['user' => $user]);
     }
-
 
     /**
      * Update role user.

@@ -22,6 +22,8 @@ return [
     'picture' => 'Picture',
     'update' => 'Update',
     'create_book' => 'Create Book',
+    'create_success' => 'Create Success',
+    'create_failure' => 'Create Failure',
     'category' => 'Category',
     'create' => 'Create',
     'back' => 'Back',
