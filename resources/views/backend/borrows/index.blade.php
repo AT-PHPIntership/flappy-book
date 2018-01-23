@@ -11,12 +11,11 @@
         {{ __('borrows.list_borrows') }}
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('borrows.home') }}</a></li>
-        <li><a href="#">{{ __('borrows.borrows') }}</a></li>
+        <li><a href="{{ route('admin.home.index') }}"><i class="fa fa-dashboard"></i> {{ __('borrows.home') }}</a></li>
+        <li><a href="{{ route('borrows.index') }}">{{ __('borrows.borrows') }}</a></li>
         <li class="active">{{ __('borrows.list_borrower') }}</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -36,32 +35,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-center">ATI2018</td>
-                    <td>Tram Pham T.M</td>
-                    <td>tram.pham@asiantech.vn</td>
-                    <td>CSS3</td>
-                    <td class="text-center">22-01-2018</td>
-                    <td class="text-center">28-01-2018</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">ATI2019</td>
-                    <td>Nhan Nguyen T.</td>
-                    <td>nhan.nguyen@asiantech.vn</td>
-                    <td>HTML5</td>
-                    <td class="text-center">21-01-2018</td>
-                    <td class="text-center">27-01-2018</td>
+                  @foreach ($borrows as $borrow)
+                    <tr>
+                      <td class="text-center">{{ $borrow->employ_code }}</td>
+                      <td>{{ $borrow->name }}</td>
+                      <td>{{ $borrow->email }}</td>
+                      <td>{{ $borrow->title }}</td>
+                      <td class="text-center">{{ date('d-m-Y', strtotime($borrow->from_date)) }}</td>
+                      <td class="text-center">{{ date('d-m-Y', strtotime($borrow->to_date)) }}</td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
                     <ul class="pagination">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">&raquo;</a></li>
+                      {{ $borrows->links() }}
                     </ul>
                 </nav>
               </div>
