@@ -11,7 +11,6 @@ use Exception;
 use App\Model\Book;
 use App\Model\Qrcode;
 use App\Model\Category;
-use App\Model\Qrcode;
 use App\Model\User;
 use App\Libraries\Image;
 
