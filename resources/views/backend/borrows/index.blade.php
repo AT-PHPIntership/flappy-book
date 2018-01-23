@@ -35,7 +35,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach ($borrows as $index => $borrow)
+                  @foreach ($borrows as $borrow)
                     <tr>
                       <td class="text-center">{{ $borrow->employ_code }}</td>
                       <td>{{ $borrow->name }}</td>
