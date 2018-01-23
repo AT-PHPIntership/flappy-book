@@ -18,12 +18,14 @@
     </ol>
   </section>
   <section class="content">
+    @include('flash::message')
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
-          <form action="{{route('books.update', 2)}}" role="form" method="POST" enctype="multipart/form-data">
+          <form action="{{route('books.update', $book->id)}}" role="form" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
+            <input type="hidden" name="redirect_to" value="{{ URL::previous() }}">
             <div class="box-body">
               <div class="row">
                 <div class="col-xs-12">
@@ -120,7 +122,7 @@
                   <span class="text-danger">{{ $errors->first('picture') }}</span>
                 @endif
                 @if(isset($book->picture))
-                  <img id="picture-display" width="150" height="200" src="{{ $book->picture }}" alt="book-picture">
+                  <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
                 @endif
               </div>
             </div>
