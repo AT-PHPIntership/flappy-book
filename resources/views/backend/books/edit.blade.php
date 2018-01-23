@@ -18,12 +18,14 @@
     </ol>
   </section>
   <section class="content">
+    @include('flash::message')
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
-          <form action="{{route('books.update', 2)}}" role="form" method="POST" enctype="multipart/form-data">
+          <form action="{{route('books.update', $book->id)}}" role="form" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
+            <input type="hidden" name="redirect_to" value="{{ URL::previous() }}">
             <div class="box-body">
               <div class="row">
                 <div class="col-xs-12">
@@ -42,7 +44,7 @@
                     <div class="row">
                       <div class="col-xs-3">
                         <label>{{ __('books.category') }}</label>
-                        <select class="form-control" name="category" >
+                        <select class="form-control" name="category_id" >
                           @foreach($categories as $category)
                             @if($book->category_id == $category->id)
                               <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
@@ -78,10 +80,10 @@
                         @endif
                       </div>
                       <div class="col-xs-4">
-                        <label for="InputIDDonator">{{ __('books.id_donator') }}</label>
-                        <input type="text" class="form-control" id="InputIDDonator" name="iddonator" placeholder="{{ __('books.id_donator') }}" value="{{ $book->from_person }}">
-                        @if($errors->first('iddonator')) 
-                          <span class="text-danger">{{ $errors->first('iddonator') }}</span>
+                        <label for="InputFromPerson">{{ __('books.from_person') }}</label>
+                        <input type="text" class="form-control" id="InputFromPerson" name="from_person" placeholder="{{ __('books.from_person') }}" value="{!! $book->from_person !!}">
+                        @if($errors->first('from_person')) 
+                          <span class="text-danger">{{ $errors->first('from_person') }}</span>
                         @endif
                       </div>
                     </div>
@@ -120,7 +122,7 @@
                   <span class="text-danger">{{ $errors->first('picture') }}</span>
                 @endif
                 @if(isset($book->picture))
-                  <img id="picture-display" width="150" height="200" src="{{ $book->picture }}" alt="book-picture">
+                  <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
                 @endif
               </div>
             </div>

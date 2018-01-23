@@ -7,4 +7,7 @@ return [
     'users' => 'Users',
     'home' => 'Home',
     'more_info' => 'More Info',
+    'profile' => 'Profile',
+    'sign_out' => 'Sign out',
+    'borrows' => 'Borrows'
 ];

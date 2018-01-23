@@ -8,7 +8,7 @@ return [
     'employee_code' => 'Employee Code',
     'name' => 'Name',
     'email' => 'Email',
-    'donate' => 'Donate',
+    'donate' => 'Donated',
     'borrowed' => 'Borrowed',
     'detail_user' => 'Detail User',
     'user_profile' => 'User Profile',
@@ -22,4 +22,5 @@ return [
     'user' => 'User',
     'none' => 'None',
     'admin_team_name' =>  \App\Model\User::ADMIN_TEAM_NAME,
+    'role_user' =>  \App\Model\User::ROLE_USER,
 ];

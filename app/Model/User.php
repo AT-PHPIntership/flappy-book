@@ -104,16 +104,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
-
-    /**
-     * Check admin
-     *
-     * @param App\Model\User $team return team
-     *
-     * @return string
-     */
-    public static function getRoleByTeam($team)
-    {
-        return $team == self::ADMIN_TEAM_NAME ? self::ROLE_ADMIN : self::ROLE_USER;
-    }
 }
