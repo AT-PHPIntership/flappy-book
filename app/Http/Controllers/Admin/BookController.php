@@ -49,9 +49,7 @@ class BookController extends Controller
         $books = Book::search($search, $filter)
             ->select($fields)
             ->groupBy('books.id')
-            ->orderby($sort, $order)
-            ->paginate(config('define.books.limit_rows'));
-        $books->appends(['search' => request('search')]);
+            ->orderby($sort, $order);
         //check option when click number book on users list
         $userId = $request->userid ? $request->userid : '';
         $option = $request->option? $request->option : '';
@@ -65,6 +63,14 @@ class BookController extends Controller
                 });
                 break;
         }
+        $books = $books->paginate(config('define.books.limit_rows'))
+                        ->appends([
+                        'userid' => $userId,
+                        'option' => $option,
+                        'sort' => $sort,
+                        'order' => $order,
+                        'search' => request('search')
+                        ]);
         return view('backend.books.index', compact('books'));
     }
 
