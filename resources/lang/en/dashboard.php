@@ -9,5 +9,6 @@ return [
     'more_info' => 'More Info',
     'profile' => 'Profile',
     'sign_out' => 'Sign out',
-    'borrows' => 'Borrows'
+    'borrows' => 'Borrows',
+    'categories' => 'Categories',
 ];
