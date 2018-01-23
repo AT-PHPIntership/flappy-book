@@ -3,9 +3,7 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\Model\Book;
 use App\Model\User;
-use App\Model\Borrow;
 use App\Model\Category;
 use Faker\Factory as Faker;
 use Facebook\WebDriver\WebDriverBy;
@@ -16,6 +14,12 @@ class AdminCreateBooksTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
+     * user log in
+     * @var App\Model\User
+     */
+    protected $user;
+
+    /**
      * Override function setUp() for make user login
      *
      * @return void
@@ -23,7 +27,8 @@ class AdminCreateBooksTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->createUserForLogin();
+        $this->user = $this->createAdminUser();
+        $this->makeData(3);
     }
 
     /**
@@ -34,7 +39,7 @@ class AdminCreateBooksTest extends DuskTestCase
     public function testCreateBooksUrl()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->press('Add Book')
                     ->assertPathIs('/admin/books/create')
@@ -72,21 +77,20 @@ class AdminCreateBooksTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) use ($name, $content, $message)
         {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books/create')
                     ->resize(900,1000)
                     ->type('title', 'Title for book')
                     ->type('price', '1000')
                     ->type('author', 'Cao Nguyen V.')
                     ->type('year', '1995')
-                    ->type('from_person', 'AT0001')
+                    ->type('from_person', 'ATI0284')
                     ->type($name, $content);
 
             $this->typeInCKEditor('.wysihtml5-sandbox', $browser, 'Description for book');
 
             $browser->press('Create')
-                    ->assertSee($message)
-                    ->assertPathIs('/admin/books/create');
+                    ->assertSee($message);
         });
     }
 
@@ -99,20 +103,19 @@ class AdminCreateBooksTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser)
         {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books/create')
                     ->resize(900,1000)
                     ->type('title', 'Title for book')
                     ->type('price', '1000')
                     ->type('author', 'Cao Nguyen V.')
                     ->type('year', '1995')
-                    ->type('from_person', 'AT0001');
+                    ->type('from_person', 'ATI0284');
 
             $this->typeInCKEditor('.wysihtml5-sandbox', $browser, '');
 
             $browser->press('Create')
-                    ->assertSee('The description field is required.')
-                    ->assertPathIs('/admin/books/create');
+                    ->assertSee('The description field is required.');
         });
     }
 
@@ -125,12 +128,12 @@ class AdminCreateBooksTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser)
         {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                 ->visit('admin/books')
                 ->resize(900,1000)
                 ->press('Add Book')
                 ->press('Back')
-                ->assertPathIs('/admin/books');
+                ->assertSee('List Books');
         });
     }
 
@@ -141,22 +144,21 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testCreatesBookSuccess()
     {
-        $this->makeData(5);
         $this->browse(function (Browser $browser)
         {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('admin/books/create')
                     ->resize(900,1000)
                     ->type('title', 'Title for book')
                     ->type('price', '1000')
                     ->type('author', 'Cao Nguyen V.')
                     ->type('year', '1995')
-                    ->type('from_person', 'AT0001');
+                    ->type('from_person', 'ATI0284');
 
             $this->typeInCKEditor('.wysihtml5-sandbox', $browser, 'Description for book');
 
             $browser->press('Create')
-                    ->assertPathIs('/admin/books')
+                    ->pause(1000)
                     ->assertSee('Create Success');
         });
     }
@@ -178,19 +180,6 @@ class AdminCreateBooksTest extends DuskTestCase
     }
 
     /**
-     * Create admin for login
-     *
-     * @return void
-     */
-    public function createUserForLogin()
-    {
-        factory(User::class, 1)->create([
-            'is_admin' => 1,
-            'employ_code' => 'AT0001'
-        ]);
-    }
-
-    /**
      * Make data  in database for test.
      *
      * @return void
@@ -198,5 +187,8 @@ class AdminCreateBooksTest extends DuskTestCase
     public function makeData($row)
     {
         factory(Category::class, $row)->create();
+        factory(User::class)->create([
+            'employ_code' => 'ATI0284',
+        ]);
     }
 }
