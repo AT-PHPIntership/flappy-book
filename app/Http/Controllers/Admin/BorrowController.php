@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Borrow;
-use App\Model\User;
-use App\Model\Book;
-use DB;
 
 class BorrowController extends Controller
 {
