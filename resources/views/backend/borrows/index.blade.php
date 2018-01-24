@@ -21,6 +21,25 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="box-header">
+              <div class="pull-right col-xs-6">
+                <form action="{{ route('borrows.index') }}" method="GET">
+                    <div class="col-xs-6">
+                      <input type="text" name="search" id="search" class="form-control" value="{{ request('search') }}" placeholder="{{ __('borrows.search') }}">
+                    </div>
+                    <div class="col-xs-4">
+                      <select name="filter" id="filter" class="form-control">
+                        @foreach( __('borrows.list_search') as $key => $search )
+                          <option value="{{ $key }}" {{$key == app('request')->input('filter') ? 'selected' : '' }}>{{ $search }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-xs-2">
+                      <button type="submit" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
+                    </div>
+                </form>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">

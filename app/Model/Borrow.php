@@ -12,7 +12,8 @@ class Borrow extends Model
      * @type int
      */
     const BORROWING = 0;
-
+    const TYPE_NAME = 'name';
+    const TYPE_BORROWS = 'borrows';
     /**
      * Declare table
      *
