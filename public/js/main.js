@@ -73,3 +73,25 @@ $(document).on('click', '.btn-role', function(e) {
         }
     });
 });
+
+$(document).on('click', '.btn-edit-category', function(e) {
+    resetAllRowListCategories();
+    selectedRow = $(this).closest('tr').find('.category-title-field');
+    textField = selectedRow.find('p');
+    inputField = selectedRow.find('input');
+
+    textField.hide();
+    inputField.val(textField.html()).show().focus().keypress(function(event) {
+        if (event.which == 13) {
+            titleContent = inputField.val();
+            textField.html(titleContent).show();
+            inputField.hide();
+        };
+    })
+});
+
+function resetAllRowListCategories() {
+    allRows = $('tbody').find('.category-title-field');
+    allRows.find('p').show();
+    allRows.find('input').hide();
+}

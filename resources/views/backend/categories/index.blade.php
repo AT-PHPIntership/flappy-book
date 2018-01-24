@@ -30,28 +30,44 @@
                   <th class="text-center" width="5%">{{ __('categories.no') }}</th>
                   <th>{{ __('categories.title') }}</th>
                   <th class="text-center" width="10%">{{ __('categories.total_book') }}</th>
+                  <th class="text-center" width="15%">
+                    {{ __('categories.options') }}
+                  </th>
                 </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="text-center">1</td>
-                    <td>Ea laboriosam eum in numquam tempor labore distinctio Eos quibusdam</td>
+                    <td class="category-title-field">
+                      <p>Title 1</p>
+                      <input type="text" category-id="1" value="" spellcheck="false" hidden>
+                    </td>
                     <td class="text-center">41</td>
+                    <td class="text-center" width="15%">
+                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category">
+                    </td>
                   </tr>
                   <tr>
                     <td class="text-center">2</td>
-                    <td>Kali Schuppe DDS</td>
-                    <td class="text-center">25</td>
+                    <td class="category-title-field">
+                      <p>Title 2</p>
+                      <input type="text" category-id="2" value="" spellcheck="false" hidden>
+                    </td>
+                    <td class="text-center">11</td>
+                    <td class="text-center" width="15%">
+                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category">
+                    </td>
                   </tr>
                   <tr>
                     <td class="text-center">3</td>
-                    <td>Kali Schuppe DDS</td>
-                    <td class="text-center">34</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">4</td>
-                    <td>Kali Schuppe DDS</td>
-                    <td class="text-center">62</td>
+                    <td class="category-title-field">
+                      <p>Title 3</p>
+                      <input type="text" category-id="3" value="" spellcheck="false" hidden>
+                    </td>
+                    <td class="text-center">15</td>
+                    <td class="text-center" width="15%">
+                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category">
+                    </td>
                   </tr>
                 </tbody>
               </table>
