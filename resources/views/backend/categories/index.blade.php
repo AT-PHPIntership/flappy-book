@@ -47,8 +47,8 @@
                           {{ csrf_field() }}
                           {{ method_field('DELETE') }}
                           <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                            data-title="{{ __('books.confirm_deletion') }}"
-                            data-confirm="{{ __('books.are_you_sure_you_want_to_delete') }}">
+                            data-title="{{ __('categories.confirm_deletion') }}"
+                            data-confirm="{{ __('categories.are_you_sure_to_delete_this_category', ['name' => 'Title Category']) }}">
                           </button>
                         </form> 
                       </div>
