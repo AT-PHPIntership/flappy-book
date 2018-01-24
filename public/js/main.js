@@ -116,6 +116,6 @@ function showConfirmEdit(titleBefore, titleAfter) {
                 +' <strong> ' + titleBefore + ' </strong> '
                 + categories.to
                 +' <strong> ' + titleAfter +' </strong> ?';
-    $('#body-content').html(dataConfirm);
+    $('#body-edit-content').html(dataConfirm);
     $('#confirm-edit').modal('show');
 }

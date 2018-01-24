@@ -28,6 +28,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               @include('backend.layouts.partials.confirm-edit')
+              @include('backend.layouts.partials.modal')
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                  <tr>
@@ -47,8 +48,18 @@
                       <input type="text" category-id="1" value="" spellcheck="false" hidden>
                     </td>
                     <td class="text-center">41</td>
-                    <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
+                    <td class="text-center">
+                      <div class="btn-option text-center">
+                        <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
+                        <form method="POST" action="#" class="inline">
+                          {{ csrf_field() }}
+                          {{ method_field('DELETE') }}
+                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                            data-title="{{ __('categories.confirm_deletion') }}"
+                            data-confirm="{{ __('categories.are_you_sure_to_delete_this_category', ['name' => 'Title Category']) }}">
+                          </button>
+                        </form> 
+                      </div>
                     </td>
                   </tr>
                   <tr>

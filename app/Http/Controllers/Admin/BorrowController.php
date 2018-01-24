@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Borrow;
 
 class BorrowController extends Controller
 {
@@ -14,6 +15,21 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        return view('backend.borrows.index');
+        $fields = [
+            'users.employ_code',
+            'users.name',
+            'users.email',
+            'books.title',
+            'borrows.from_date',
+            'borrows.to_date',
+            'borrows.id',
+        ];
+        $borrows = Borrow::select($fields)
+        ->join('users', 'users.id', '=', 'borrows.user_id')
+        ->join('books', 'books.id', '=', 'borrows.book_id')
+        ->where('borrows.status', Borrow::BORROWING)
+        ->paginate(config('define.borrows.limit_rows'));
+
+        return view('backend.borrows.index', ['borrows' => $borrows]);
     }
 }

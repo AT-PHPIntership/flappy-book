@@ -6,7 +6,6 @@ return [
     'no' => 'No',
     'title' => 'Title',
     'list' => 'List',
-    'options' => 'Options',
     'total_book' => 'Total Book',
     'edit' => 'Edit',
     'reset' => 'Reset',
@@ -14,4 +13,7 @@ return [
     'confirm_edit' => 'Confirm edit!',
     'you_want_edit' => 'Do you want edit',
     'to' => 'to',
+    'options' => 'Options',
+    'confirm_deletion' => 'Confirm deletion!',
+    'are_you_sure_to_delete_this_category' => 'Are you sure to delete this category, :name ?',
 ];
