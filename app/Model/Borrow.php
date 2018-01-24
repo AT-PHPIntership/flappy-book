@@ -13,7 +13,7 @@ class Borrow extends Model
      */
     const BORROWING = 0;
     const TYPE_NAME = 'name';
-    const TYPE_BORROWING = 'borrows';
+    const TYPE_BORROWING = 'borrowing';
     /**
      * Declare table
      *
