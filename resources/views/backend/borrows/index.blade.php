@@ -45,12 +45,12 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                  <tr>
-                  <th class="text-center">{{ __('borrows.employee_code') }}</th>
-                  <th>{{ __('borrows.name') }}</th>
-                  <th>{{ __('borrows.email') }}</th>
-                  <th>{{ __('borrows.books_borrowing') }}</th>
-                  <th class="text-center">{{ __('borrows.from_date') }}</th>
-                  <th class="text-center">{{ __('borrows.end_date') }}</th>
+                  <th class="text-center">@sortablelink('employ_code', __('borrows.employee_code'))</th>
+                  <th>@sortablelink('name', __('borrows.name'))</th>
+                  <th>@sortablelink('email', __('borrows.email'))</th>
+                  <th>@sortablelink('title', __('borrows.book_borrowing'))</th>
+                  <th class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
+                  <th class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
                 </tr>
                 </thead>
                 <tbody>
