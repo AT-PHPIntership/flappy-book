@@ -24,12 +24,16 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
+              @include('backend.layouts.partials.modal')
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th class="text-center" width="5%">{{ __('categories.no') }}</th>
                   <th>{{ __('categories.title') }}</th>
                   <th class="text-center" width="10%">{{ __('categories.total_book') }}</th>
+                  <th class="text-center" width="15%">
+                    {{ __('categories.options') }}
+                  </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +41,18 @@
                     <td class="text-center">1</td>
                     <td>Ea laboriosam eum in numquam tempor labore distinctio Eos quibusdam</td>
                     <td class="text-center">41</td>
+                    <td class="text-center">
+                      <div class="btn-option text-center">
+                        <form method="POST" action="#" class="inline">
+                          {{ csrf_field() }}
+                          {{ method_field('DELETE') }}
+                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                            data-title="{{ __('books.confirm_deletion') }}"
+                            data-confirm="{{ __('books.are_you_sure_you_want_to_delete') }}">
+                          </button>
+                        </form> 
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td class="text-center">2</td>
