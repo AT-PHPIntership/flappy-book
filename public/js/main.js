@@ -73,3 +73,42 @@ $(document).on('click', '.btn-role', function(e) {
         }
     });
 });
+
+$(document).on('click', '.btn-edit-category', function(e) {
+    resetAllRowListCategories();
+    selectedRow = $(this).closest('tr').find('.category-title-field');
+    textField = selectedRow.find('p');
+    inputField = selectedRow.find('input');
+
+    textField.hide();
+    inputField.val(textField.html()).show().focus().keypress(function(event) {
+        if (event.which == 13) {
+            titleContent = inputField.val();
+            id = $(this).attr('category-id');
+
+            $.ajax({
+                url: '/admin/categories/' + id,
+                type: 'put',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'title': titleContent
+                },
+                success: function (data) {
+                },
+                error: function () {
+                }
+            });
+
+            textField.html(titleContent).show();
+            inputField.hide();
+        };
+    })
+});
+
+function resetAllRowListCategories() {
+    allRows = $('tbody').find('.category-title-field');
+    allRows.find('p').show();
+    allRows.find('input').hide();
+}

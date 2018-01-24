@@ -6,5 +6,6 @@ return [
     'no' => 'No',
     'title' => 'Title',
     'list' => 'List',
+    'options' => 'Options',
     'total_book' => 'Total Book',
 ];
