@@ -35,7 +35,7 @@
                       </select>
                     </div>
                     <div class="col-xs-2">
-                      <button type="submit" id="btn-search" class="btn btn-primary btn-flat">{{ __('books.search') }}</button>
+                      <button type="submit" id="btn-search" class="btn btn-primary btn-flat">{{ __('borrows.search') }}</button>
                     </div>
                 </form>
               </div>
