@@ -35,12 +35,9 @@ class CategoryController extends Controller
         DB::beginTransaction();
         try {
             $category->update($request->only('title'));
-            flash(__('books.books_edit_success'))->success();
             DB::commit();
         } catch (Exception $e) {
-            flash(__('books.books_edit_failed'))->error();
             DB::rollBack();
         }
-        return response();
     }
 }

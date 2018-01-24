@@ -3,6 +3,9 @@
     {{ __('categories.list_categories') }}
 @endsection
 @section('content')
+<script type="text/javascript">
+  categories = {!! json_encode(trans('categories')) !!};
+</script>
  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -24,6 +27,7 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
+              @include('backend.layouts.partials.confirm-edit')
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                  <tr>
@@ -44,7 +48,7 @@
                     </td>
                     <td class="text-center">41</td>
                     <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category">
+                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
                     </td>
                   </tr>
                   <tr>
@@ -55,7 +59,7 @@
                     </td>
                     <td class="text-center">11</td>
                     <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category">
+                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
                     </td>
                   </tr>
                   <tr>
@@ -66,7 +70,7 @@
                     </td>
                     <td class="text-center">15</td>
                     <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category">
+                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
                     </td>
                   </tr>
                 </tbody>
