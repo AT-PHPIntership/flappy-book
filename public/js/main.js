@@ -76,22 +76,46 @@ $(document).on('click', '.btn-role', function(e) {
 
 $(document).on('click', '.btn-edit-category', function(e) {
     resetAllRowListCategories();
-    selectedRow = $(this).closest('tr').find('.category-title-field');
-    textField = selectedRow.find('p');
-    inputField = selectedRow.find('input');
+    let selectedRow = $(this).closest('tr').find('.category-title-field');
+    let textField = selectedRow.find('p');
+    let inputField = selectedRow.find('input');
 
     textField.hide();
-    inputField.val(textField.html()).show().focus().keypress(function(event) {
+    let titleBefore = textField.html();
+
+    inputField.val(titleBefore).show().focus().keypress(function(event) {
         if (event.which == 13) {
-            titleContent = inputField.val();
-            textField.html(titleContent).show();
-            inputField.hide();
+            let titleAfter = inputField.val();
+            showConfirmEdit(titleBefore, titleAfter);
+
+            $('#edit-btn').one('click', function () {
+                textField.html(titleAfter).show();
+                inputField.hide();
+            });
+
+            $('#reset-btn').one('click', function () {
+                textField.show();
+                inputField.hide();
+            });
+
+            $('#cancel-btn').one('click', function () {
+                inputField.focus();
+            });
         };
     })
 });
 
 function resetAllRowListCategories() {
-    allRows = $('tbody').find('.category-title-field');
+    let allRows = $('tbody').find('.category-title-field');
     allRows.find('p').show();
     allRows.find('input').hide();
+}
+
+function showConfirmEdit(titleBefore, titleAfter) {
+    let dataConfirm = categories.you_want_edit
+                +' <strong> ' + titleBefore + ' </strong> '
+                + categories.to
+                +' <strong> ' + titleAfter +' </strong> ?';
+    $('#body-content').html(dataConfirm);
+    $('#confirm-edit').modal('show');
 }

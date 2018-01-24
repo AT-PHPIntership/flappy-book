@@ -8,4 +8,10 @@ return [
     'list' => 'List',
     'options' => 'Options',
     'total_book' => 'Total Book',
+    'edit' => 'Edit',
+    'reset' => 'Reset',
+    'cancel' => 'Cancel',
+    'confirm_edit' => 'Confirm edit!',
+    'you_want_edit' => 'Do you want edit',
+    'to' => 'to',
 ];
