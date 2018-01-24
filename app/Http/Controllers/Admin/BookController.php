@@ -9,6 +9,7 @@ use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
 use Exception;
 use App\Model\Book;
+use App\Model\Qrcode;
 use App\Model\Category;
 use App\Model\User;
 use App\Libraries\Image;
@@ -25,8 +26,6 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        // $search = $request->search;
-        // $filter = $request->filter;
         $fields = [
             'books.id',
             'books.title',
@@ -156,7 +155,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CategoryRequest $request send request
+     * @param CreateBookRequest $request send request
      *
      * @return \Illuminate\Http\Response
      */
