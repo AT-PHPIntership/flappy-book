@@ -37,10 +37,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-center">1</td>
-                    <td>Ea laboriosam eum in numquam tempor labore distinctio Eos quibusdam</td>
-                    <td class="text-center">41</td>
+                @foreach ($categories as $index => $category)
+                  <tr class="item-{{ $category->id }}">
+                    <td class="text-center">{{ $index + $categories->firstItem() }}</td>
+                    <td>{{ $category->title }}</td>
+                    <td class="text-center">{{ $category->total_books }}</td>
                     <td class="text-center">
                       <div class="btn-option text-center">
                         <form method="POST" action="#" class="inline">
@@ -54,32 +55,14 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td>Kali Schuppe DDS</td>
-                    <td class="text-center">25</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">3</td>
-                    <td>Kali Schuppe DDS</td>
-                    <td class="text-center">34</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">4</td>
-                    <td>Kali Schuppe DDS</td>
-                    <td class="text-center">62</td>
-                  </tr>
+                @endforeach
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
                     <ul class="pagination">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">&raquo;</a></li>
+                        {{ $categories->links() }}
                     </ul>
                 </nav>
               </div>

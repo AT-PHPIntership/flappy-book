@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
+use App\Model\Category;
+use App\Model\Book;
 
 class CategoryController extends Controller
 {
@@ -14,6 +17,16 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('backend.categories.index');
+        $fields = [
+            'categories.id',
+            'categories.title',
+            DB::raw('COUNT(DISTINCT(books.id)) AS total_books'),
+        ];
+        $categories = Category::select($fields)
+        ->leftJoin('books', 'books.category_id', '=', 'categories.id')
+        ->groupBy('categories.id')
+        ->paginate(config('define.categories.limit_rows'));
+
+        return view('backend.categories.index', ['categories' => $categories]);
     }
 }
