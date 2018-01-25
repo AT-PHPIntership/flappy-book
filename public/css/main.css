@@ -5,3 +5,7 @@
   outline: none;
   background-color: inherit;
 }
+
+.popup-edit-categories button {
+  width: 10%;
+}
