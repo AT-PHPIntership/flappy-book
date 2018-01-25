@@ -14,7 +14,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function(){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'admin'], function(){
     Route::get('/', 'DashboardController@index')->name('admin.home.index');
     Route::resource('/books', 'BookController');
     Route::resource('/users', 'UserController');
