@@ -30,11 +30,11 @@ class DashboardController extends Controller
             DB::raw('COUNT(borrows.book_id) AS total_borrowed'),
         ];
         $topBorrowed = Borrow::select($fields)
-        ->join('books', 'books.id', '=', 'borrows.book_id')
-        ->groupBy('books.id')
-        ->orderBy('total_borrowed', 'desc')
-        ->limit(5)
-        ->get();
+                             ->join('books', 'books.id', '=', 'borrows.book_id')
+                             ->groupBy('books.id')
+                             ->orderBy('total_borrowed', 'desc')
+                             ->limit(5)
+                             ->get();
         return view('backend.home.index', compact(
             'users',
             'books',
