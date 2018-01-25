@@ -23,9 +23,9 @@ class CategoryController extends Controller
             DB::raw('COUNT(DISTINCT(books.id)) AS total_books'),
         ];
         $categories = Category::select($fields)
-        ->leftJoin('books', 'books.category_id', '=', 'categories.id')
-        ->groupBy('categories.id')
-        ->paginate(config('define.categories.limit_rows'));
+            ->leftJoin('books', 'books.category_id', '=', 'categories.id')
+            ->groupBy('categories.id')
+            ->paginate(config('define.categories.limit_rows'));
 
         return view('backend.categories.index', ['categories' => $categories]);
     }
