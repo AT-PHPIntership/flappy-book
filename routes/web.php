@@ -20,6 +20,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/users', 'UserController');
     Route::get('/users/{user}/updateRole', 'UserController@updateRole');
     Route::resource('/borrows', 'BorrowController');
+    Route::resource('/categories', 'CategoryController');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
