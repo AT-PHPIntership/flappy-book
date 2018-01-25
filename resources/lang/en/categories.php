@@ -10,4 +10,8 @@ return [
     'options' => 'Options',
     'confirm_deletion' => 'Confirm deletion!',
     'are_you_sure_to_delete_this_category' => 'Are you sure to delete this category, :name ?',
+    'add_category' => 'Add Category',
+    'add' => 'Add',
+    'close' => 'Close',
+    'category' => 'Category',
 ];

@@ -22,10 +22,15 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="box-header">
+              <div class="pull-left">
+                <button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat btn-add-category">{{ __('categories.add_category') }}</button>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               @include('backend.layouts.partials.modal')
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="categories" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th class="text-center" width="5%">{{ __('categories.no') }}</th>
