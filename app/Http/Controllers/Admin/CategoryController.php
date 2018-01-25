@@ -26,7 +26,7 @@ class CategoryController extends Controller
      * @param App\Http\Requests\Backend\EditCategoryRequest $request category request
      * @param Integer                                       $id      category id
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function update(EditCategoryRequest $request, $id)
     {

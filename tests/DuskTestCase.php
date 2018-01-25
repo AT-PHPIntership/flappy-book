@@ -46,11 +46,11 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      * Make user belong team SA and is admin
      *
-     * @return void
+     * @return App\Model\User
      */
     public function createAdminUser()
     {
-        factory(User::class)->create([
+        return factory(User::class)->create([
             'employ_code' => 'ATI0297',
             'name' => 'Minh Dao T.',
             'email' => 'minh.dao@asiantech.vn',
