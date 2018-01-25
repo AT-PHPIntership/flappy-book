@@ -24,9 +24,10 @@ class BorrowController extends Controller
             'borrows.to_date',
             'borrows.id',
         ];
-        $borrows = Borrow::select($fields)
-        ->join('users', 'users.id', '=', 'borrows.user_id')
-        ->join('books', 'books.id', '=', 'borrows.book_id')
+        $borrows = Borrow::search(request('search'), request('filter'))
+        ->select($fields)
+        // ->join('users', 'users.id', '=', 'borrows.user_id')
+        // ->join('books', 'books.id', '=', 'borrows.book_id')
         ->where('borrows.status', Borrow::BORROWING)
         ->with('users', 'books')
         ->sortable()
