@@ -29,7 +29,6 @@ class BorrowController extends Controller
         // ->join('users', 'users.id', '=', 'borrows.user_id')
         // ->join('books', 'books.id', '=', 'borrows.book_id')
         ->where('borrows.status', Borrow::BORROWING)
-        ->with('users', 'books')
         ->sortable()
         ->orderby('from_date', 'desc')
         ->paginate(config('define.borrows.limit_rows'));
