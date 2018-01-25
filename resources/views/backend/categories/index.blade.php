@@ -45,6 +45,7 @@
                     <td class="category-title-field">
                       <p>Title 1</p>
                       <input type="text" category-id="1" value="" spellcheck="false" hidden>
+                      <span class="text-danger"></span>
                     </td>
                     <td class="text-center">41</td>
                     <td class="text-center" width="15%">
