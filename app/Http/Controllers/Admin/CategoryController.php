@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Backend\EditCategoryRequest;
 use App\Http\Controllers\Controller;
 use App\Model\Category;
 use Exception;
@@ -23,12 +23,12 @@ class CategoryController extends Controller
     /**
      * Update infomation of Category.
      *
-     * @param Illuminate\Http\Request $request category title
-     * @param Integer                 $id      category id
+     * @param App\Http\Requests\Backend\EditCategoryRequest $request category request
+     * @param Integer                                       $id      category id
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditCategoryRequest $request, $id)
     {
         $category = Category::findOrFail($id);
 

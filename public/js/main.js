@@ -79,6 +79,7 @@ $(document).on('click', '.btn-edit-category', function(e) {
     let selectedRow = $(this).closest('tr').find('.category-title-field');
     let textField = selectedRow.find('p');
     let inputField = selectedRow.find('input');
+    let errorMessage = selectedRow.find('span');
 
     textField.hide();
     let titleBefore = textField.html();
@@ -89,20 +90,26 @@ $(document).on('click', '.btn-edit-category', function(e) {
             showConfirmEdit(titleBefore, titleAfter);
 
             $('#edit-btn').one('click', function () {
+                let id = inputField.attr('category-id');
                 $.ajax({
-                    url: '/admin/categories/' + inputField.attr('category-id'),
+                    url: '/admin/categories/' + id,
                     type: 'put',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
-                        'title': titleAfter
+                        'title': titleAfter,
+                        'id': id,
                     },
-                    success: function () {
+                    success: function (data) {
                         textField.html(titleAfter).show();
                         inputField.hide();
+                        errorMessage.html('');
                     },
-                    error: function () {
+                    error: function (error) {
+                        errorMessage.html(typeof error.responseJSON.errors !== 'undefined' ?
+                            error.responseJSON.errors.title :
+                            categories.edit_failure);
                     }
                 });
             });
@@ -123,6 +130,7 @@ function resetAllRowListCategories() {
     let allRows = $('tbody').find('.category-title-field');
     allRows.find('p').show();
     allRows.find('input').hide();
+    allRows.find('span').html('');
 }
 
 function showConfirmEdit(titleBefore, titleAfter) {

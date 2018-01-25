@@ -13,5 +13,6 @@ return [
     'cancel' => 'Cancel',
     'confirm_edit' => 'Confirm edit!',
     'you_want_edit' => 'Do you want edit',
+    'edit_failure' => 'Error when edit category!',
     'to' => 'to',
 ];
