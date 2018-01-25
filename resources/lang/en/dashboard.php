@@ -11,4 +11,5 @@ return [
     'sign_out' => 'Sign out',
     'borrows' => 'Borrows',
     'categories' => 'Categories',
+    'posts' => 'Posts',
 ];
