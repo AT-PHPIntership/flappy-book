@@ -14,15 +14,13 @@ class BooksTableSeeder extends Seeder
     public function run()
     {
         $categoryId = DB::table('categories')->pluck('id')->toArray();
-        $userId = DB::table('users')->pluck('employ_code')->toArray();
+        $employCode = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
         for ($i = 0; $i <= 15; $i++) {
             factory(App\Model\Book::class)->create([
                 'category_id' => $faker->randomElement($categoryId),
-                'from_person' => $faker->randomElement($userId)
-            ])->each(function($u) {
-                $u->qrcode()->save(factory(App\Model\Qrcode::class)->make());
-            });
+                'from_person' => $faker->randomElement($employCode)
+            ]);
         }
     }
 }

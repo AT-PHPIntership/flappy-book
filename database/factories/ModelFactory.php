@@ -27,7 +27,6 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
         'price' => $faker->numberBetween(1000,9000),
         'unit' => $faker->randomElement([\App\Model\Book::TYPE_VND, \App\Model\Book::TYPE_DOLAR,\App\Model\Book::TYPE_YEN, \App\Model\Book::TYPE_EURO]),
         'picture' => $faker->image,
-        'from_person' => $faker->name,
         'total_rating' => $faker->numberBetween(1,20),
         'rating' => $faker->numberBetween(1,5),
     ];
@@ -37,12 +36,13 @@ $factory->define(App\Model\Borrow::class, function (Faker $faker) {
         'from_date' => $faker->datetime,
         'to_date' => $faker->datetime,
         'status' => $faker->numberBetween(0,1),
+        'send_mail_date' => $faker->datetime,
     ];
 });
 $factory->define(App\Model\Post::class, function (Faker $faker) {
     return [
         'content' => $faker->text,
-        'is_findbook' => $faker->numberBetween(0,1),
+        'status' => $faker->numberBetween(0,2),
     ];
 });
 $factory->define(App\Model\Comment::class, function (Faker $faker) {
