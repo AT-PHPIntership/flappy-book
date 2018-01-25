@@ -26,8 +26,6 @@ class BorrowController extends Controller
         ];
         $borrows = Borrow::search(request('search'), request('filter'))
         ->select($fields)
-        // ->join('users', 'users.id', '=', 'borrows.user_id')
-        // ->join('books', 'books.id', '=', 'borrows.book_id')
         ->where('borrows.status', Borrow::BORROWING)
         ->sortable()
         ->orderby('from_date', 'desc')
