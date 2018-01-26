@@ -45,13 +45,11 @@ class CategoryController extends Controller
             return redirect()->back();
         }
         $title = $category->title;
-        DB::beginTransaction();
         try {
             $category->delete();
-            DB::commit();
             flash(__('categories.delete_category_success', ['name' => $title]))->success();
         } catch (Exception $e) {
-            DB::rollBack();
+            \Log::error($e);
             flash(__('categories.delete_category_fail', ['name' => $title]))->error();
         }
         return redirect()->back();
