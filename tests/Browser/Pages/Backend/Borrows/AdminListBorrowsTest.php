@@ -9,7 +9,6 @@ use App\Model\User;
 use App\Model\Category;
 use App\Model\Borrow;
 use App\Model\Book;
-use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
 class AdminListBorrowsTest extends DuskTestCase
@@ -124,19 +123,17 @@ class AdminListBorrowsTest extends DuskTestCase
     public function makeData($row)
     {
         $faker = Faker::create();
-        factory(Category::class)->create();
-        factory(User::class, 4)->create(); 
-        $userId = DB::table('users')->pluck('id')->toArray();
-        $userEmploy_code = DB::table('users')->pluck('employ_code')->toArray();
-        $categoryId = DB::table('categories')->pluck('id')->toArray();
-        
+        $users = factory(User::class, 4)->create();
+        $userId = $users->pluck('id')->toArray();
+        $employeeCode = $users->pluck('employ_code')->toArray();
+        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
         for ($i = 0; $i < $row; $i++) {
-            factory(Book::class)->create([
-                'from_person' => $faker->randomElement($userEmploy_code),
+            $books[] = factory(Book::class)->create([
+                'from_person' => $faker->randomElement($employeeCode),
                 'category_id' => $faker->randomElement($categoryId),
             ]);
         }
-        $bookId = DB::table('books')->pluck('id')->toArray();
+        $bookId = array_pluck($books, 'id');
         for ($i = 0; $i < $row; $i++) {
             factory(Borrow::class)->create([
                 'book_id' => $faker->randomElement($bookId),
