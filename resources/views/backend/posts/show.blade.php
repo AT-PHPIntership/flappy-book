@@ -26,19 +26,14 @@
 
   <!-- Main content -->
   <section class="content">
-
     <div class="row">
       <div class="col-md-4">
-
         <!-- Profile Image -->
         <div class="box box-primary">
           <div class="box-body box-profile">
             <img class="profile-user-img img-responsive img-circle" src="{{ asset('bower_components/admin-lte/dist/img/user4-128x128.jpg') }}" alt="User profile picture">
-
             <h3 class="profile-username text-center">Nina Mcintire</h3>
-
             <p class="text-muted text-center">PHP Developer</p>
-
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
                 <b>{{ __('posts.status') }}</b>
@@ -56,14 +51,9 @@
                 <b>{{ __('posts.create_date') }}</b>
                 <a class="pull-right">2018-01-24</a>
               </li>
-              {{--  <li class="list-group-item">  --}}
-                <b style="padding-top: 50px">{{ __('posts.content') }}</b>
-              {{--  </li>  --}}
-              {{--  <li class="list-group-item">  --}}
-                <p>Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</p>
-              {{--  </li>  --}}
+              <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
+              <p>Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</p>
             </ul>
-
             <a href="#" class="btn btn-danger btn-block btn-flat">
               <b>{{ __('posts.delete') }}</b>
             </a>
@@ -71,7 +61,6 @@
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
       </div>
       <!-- /.col -->
       <div class="col-md-8">
@@ -147,16 +136,12 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-
-          </div>
-          <!-- /.tab-content -->
         </div>
-        <!-- /.nav-tabs-custom -->
+          <!-- /.tab-content -->
       </div>
-      <!-- /.col -->
+        <!-- /.nav-tabs-custom -->
     </div>
     <!-- /.row -->
-
   </section>
   <!-- /.content -->
 </div>
