@@ -19,4 +19,7 @@ return [
     'categories' => [
     	'limit_rows' => 10,
     ],
+    'posts' => [
+        'limit_rows' => 10
+    ],
 ];

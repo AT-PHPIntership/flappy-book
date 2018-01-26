@@ -7,6 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
+     * Value of review post
+     */
+
+    const REVIEW_TYPE = 0;
+    /**
+     * Value of status post
+     */
+
+    const STATUS_TYPE = 1;
+    /**
+     * Value of find book post
+     */
+    
+    const FIND_TYPE = 2;
+    /**
      * Declare table
      *
      * @var string $tabel table name
