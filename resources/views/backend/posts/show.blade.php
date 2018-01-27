@@ -14,11 +14,11 @@
     </h1>
     <ol class="breadcrumb">
       <li>
-        <a href="#">
+        <a href="{{ route('admin.home.index')}} ">
           <i class="fa fa-dashboard"></i>{{ __('posts.home') }}</a>
       </li>
       <li>
-        <a href="#">{{ __('posts.posts') }}</a>
+        <a href="{{ route('posts.index') }}">{{ __('posts.posts') }}</a>
       </li>
       <li class="active">{{ __('posts.detail') }}</li>
     </ol>
