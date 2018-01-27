@@ -26,7 +26,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               @include('backend.layouts.partials.modal')
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="list-categories" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th class="text-center" width="5%">{{ __('categories.no') }}</th>
