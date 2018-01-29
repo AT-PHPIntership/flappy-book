@@ -42,7 +42,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="list-borrows" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th class="text-center">@sortablelink('employ_code', __('borrows.employee_code'))</th>
@@ -69,9 +69,9 @@
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                    <ul class="pagination">
-                      {{ $borrows->links() }}
-                    </ul>
+                  <ul class="pagination">
+                    {{ $borrows->links() }}
+                  </ul>
                 </nav>
               </div>
               <!-- /.pagination -->
