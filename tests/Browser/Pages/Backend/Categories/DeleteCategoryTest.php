@@ -37,7 +37,7 @@ class DeleteCategoryTest extends DuskTestCase
      *
      * @return void
      */
-    public function testDontDeleteDefaultCategory()
+    public function testDontSeeDeleteButtonOnDefaultCategory()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
@@ -73,6 +73,7 @@ class DeleteCategoryTest extends DuskTestCase
             $browser->loginAs(User::first())
                     ->visit('/admin/categories')
                     ->click('td button.btn-delete-item')
+                    ->assertSee('Confirm deletion!')
                     ->press('Close')
                     ->assertDontSee('Confirm deletion!');
         });
