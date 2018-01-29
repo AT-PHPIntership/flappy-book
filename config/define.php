@@ -11,6 +11,12 @@ return [
         'default_name_image' => 'book_image.png',
     ],
     'users' => [
-    	'limit_rows' => 10
+    	'limit_rows' => 10,
+    ],
+    'borrows' => [
+        'limit_rows' => 10,
+    ],
+    'categories' => [
+    	'limit_rows' => 10,
     ],
 ];

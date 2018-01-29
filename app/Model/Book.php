@@ -4,10 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Libraries\Traits\SearchTrait;
 
 class Book extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, SearchTrait;
     
     /**
      * Book currency unit
@@ -18,9 +19,9 @@ class Book extends Model
     const TYPE_DOLAR = 1;
     const TYPE_EURO = 2;
     const TYPE_YEN = 3;
-    const TYPE_ALL = 'All';
-    const TYPE_TITLE = 'Title';
-    const TYPE_AUTHOR = 'Author';
+    const TYPE_ALL = 'all';
+    const TYPE_TITLE = 'title';
+    const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
     
@@ -121,4 +122,19 @@ class Book extends Model
             $books->comments()->delete();
         });
     }
+
+     /**
+     * The attributes that can be search.
+     *
+     * @var array $searchableFields
+     */
+    protected $searchableFields = [
+        'columns' => [
+            self::TYPE_TITLE,
+            self::TYPE_AUTHOR,
+        ],
+        'joins' => [
+            'borrows' => ['books.id', 'borrows.id']
+        ]
+    ];
 }
