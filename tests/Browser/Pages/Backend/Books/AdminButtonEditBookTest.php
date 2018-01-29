@@ -24,7 +24,6 @@ class AdminButtonEditBookTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->createAdminUser();
         factory(Category::class, 2)->create();
         factory(User::class, 2)->create();
     }
@@ -38,7 +37,7 @@ class AdminButtonEditBookTest extends DuskTestCase
     {
         $this->makeData(1);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->assertSee('List Books');
             $elements = $browser->elements('#list-books tbody tr');
