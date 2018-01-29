@@ -28,7 +28,6 @@ class ReminderedUser extends Mailable
      */
     public $user;
 
-
     /**
      * Create a new message instance.
      *

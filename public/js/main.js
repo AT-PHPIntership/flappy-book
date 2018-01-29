@@ -25,8 +25,16 @@ $(document).ready(function () {
         $('#body-content').html(body);
         $('#confirm').modal('show');
         $('#send-btn').one('click', function () {
+            $("#loading").removeClass("hidden");
             form.submit();
         })
+    });
+
+    /**
+     * Show form add category when click button add category
+     */
+    $('#btn-add-category').bind('click', function (e) {
+        $('#add-category').modal('show');
     });
 });
 $(document).ready(function () {
