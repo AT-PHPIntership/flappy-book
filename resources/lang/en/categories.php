@@ -6,7 +6,7 @@ return [
     'no' => 'No',
     'title' => 'Title',
     'list' => 'List',
-    'total_book' => 'Total Book',
+    'total_books' => 'Total Books',
     'edit' => 'Edit',
     'reset' => 'Reset',
     'cancel' => 'Cancel',
