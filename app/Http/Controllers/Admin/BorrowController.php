@@ -5,10 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Borrow;
-use App\Model\User;
-use Mail;
-use App\Mail\ReminderedUser;
-use Illuminate\Support\Facades\Auth;
 
 class BorrowController extends Controller
 {
