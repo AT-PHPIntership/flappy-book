@@ -39,6 +39,9 @@
       <li class="{{ checkActiveRoutes(['borrows.index','borrows.show', 'borrows.edit']) }}">
         <a href="{{ route('borrows.index') }}"><i class="glyphicon glyphicon-list-alt"></i> <span>{{ __('dashboard.borrows') }}</span></a>
       </li>
+      <li class="{{ checkActiveRoutes(['categories.index','categories.show', 'categories.edit']) }}">
+        <a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>{{ __('dashboard.categories') }}</span></a>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->
