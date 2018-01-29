@@ -17,7 +17,7 @@ $(document).ready(function () {
     /**
      * Show form add category when click button add category
      */
-    $('.btn-add-category').bind('click', function (e) {
+    $('#btn-add-category').bind('click', function (e) {
         $('#add-category').modal('show');
     });
 });

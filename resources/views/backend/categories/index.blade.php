@@ -19,12 +19,13 @@
 
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
               <div class="pull-left">
-                <button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat btn-add-category">{{ __('categories.add_category') }}</button>
+                <button type="button" name="btn-add" id="btn-add-category" class="btn btn-success btn-flat">{{ __('categories.add_category') }}</button>
               </div>
             </div>
             <!-- /.box-header -->
@@ -35,7 +36,7 @@
                  <tr>
                   <th class="text-center" width="5%">{{ __('categories.no') }}</th>
                   <th>{{ __('categories.title') }}</th>
-                  <th class="text-center" width="10%">{{ __('categories.total_book') }}</th>
+                  <th class="text-center" width="10%">{{ __('categories.total_books') }}</th>
                   <th class="text-center" width="15%">
                     {{ __('categories.options') }}
                   </th>
@@ -48,16 +49,18 @@
                     <td>{{ $category->title }}</td>
                     <td class="text-center">{{ $category->total_books }}</td>
                     <td class="text-center">
-                      <div class="btn-option text-center">
-                        <form method="POST" action="#" class="inline">
-                          {{ csrf_field() }}
-                          {{ method_field('DELETE') }}
-                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                            data-title="{{ __('categories.confirm_deletion') }}"
-                            data-confirm="{{ __('categories.are_you_sure_to_delete_this_category', ['name' => 'Title Category']) }}">
-                          </button>
-                        </form> 
-                      </div>
+                      @if ($category->id != App\Model\Category::CATEGORY_DEFAULT)
+                        <div class="btn-option text-center">
+                          <form method="POST" action="{{ route('categories.destroy', $category->id) }}" class="inline">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                              data-title="{{ __('categories.confirm_deletion') }}"
+                              data-confirm="{{ __('categories.are_you_sure_to_delete_this_category', ['name' => $category->title]) }}">
+                            </button>
+                          </form> 
+                        </div>
+                      @endif
                     </td>
                   </tr>
                 @endforeach

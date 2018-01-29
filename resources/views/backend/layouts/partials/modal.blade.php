@@ -25,7 +25,7 @@
         <form method="POST" action="{{ route('categories.store') }}" class="inline">
             <div class="modal-body">
                 <p><strong>{{ __('categories.title') }}:</strong></p>
-                <input type="text" class="form-control" name="title" id="title" placeholder="{{ __('categories.title') }}">
+                <input type="text" class="form-control" name="title" id="title" placeholder="{{ __('categories.title') }}" autofocus>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-sm btn-flat btn-primary">&nbsp;&nbsp;{{ __('categories.add') }}&nbsp;&nbsp;</button>
