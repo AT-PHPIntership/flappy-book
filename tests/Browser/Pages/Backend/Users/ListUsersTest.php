@@ -22,8 +22,6 @@ class ListUsersTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->createAdminUser();
         factory(User::class, self::NUMBER_RECORD_CREATE)->create();
     }
 
@@ -32,10 +30,10 @@ class ListUsersTest extends DuskTestCase
     *
     * @return void
     */
-    public function testRoute()
+    public function testListUsers()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->clickLink('Users')
                     ->assertPathIs('/admin/users')
@@ -51,7 +49,7 @@ class ListUsersTest extends DuskTestCase
     public function testShowRecord()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
@@ -64,12 +62,15 @@ class ListUsersTest extends DuskTestCase
     *
     * @return void
     */
-    public function testPagination()
+    public function testListUsersPagination()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertSee('List Users');
+            $elements = $browser->elements('#list-users tbody tr');
+            $this->assertCount(config('define.users.limit_rows'), $elements);
+            $this->assertNotNull($browser->element('.pagination'));
             //Count page number of pagination
             $paginate_element = $browser->elements('.pagination li');
             $number_page = count($paginate_element)- 2;
@@ -78,17 +79,19 @@ class ListUsersTest extends DuskTestCase
     }
 
     /**
-    * Test click page 2 in pagination link
-    *
-    * @return void
-    */
+     * A Dusk test view Admin List Users with lastest pagination
+     *
+     * @return void
+     */
     public function testPathPagination()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/users?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))))
                     ->assertSee('List Users');
-            $browser->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))));
+            $elements = $browser->elements('#list-users tbody tr');
+            $browser->assertPathIs('/admin/users')
+                    ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))));
         });
     }
 }
