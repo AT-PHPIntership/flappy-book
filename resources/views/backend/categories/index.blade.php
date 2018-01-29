@@ -45,7 +45,7 @@
                     <td class="text-center">1</td>
                     <td class="category-title-field">
                       <p>Title 1</p>
-                      <input type="text" category-id="1" value="" spellcheck="false" hidden>
+                      <input type="text" category-id="1" value="" spellcheck="false" hidden autofocus>
                     </td>
                     <td class="text-center">41</td>
                     <td class="text-center">

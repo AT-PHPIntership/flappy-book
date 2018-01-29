@@ -11,7 +11,7 @@ return [
     'reset' => 'Reset',
     'cancel' => 'Cancel',
     'confirm_edit' => 'Confirm edit!',
-    'you_want_edit' => 'Do you want edit',
+    'you_want_edit' => 'Do you want edit from',
     'to' => 'to',
     'options' => 'Options',
     'confirm_deletion' => 'Confirm deletion!',

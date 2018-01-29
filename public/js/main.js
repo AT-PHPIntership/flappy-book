@@ -75,47 +75,47 @@ $(document).on('click', '.btn-role', function(e) {
 });
 
 $(document).on('click', '.btn-edit-category', function(e) {
-    resetAllRowListCategories();
+    changeAllInputOfCategoriesToLabel();
+    const PRESS_ENTER = 13;
     let selectedRow = $(this).closest('tr').find('.category-title-field');
     let textField = selectedRow.find('p');
     let inputField = selectedRow.find('input');
 
-    textField.hide();
-    let titleBefore = textField.html();
-
-    inputField.val(titleBefore).show().focus().keypress(function(event) {
-        if (event.which == 13) {
-            let titleAfter = inputField.val();
-            showConfirmEdit(titleBefore, titleAfter);
-
-            $('#edit-btn').one('click', function () {
-                textField.html(titleAfter).show();
-                inputField.hide();
-            });
-
-            $('#reset-btn').one('click', function () {
-                textField.show();
-                inputField.hide();
-            });
-
-            $('#cancel-btn').one('click', function () {
-                inputField.focus();
-            });
-        };
-    })
+    inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
+        if (event.which == PRESS_ENTER) {
+            showConfirmEditCategory(textField, inputField);
+        }
+    });
 });
 
-function resetAllRowListCategories() {
+function changeAllInputOfCategoriesToLabel() {
     let allRows = $('tbody').find('.category-title-field');
     allRows.find('p').show();
     allRows.find('input').hide();
 }
 
-function showConfirmEdit(titleBefore, titleAfter) {
+function showConfirmEditCategory(textField, inputField) {
+    let title = textField.html();
+    let titleEdited = inputField.val();
     let dataConfirm = categories.you_want_edit
-                +' <strong> ' + titleBefore + ' </strong> '
+                +' <strong> ' + title + ' </strong> '
                 + categories.to
-                +' <strong> ' + titleAfter +' </strong> ?';
+                +' <strong> ' + titleEdited +' </strong> ?';
+
     $('#body-edit-content').html(dataConfirm);
     $('#confirm-edit').modal('show');
+
+    $('#edit-btn').one('click', function () {
+        textField.html(titleEdited).show();
+        inputField.hide();
+    });
+
+    $('#reset-btn').one('click', function () {
+        textField.show();
+        inputField.hide();
+    });
+
+    $('#cancel-btn').one('click', function () {
+        inputField.focus();
+    });
 }

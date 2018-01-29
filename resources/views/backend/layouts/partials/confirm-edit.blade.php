@@ -7,9 +7,9 @@
         </div>
         <div class="modal-body" id="body-edit-content"></div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-flat btn-primary" id="edit-btn" data-dismiss="modal">{{ __('categories.edit') }}</button>
-            <button type="button" class="btn btn-sm btn-flat btn-warning" id="reset-btn" data-dismiss="modal">{{ __('categories.reset') }}</button>
-            <button type="button" class="btn btn-sm btn-flat btn-default" id="cancel-btn" data-dismiss="modal">{{ __('categories.cancel') }}</button>
+            <button type="button" class="btn btn-sm btn-flat btn-primary btn-confirm-edit" id="edit-btn" data-dismiss="modal">{{ __('categories.edit') }}</button>
+            <button type="button" class="btn btn-sm btn-flat btn-warning btn-confirm-edit" id="reset-btn" data-dismiss="modal">{{ __('categories.reset') }}</button>
+            <button type="button" class="btn btn-sm btn-flat btn-default btn-confirm-edit" id="cancel-btn" data-dismiss="modal">{{ __('categories.cancel') }}</button>
         </div>
     </div>
   </div>

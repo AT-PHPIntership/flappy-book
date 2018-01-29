@@ -5,3 +5,7 @@
   outline: none;
   background-color: inherit;
 }
+
+.btn-confirm-edit {
+  width: 80px;
+}
