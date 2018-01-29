@@ -13,7 +13,7 @@
       <ol class="breadcrumb">
         <li><a href="{{ route('admin.home.index') }}"><i class="fa fa-dashboard"></i> {{ __('borrows.home') }}</a></li>
         <li><a href="{{ route('borrows.index') }}">{{ __('borrows.borrows') }}</a></li>
-        <li class="active">{{ __('borrows.list_borrower') }}</li>
+        <li class="active">{{ __('borrows.list') }}</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -32,6 +32,9 @@
                   <th>{{ __('borrows.books_borrowing') }}</th>
                   <th class="text-center">{{ __('borrows.from_date') }}</th>
                   <th class="text-center">{{ __('borrows.end_date') }}</th>
+                  <th class="text-center">{{ __('borrows.send_mail_date') }}</th>
+                  <th class="text-center">{{ __('borrows.reminder') }}</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +46,12 @@
                       <td>{{ $borrow->title }}</td>
                       <td class="text-center">{{ date('d-m-Y', strtotime($borrow->from_date)) }}</td>
                       <td class="text-center">{{ date('d-m-Y', strtotime($borrow->to_date)) }}</td>
+                      <td>{{ date('d-m-Y', strtotime($borrow->send_mail_date)) }}</td>
+                      <td class="text-center">
+                        <form>
+                          <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o"></button>
+                        </form>
+                      </td>
                     </tr>
                   @endforeach
                 </tbody>

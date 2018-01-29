@@ -10,4 +10,7 @@ return [
     'books_borrowing' => 'Book Borrowing',
     'from_date' => 'From Date',
     'end_date' => 'End Date',
+    'list' => 'List',
+    'send_mail_date' => 'Send Mail Date',
+    'reminder' => 'Reminder',
 ];

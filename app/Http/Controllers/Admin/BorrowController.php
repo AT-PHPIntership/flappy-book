@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Borrow;
+use App\Model\User;
+use Mail;
+use App\Mail\ReminderedUser;
+use Illuminate\Support\Facades\Auth;
 
 class BorrowController extends Controller
 {
@@ -23,6 +27,7 @@ class BorrowController extends Controller
             'borrows.from_date',
             'borrows.to_date',
             'borrows.id',
+            'borrows.send_mail_date',
         ];
         $borrows = Borrow::select($fields)
         ->join('users', 'users.id', '=', 'borrows.user_id')
