@@ -42,6 +42,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              @include('backend.layouts.partials.modal-reminder')
               <table id="list-borrows" class="table table-bordered table-hover">
                 <thead>
                  <tr>
@@ -67,7 +68,10 @@
                       <td>{{ date('d-m-Y', strtotime($borrow->send_mail_date)) }}</td>
                       <td class="text-center">
                         <form>
-                          <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o"></button>
+                          <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 
+                          data-title="{{ __('borrows.confirm_send_mail_reminder') }}"
+                          data-confirm="{{ __('borrows.are_you_sure_to_send_mail_reminder_for_this_user', ['name' => $borrow->name]) }}">
+                        </button>
                         </form>
                       </td>
                     </tr>

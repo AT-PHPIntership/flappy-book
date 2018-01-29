@@ -13,6 +13,21 @@ $(document).ready(function () {
             form.submit();
         })
     });
+    
+    /**
+     * Show send mail reminder for user confimation when click button reminder
+     */
+    $('.btn-reminder-item').bind('click', function (e) {
+        var form = $(this.form);
+        var title = $(this).attr('data-title');
+        var body = '<i>' + $(this).attr('data-confirm') + '</i>';
+        $('#title-content').html(title);
+        $('#body-content').html(body);
+        $('#confirm').modal('show');
+        $('#send-btn').one('click', function () {
+            form.submit();
+        })
+    });
 });
 $(document).ready(function () {
     let url = new URL(document.location);
