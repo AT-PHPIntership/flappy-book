@@ -14,9 +14,8 @@ class QrcodesTableSeeder extends Seeder
     public function run()
     {
     	$bookId = DB::table('books')->pluck('id')->toArray();
-        $numberRecord = count($bookId);
         $faker = Faker::create();
-        for ($i = 0; $i <= $numberRecord - 1; $i++) {
+        for ($i = 0; $i <= count($bookId) - 1; $i++) {
             factory(App\Model\Qrcode::class)->create([
                 'book_id' => $faker->unique()->randomElement($bookId)
             ]);
