@@ -26,7 +26,7 @@ class BorrowController extends Controller
             'borrows.from_date',
             'borrows.to_date',
             'borrows.id',
-            'borrows.user_id'
+            'borrows.send_mail_date',
         ];
         $borrows = Borrow::select($fields)
         ->join('users', 'users.id', '=', 'borrows.user_id')
@@ -48,15 +48,16 @@ class BorrowController extends Controller
     */
     public function reminderSendMail($id)
     {
-        $borrower = Borrow::findOrFail($id);
-        $userId = $borrower->user_id;
+        $borrowing = Borrow::findOrFail($id);
+        $userId = $borrowing->user_id;
         $user = User::findOrFail($userId);
-        Mail::to($user->email)->send(new ReminderedUser());
+        $email = new ReminderedUser($borrowing, $user);
+        Mail::to($user->email)->send($email);
         if (Mail::failures()) {
             flash(__('borrows.send_mail_fail'))->error();
         } else {
             $sendDate = date("Y-m-d");
-            if (Borrow::findOrFail($id)->update(['to_date' => $sendDate])) {
+            if (Borrow::findOrFail($id)->update(['send_mail_date' => $sendDate])) {
                 flash(__('borrows.send_mail_success'))->success();
             }
         }

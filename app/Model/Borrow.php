@@ -34,7 +34,8 @@ class Borrow extends Model
         'user_id',
         'status',
         'from_date',
-        'to_date'
+        'to_date',
+        'send_mail_date'
     ];
 
     /**
@@ -44,7 +45,8 @@ class Borrow extends Model
     */
     public $sortable = [
         'from_date',
-        'to_date'
+        'to_date',
+        'send_mail_date'
     ];
 
     /**

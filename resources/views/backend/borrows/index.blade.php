@@ -13,7 +13,7 @@
       <ol class="breadcrumb">
         <li><a href="{{ route('admin.home.index') }}"><i class="fa fa-dashboard"></i> {{ __('borrows.home') }}</a></li>
         <li><a href="{{ route('borrows.index') }}">{{ __('borrows.borrows') }}</a></li>
-        <li class="active">{{ __('borrows.list_borrower') }}</li>
+        <li class="active">{{ __('borrows.list') }}</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -53,7 +53,7 @@
                   <th>@sortablelink('title', __('borrows.book_borrowing'))</th>
                   <th class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
                   <th class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
-                  <th class="text-center">{{ __('borrows.send_mail_date') }}</th>
+                  <th class="text-center">@sortablelink('send_mail_date',  __('borrows.send_mail_date'))</th>
                   <th class="text-center">{{ __('borrows.reminder') }}</th>
                 </tr>
                 </thead>
@@ -66,13 +66,13 @@
                       <td>{{ $borrow->title }}</td>
                       <td class="text-center">{{ date('d-m-Y', strtotime($borrow->from_date)) }}</td>
                       <td class="text-center">{{ date('d-m-Y', strtotime($borrow->to_date)) }}</td>
-                      <td></td>
+                      <td>{{ date('d-m-Y', strtotime($borrow->send_mail_date)) }}</td>
                       <td class="text-center">
                         <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="GET">
                           <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 
                           data-title="{{ __('borrows.confirm_send_mail_reminder') }}"
-                         data-confirm="{{ __('borrows.are_you_sure_to_send_mail_reminder_for_this_user', ['name' => $borrow->name]) }}">
-                          </button>
+                          data-confirm="{{ __('borrows.are_you_sure_to_send_mail_reminder_for_this_user', ['name' => $borrow->name]) }}">
+                        </button>
                         </form>
                       </td>
                     </tr>

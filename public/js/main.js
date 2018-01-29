@@ -13,7 +13,7 @@ $(document).ready(function () {
             form.submit();
         })
     });
-
+    
     /**
      * Show send mail reminder for user confimation when click button reminder
      */
