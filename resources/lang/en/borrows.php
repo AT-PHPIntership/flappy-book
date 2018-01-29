@@ -15,4 +15,12 @@ return [
         \App\Model\Borrow::TYPE_NAME => 'Name',
         \App\Model\Borrow::TYPE_BORROWING => 'Book Borrowing',
     ],
+    'send_mail_date' => 'Send Mail Date',
+    'reminder' => 'Reminder',
+    'confirm_send_mail_reminder' => 'Confirm reminder send mail!',
+    'are_you_sure_to_send_mail_reminder_for_this_user' => 'Are you sure to send mail reminder for this user, :name ?',
+    'send' => 'Send',
+    'close' => 'Close',
+    'send_mail_success' => 'Send mail success!',
+    'send_mail_fail' => 'Send mail fail',
 ];

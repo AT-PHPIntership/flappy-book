@@ -18,6 +18,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -42,6 +43,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              @include('backend.layouts.partials.modal-reminder')
               <table id="list-borrows" class="table table-bordered table-hover">
                 <thead>
                  <tr>
@@ -51,6 +53,8 @@
                   <th>@sortablelink('title', __('borrows.book_borrowing'))</th>
                   <th class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
                   <th class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
+                  <th class="text-center">{{ __('borrows.send_mail_date') }}</th>
+                  <th class="text-center">{{ __('borrows.reminder') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,6 +66,15 @@
                       <td>{{ $borrow->title }}</td>
                       <td class="text-center">{{ date('d-m-Y', strtotime($borrow->from_date)) }}</td>
                       <td class="text-center">{{ date('d-m-Y', strtotime($borrow->to_date)) }}</td>
+                      <td></td>
+                      <td class="text-center">
+                        <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="GET">
+                          <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 
+                          data-title="{{ __('borrows.confirm_send_mail_reminder') }}"
+                         data-confirm="{{ __('borrows.are_you_sure_to_send_mail_reminder_for_this_user', ['name' => $borrow->name]) }}">
+                          </button>
+                        </form>
+                      </td>
                     </tr>
                   @endforeach
                 </tbody>
