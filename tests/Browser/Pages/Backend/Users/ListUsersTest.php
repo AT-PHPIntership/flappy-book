@@ -32,7 +32,7 @@ class ListUsersTest extends DuskTestCase
     *
     * @return void
     */
-    public function testListUsers()
+    public function testRoute()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
@@ -52,12 +52,10 @@ class ListUsersTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
-            ->visit('/admin/users')
-            ->assertSee('List Users');
+                    ->visit('/admin/users')
+                    ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
             $this->assertCount(config('define.users.limit_rows'), $elements);
-            $this->assertNotNull($browser->element('.pagination'));
-
         });
     }
 
@@ -66,16 +64,12 @@ class ListUsersTest extends DuskTestCase
     *
     * @return void
     */
-    public function testListUsersPagination()
+    public function testPagination()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
                     ->visit('/admin/users')
                     ->assertSee('List Users');
-            // Count row number in one page
-            $elements = $browser->elements('#list-users tbody tr');
-            $this->assertCount(config('define.users.limit_rows'), $elements);
-            $this->assertNotNull($browser->element('.pagination'));
             //Count page number of pagination
             $paginate_element = $browser->elements('.pagination li');
             $number_page = count($paginate_element)- 2;
@@ -94,9 +88,6 @@ class ListUsersTest extends DuskTestCase
             $browser->loginAs(User::first())
                     ->visit('/admin/users?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))))
                     ->assertSee('List Users');
-            $elements = $browser->elements('#list-users tbody tr');
-            $this->assertCount((self::NUMBER_RECORD_CREATE +1) % config('define.users.limit_rows'), $elements);
-            $browser->assertPathIs('/admin/users');
             $browser->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))));
         });
     }
