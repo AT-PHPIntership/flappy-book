@@ -16,60 +16,45 @@ class AdminSortBooksTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    /**
-     * Override function setUp() for make user login
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
+    // /**
+    //  * Override function setUp() for make user login
+    //  *
+    //  * @return void
+    //  */
+    // public function setUp()
+    // {
+    //     parent::setUp();
+    // }
+
+    // /*
+    //  * A Dusk test for click button.
+    //  *
+    //  * @return void
+    //  */
+    // public function testClickButtonsSort()
+    // {
+    //     $btnSortNames = ['title', 'author', 'rating', 'total_borrowed'];
+
+    //     $this->browse(function (Browser $browser) use ($btnSortNames) {
+
+    //         $browser->loginAs($this->user)
+    //                 ->visit('admin/books');
+
+    //         foreach ($btnSortNames as $name) {
+    //             $browser->press('#btn-sort-'.$name)
+    //                     ->assertQueryStringHas('sort', $name)
+    //                     ->assertQueryStringHas('order', 'asc')
+    //                     ->press('#btn-sort-'.$name)
+    //                     ->assertQueryStringHas('sort', $name)
+    //                     ->assertQueryStringHas('order', 'desc')
+    //                     ->press('#btn-sort-'.$name)
+    //                     ->assertQueryStringHas('sort', $name)
+    //                     ->assertQueryStringHas('order', 'asc');
+    //         }
+    //     });
+    // }
 
     /**
-     * A Dusk test check existence of button sort.
-     *
-     * @return void
-     */
-    public function testExistOfButtonSort()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs($this->user)
-                    ->visit('admin/books');
-            $elements = $browser->elements('#list-books .sort-element');
-            $this->assertCount(4, $elements);
-        });
-    }
-
-    /*
-     * A Dusk test for click button.
-     *
-     * @return void
-     */
-    public function testClickButtonsSort()
-    {
-        $btnSortNames = ['title', 'author', 'rating', 'total_borrowed'];
-
-        $this->browse(function (Browser $browser) use ($btnSortNames) {
-
-            $browser->loginAs($this->user)
-                    ->visit('admin/books');
-
-            foreach ($btnSortNames as $name) {
-                $browser->press('#btn-sort-'.$name)
-                        ->assertQueryStringHas('sort', $name)
-                        ->assertQueryStringHas('order', 'asc')
-                        ->press('#btn-sort-'.$name)
-                        ->assertQueryStringHas('sort', $name)
-                        ->assertQueryStringHas('order', 'desc')
-                        ->press('#btn-sort-'.$name)
-                        ->assertQueryStringHas('sort', $name)
-                        ->assertQueryStringHas('order', 'asc');
-            }
-        });
-    }
-
-   /**
      * Make cases for test.
      *
      * @return array
@@ -77,48 +62,47 @@ class AdminSortBooksTest extends DuskTestCase
     public function dataForTest()
     {
         return [
-            ['title', 2, 'asc'],
-            ['author', 3, 'asc'],
-            ['rating', 4, 'asc'],
-            ['title', 2, 'desc'],
-            ['author', 3, 'desc'],
-            ['rating', 4, 'desc'],
+            ['title', 2],
+            ['author', 3],
+            ['rating', 4],
+            ['total_borrowed', 5],
         ];
     }
 
-    /**
-     * A Dusk test data.
-     *
-     * @dataProvider dataForTest
-     *
-     * @return void
-     */
-    public function testSortData($name, $columIndex, $order)
-    {
-        $this->makeData(5);
-        $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
-            $browser->loginAs($this->user)
-                    ->visit('admin/books')
-                    ->resize(1200,1600)
-                    ->press('#btn-sort-'.$name);
-            $this->assertCount(5, $browser->elements('#list-books tbody tr'));
-            if ($order == 'desc') {
-                $browser->press('#btn-sort-'.$name);
-                $this->assertCount(5, $browser->elements('#list-books tbody tr'));
-            }
+    // /**
+    //  * A Dusk test data.
+    //  *
+    //  * @dataProvider dataForTest
+    //  *
+    //  * @return void
+    //  */
+    // public function testSortListBooks($name, $columIndex)
+    // {
+    //     $books = $this->makeData(5);
+    //     $arraySelected = $books->pluck($name)->toArray();
 
-            $listBooksSorted = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                                 ->select('title', 'author', 'rating', DB::raw('COUNT(borrows.id) AS total_borrowed'))
-                                 ->groupBy('books.id')
-                                 ->orderBy($name, $order)
-                                 ->get();
+    //     $this->browse(function (Browser $browser) use ($name, $columIndex, $arraySelected) {
+    //         $browser->loginAs($this->user)
+    //                 ->visit('admin/books')
+    //                 ->resize(1200,1600)
+    //                 ->press('#btn-sort-'.$name)->screenshot(1);
 
-            for ($i = 1; $i <= 5; $i++) {
-                $selector = "#list-books tbody tr:nth-child($i) td:nth-child($columIndex)";
-                $this->assertTrue($browser->text($selector) == $listBooksSorted[$i - 1]->$name);
-            }
-        });
-    }
+    //         // Test list Asc
+    //         sort($arraySelected);
+    //         for ($i = 1; $i <= 5; $i++) {
+    //             $selector = "#list-books tbody tr:nth-child($i) td:nth-child($columIndex)";
+    //             $this->assertEquals($browser->text($selector), $arraySelected[$i-1]);
+    //         }
+
+    //         // Test list Desc
+    //         $browser->press('#btn-sort-'.$name);
+    //         rsort($arraySelected);
+    //         for ($i = 1; $i <= 5; $i++) {
+    //             $selector = "#list-books tbody tr:nth-child($i) td:nth-child($columIndex)";
+    //             $this->assertEquals($browser->text($selector), $arraySelected[$i-1]);
+    //         }
+    //     });
+    // }
 
     /**
      * A Dusk test data when panigate.
@@ -127,32 +111,31 @@ class AdminSortBooksTest extends DuskTestCase
      *
      * @return void
      */
-    public function testSortDataWhenPanigate($name, $columIndex, $order)
+    public function testSortListBooksWhenPanigate($name, $columIndex)
     {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) use ($name, $columIndex, $order) {
+        $books = $this->makeData(16);
+        $arraySelected = $books->pluck($name)->toArray();
+        $this->browse(function (Browser $browser) use ($name, $columIndex, $arraySelected) {
             $browser->loginAs($this->user)
                     ->visit('admin/books?page=2')
                     ->resize(1200,1600)
                     ->press('#btn-sort-'.$name);
 
-            $this->assertCount(6, $browser->elements('#list-books tbody tr'));
-            if ($order == 'desc') {
-                $browser->press('#btn-sort-'.$name);
-                $this->assertCount(6, $browser->elements('#list-books tbody tr'));
-            }
-
-            $listBooksSorted = Book::leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                                 ->select('title', 'author', 'rating', DB::raw('COUNT(borrows.id) AS total_borrowed'))
-                                 ->groupBy('books.id')
-                                 ->orderBy($name, $order)
-                                 ->offset(10)
-                                 ->limit(10)
-                                 ->get();
-
+            // Test list Asc
+            sort($arraySelected);
+            $arraySelected = array_chunk($arraySelected, 10)[1];
+            dd($arraySelected);
             for ($i = 1; $i <= 6; $i++) {
                 $selector = "#list-books tbody tr:nth-child($i) td:nth-child($columIndex)";
-                $this->assertTrue($browser->text($selector) == $listBooksSorted[$i - 1]->$name);
+                $this->assertEquals($browser->text($selector), $arraySelected[$i-1]);
+            }
+
+            // Test list Desc
+            $browser->press('#btn-sort-'.$name);
+            rsort($arraySelected);
+            for ($i = 1; $i <= 6; $i++) {
+                $selector = "#list-books tbody tr:nth-child($i) td:nth-child($columIndex)";
+                $this->assertEquals($browser->text($selector), $arraySelected[$i-1]);
             }
         });
     }
@@ -176,14 +159,18 @@ class AdminSortBooksTest extends DuskTestCase
 
         $books = factory(Book::class, $row)->create([
             'category_id' => $faker->randomElement($categoryIds),
-            'from_person' => $faker->randomElement($employCodes)
-        ]);
+            'from_person' => $faker->randomElement($employCodes),
+        ])->each(function($book) use ($faker) {
+            $book->total_borrowed = $faker->numberBetween(1, 3);
+        });
 
-        $bookIds = $books->pluck('id')->toArray();
+        foreach ($books as $book) {
+            factory(Borrow::class, $book->total_borrowed)->create([
+                'book_id' => $book->id,
+                'user_id' => $faker->randomElement($userIds)
+            ]);
+        }
 
-        factory(Borrow::class, $row)->create([
-            'book_id' => $faker->randomElement($bookIds),
-            'user_id' => $faker->randomElement($userIds)
-        ]);
+        return $books;
     }
 }
