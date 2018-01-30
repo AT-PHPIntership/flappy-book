@@ -70,7 +70,7 @@
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                        {{ $categories->links() }}
+                  {{ $categories->links() }}
                 </nav>
               </div>
               <!-- /.pagination -->
