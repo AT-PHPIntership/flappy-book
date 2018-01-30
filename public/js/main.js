@@ -75,7 +75,7 @@ $(document).on('click', '.btn-role', function(e) {
 });
 
 $(document).on('click', '.btn-edit-category', function(e) {
-    changeAllInputOfCategoriesToLabel();
+    resetCategoriesInput();
     const PRESS_ENTER = 13;
     let selectedRow = $(this).closest('tr').find('.category-title-field');
     let textField = selectedRow.find('p');
@@ -83,18 +83,18 @@ $(document).on('click', '.btn-edit-category', function(e) {
 
     inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
         if (event.which == PRESS_ENTER) {
-            showConfirmEditCategory(textField, inputField);
+            confirmEditCategory(textField, inputField);
         }
     });
 });
 
-function changeAllInputOfCategoriesToLabel() {
+function resetCategoriesInput() {
     let allRows = $('tbody').find('.category-title-field');
     allRows.find('p').show();
     allRows.find('input').hide();
 }
 
-function showConfirmEditCategory(textField, inputField) {
+function confirmEditCategory(textField, inputField) {
     let title = textField.html();
     let titleEdited = inputField.val();
     let dataConfirm = categories.you_want_edit
