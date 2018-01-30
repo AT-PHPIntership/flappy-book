@@ -24,13 +24,12 @@ class BorrowController extends Controller
             'borrows.to_date',
             'borrows.id',
         ];
-        $borrows = Borrow::select($fields)
-        ->join('users', 'users.id', '=', 'borrows.user_id')
-        ->join('books', 'books.id', '=', 'borrows.book_id')
-        ->where('borrows.status', Borrow::BORROWING)
-        ->sortable()
-        ->orderby('from_date', 'desc')
-        ->paginate(config('define.borrows.limit_rows'));
+        $borrows = Borrow::search(request('search'), request('filter'))
+            ->select($fields)
+            ->where('borrows.status', Borrow::BORROWING)
+            ->sortable()
+            ->orderby('from_date', 'desc')
+            ->paginate(config('define.borrows.limit_rows'));
 
         return view('backend.borrows.index', ['borrows' => $borrows]);
     }

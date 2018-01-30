@@ -23,6 +23,12 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="box-header">
+              @include('backend.categories.partials.add-category')
+              <div class="pull-left">
+                <button type="button" name="btn-add" id="btn-add-category" class="btn btn-success btn-flat">{{ __('categories.add_category') }}</button>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               @include('backend.layouts.partials.modal')
