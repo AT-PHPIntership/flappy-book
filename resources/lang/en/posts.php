@@ -14,4 +14,9 @@ return [
     'options' => 'Options',
     'list_comments' => 'List comments',
     'delete' => 'Delete',
+    'liststatus' => [
+        \App\Model\Post::TYPE_STATUS => 'Status',
+        \App\Model\Post::TYPE_FIND_BOOK => 'Find book',
+        \App\Model\Post::TYPE_REVIEW_BOOK => 'Review',
+    ],
 ];
