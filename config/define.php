@@ -19,4 +19,8 @@ return [
     'categories' => [
     	'limit_rows' => 10,
     ],
+    'posts' => [
+        'limit_rows_comment' => 15,
+        'format_date_detail_post' => 'H:i:A d-m-Y',
+    ],
 ];
