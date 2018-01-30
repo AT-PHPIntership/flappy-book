@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function () {
     /**
      * Show delete confimation when click button delete
@@ -87,18 +93,14 @@ $(document).on('click', '#category-add', function(e) {
     var errorMessage = $('#add-category').find('span');
     $.ajax({
         url: '/admin/categories',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         type: 'post',
         data: {'title' : title},
         success: function (data) {
             form.submit();
         },
         error: function (error) {
-            errorMessage.html(typeof error.responseJSON.errors !== 'undefined' ?
-            error.responseJSON.errors.title :
-            categories.edit_failure);
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
             $('#title').focus();
         }
     });
