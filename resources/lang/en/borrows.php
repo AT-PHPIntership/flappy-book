@@ -10,6 +10,9 @@ return [
     'book_borrowing' => 'Book Borrowing',
     'from_date' => 'From Date',
     'end_date' => 'End Date',
+    'list' => 'List',
+    'send_mail_date' => 'Send Mail Date',
+    'reminder' => 'Reminder',
     'search' => 'Search',
     'list_search' =>[
         \App\Model\Borrow::TYPE_NAME => 'Name',

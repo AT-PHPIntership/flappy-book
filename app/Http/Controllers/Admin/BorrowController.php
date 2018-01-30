@@ -23,6 +23,7 @@ class BorrowController extends Controller
             'borrows.from_date',
             'borrows.to_date',
             'borrows.id',
+            'borrows.send_mail_date',
         ];
         $borrows = Borrow::search(request('search'), request('filter'))
             ->select($fields)
