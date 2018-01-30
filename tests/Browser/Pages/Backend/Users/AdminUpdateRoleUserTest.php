@@ -26,8 +26,6 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->user = $this->createAdminUser();
     }
 
     /**
