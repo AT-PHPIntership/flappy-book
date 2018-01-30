@@ -23,9 +23,9 @@ class PostController extends Controller
             'posts.created_at',
         ];
         $posts = Post::leftJoin('users', 'posts.user_id', '=', 'users.id')
-                    ->select($fields)
-                    ->withCount('comments')
-                    ->paginate(config('define.posts.limit_rows'));
+            ->select($fields)
+            ->withCount('comments')
+            ->paginate(config('define.posts.limit_rows'));
         return view('backend.posts.index', compact('posts'));
     }
     
