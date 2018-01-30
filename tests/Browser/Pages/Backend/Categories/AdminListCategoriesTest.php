@@ -58,15 +58,15 @@ class AdminListCategoriesTest extends DuskTestCase
                     ->assertSee('List Categories');
             $elements = $browser->elements('#list-categories tbody tr');
             $this->assertCount(0, $elements);
-            $this->assertNull($browser->element('.paginate'));
+            $this->assertNull($browser->element('.pagination'));
         });
     }
 
     /**
-    * A Dusk test show record with table categories has data.
-    *
-    * @return void
-    */
+     * A Dusk test show record with table categories has data.
+     *
+     * @return void
+     */
     public function testShowRecord()
     {
         $this->makeData(6);
@@ -75,7 +75,7 @@ class AdminListCategoriesTest extends DuskTestCase
                     ->visit('/admin/categories');
             $elements = $browser->elements('#list-categories tbody tr');
             $this->assertCount(6, $elements);
-            $this->assertNull($browser->element('.paginate'));
+            $this->assertNull($browser->element('.pagination'));
         });
     }
 
@@ -112,6 +112,22 @@ class AdminListCategoriesTest extends DuskTestCase
                     ->visit('/admin/categories?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
             $browser->assertPathIs('/admin/categories')
                     ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
+        });
+    }
+
+    /**
+     * A Dusk test view Admin List categories at last page
+     *
+     * @return void
+     */
+    public function testLastRecord()
+    {
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::first())
+                    ->visit('/admin/categories?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
+            $elements = $browser->elements('#list-categories tbody tr');
+            $this->assertCount(self::NUMBER_RECORD_CREATE % config('define.categories.limit_rows') == 0 ? config('define.categories.limit_rows') : self::NUMBER_RECORD_CREATE % config('define.categories.limit_rows'), $elements);       
         });
     }
 
