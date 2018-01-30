@@ -64,9 +64,9 @@
                       <td>{{ $borrow->name }}</td>
                       <td>{{ $borrow->email }}</td>
                       <td>{{ $borrow->title }}</td>
-                      <td class="text-center">{{ date('d-m-Y', strtotime($borrow->from_date)) }}</td>
-                      <td class="text-center">{{ date('d-m-Y', strtotime($borrow->to_date)) }}</td>
-                      <td>{{ date('d-m-Y', strtotime($borrow->send_mail_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->from_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->to_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->send_mail_date)) }}</td>
                       <td class="text-center">
                         <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="GET">
                           <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 

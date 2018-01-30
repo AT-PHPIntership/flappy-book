@@ -4,10 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use App\Libraries\Traits\SearchTrait;
 
 class Borrow extends Model
 {
-    use Sortable;
+    use Sortable, SearchTrait;
 
     /**
      * Borrows currency status
@@ -16,7 +17,8 @@ class Borrow extends Model
      */
     const BORROWING = 0;
     const TYPE_NAME = 'name';
-    const TYPE_BORROWING = 'borrowing';
+    const TYPE_TITLE = 'title';
+
     /**
      * Declare table
      *
@@ -75,4 +77,20 @@ class Borrow extends Model
     {
         return $this->belongsTo(Book::class, 'book_id');
     }
+
+    /**
+     * The attributes that can be search.
+     *
+     * @var array $searchableFields
+     */
+    protected $searchableFields = [
+        'columns' => [
+            self::TYPE_NAME,
+            self::TYPE_TITLE,
+        ],
+        'joins' => [
+            'books' => ['books.id', 'borrows.book_id'],
+            'users' => ['users.id','borrows.user_id'],
+        ]
+    ];
 }
