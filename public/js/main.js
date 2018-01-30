@@ -154,8 +154,6 @@ function confirmEditCategory(textField, inputField, errorMessage) {
                     errorMessage.html(categories.error_when_edit_category);
                 }
             },
-            error: function () {
-            }
         });
     });
 
