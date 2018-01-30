@@ -70,9 +70,7 @@
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                    <ul class="pagination">
                         {{ $categories->links() }}
-                    </ul>
                 </nav>
               </div>
               <!-- /.pagination -->
