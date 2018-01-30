@@ -25,29 +25,29 @@
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
-                 <tr>
-                  <th class="text-center" width="5%">
-                    {{ __('posts.no') }}
-                  </th>
-                  <th class="text-center">
-                    {{ __('posts.short_content') }}
-                  </th>
-                  <th class="text-center" width="10%">
-                    {{ __('posts.status') }}
-                  </th>
-                  <th width="10%" class="text-center">
-                    {{ __('posts.user_name') }}
-                  </th>
-                  <th class="text-center" width="12%">
-                    {{ __('posts.post_date') }}
-                  </th>
+                  <tr>
+                    <th class="text-center" width="5%">
+                      {{ __('posts.no') }}
+                    </th>
+                    <th class="text-center">
+                      {{ __('posts.short_content') }}
+                    </th>
+                    <th class="text-center" width="10%">
+                      {{ __('posts.status') }}
+                    </th>
+                    <th width="10%" class="text-center">
+                      {{ __('posts.user_name') }}
+                    </th>
                     <th class="text-center" width="12%">
-                    {{ __('posts.total_comment') }}
-                  </th>
-                  <th class="text-center" width="15%">
-                    {{ __('posts.options') }}
-                  </th>
-                </tr>
+                      {{ __('posts.post_date') }}
+                    </th>
+                    <th class="text-center" width="12%">
+                      {{ __('posts.total_comment') }}
+                    </th>
+                    <th class="text-center" width="15%">
+                      {{ __('posts.options') }}
+                    </th>
+                  </tr>
                 </thead>
                 <tbody>
                   @foreach ($posts as $post)
@@ -84,15 +84,15 @@
                         </div>
                       </td>
                     </tr>
-                   @endforeach  
+                  @endforeach  
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                    <ul class="pagination">
-                      {{ $posts->links() }}
-                    </ul>
+                  <ul class="pagination">
+                    {{ $posts->links() }}
+                  </ul>
                 </nav>
               </div>
               <!-- /.pagination -->
