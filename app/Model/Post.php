@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
-     * Value of review post
+     * Value of status post
      */
 
     const TYPE_STATUS = 0;
     /**
-     * Value of status post
+     * Value of find book post
      */
 
     const TYPE_FIND_BOOK = 1;
     /**
-     * Value of find book post
+     * Value of review book post
      */
     
     const TYPE_REVIEW_BOOK = 2;
