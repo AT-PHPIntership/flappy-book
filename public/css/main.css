@@ -6,6 +6,6 @@
   background-color: inherit;
 }
 
-.popup-edit-categories button {
-  width: 10%;
+.btn-confirm-edit {
+  width: 80px;
 }

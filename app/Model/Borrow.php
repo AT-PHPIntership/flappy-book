@@ -3,15 +3,21 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+use App\Libraries\Traits\SearchTrait;
 
 class Borrow extends Model
 {
+    use Sortable, SearchTrait;
+
     /**
      * Borrows currency status
      *
      * @type int
      */
     const BORROWING = 0;
+    const TYPE_NAME = 'name';
+    const TYPE_TITLE = 'title';
 
     /**
      * Declare table
@@ -30,8 +36,27 @@ class Borrow extends Model
         'user_id',
         'status',
         'from_date',
-        'to_date'
+        'to_date',
+        'send_mail_date'
     ];
+
+    /**
+    * Declare table sort
+    *
+    * @var array $sortable table sort
+    */
+    public $sortable = [
+        'from_date',
+        'to_date',
+        'send_mail_date'
+    ];
+
+    /**
+     * Declare table sort
+     *
+     * @var string $sortableAs
+     */
+    protected $sortableAs = ['employ_code', 'name', 'email', 'title'];
 
     /**
      * Relationship belongsTo with User
@@ -52,4 +77,20 @@ class Borrow extends Model
     {
         return $this->belongsTo(Book::class, 'book_id');
     }
+
+    /**
+     * The attributes that can be search.
+     *
+     * @var array $searchableFields
+     */
+    protected $searchableFields = [
+        'columns' => [
+            self::TYPE_NAME,
+            self::TYPE_TITLE,
+        ],
+        'joins' => [
+            'books' => ['books.id', 'borrows.book_id'],
+            'users' => ['users.id','borrows.user_id'],
+        ]
+    ];
 }

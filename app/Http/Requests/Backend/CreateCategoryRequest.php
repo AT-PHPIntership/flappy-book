@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-class EditCategoryRequest extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,14 +19,12 @@ class EditCategoryRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param Illuminate\Http\Request $request request for edit category
-     *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'title' => 'required|unique:categories,title,'.$request->get('id'),
+            'title' => 'required|unique:categories,title'
         ];
     }
 }

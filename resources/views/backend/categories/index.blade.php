@@ -22,70 +22,64 @@
 
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="box-header">
+              @include('backend.categories.partials.add-category')
+              <div class="pull-left">
+                <button type="button" name="btn-add" id="btn-add-category" class="btn btn-success btn-flat">{{ __('categories.add_category') }}</button>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               @include('backend.layouts.partials.confirm-edit')
-              <table id="example2" class="table table-bordered table-hover">
+              @include('backend.layouts.partials.modal')
+              <table id="list-categories" class="table table-bordered table-hover">
                 <thead>
                  <tr>
                   <th class="text-center" width="5%">{{ __('categories.no') }}</th>
                   <th>{{ __('categories.title') }}</th>
-                  <th class="text-center" width="10%">{{ __('categories.total_book') }}</th>
+                  <th class="text-center" width="10%">{{ __('categories.total_books') }}</th>
                   <th class="text-center" width="15%">
                     {{ __('categories.options') }}
                   </th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-center">1</td>
+                @foreach ($categories as $index => $category)
+                  <tr class="item-{{ $category->id }}">
+                    <td class="text-center">{{ $index + $categories->firstItem() }}</td>
                     <td class="category-title-field">
-                      <p>Title 1</p>
-                      <input type="text" category-id="1" value="" spellcheck="false" hidden>
+                      <p>{{ $category->title }}</p>
+                      <input type="text" category-id="{{ $category->id }}" value="" spellcheck="false" hidden>
                       <span class="text-danger"></span>
                     </td>
-                    <td class="text-center">41</td>
-                    <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
+                    <td class="text-center">{{ $category->total_books }}</td>
+                    <td class="text-center">
+                      @if ($category->id != App\Model\Category::CATEGORY_DEFAULT)
+                        <div class="btn-option text-center">
+                          <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
+                          <form method="POST" action="{{ route('categories.destroy', $category->id) }}" class="inline">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                              data-title="{{ __('categories.confirm_deletion') }}"
+                              data-confirm="{{ __('categories.are_you_sure_to_delete_this_category', ['name' => $category->title]) }}">
+                            </button>
+                          </form> 
+                        </div>
+                      @endif
                     </td>
                   </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td class="category-title-field">
-                      <p>Title 2</p>
-                      <input type="text" category-id="2" value="" spellcheck="false" hidden>
-                    </td>
-                    <td class="text-center">11</td>
-                    <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">3</td>
-                    <td class="category-title-field">
-                      <p>Title 3</p>
-                      <input type="text" category-id="3" value="" spellcheck="false" hidden>
-                    </td>
-                    <td class="text-center">15</td>
-                    <td class="text-center" width="15%">
-                      <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
-                    </td>
-                  </tr>
+                @endforeach
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                    <ul class="pagination">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">&raquo;</a></li>
-                    </ul>
+                  {{ $categories->links() }}
                 </nav>
               </div>
               <!-- /.pagination -->
