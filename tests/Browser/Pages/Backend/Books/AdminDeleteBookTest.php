@@ -24,7 +24,6 @@ class AdminDeleteBookTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->createAdminUser();
         $this->makeData(1);
     }
 
@@ -36,7 +35,7 @@ class AdminDeleteBookTest extends DuskTestCase
     public function testAdminClickButtonDeleleBook()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->assertSee('List Books')
                     ->click('td button.fa-trash-o')
@@ -52,7 +51,7 @@ class AdminDeleteBookTest extends DuskTestCase
     public function testAdminConfirmCloseOnPopup()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->click('td button.fa-trash-o')
                     ->assertSee('Confirm deletion!')
@@ -69,7 +68,7 @@ class AdminDeleteBookTest extends DuskTestCase
     public function testAdminConfirmDeleteOnPopup()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(1, $elements);

@@ -8,6 +8,7 @@ use App\Model\Category;
 use App\Model\Book;
 use Exception;
 use DB;
+use App\Http\Requests\Backend\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -56,6 +57,18 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateCategoryRequest $request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateCategoryRequest $request)
+    {
+        return $request;
+    }
+    
     /**
      * Update infomation of Category.
      *
