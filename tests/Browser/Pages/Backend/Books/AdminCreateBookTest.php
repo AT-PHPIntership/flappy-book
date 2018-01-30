@@ -9,7 +9,7 @@ use Faker\Factory as Faker;
 use Facebook\WebDriver\WebDriverBy;
 use DB;
 
-class AdminCreateBooksTest extends DuskTestCase
+class AdminCreateBookTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
@@ -27,8 +27,6 @@ class AdminCreateBooksTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->user = $this->createAdminUser();
-        $this->makeData(3);
     }
 
     /**
@@ -75,7 +73,9 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testValidateForInput($name, $content, $message)
     {
-        $this->browse(function (Browser $browser) use ($name, $content, $message)
+        $employ_code = $this->makeData()->employ_code;
+
+        $this->browse(function (Browser $browser) use ($name, $content, $message, $employ_code)
         {
             $browser->loginAs($this->user)
                     ->visit('admin/books/create')
@@ -101,7 +101,9 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testValidateForTextarea()
     {
-        $this->browse(function (Browser $browser)
+        $employ_code = $this->makeData()->employ_code;
+
+        $this->browse(function (Browser $browser) use ($employ_code)
         {
             $browser->loginAs($this->user)
                     ->visit('admin/books/create')
@@ -110,7 +112,7 @@ class AdminCreateBooksTest extends DuskTestCase
                     ->type('price', '1000')
                     ->type('author', 'Cao Nguyen V.')
                     ->type('year', '1995')
-                    ->type('from_person', 'ATI0284');
+                    ->type('from_person', $employ_code);
 
             $this->typeInCKEditor('.wysihtml5-sandbox', $browser, '');
 
@@ -144,7 +146,9 @@ class AdminCreateBooksTest extends DuskTestCase
      */
     public function testCreatesBookSuccess()
     {
-        $this->browse(function (Browser $browser)
+        $employ_code = $this->makeData()->employ_code;
+
+        $this->browse(function (Browser $browser) use ($employ_code)
         {
             $browser->loginAs($this->user)
                     ->visit('admin/books/create')
@@ -153,7 +157,7 @@ class AdminCreateBooksTest extends DuskTestCase
                     ->type('price', '1000')
                     ->type('author', 'Cao Nguyen V.')
                     ->type('year', '1995')
-                    ->type('from_person', 'ATI0284');
+                    ->type('from_person', $employ_code);
 
             $this->typeInCKEditor('.wysihtml5-sandbox', $browser, 'Description for book');
 
@@ -184,11 +188,9 @@ class AdminCreateBooksTest extends DuskTestCase
      *
      * @return void
      */
-    public function makeData($row)
+    public function makeData()
     {
-        factory(Category::class, $row)->create();
-        factory(User::class)->create([
-            'employ_code' => 'ATI0284',
-        ]);
+        factory(Category::class, 2)->create();
+        return factory(User::class)->create();
     }
 }

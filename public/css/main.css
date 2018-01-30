@@ -1,0 +1,11 @@
+.category-title-field input {
+  width: 100%;
+  border: none;
+  border-bottom: solid 1px #3c8dbc;
+  outline: none;
+  background-color: inherit;
+}
+
+.btn-confirm-edit {
+  width: 80px;
+}

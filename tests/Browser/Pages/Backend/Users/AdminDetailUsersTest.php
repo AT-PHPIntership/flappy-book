@@ -20,7 +20,6 @@ class AdminDetailUsersTest extends DuskTestCase
      public function setUp()
      {
          parent::setUp();
-         $this->createAdminUser();
      }
 
     /**
@@ -29,7 +28,7 @@ class AdminDetailUsersTest extends DuskTestCase
      * @return void
      */
     public function testRouteShowDetailUser(){                       
-        $user = User::first();
+        $user = $this->user;
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('admin/users/'.$user->id)
@@ -43,7 +42,7 @@ class AdminDetailUsersTest extends DuskTestCase
      * @return void
      */
     public function testRouteShowDetailUserNotExists(){                      
-        $user = User::first();
+        $user = $this->user;
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('admin/users/user_not_Exists')
@@ -58,7 +57,7 @@ class AdminDetailUsersTest extends DuskTestCase
      */
     public function testLayoutDetailUser()
    {
-        $user = User::first();
+        $user = $this->user;
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('/admin/users/' . $user->id)
@@ -83,7 +82,7 @@ class AdminDetailUsersTest extends DuskTestCase
      */
     public function testShowDetailUser()
    {
-        $user = User::first();
+        $user = $this->user;
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visit('/admin/users/' . $user->id);
