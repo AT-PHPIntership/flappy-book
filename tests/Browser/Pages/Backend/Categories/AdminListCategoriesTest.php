@@ -140,14 +140,11 @@ class AdminListCategoriesTest extends DuskTestCase
     {
         $faker = Faker::create(); 
         $employeeCode = factory(User::class, 2)->create()->pluck('employ_code')->toArray();
-        for ($i = 0; $i < $row; $i++) {
-            $categories[] = factory(Category::class)->create();
-        }
-        $categoryId = array_pluck($categories, 'id');
+        $categoryIds = factory(Category::class, $row)->create()->pluck('id')->toArray();
         for ($i = 0; $i < $row; $i++) {
             factory(Book::class)->create([
                 'from_person' => $faker->randomElement($employeeCode),
-                'category_id' => $faker->randomElement($categoryId),
+                'category_id' => $faker->randomElement($categoryIds),
             ]);
         }
     }
