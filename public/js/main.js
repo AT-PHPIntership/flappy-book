@@ -80,3 +80,26 @@ $(document).on('click', '.btn-role', function(e) {
         }
     });
 });
+
+$(document).on('click', '#category-add', function(e) {
+    var form = $(this.form);
+    var title = $('#title').val()
+    var errorMessage = $('#add-category').find('span');
+    $.ajax({
+        url: '/admin/categories',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'post',
+        data: {'title' : title},
+        success: function (data) {
+            form.submit();
+        },
+        error: function (error) {
+            errorMessage.html(typeof error.responseJSON.errors !== 'undefined' ?
+            error.responseJSON.errors.title :
+            categories.edit_failure);
+            $('#title').focus();
+        }
+    });
+});
