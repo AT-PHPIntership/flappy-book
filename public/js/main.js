@@ -13,6 +13,13 @@ $(document).ready(function () {
             form.submit();
         })
     });
+
+    /**
+     * Show form add category when click button add category
+     */
+    $('#btn-add-category').bind('click', function (e) {
+        $('#add-category').modal('show');
+    });
 });
 $(document).ready(function () {
     let url = new URL(document.location);
@@ -75,61 +82,77 @@ $(document).on('click', '.btn-role', function(e) {
 });
 
 $(document).on('click', '.btn-edit-category', function(e) {
-    resetAllRowListCategories();
+    resetCategoriesInput();
+    const PRESS_ENTER = 13;
     let selectedRow = $(this).closest('tr').find('.category-title-field');
     let textField = selectedRow.find('p');
     let inputField = selectedRow.find('input');
 
-    textField.hide();
-    let titleBefore = textField.html();
-
-    inputField.val(titleBefore).show().focus().keypress(function(event) {
-        if (event.which == 13) {
-            let titleAfter = inputField.val();
-            showConfirmEdit(titleBefore, titleAfter);
-
-            $('#edit-btn').one('click', function () {
-                $.ajax({
-                    url: '/admin/categories/' + inputField.attr('category-id'),
-                    type: 'put',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        'title': titleAfter
-                    },
-                    success: function () {
-                        textField.html(titleAfter).show();
-                        inputField.hide();
-                    },
-                    error: function () {
-                    }
-                });
-            });
-
-            $('#reset-btn').one('click', function () {
-                textField.show();
-                inputField.hide();
-            });
-
-            $('#cancel-btn').one('click', function () {
-                inputField.focus();
-            });
-        };
-    })
+    inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
+        if (event.which == PRESS_ENTER) {
+            confirmEditCategory(textField, inputField);
+        }
+    });
 });
 
-function resetAllRowListCategories() {
+function resetCategoriesInput() {
     let allRows = $('tbody').find('.category-title-field');
     allRows.find('p').show();
     allRows.find('input').hide();
 }
 
-function showConfirmEdit(titleBefore, titleAfter) {
+function confirmEditCategory(textField, inputField) {
+    let title = textField.html();
+    let titleEdited = inputField.val();
     let dataConfirm = categories.you_want_edit
-                +' <strong> ' + titleBefore + ' </strong> '
+                +' <strong> ' + title + ' </strong> '
                 + categories.to
-                +' <strong> ' + titleAfter +' </strong> ?';
-    $('#body-content').html(dataConfirm);
+                +' <strong> ' + titleEdited +' </strong> ?';
+
+    $('#body-edit-content').html(dataConfirm);
     $('#confirm-edit').modal('show');
+
+    $('#edit-btn').one('click', function () {
+        $.ajax({
+            url: '/admin/categories/' + inputField.attr('category-id'),
+            type: 'put',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'title': titleEdited,
+            },
+            success: function () {
+                textField.html(titleEdited).show();
+                inputField.hide();
+            },
+        });
+    });
+
+    $('#reset-btn').one('click', function () {
+        textField.show();
+        inputField.hide();
+    });
+
+    $('#cancel-btn').one('click', function () {
+        inputField.focus();
+    });
+}
+
+function updateCategory(textField, inputField) {
+    let titleEdited = inputField.val();
+    $.ajax({
+        url: '/admin/categories/' + inputField.attr('category-id'),
+        type: 'put',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            'title': titleEdited,
+        },
+        success: function () {
+            textField.html(titleEdited).show();
+            inputField.hide();
+        },
+    });
 }
