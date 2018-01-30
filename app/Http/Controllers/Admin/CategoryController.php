@@ -59,21 +59,21 @@ class CategoryController extends Controller
     /**
      * Update infomation of Category.
      *
-     * @param Illuminate\Http\Request $request category title
-     * @param Integer                 $id      category id
+     * @param Illuminate\Http\Request $request  category request
+     * @param App\Model\Category      $category category object
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        $category = Category::findOrFail($id);
-
         DB::beginTransaction();
+        $result = false;
         try {
-            $category->update($request->only('title'));
+            $result = $category->update($request->only('title'));
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
         }
+        return response(array('result' => $result));
     }
 }

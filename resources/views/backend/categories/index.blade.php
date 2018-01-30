@@ -54,6 +54,7 @@
                     <td class="category-title-field">
                       <p>{{ $category->title }}</p>
                       <input type="text" category-id="{{ $category->id }}" value="" spellcheck="false" hidden>
+                      <span class="text-danger"></span>
                     </td>
                     <td class="text-center">{{ $category->total_books }}</td>
                     <td class="text-center">

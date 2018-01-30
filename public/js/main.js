@@ -93,10 +93,11 @@ $(document).on('click', '.btn-edit-category', function(e) {
     let selectedRow = $(this).closest('tr').find('.category-title-field');
     let textField = selectedRow.find('p');
     let inputField = selectedRow.find('input');
+    let errorMessage = selectedRow.find('span');
 
     inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
         if (event.which == PRESS_ENTER) {
-            confirmEditCategory(textField, inputField);
+            confirmEditCategory(textField, inputField, errorMessage);
         }
     });
 });
@@ -107,7 +108,7 @@ function resetCategoriesInput() {
     allRows.find('input').hide();
 }
 
-function confirmEditCategory(textField, inputField) {
+function confirmEditCategory(textField, inputField, errorMessage) {
     let title = textField.html();
     let titleEdited = inputField.val();
     let dataConfirm = categories.you_want_edit
@@ -122,40 +123,30 @@ function confirmEditCategory(textField, inputField) {
         $.ajax({
             url: '/admin/categories/' + inputField.attr('category-id'),
             type: 'put',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             data: {
                 'title': titleEdited,
             },
-            success: function () {
-                textField.html(titleEdited).show();
-                inputField.hide();
+            success: function (data) {
+                if (data.result) {
+                    textField.html(titleEdited).show();
+                    inputField.hide();
+                    errorMessage.html('');
+                } else {
+                    errorMessage.html(categories.error_when_edit_category);
+                }
             },
+            error: function () {
+            }
         });
     });
 
     $('#reset-btn').one('click', function () {
         textField.show();
         inputField.hide();
+        errorMessage.html('');
     });
 
     $('#cancel-btn').one('click', function () {
         inputField.focus();
-    });
-}
-
-function updateCategory(textField, inputField) {
-    let titleEdited = inputField.val();
-    $.ajax({
-        url: '/admin/categories/' + inputField.attr('category-id'),
-        type: 'put',
-        data: {
-            'title': titleEdited,
-        },
-        success: function () {
-            textField.html(titleEdited).show();
-            inputField.hide();
-        },
     });
 }
