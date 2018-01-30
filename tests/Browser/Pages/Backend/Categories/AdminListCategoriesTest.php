@@ -120,7 +120,7 @@ class AdminListCategoriesTest extends DuskTestCase
      *
      * @return void
      */
-    public function testLastRecord()
+    public function testNumberRecordLastPage()
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
