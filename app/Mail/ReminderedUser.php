@@ -49,7 +49,7 @@ class ReminderedUser extends Mailable
      */
     public function build()
     {
-        $currentDate = date("Y-m-d");
+        $currentDate = date(config('define.borrows.current_date_format'));
         $borrowDate = $this->borrowing->from_date;
         $numDateBorrowed = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
         $bookId = $this->borrowing->book_id;
