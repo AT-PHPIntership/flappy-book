@@ -25,7 +25,6 @@ class NumberOfBookListUser extends DuskTestCase
     {
        parent::setUp();
 
-       $this->createAdminUser();
        $this->makeData();
     }
 
@@ -37,7 +36,7 @@ class NumberOfBookListUser extends DuskTestCase
     public function testListUsers()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->clickLink('Users')
                     ->assertPathIs('/admin/users')
@@ -53,7 +52,7 @@ class NumberOfBookListUser extends DuskTestCase
     public function testAddLink()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/users')
                     ->assertVisible('#list-users tbody td:nth-child(6) a ')
                     ->visit($browser->attribute('#list-users tbody td:nth-child(6) a ', 'href'))
@@ -71,7 +70,7 @@ class NumberOfBookListUser extends DuskTestCase
     public function testNumberOfBookAtListUser()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/users');
             $fields = [
                 'users.id',
@@ -102,7 +101,7 @@ class NumberOfBookListUser extends DuskTestCase
     public function testDetailOfBook()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('admin/books?userid=1&option=borrowed')
                     ->assertSee('List Books');
             $fields = [

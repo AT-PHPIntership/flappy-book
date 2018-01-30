@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function () {
     /**
      * Show delete confimation when click button delete
@@ -12,6 +18,13 @@ $(document).ready(function () {
         $('#delete-btn').one('click', function () {
             form.submit();
         })
+    });
+
+    /**
+     * Show form add category when click button add category
+     */
+    $('#btn-add-category').bind('click', function (e) {
+        $('#add-category').modal('show');
     });
 });
 $(document).ready(function () {
@@ -73,3 +86,68 @@ $(document).on('click', '.btn-role', function(e) {
         }
     });
 });
+
+$(document).on('click', '#category-add', function(e) {
+    var form = $(this.form);
+    var title = $('#title').val()
+    var errorMessage = $('#add-category').find('span');
+    $.ajax({
+        url: '/admin/categories',
+        type: 'post',
+        data: {'title' : title},
+        success: function (data) {
+            form.submit();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
+            $('#title').focus();
+        }
+    });
+});
+
+$(document).on('click', '.btn-edit-category', function(e) {
+    resetCategoriesInput();
+    const PRESS_ENTER = 13;
+    let selectedRow = $(this).closest('tr').find('.category-title-field');
+    let textField = selectedRow.find('p');
+    let inputField = selectedRow.find('input');
+
+    inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
+        if (event.which == PRESS_ENTER) {
+            confirmEditCategory(textField, inputField);
+        }
+    });
+});
+
+function resetCategoriesInput() {
+    let allRows = $('tbody').find('.category-title-field');
+    allRows.find('p').show();
+    allRows.find('input').hide();
+}
+
+function confirmEditCategory(textField, inputField) {
+    let title = textField.html();
+    let titleEdited = inputField.val();
+    let dataConfirm = categories.you_want_edit
+                +' <strong> ' + title + ' </strong> '
+                + categories.to
+                +' <strong> ' + titleEdited +' </strong> ?';
+
+    $('#body-edit-content').html(dataConfirm);
+    $('#confirm-edit').modal('show');
+
+    $('#edit-btn').one('click', function () {
+        textField.html(titleEdited).show();
+        inputField.hide();
+    });
+
+    $('#reset-btn').one('click', function () {
+        textField.show();
+        inputField.hide();
+    });
+
+    $('#cancel-btn').one('click', function () {
+        inputField.focus();
+    });
+}
