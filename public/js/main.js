@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function () {
     /**
      * Show delete confimation when click button delete
@@ -144,9 +150,6 @@ function updateCategory(textField, inputField) {
     $.ajax({
         url: '/admin/categories/' + inputField.attr('category-id'),
         type: 'put',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         data: {
             'title': titleEdited,
         },
