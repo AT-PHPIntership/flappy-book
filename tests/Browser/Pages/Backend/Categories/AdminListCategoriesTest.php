@@ -25,8 +25,6 @@ class AdminListCategoriesTest extends DuskTestCase
     public function setUp()
     {
        parent::setUp();
-
-       $this->createAdminUser();
     }
 
     /**
@@ -37,7 +35,7 @@ class AdminListCategoriesTest extends DuskTestCase
     public function testListCategories()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->clickLink('Categories')
                     ->assertPathIs('/admin/categories')
@@ -53,7 +51,7 @@ class AdminListCategoriesTest extends DuskTestCase
     public function testListCategoriesEmpty()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories')
                     ->assertSee('List Categories');
             $elements = $browser->elements('#list-categories tbody tr');
@@ -71,7 +69,7 @@ class AdminListCategoriesTest extends DuskTestCase
     {
         $this->makeData(6);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories');
             $elements = $browser->elements('#list-categories tbody tr');
             $this->assertCount(6, $elements);
@@ -88,7 +86,7 @@ class AdminListCategoriesTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories');
             $elements = $browser->elements('#list-categories tbody tr');
             $this->assertCount(config('define.categories.limit_rows'), $elements);
@@ -108,7 +106,7 @@ class AdminListCategoriesTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
             $browser->assertPathIs('/admin/categories')
                     ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
@@ -124,7 +122,7 @@ class AdminListCategoriesTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
             $elements = $browser->elements('#list-categories tbody tr');
             $this->assertCount(self::NUMBER_RECORD_CREATE % config('define.categories.limit_rows') == 0 ? config('define.categories.limit_rows') : self::NUMBER_RECORD_CREATE % config('define.categories.limit_rows'), $elements);       
