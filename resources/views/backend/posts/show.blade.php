@@ -31,28 +31,34 @@
         <!-- Profile Image -->
         <div class="box box-primary">
           <div class="box-body box-profile">
-            <img class="profile-user-img img-responsive img-circle" src="{{ asset('bower_components/admin-lte/dist/img/user4-128x128.jpg') }}" alt="User profile picture">
-            <h3 class="profile-username text-center">Nina Mcintire</h3>
-            <p class="text-muted text-center">PHP Developer</p>
+            <img class="profile-user-img img-responsive img-circle" src="{{ $post->avatar_url }}" alt="User profile picture">
+            <h3 class="profile-username text-center">{{ $post->name }}</h3>
+            <p class="text-muted text-center">{{ $post->team }}</p>
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
                 <b>{{ __('posts.status') }}</b>
-                <a class="pull-right">Reivew</a>
+                @foreach( __('posts.liststatus') as $key => $status )
+                  @if($key == $post->status)
+                    <a class="pull-right">{{ $status }}</a>                    
+                  @endif
+                @endforeach
               </li>
-              <li class="list-group-item">
-                <b>{{ __('posts.rating') }}</b>
-                <a class="pull-right">4.5</a>
-              </li>
+              @if ($post->status == App\Model\Post::TYPE_REVIEW_BOOK)
+                <li class="list-group-item">
+                  <b>{{ __('posts.rating') }}</b>
+                  <a class="pull-right">4.5</a>
+                </li>
+              @endif
               <li class="list-group-item">
                 <b>{{ __('posts.like') }}</b>
-                <a class="pull-right">23</a>
+                <a class="pull-right">{{ $post->likes }}</a>
               </li>
               <li class="list-group-item">
                 <b>{{ __('posts.create_date') }}</b>
-                <a class="pull-right">2018-01-24</a>
+                <a class="pull-right">{{ date(config('define.posts.format_date_detail_post'), strtotime($post->created_at)) }}</a>
               </li>
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
-              <p>Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</p>
+              <p>{!! $post->content !!}</p>
             </ul>
             <a href="#" class="btn btn-danger btn-block btn-flat">
               <b>{{ __('posts.delete') }}</b>
@@ -74,63 +80,38 @@
                 <thead>
                 <tr>
                   <th class="text-center" width="10%">{{ __('posts.id') }}</th>
-                  <th>{{ __('posts.content') }}</th>
+                  <th width="50%">{{ __('posts.content') }}</th>
                   <th class="text-center">{{ __('posts.comment_date') }}</th>
                   <th class="text-center">{{ __('posts.options') }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td class="text-center">1</td>
-                  <td>This is comment number 1</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">2</td>
-                  <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">3</td>
-                  <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">4</td>
-                  <td>This is comment number 2</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
-                  </td>
-                </tr>
+                  @foreach ($comments as $comment)
+                    @if ($comment->parent_id == null)
+                      <tr>
+                        <td class="text-center">{{ $comment->id }}</td>
+                        <td>{!! $comment->comment !!}</td>
+                        <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($comment->created_at)) }}</td>
+                        <td class="text-center" width="15%">
+                          <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                        </td>
+                      </tr>
+                      @foreach ($comment->comments as $index => $childComment)
+                        <tr>
+                          <td class="text-center">{{ $comment->id }}.{{ ++$index }}</td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90"></i>&nbsp;&nbsp;{!! $childComment->comment !!}</td>
+                          <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($childComment->created_at)) }}</td>
+                          <td class="text-center" width="15%">
+                            <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                          </td>
+                        </tr>
+                      @endforeach
+                    @endif
+                  @endforeach                  
+                </tbody>
               </table>
               <div class="text-right">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
+                {{ $comments->links() }}
               </div>
             </div>
             <!-- /.box-body -->
