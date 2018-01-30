@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function () {
     /**
      * Show delete confimation when click button delete
@@ -77,6 +83,25 @@ $(document).on('click', '.btn-role', function(e) {
             }
         },
         error: function () {
+        }
+    });
+});
+
+$(document).on('click', '#category-add', function(e) {
+    var form = $(this.form);
+    var title = $('#title').val()
+    var errorMessage = $('#add-category').find('span');
+    $.ajax({
+        url: '/admin/categories',
+        type: 'post',
+        data: {'title' : title},
+        success: function (data) {
+            form.submit();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
+            $('#title').focus();
         }
     });
 });

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use App\Model\Category;
-use App\Model\Book;
+use App\Http\Requests\Backend\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -53,5 +53,17 @@ class CategoryController extends Controller
             flash(__('categories.delete_category_fail', ['name' => $title]))->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateCategoryRequest $request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateCategoryRequest $request)
+    {
+        return $request;
     }
 }
