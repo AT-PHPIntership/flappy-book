@@ -69,8 +69,8 @@
                       <td class="text-center">
                         <form>
                           <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 
-                          data-title="{{ __('borrows.confirm_send_mail_reminder') }}"
-                          data-confirm="{{ __('borrows.are_you_sure_to_send_mail_reminder_for_this_user', ['name' => $borrow->name]) }}">
+                          data-title="{{ __('borrows.title_confirm_send_mail') }}"
+                          data-confirm="{{ __('borrows.content_confirm_send_mail', ['name' => $borrow->name]) }}">
                         </button>
                         </form>
                       </td>

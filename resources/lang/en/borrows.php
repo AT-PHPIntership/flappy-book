@@ -18,8 +18,8 @@ return [
         \App\Model\Borrow::TYPE_NAME => 'Name',
         \App\Model\Borrow::TYPE_TITLE => 'Book Borrowing',
     ],
-    'confirm_send_mail_reminder' => 'Confirm reminder send mail!',
-    'are_you_sure_to_send_mail_reminder_for_this_user' => 'Are you sure to send mail reminder for this user, :name ?',
+    'title_confirm_send_mail' => 'Confirm reminder send mail!',
+    'content_confirm_send_mail' => 'Are you sure to send mail reminder for this user, :name ?',
     'send' => 'Send',
     'close' => 'Close',
 ];
