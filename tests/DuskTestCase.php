@@ -19,6 +19,7 @@ abstract class DuskTestCase extends BaseTestCase
      * @var App\Model\User
      */
     protected $user;
+
     /**
      * Override function setUp() for make user login
      *
@@ -63,7 +64,7 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      * Make user belong team SA and is admin
      *
-     * @return void
+     * @return App\Model\User
      */
     public function createAdminUser()
     {

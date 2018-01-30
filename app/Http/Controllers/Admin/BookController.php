@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\Backend\CreateBookRequest;
 use DB;
+use Exception;
 use App\Model\Book;
 use App\Model\Qrcode;
 use App\Model\Category;
+use App\Model\User;
+use App\Libraries\Image;
 
 class BookController extends Controller
 {
@@ -23,9 +26,6 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->search;
-        $filter = $request->filter;
-
         $fields = [
             'books.id',
             'books.title',
@@ -48,21 +48,10 @@ class BookController extends Controller
 
         $sort = in_array($request->sort, $sortFields) ? $request->sort : 'id';
         $order = in_array($request->order, $orderFields) ? $request->order : 'desc';
-
-        // check filter when search
-        switch ($filter) {
-            case Book::TYPE_TITLE:
-                $books = Book::where('title', 'like', '%'.$search.'%');
-                break;
-            case Book::TYPE_AUTHOR:
-                $books = Book::where('author', 'like', '%'.$search.'%');
-                break;
-            default:
-                $books = Book::where(function ($query) use ($search) {
-                    return $query->where('title', 'like', '%'.$search.'%')
-                               ->orWhere('author', 'like', '%'.$search.'%');
-                });
-        }
+        $books = Book::search(request('search'), request('filter'))
+            ->select($fields)
+            ->groupBy('books.id')
+            ->orderby($sort, $order);
         //check option when click number book on users list
         $userId = $request->userid ? $request->userid : '';
         $option = $request->option? $request->option : '';
@@ -75,15 +64,19 @@ class BookController extends Controller
                               ->where('users.id', '=', $userId);
                 });
                 break;
+            case Book::TYPE_DONATED:
+                $books = $books->join('users', 'users.employ_code', '=', 'books.from_person')
+                               ->where('users.id', '=', $userId);
+                break;
         }
-        // get list books
-        $books = $books->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
-                       ->select($fields)
-                       ->groupBy('books.id')
-                       ->orderBy($sort, $order)
-                       ->paginate(config('define.books.limit_rows'))
-                       ->appends(['userid' => $userId, 'option' => $option, 'sort' => $sort, 'order' => $order]);
-
+        $books = $books->paginate(config('define.books.limit_rows'))
+                        ->appends([
+                        'userid' => $userId,
+                        'option' => $option,
+                        'sort' => $sort,
+                        'order' => $order,
+                        'search' => request('search')
+                        ]);
         return view('backend.books.index', compact('books'));
     }
 
@@ -109,15 +102,48 @@ class BookController extends Controller
      * Update infomation of Book.
      *
      * @param App\Http\Requests\EditBookRequest $request form edit book
-     * @param int                               $id      id of book
+     * @param App\Model\Book                    $id      pass id object
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function update(EditBookRequest $request, $id)
     {
-        dd($request);
-        dd($id);
+        $book = Book::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $this->updateBook($book, $request);
+            flash(__('books.books_edit_success'))->success();
+            DB::commit();
+            return redirect()->route("books.index");
+        } catch (Exception $e) {
+            flash(__('books.books_edit_failed'))->error();
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
     }
+
+    /**
+     * Save infomation of Book.
+     *
+     * @param App\Model\Book                    $book    pass book object
+     * @param App\Http\Requests\EditBookRequest $request picture and iddonator edit book
+     *
+     * @return void
+     */
+    private function updateBook($book, $request)
+    {
+        if (isset($request->picture)) {
+            $oldPath = $book->picture;
+            $book->picture  = Image::update($request->picture, config('image.book.path'), $oldPath);
+        }
+
+        $user = User::where('employ_code', $request->iddonator)->first();
+        if (isset($user)) {
+            $book->from_person = $request->iddonator;
+        }
+        $book->update($request->except(['iddonator', 'picture']));
+    }
+    
 
     /**
      * Show the form for creating a new book.
@@ -142,7 +168,6 @@ class BookController extends Controller
         // create book fields.
         $bookFields = $request->all();
         $bookFields['unit'] =  __('books.listunit')[$request->unit];
-
         // save book picture
         if ($request->hasFile('picture')) {
             $picture = $request->picture;
@@ -153,7 +178,6 @@ class BookController extends Controller
         } else {
             $bookFields['picture'] = config('define.books.default_name_image');
         }
-
         DB::beginTransaction();
         try {
             // store book
@@ -161,13 +185,11 @@ class BookController extends Controller
             // generate qrcode_id
             $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
             $codeNumber = $qrCode ? $qrCode->code_id + 1 :  Qrcode::DEFAULT_CODE_ID ;
-
             // store qrcode
             $book->qrcode()->create([
                 'code_id' => $codeNumber,
                 'prefix'  => Qrcode::DEFAULT_CODE_PREFIX,
             ]);
-
             DB::commit();
             flash(__('books.create_success'))->success();
             return redirect()->route('books.index');
@@ -186,14 +208,17 @@ class BookController extends Controller
      *
      * @param Book $book object book
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Book $book)
     {
-        $bookDelete = $book->delete();
-        if ($bookDelete) {
+        DB::beginTransaction();
+        try {
+            $book->delete();
+            DB::commit();
             flash(__('books.delete_book_success'))->success();
-        } else {
+        } catch (Exception $e) {
+            DB::rollBack();
             flash(__('books.delete_book_fail'))->error();
         }
         return redirect()->back();

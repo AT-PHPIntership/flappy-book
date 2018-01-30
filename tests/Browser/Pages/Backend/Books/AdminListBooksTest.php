@@ -24,7 +24,6 @@ class AdminListBooksTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->createAdminUser();
         factory(Category::class, 2)->create();
         factory(User::class, 2)->create();
     }
@@ -37,7 +36,7 @@ class AdminListBooksTest extends DuskTestCase
     public function testListBooks()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->clickLink('Books')
                     ->assertPathIs('/admin/books')
@@ -53,7 +52,7 @@ class AdminListBooksTest extends DuskTestCase
     public function testListBooksEmpty()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->assertSee('List Books');
             $elements = $browser->elements('#list-books tbody tr');
@@ -71,7 +70,7 @@ class AdminListBooksTest extends DuskTestCase
     {
         $this->makeData(2);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->assertSee('List Books');
             $elements = $browser->elements('#list-books tbody tr');
@@ -89,7 +88,7 @@ class AdminListBooksTest extends DuskTestCase
     {
         $this->makeData(12);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->assertSee('List Books');
             // Count row number in one page
@@ -112,7 +111,7 @@ class AdminListBooksTest extends DuskTestCase
     {
         $this->makeData(12);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
+            $browser->loginAs($this->user)
                     ->visit('/admin/books?page=2')
                     ->assertSee('List Books');
             $elements = $browser->elements('#list-books tbody tr');
