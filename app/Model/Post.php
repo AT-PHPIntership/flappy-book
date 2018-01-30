@@ -10,17 +10,17 @@ class Post extends Model
      * Value of review post
      */
 
-    const REVIEW_TYPE = 0;
+    const TYPE_STATUS = 0;
     /**
      * Value of status post
      */
 
-    const STATUS_TYPE = 1;
+    const TYPE_FIND_BOOK = 1;
     /**
      * Value of find book post
      */
     
-    const FIND_TYPE = 2;
+    const TYPE_REVIEW_BOOK = 2;
     /**
      * Declare table
      *

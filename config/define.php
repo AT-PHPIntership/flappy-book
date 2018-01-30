@@ -21,6 +21,8 @@ return [
     	'limit_rows' => 10,
     ],
     'posts' => [
-        'limit_rows' => 10
+        'limit_rows' => 10,
+        'date_format' => 'H:A d-m-Y',
+        'size_short_content' => '6',
     ],
 ];

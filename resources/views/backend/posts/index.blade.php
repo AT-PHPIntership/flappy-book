@@ -53,22 +53,22 @@
                   @foreach ($posts as $post)
                     <tr>
                       <td class="text-center">{{ $post->id }}</td>
-                      <td>{!! \Illuminate\Support\Str::words($post->content, 7,'...')  !!}</td>
+                      <td>{!! \Illuminate\Support\Str::words($post->content, config('define.posts.size_short_content'),'...')  !!}</td>
                       <td class="text-center">
                         @switch($post->status)
-                          @case(App\Model\Post::REVIEW_TYPE)
+                          @case(App\Model\Post::TYPE_REVIEW_BOOK)
                             {{ __('posts.review') }}
                             @break
-                          @case(App\Model\Post::STATUS_TYPE)
+                          @case(App\Model\Post::TYPE_STATUS)
                             {{ __('posts.status') }}
                             @break
-                          @case(App\Model\Post::FIND_TYPE)
+                          @case(App\Model\Post::TYPE_FIND_BOOK)
                             {{ __('posts.find_book') }}
                             @break
                         @endswitch
                       </td>
                       <td>{{ $post->name }}</td>
-                      <td class="text-center">{{ date('H:A d/m/Y', strtotime($post->created_at)) }}</td>
+                      <td class="text-center">{{ date(config('define.posts.date_format'), strtotime($post->created_at)) }}</td>
                       <td class="text-center">{{ $post->comments_count }}</td>
                       <td class="text-center">
                         <div class="btn-option text-center">
