@@ -34,7 +34,7 @@ class AdminListCategoriesTest extends DuskTestCase
      *
      * @return void
      */
-    public function testListBorrows()
+    public function testListCategories()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
@@ -50,7 +50,7 @@ class AdminListCategoriesTest extends DuskTestCase
      *
      * @return void
      */
-    public function testListBorrowsEmpty()
+    public function testListCategoriesEmpty()
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
@@ -75,6 +75,7 @@ class AdminListCategoriesTest extends DuskTestCase
                     ->visit('/admin/categories');
             $elements = $browser->elements('#list-categories tbody tr');
             $this->assertCount(6, $elements);
+            $this->assertNull($browser->element('.paginate'));
         });
     }
 
@@ -83,7 +84,7 @@ class AdminListCategoriesTest extends DuskTestCase
      *
      * @return void
      */
-    public function testListBooksPagination()
+    public function testListCategoriesPagination()
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
@@ -109,7 +110,6 @@ class AdminListCategoriesTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::first())
                     ->visit('/admin/categories?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
-            $elements = $browser->elements('#list-categories tbody tr');
             $browser->assertPathIs('/admin/categories')
                     ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.categories.limit_rows'))));
         });
@@ -126,7 +126,9 @@ class AdminListCategoriesTest extends DuskTestCase
         $employeeCode = factory(User::class, 2)->create()->pluck('employ_code')->toArray();
         for ($i = 0; $i < $row; $i++) {
             $categories[] = factory(Category::class)->create();
-            $categoryId = array_pluck($categories, 'id');
+        }
+        $categoryId = array_pluck($categories, 'id');
+        for ($i = 0; $i < $row; $i++) {
             factory(Book::class)->create([
                 'from_person' => $faker->randomElement($employeeCode),
                 'category_id' => $faker->randomElement($categoryId),
@@ -134,4 +136,3 @@ class AdminListCategoriesTest extends DuskTestCase
         }
     }
 }
- 
