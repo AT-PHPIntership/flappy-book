@@ -11,8 +11,16 @@ use DB;
 
 class PostController extends Controller
 {
-
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('backend.posts.index');
+    }
+    
     /**
      * Display a detail of the post.
      *
@@ -23,21 +31,26 @@ class PostController extends Controller
     public function show(int $id)
     {
         $fields = [
+            'books.title AS book_title',
             'users.id AS user_id',
             'users.name',
             'users.team',
             'users.avatar_url',
-            'posts.id AS book_id',
+            'posts.id AS post_id',
             'posts.content',
             'posts.status',
+            'posts.rating',
+            'posts.book_id',
             'posts.created_at',
             DB::raw('COUNT(post_id) AS likes'),
         ];
         $post = Post::select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
+                    ->join('books', 'posts.book_id', '=', 'books.id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->groupBy('posts.id')
                     ->findOrFail($id);
+        // dd($post);
         $fieldsComment = [
             'id',
             'comment',

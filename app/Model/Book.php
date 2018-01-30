@@ -134,7 +134,7 @@ class Book extends Model
             self::TYPE_AUTHOR,
         ],
         'joins' => [
-            'borrows' => ['books.id', 'borrows.id']
+            'borrows' => ['books.id', 'borrows.book_id']
         ]
     ];
 }

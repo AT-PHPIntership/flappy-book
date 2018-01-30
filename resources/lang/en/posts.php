@@ -1,5 +1,11 @@
 <?php
 return [
+    'no' => 'No',
+    'user_name' => 'UserName',
+    'short_content' => 'Short Content',
+    'post_date' => 'Post Date',
+    'total_comment' => 'Total Comment',
+    'list_posts' => 'List Posts',
     'detail_post' => 'Detail post',
     'home' => 'Home',
     'posts' => 'Posts',
@@ -14,6 +20,7 @@ return [
     'options' => 'Options',
     'list_comments' => 'List comments',
     'delete' => 'Delete',
+    'book' => 'Book',
     'liststatus' => [
         \App\Model\Post::TYPE_STATUS => 'Status',
         \App\Model\Post::TYPE_FIND_BOOK => 'Find book',

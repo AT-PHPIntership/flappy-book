@@ -30,6 +30,7 @@
       <div class="col-md-4">
         <!-- Profile Image -->
         <div class="box box-primary">
+          @include('backend.layouts.partials.modal')
           <div class="box-body box-profile">
             <img class="profile-user-img img-responsive img-circle" src="{{ $post->avatar_url }}" alt="User profile picture">
             <h3 class="profile-username text-center">{{ $post->name }}</h3>
@@ -45,8 +46,12 @@
               </li>
               @if ($post->status == App\Model\Post::TYPE_REVIEW_BOOK)
                 <li class="list-group-item">
+                  <b>{{ __('posts.book') }}</b>
+                  <a class="pull-right">{{ $post->book_title }}</a>
+                </li>
+                <li class="list-group-item">
                   <b>{{ __('posts.rating') }}</b>
-                  <a class="pull-right">4.5</a>
+                  <a class="pull-right">{{ $post->rating }}</a>
                 </li>
               @endif
               <li class="list-group-item">
@@ -60,7 +65,7 @@
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
               <p>{!! $post->content !!}</p>
             </ul>
-            <a href="#" class="btn btn-danger btn-block btn-flat">
+            <a href="#" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
               <b>{{ __('posts.delete') }}</b>
             </a>
           </div>
@@ -98,7 +103,7 @@
                       </tr>
                       @foreach ($comment->comments as $index => $childComment)
                         <tr>
-                          <td class="text-center">{{ $comment->id }}.{{ ++$index }}</td>
+                          <td class="text-right">{{ $comment->id }}.{{ ++$index }}</td>
                           <td>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90"></i>&nbsp;&nbsp;{!! $childComment->comment !!}</td>
                           <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($childComment->created_at)) }}</td>
                           <td class="text-center" width="15%">

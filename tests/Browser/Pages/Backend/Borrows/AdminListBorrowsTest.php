@@ -25,8 +25,6 @@ class AdminListBorrowsTest extends DuskTestCase
     public function setUp()
     {
        parent::setUp();
-
-       $this->createAdminUser();
     }
 
     /**
@@ -37,7 +35,7 @@ class AdminListBorrowsTest extends DuskTestCase
     public function testListBorrows()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->clickLink('Borrows')
                     ->assertPathIs('/admin/borrows')
@@ -53,7 +51,7 @@ class AdminListBorrowsTest extends DuskTestCase
     public function testListBorrowsEmpty()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/borrows')
                     ->assertSee('List Borrower');
             $elements = $browser->elements('#list-borrows tbody tr');
@@ -71,7 +69,7 @@ class AdminListBorrowsTest extends DuskTestCase
     {
         $this->makeData(4);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/borrows');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(4, $elements);
@@ -87,7 +85,7 @@ class AdminListBorrowsTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/borrows');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(config('define.borrows.limit_rows'), $elements);
@@ -107,7 +105,7 @@ class AdminListBorrowsTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/borrows?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.borrows.limit_rows'))));
             $elements = $browser->elements('#list-books tbody tr');
             $browser->assertPathIs('/admin/borrows')

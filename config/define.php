@@ -15,6 +15,7 @@ return [
     ],
     'borrows' => [
         'limit_rows' => 10,
+        'date_format' => 'd-m-Y',
     ],
     'categories' => [
     	'limit_rows' => 10,
