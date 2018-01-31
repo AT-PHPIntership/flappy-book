@@ -22,6 +22,7 @@ class ListUsersTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
+        
         factory(User::class, self::NUMBER_RECORD_CREATE)->create();
     }
 
@@ -34,10 +35,10 @@ class ListUsersTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin')
-                    ->clickLink('Users')
-                    ->assertPathIs('/admin/users')
-                    ->assertSee('List Users');
+                ->visit('/admin')
+                ->clickLink('Users')
+                ->assertPathIs('/admin/users')
+                ->assertSee('List Users');
         });
     }
 
@@ -50,8 +51,8 @@ class ListUsersTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/users')
-                    ->assertSee('List Users');
+                ->visit('/admin/users')
+                ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
             $this->assertCount(config('define.users.limit_rows'), $elements);
         });
@@ -66,8 +67,8 @@ class ListUsersTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/users')
-                    ->assertSee('List Users');
+                ->visit('/admin/users')
+                ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
             $this->assertCount(config('define.users.limit_rows'), $elements);
             $this->assertNotNull($browser->element('.pagination'));
@@ -87,11 +88,11 @@ class ListUsersTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/users?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))))
-                    ->assertSee('List Users');
+                ->visit('/admin/users?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))))
+                ->assertSee('List Users');
             $elements = $browser->elements('#list-users tbody tr');
             $browser->assertPathIs('/admin/users')
-                    ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))));
+                ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.users.limit_rows'))));
         });
     }
 }
