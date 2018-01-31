@@ -31,26 +31,26 @@ class PostController extends Controller
     public function show(int $id)
     {
         $fields = [
-            'books.title AS book_title',
-            'users.id AS user_id',
+            'posts.id',
+            'posts.content',
+            'posts.status',
+            'posts.created_at',
             'users.name',
             'users.team',
             'users.avatar_url',
-            'posts.id AS post_id',
-            'posts.content',
-            'posts.status',
-            'posts.rating',
-            'posts.book_id',
-            'posts.created_at',
-            DB::raw('COUNT(post_id) AS likes'),
+            'ratings.rating',
+            'books.title',
+            DB::raw('COUNT(likes.id) AS likes'),
         ];
+        
         $post = Post::select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->join('books', 'posts.book_id', '=', 'books.id')
+                    ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
+                    ->leftJoin('books', 'books.id', '=', 'ratings.book_id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
-                    ->groupBy('posts.id')
+                    ->groupBy('posts.id', 'ratings.id')
                     ->findOrFail($id);
-        // dd($post);
+
         $fieldsComment = [
             'id',
             'comment',
@@ -58,9 +58,11 @@ class PostController extends Controller
             'created_at',
         ];
         $comments = Comment::select($fieldsComment)
-                          ->where('commentable_type', '=', 'post')
-                          ->where('commentable_id', '=', $id)
-                          ->paginate(config('define.posts.limit_rows_comment'));
+                            ->with('comments')
+                            ->where('commentable_type', '=', 'post')
+                            ->where('commentable_id', '=', $id)
+                            ->paginate(config('define.posts.limit_rows_comment'));
+        
         return view('backend.posts.show', compact('post', 'comments'));
     }
 }

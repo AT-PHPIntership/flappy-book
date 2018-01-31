@@ -47,7 +47,7 @@
               @if ($post->status == App\Model\Post::TYPE_REVIEW_BOOK)
                 <li class="list-group-item">
                   <b>{{ __('posts.book') }}</b>
-                  <a class="pull-right">{{ $post->book_title }}</a>
+                  <a class="pull-right">{{ $post->title }}</a>
                 </li>
                 <li class="list-group-item">
                   <b>{{ __('posts.rating') }}</b>
