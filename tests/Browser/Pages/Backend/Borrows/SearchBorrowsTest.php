@@ -49,6 +49,7 @@ class SearchBorrowsTest extends DuskTestCase
             $this->assertCount(7, $elements);
         });
     }
+
     /**
      * A Dusk test looking input search null with select title
      *
@@ -71,6 +72,7 @@ class SearchBorrowsTest extends DuskTestCase
             $this->assertCount(7, $elements);
         });
     }
+
     /**
      * A Dusk test when input search username incorrect with select name
      *
@@ -116,6 +118,7 @@ class SearchBorrowsTest extends DuskTestCase
             $this->assertCount(1, $elements);
         });
     }
+    
     /**
      * A Data test for users, books and borrows
      *
