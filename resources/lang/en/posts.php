@@ -1,7 +1,7 @@
 <?php
 return [
     'no' => 'No',
-    'user_name' => 'UserName',
+    'user_name' => 'User Name',
     'short_content' => 'Short Content',
     'post_date' => 'Post Date',
     'total_comment' => 'Total Comment',
@@ -9,6 +9,9 @@ return [
     'detail_post' => 'Detail post',
     'home' => 'Home',
     'posts' => 'Posts',
+    'review' => 'Review',
+    'status' => 'Status',
+    'find_book' => 'Find book',
     'detail' => 'Detail',
     'status' => 'Status',
     'rating' => 'Rating',
