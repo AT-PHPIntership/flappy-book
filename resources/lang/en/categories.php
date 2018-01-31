@@ -7,6 +7,12 @@ return [
     'title' => 'Title',
     'list' => 'List',
     'total_books' => 'Total Books',
+    'edit' => 'Edit',
+    'reset' => 'Reset',
+    'cancel' => 'Cancel',
+    'confirm_edit' => 'Confirm edit!',
+    'you_want_edit' => 'Do you want edit from',
+    'to' => 'to',
     'options' => 'Options',
     'confirm_deletion' => 'Confirm deletion!',
     'add_category' => 'Add Category',
@@ -19,4 +25,5 @@ return [
     'can_not_delete_default_category' => 'Can not delete default category!',
     'add_category_success' => 'Successfully add the "<b>:name</b>" category!',
     'add_category_fail' => 'Add "<b>:name</b>" category failure!',
+    'error_when_edit_category' => 'Error when edit category!',
 ];

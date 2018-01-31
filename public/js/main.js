@@ -105,3 +105,65 @@ $('#add-category form').on('submit', function (event) {
     });
     event.preventDefault();
 });
+
+$(document).on('click', '.btn-edit-category', function(e) {
+    resetCategoriesInput();
+    const PRESS_ENTER = 13;
+    let selectedRow = $(this).closest('tr').find('.category-title-field');
+    let textField = selectedRow.find('p');
+    let inputField = selectedRow.find('input');
+    let errorMessage = selectedRow.find('span');
+
+    inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
+        if (event.which == PRESS_ENTER) {
+            confirmEditCategory(textField, inputField, errorMessage);
+        }
+    });
+});
+
+function resetCategoriesInput() {
+    let allRows = $('tbody').find('.category-title-field');
+    allRows.find('p').show();
+    allRows.find('input').hide();
+}
+
+function confirmEditCategory(textField, inputField, errorMessage) {
+    let title = textField.html();
+    let titleEdited = inputField.val();
+    let dataConfirm = categories.you_want_edit
+                +' <strong> ' + title + ' </strong> '
+                + categories.to
+                +' <strong> ' + titleEdited +' </strong> ?';
+
+    $('#body-edit-content').html(dataConfirm);
+    $('#confirm-edit').modal('show');
+
+    $('#edit-btn').one('click', function () {
+        $.ajax({
+            url: '/admin/categories/' + inputField.attr('category-id'),
+            type: 'put',
+            data: {
+                'title': titleEdited,
+            },
+            success: function (data) {
+                if (data.result) {
+                    textField.html(titleEdited).show();
+                    inputField.hide();
+                    errorMessage.html('');
+                } else {
+                    errorMessage.html(categories.error_when_edit_category);
+                }
+            },
+        });
+    });
+
+    $('#reset-btn').one('click', function () {
+        textField.show();
+        inputField.hide();
+        errorMessage.html('');
+    });
+
+    $('#cancel-btn').one('click', function () {
+        inputField.focus();
+    });
+}

@@ -28,7 +28,6 @@ class DeleteCategoryTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->createAdminUser();
         $this->makeData(self::NUMBER_RECORD_CATEGORY);        
     }
 
@@ -40,7 +39,7 @@ class DeleteCategoryTest extends DuskTestCase
     public function testDontSeeDeleteButtonOnDefaultCategory()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories');
             $btnDelete = $browser->elements('#list-categories tbody tr:nth-child('.Category::CATEGORY_DEFAULT.') button');
             $this->assertCount(0, $btnDelete);
@@ -55,7 +54,7 @@ class DeleteCategoryTest extends DuskTestCase
     public function testClickButtonDelete()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories')
                     ->click('td button.btn-delete-item')
                     ->assertSee('Confirm deletion!');
@@ -70,7 +69,7 @@ class DeleteCategoryTest extends DuskTestCase
     public function testClickButtonCloseOnPopup()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories')
                     ->click('td button.btn-delete-item')
                     ->assertSee('Confirm deletion!')
@@ -87,7 +86,7 @@ class DeleteCategoryTest extends DuskTestCase
     public function testClickButtonDeleteOnPopup()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/categories');
 
             $totalBooksDefault = $browser->text('#list-categories tbody tr:nth-child('.Category::CATEGORY_DEFAULT.') td:nth-child(3)');
