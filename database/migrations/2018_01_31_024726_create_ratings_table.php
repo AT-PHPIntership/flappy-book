@@ -20,8 +20,6 @@ class CreateRatingsTable extends Migration
             $table->integer('post_id')->unsigned();            
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('restrict');
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('restrict');
         });
     }
 
