@@ -42,6 +42,9 @@
       <li class="{{ checkActiveRoutes(['categories.index','categories.show', 'categories.edit']) }}">
         <a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>{{ __('dashboard.categories') }}</span></a>
       </li>
+      <li class="{{ checkActiveRoutes(['posts.index','posts.show', 'posts.edit']) }}">
+        <a href="{{ route('posts.index') }}"><i class="glyphicon glyphicon-list-alt"></i> <span>{{ __('dashboard.posts') }}</span></a>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

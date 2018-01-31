@@ -13,4 +13,5 @@ return [
     'categories' => 'Categories',
     'posts' => 'Posts',
     'top_5_borrowed' => 'Top 5 Books are the most borrowed'
+
 ];
