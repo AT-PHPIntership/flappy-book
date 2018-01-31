@@ -45,13 +45,13 @@
               <table id="list-borrows" class="table table-bordered table-hover">
                 <thead>
                  <tr>
-                  <th class="text-center">@sortablelink('employ_code', __('borrows.employee_code'))</th>
-                  <th>@sortablelink('name', __('borrows.name'))</th>
-                  <th>@sortablelink('email', __('borrows.email'))</th>
-                  <th>@sortablelink('title', __('borrows.book_borrowing'))</th>
-                  <th class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
-                  <th class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
-                  <th class="text-center">@sortablelink('send_mail_date',  __('borrows.send_mail_date'))</th>
+                  <th id="link-sort-employ_code" class="text-center">@sortablelink('employ_code', __('borrows.employee_code'))</th>
+                  <th id="link-sort-name">@sortablelink('name', __('borrows.name'))</th>
+                  <th id="link-sort-email">@sortablelink('email', __('borrows.email'))</th>
+                  <th id="link-sort-title">@sortablelink('title', __('borrows.book_borrowing'))</th>
+                  <th id="link-sort-from_date" class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
+                  <th id="link-sort-to_date" class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
+                  <th id="link-sort-send_mail_date" class="text-center">@sortablelink('send_mail_date',  __('borrows.send_mail_date'))</th>
                   <th class="text-center">{{ __('borrows.reminder') }}</th>
                 </tr>
                 </thead>
@@ -78,7 +78,7 @@
               <div class="text-right">
                 <nav aria-label="...">
                   <ul class="pagination">
-                    {{ $borrows->links() }}
+                    {{ $borrows->appends(\Request::except('page'))->render()}}
                   </ul>
                 </nav>
               </div>
