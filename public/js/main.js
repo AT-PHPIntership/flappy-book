@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function () {
     /**
      * Show delete confimation when click button delete
@@ -97,16 +103,36 @@ $(document).on('click', '.btn-role', function(e) {
     });
 });
 
+$(document).on('click', '#category-add', function(e) {
+    var form = $(this.form);
+    var title = $('#title').val()
+    var errorMessage = $('#add-category').find('span');
+    $.ajax({
+        url: '/admin/categories',
+        type: 'post',
+        data: {'title' : title},
+        success: function (data) {
+            form.submit();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
+            $('#title').focus();
+        }
+    });
+});
+
 $(document).on('click', '.btn-edit-category', function(e) {
     resetCategoriesInput();
     const PRESS_ENTER = 13;
     let selectedRow = $(this).closest('tr').find('.category-title-field');
     let textField = selectedRow.find('p');
     let inputField = selectedRow.find('input');
+    let errorMessage = selectedRow.find('span');
 
     inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
         if (event.which == PRESS_ENTER) {
-            confirmEditCategory(textField, inputField);
+            confirmEditCategory(textField, inputField, errorMessage);
         }
     });
 });
@@ -117,7 +143,7 @@ function resetCategoriesInput() {
     allRows.find('input').hide();
 }
 
-function confirmEditCategory(textField, inputField) {
+function confirmEditCategory(textField, inputField, errorMessage) {
     let title = textField.html();
     let titleEdited = inputField.val();
     let dataConfirm = categories.you_want_edit
@@ -129,13 +155,28 @@ function confirmEditCategory(textField, inputField) {
     $('#confirm-edit').modal('show');
 
     $('#edit-btn').one('click', function () {
-        textField.html(titleEdited).show();
-        inputField.hide();
+        $.ajax({
+            url: '/admin/categories/' + inputField.attr('category-id'),
+            type: 'put',
+            data: {
+                'title': titleEdited,
+            },
+            success: function (data) {
+                if (data.result) {
+                    textField.html(titleEdited).show();
+                    inputField.hide();
+                    errorMessage.html('');
+                } else {
+                    errorMessage.html(categories.error_when_edit_category);
+                }
+            },
+        });
     });
 
     $('#reset-btn').one('click', function () {
         textField.show();
         inputField.hide();
+        errorMessage.html('');
     });
 
     $('#cancel-btn').one('click', function () {

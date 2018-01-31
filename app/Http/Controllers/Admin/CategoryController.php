@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use App\Model\Category;
 use App\Model\Book;
+use Exception;
+use DB;
+use App\Http\Requests\Backend\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -53,5 +55,38 @@ class CategoryController extends Controller
             flash(__('categories.delete_category_fail', ['name' => $title]))->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateCategoryRequest $request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateCategoryRequest $request)
+    {
+        return $request;
+    }
+    
+    /**
+     * Update infomation of Category.
+     *
+     * @param Illuminate\Http\Request $request  category request
+     * @param App\Model\Category      $category category object
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Category $category)
+    {
+        DB::beginTransaction();
+        $result = false;
+        try {
+            $result = $category->update($request->only('title'));
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+        return response(array('result' => $result));
     }
 }
