@@ -52,4 +52,24 @@ class Post extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    /**
+     * Relationship hasOne with Rating
+     *
+     * @return array
+     */
+    public function ratings()
+    {
+        return $this->hasOne(Rating::class);
+    }
+
+    /**
+     * Relationship belongsTo with Book
+     *
+     * @return array
+     */
+    public function books()
+    {
+        return $this->belongsTo(Book::class, 'book_id');
+    }
 }
