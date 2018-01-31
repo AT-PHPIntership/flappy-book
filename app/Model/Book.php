@@ -109,6 +109,16 @@ class Book extends Model
     }
 
     /**
+     * Relationship hasMany with Post
+     *
+     * @return array
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Override parent boot and Call deleting borrows and comments
      *
      * @return void
