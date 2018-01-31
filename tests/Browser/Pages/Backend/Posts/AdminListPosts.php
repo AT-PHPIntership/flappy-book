@@ -24,7 +24,6 @@ class AdminListPosts extends DuskTestCase
      */
     public function setUp(){
         parent::setUp();
-        $this->createAdminUser();
     }
 
     /**
@@ -35,7 +34,7 @@ class AdminListPosts extends DuskTestCase
     public function testListPosts()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->clickLink('Posts')
                     ->assertPathIs('/admin/posts')
@@ -51,7 +50,7 @@ class AdminListPosts extends DuskTestCase
     public function testListPostsEmpty()
     {
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/posts')
                     ->assertSee('List Posts');
             $elements = $browser->elements('#list-posts tbody tr');
@@ -69,7 +68,7 @@ class AdminListPosts extends DuskTestCase
     {
         $this->makeData(4);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/posts');
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(4, $elements);
@@ -85,7 +84,7 @@ class AdminListPosts extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/posts');
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(config('define.posts.limit_rows'), $elements);
@@ -105,7 +104,7 @@ class AdminListPosts extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/posts?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
             $elements = $browser->elements('#list-posts tbody tr');
             $browser->assertPathIs('/admin/posts')
