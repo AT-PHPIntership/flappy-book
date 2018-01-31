@@ -73,7 +73,7 @@ class CategoryController extends Controller
      * Update infomation of Category.
      *
      * @param App\Http\Requests\Backend\EditCategoryRequest $request  category request
-     * @param Category                                      $category object category
+     * @param App\Model\Category                            $category object category
      *
      * @return \Illuminate\Http\Response
      */
