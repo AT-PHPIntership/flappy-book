@@ -53,7 +53,7 @@
                   @foreach ($posts as $post)
                     <tr>
                       <td class="text-center">{{ $post->id }}</td>
-                      <td>{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots'))  !!}</td>
+                      <td><a href="{{ route('posts.show', $post->id) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots'))  !!}</a></td>
                       <td class="text-left">
                         @switch($post->status)
                           @case(config('define.posts.type_review_book'))
