@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Model\Borrow;
 use App\Model\User;
 use App\Model\Book;
+use Illuminate\Support\Facades\Auth;
 
 class ReminderedUser extends Mailable
 {
@@ -54,6 +55,9 @@ class ReminderedUser extends Mailable
         $numDateBorrowed = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
         $bookId = $this->borrowing->book_id;
         $book = Book::findOrFail($bookId);
-        return $this->view('backend.mails.sendmail', ['numberDateBorrowed' => $numDateBorrowed, 'book' => $book]);
+        $subject = 'Reminder User Borrowing Book';
+        return $this->view('backend.mails.sendmail', ['numberDateBorrowed' => $numDateBorrowed, 'book' => $book])
+                    ->from(Auth::user()->email,Auth::user()->name)
+                    ->subject($subject);
     }
 }
