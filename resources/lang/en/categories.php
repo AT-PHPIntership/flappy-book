@@ -23,5 +23,7 @@ return [
     'delete_category_success' => 'Successfully deleted the "<b>:name</b>" category!',
     'delete_category_fail' => 'Delete "<b>:name</b>" category failure!',
     'can_not_delete_default_category' => 'Can not delete default category!',
+    'add_category_success' => 'Successfully add the "<b>:name</b>" category!',
+    'add_category_fail' => 'Add "<b>:name</b>" category failure!',
     'error_when_edit_category' => 'Error when edit category!',
 ];

@@ -103,16 +103,16 @@ $(document).on('click', '.btn-role', function(e) {
     });
 });
 
-$(document).on('click', '#category-add', function(e) {
-    var form = $(this.form);
+$('#add-category form').on('submit', function (event) {
+    var route = $(this).attr('action')
     var title = $('#title').val()
     var errorMessage = $('#add-category').find('span');
     $.ajax({
-        url: '/admin/categories',
+        url: route,
         type: 'post',
         data: {'title' : title},
-        success: function (data) {
-            form.submit();
+        success: function () {
+            location.reload();
         },
         error: function (error) {
             var errors = error.responseJSON.errors;
@@ -120,6 +120,7 @@ $(document).on('click', '#category-add', function(e) {
             $('#title').focus();
         }
     });
+    event.preventDefault();
 });
 
 $(document).on('click', '.btn-edit-category', function(e) {
