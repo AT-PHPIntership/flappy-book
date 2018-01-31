@@ -66,16 +66,15 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        $category = new Category;
-        $category->title = $request->title;
+        $title = $request->title;
         try {
-            $category->save();
-            flash(__('categories.add_category_success', ['name' => $category->title]))->success();
-            return ['result' => true];
+            Category::create([
+                'title' => $title,
+            ]);
+            flash(__('categories.add_category_success', ['name' => $title]))->success();
         } catch (Exception $e) {
             \Log::error($e);
-            flash(__('categories.add_category_fail', ['name' => $category->title]))->error();
-            return ['result' => false];
+            flash(__('categories.add_category_fail', ['name' => $title]))->error();
         }
     }
     
