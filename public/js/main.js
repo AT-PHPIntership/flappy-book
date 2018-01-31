@@ -123,6 +123,7 @@ $(document).on('click', '.btn-edit-category', function(e) {
 
 function resetCategoriesInput() {
     let allRows = $('tbody').find('.category-title-field');
+    allRows.find('span').html('');
     allRows.find('p').show();
     allRows.find('input').hide();
 }
@@ -139,28 +140,36 @@ function confirmEditCategory(textField, inputField, errorMessage) {
     $('#confirm-edit').modal('show');
 
     $('#edit-btn').one('click', function () {
+        let id = inputField.attr('category-id');
         $.ajax({
-            url: '/admin/categories/' + inputField.attr('category-id'),
+            url: '/admin/categories/' + id,
             type: 'put',
             data: {
                 'title': titleEdited,
+                'id': id,
             },
             success: function (data) {
                 if (data.result) {
+                    errorMessage.html('');
                     textField.html(titleEdited).show();
                     inputField.hide();
-                    errorMessage.html('');
                 } else {
                     errorMessage.html(categories.error_when_edit_category);
+                    inputField.focus();
                 }
             },
+            error: function (error) {
+                let errors = error.responseJSON.errors;
+                errorMessage.html(typeof errors !== 'undefined' ? errors.title : categories.error_when_edit_category);
+                inputField.focus();
+            }
         });
     });
 
     $('#reset-btn').one('click', function () {
+        errorMessage.html('');
         textField.show();
         inputField.hide();
-        errorMessage.html('');
     });
 
     $('#cancel-btn').one('click', function () {

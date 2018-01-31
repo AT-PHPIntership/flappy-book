@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Backend\EditCategoryRequest;
 use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Book;
@@ -72,12 +72,12 @@ class CategoryController extends Controller
     /**
      * Update infomation of Category.
      *
-     * @param Illuminate\Http\Request $request  category request
-     * @param App\Model\Category      $category category object
+     * @param App\Http\Requests\Backend\EditCategoryRequest $request  category request
+     * @param App\Model\Category                            $category object category
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(EditCategoryRequest $request, Category $category)
     {
         DB::beginTransaction();
         $result = false;
