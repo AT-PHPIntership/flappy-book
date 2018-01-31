@@ -20,8 +20,19 @@ class Rating extends Model
      */
     protected $fillable = [
         'post_id',
+        'book_id',
         'rating',
     ];
+
+    /**
+     * Relationship belongsTo with Book
+     *
+     * @return array
+     */
+    public function books()
+    {
+        return $this->belongsTo(Book::class, 'book_id');
+    }
 
     /**
      * Relationship belongsTo with Post

@@ -58,18 +58,8 @@ class Post extends Model
      *
      * @return array
      */
-    public function ratings()
+    public function rating()
     {
         return $this->hasOne(Rating::class);
-    }
-
-    /**
-     * Relationship belongsTo with Book
-     *
-     * @return array
-     */
-    public function books()
-    {
-        return $this->belongsTo(Book::class, 'book_id');
     }
 }
