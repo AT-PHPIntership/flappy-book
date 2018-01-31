@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnRatingAndBookIdToPostsTable extends Migration
+class AddColumnBookIdToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddColumnRatingAndBookIdToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->decimal('rating', 4, 1)->nullable()->after('status');
-            $table->integer('book_id')->unsigned()->nullable()->after('rating');
+            $table->integer('book_id')->unsigned()->nullable()->after('status');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('restrict');
         });
     }
 
@@ -27,7 +27,8 @@ class AddColumnRatingAndBookIdToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn(['rating', 'book_id']);
+            $table->dropForeign('posts_book_id_foreign');
+            $table->dropColumn('book_id');
         });
     }
 }
