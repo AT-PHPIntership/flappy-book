@@ -38,13 +38,19 @@
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
                 <b>{{ __('posts.status') }}</b>
-                @foreach( __('posts.liststatus') as $key => $status )
-                  @if($key == $post->status)
-                    <a class="pull-right">{{ $status }}</a>                    
-                  @endif
-                @endforeach
+                @switch($post->status)
+                  @case(config('define.posts.type_review_book'))
+                    <a class="pull-right">{{ __('posts.review') }}</a>
+                    @break
+                  @case(config('define.posts.type_status'))
+                    <a class="pull-right">{{ __('posts.status') }}</a>
+                    @break
+                  @case(config('define.posts.type_find_book'))
+                    <a class="pull-right">{{ __('posts.find_book') }}</a>
+                    @break
+                @endswitch
               </li>
-              @if ($post->status == App\Model\Post::TYPE_REVIEW_BOOK)
+              @if ($post->status == config('define.posts.type_review_book'))
                 <li class="list-group-item">
                   <b>{{ __('posts.book') }}</b>
                   <a class="pull-right">{{ $post->title }}</a>

@@ -1,7 +1,7 @@
 <?php
 return [
     'no' => 'No',
-    'user_name' => 'UserName',
+    'user_name' => 'User Name',
     'short_content' => 'Short Content',
     'post_date' => 'Post Date',
     'total_comment' => 'Total Comment',
@@ -9,6 +9,9 @@ return [
     'detail_post' => 'Detail post',
     'home' => 'Home',
     'posts' => 'Posts',
+    'review' => 'Review',
+    'status' => 'Status',
+    'find_book' => 'Find book',
     'detail' => 'Detail',
     'status' => 'Status',
     'rating' => 'Rating',
@@ -21,9 +24,4 @@ return [
     'list_comments' => 'List comments',
     'delete' => 'Delete',
     'book' => 'Book',
-    'liststatus' => [
-        \App\Model\Post::TYPE_STATUS => 'Status',
-        \App\Model\Post::TYPE_FIND_BOOK => 'Find book',
-        \App\Model\Post::TYPE_REVIEW_BOOK => 'Review',
-    ],
 ];

@@ -7,12 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
-     * Post status
-     *
-     * @type int
+     * Value of status post
      */
     const TYPE_STATUS = 0;
+
+    /**
+     * Value of find book post
+     */
     const TYPE_FIND_BOOK = 1;
+
+    /**
+     * Value of review book post
+     */
     const TYPE_REVIEW_BOOK = 2;
 
     /**
@@ -21,6 +27,7 @@ class Post extends Model
      * @var string $tabel table name
      */
     protected $table = 'posts';
+    
     /**
      * The attributes that are mass assignable.
      *
