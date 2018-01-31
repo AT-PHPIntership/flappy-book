@@ -23,6 +23,6 @@ return [
     'posts' => [
         'limit_rows' => 10,
         'date_format' => 'H:A d-m-Y',
-        'size_short_content' => '6',
+        'size_short_content' => 6,
     ],
 ];

@@ -29,19 +29,19 @@
                     <th class="text-center" width="5%">
                       {{ __('posts.no') }}
                     </th>
-                    <th class="text-center">
+                    <th class="text-center" width="30%">
                       {{ __('posts.short_content') }}
                     </th>
                     <th class="text-center" width="10%">
                       {{ __('posts.status') }}
                     </th>
-                    <th width="10%" class="text-center">
+                    <th width="18%" class="text-center">
                       {{ __('posts.user_name') }}
                     </th>
                     <th class="text-center" width="12%">
                       {{ __('posts.post_date') }}
                     </th>
-                    <th class="text-center" width="12%">
+                    <th class="text-center" width="10%">
                       {{ __('posts.total_comment') }}
                     </th>
                     <th class="text-center" width="15%">
@@ -67,7 +67,7 @@
                             @break
                         @endswitch
                       </td>
-                      <td>{{ $post->name }}</td>
+                      <td class="text-center">{{ $post->name }}</td>
                       <td class="text-center">{{ date(config('define.posts.date_format'), strtotime($post->created_at)) }}</td>
                       <td class="text-center">{{ $post->comments_count }}</td>
                       <td class="text-center">
