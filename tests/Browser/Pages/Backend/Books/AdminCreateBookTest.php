@@ -14,12 +14,6 @@ class AdminCreateBookTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     * user log in
-     * @var App\Model\User
-     */
-    protected $user;
-
-    /**
      * Override function setUp() for make user login
      *
      * @return void
@@ -47,7 +41,6 @@ class AdminCreateBookTest extends DuskTestCase
 
     /**
      * List case for Test validate for input Create Book
-     *
      */
     public function listCaseTestValidateForInput()
     {
@@ -67,6 +60,10 @@ class AdminCreateBookTest extends DuskTestCase
     /**
      * Dusk test validate for input
      *
+     * @param  string $name    name of field      
+     * @param  string $content content 
+     * @param  string $message message show when validate  
+     *
      * @dataProvider listCaseTestValidateForInput
      *
      * @return void
@@ -84,10 +81,10 @@ class AdminCreateBookTest extends DuskTestCase
                     ->type('price', '1000')
                     ->type('author', 'Cao Nguyen V.')
                     ->type('year', '1995')
-                    ->type('from_person', 'ATI0284')
+                    ->type('from_person', $employ_code)
                     ->type($name, $content);
 
-            $this->typeInCKEditor('.wysihtml5-sandbox', $browser, 'Description for book');
+            $this->fillTextArea('.wysihtml5-sandbox', $browser, 'Description for book');
 
             $browser->press('Create')
                     ->assertSee($message);
@@ -114,7 +111,7 @@ class AdminCreateBookTest extends DuskTestCase
                     ->type('year', '1995')
                     ->type('from_person', $employ_code);
 
-            $this->typeInCKEditor('.wysihtml5-sandbox', $browser, '');
+            $this->fillTextArea('.wysihtml5-sandbox', $browser, '');
 
             $browser->press('Create')
                     ->assertSee('The description field is required.');
@@ -159,7 +156,7 @@ class AdminCreateBookTest extends DuskTestCase
                     ->type('year', '1995')
                     ->type('from_person', $employ_code);
 
-            $this->typeInCKEditor('.wysihtml5-sandbox', $browser, 'Description for book');
+            $this->fillTextArea('.wysihtml5-sandbox', $browser, 'Description for book');
 
             $browser->press('Create')
                     ->pause(1000)
@@ -172,9 +169,10 @@ class AdminCreateBookTest extends DuskTestCase
      * @param  string               $selector selector
      * @param  Laravel\Dusk\Browser $browser  browser
      * @param  string               $content  description of books
+     * 
      * @return void
      */
-    public function typeInCKEditor ($selector, $browser, $content)
+    public function fillTextArea($selector, $browser, $content)
     {
        $ckIframe = $browser->elements($selector)[0];
        $browser->driver->switchTo()->frame($ckIframe);
