@@ -29,13 +29,13 @@
                     <th class="text-center" width="5%">
                       {{ __('posts.no') }}
                     </th>
-                    <th class="text-center" width="30%">
+                    <th class="text-left" width="30%">
                       {{ __('posts.short_content') }}
                     </th>
-                    <th class="text-center" width="10%">
+                    <th class="text-left" width="10%">
                       {{ __('posts.status') }}
                     </th>
-                    <th width="18%" class="text-center">
+                    <th class="text-left" width="18%">
                       {{ __('posts.user_name') }}
                     </th>
                     <th class="text-center" width="12%">
@@ -54,7 +54,7 @@
                     <tr>
                       <td class="text-center">{{ $post->id }}</td>
                       <td>{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots'))  !!}</td>
-                      <td class="text-center">
+                      <td class="text-left">
                         @switch($post->status)
                           @case(config('define.posts.type_review_book'))
                             {{ __('posts.review') }}
@@ -67,7 +67,7 @@
                             @break
                         @endswitch
                       </td>
-                      <td class="text-center">{{ $post->name }}</td>
+                      <td class="text-left">{{ $post->name }}</td>
                       <td class="text-center">{{ date(config('define.posts.date_format'), strtotime($post->created_at)) }}</td>
                       <td class="text-center">{{ $post->comments_count }}</td>
                       <td class="text-center">
