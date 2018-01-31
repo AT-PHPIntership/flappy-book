@@ -30,6 +30,7 @@
       <div class="col-md-4">
         <!-- Profile Image -->
         <div class="box box-primary">
+          @include('backend.layouts.partials.modal')
           <div class="box-body box-profile">
             <img class="profile-user-img img-responsive img-circle" src="{{ asset('bower_components/admin-lte/dist/img/user4-128x128.jpg') }}" alt="User profile picture">
             <h3 class="profile-username text-center">Nina Mcintire</h3>
@@ -54,7 +55,7 @@
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
               <p>Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</p>
             </ul>
-            <a href="#" class="btn btn-danger btn-block btn-flat">
+            <a href="#" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
               <b>{{ __('posts.delete') }}</b>
             </a>
           </div>
@@ -85,7 +86,7 @@
                   <td>This is comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
                   </td>
                 </tr>
                 <tr>
@@ -93,7 +94,7 @@
                   <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
                   </td>
                 </tr>
                 <tr>
@@ -101,7 +102,7 @@
                   <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
                   </td>
                 </tr>
                 <tr>
@@ -109,7 +110,7 @@
                   <td>This is comment number 2</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
                   </td>
                 </tr>
               </table>
