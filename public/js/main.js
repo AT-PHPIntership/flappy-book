@@ -87,8 +87,7 @@ $(document).on('click', '.btn-role', function(e) {
     });
 });
 
-$(document).on('click', '#category-add', function(e) {
-    var form = $(this.form);
+$('#add-category form').on('submit', function (event) {
     var title = $('#title').val()
     var errorMessage = $('#add-category').find('span');
     $.ajax({
@@ -96,7 +95,7 @@ $(document).on('click', '#category-add', function(e) {
         type: 'post',
         data: {'title' : title},
         success: function (data) {
-            form.submit();
+            location.reload();
         },
         error: function (error) {
             var errors = error.responseJSON.errors;
@@ -104,4 +103,5 @@ $(document).on('click', '#category-add', function(e) {
             $('#title').focus();
         }
     });
+    event.preventDefault();
 });
