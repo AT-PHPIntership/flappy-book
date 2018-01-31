@@ -10,9 +10,16 @@ return [
     'book_borrowing' => 'Book Borrowing',
     'from_date' => 'From Date',
     'end_date' => 'End Date',
+    'list' => 'List',
+    'send_mail_date' => 'Send Mail Date',
+    'reminder' => 'Reminder',
     'search' => 'Search',
     'list_search' =>[
         \App\Model\Borrow::TYPE_NAME => 'Name',
-        \App\Model\Borrow::TYPE_BORROWING => 'Book Borrowing',
+        \App\Model\Borrow::TYPE_TITLE => 'Book Borrowing',
     ],
+    'title_confirm_send_mail' => 'Confirm reminder send mail!',
+    'content_confirm_send_mail' => 'Are you sure to send mail reminder for this user, :name ?',
+    'send' => 'Send',
+    'close' => 'Close',
 ];

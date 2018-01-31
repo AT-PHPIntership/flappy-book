@@ -15,11 +15,18 @@ return [
     ],
     'borrows' => [
         'limit_rows' => 10,
+        'date_format' => 'd-m-Y',
     ],
     'categories' => [
     	'limit_rows' => 10,
     ],
     'posts' => [
-        'limit_rows' => 10
+        'limit_rows' => 10,
+        'date_format' => 'H:A d-m-Y',
+        'size_short_content' => 6,
+        'type_review_book' => App\Model\Post::TYPE_REVIEW_BOOK,
+        'type_status' => App\Model\Post::TYPE_STATUS,
+        'type_find_book' => App\Model\Post::TYPE_FIND_BOOK,
+        'three_dots' => '...'
     ],
 ];

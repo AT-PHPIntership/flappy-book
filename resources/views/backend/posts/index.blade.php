@@ -25,50 +25,50 @@
             <div class="box-body">
               <table id="list-posts" class="table table-bordered table-hover">
                 <thead>
-                 <tr>
-                  <th class="text-center" width="5%">
-                    {{ __('posts.no') }}
-                  </th>
-                  <th class="text-center">
-                    {{ __('posts.short_content') }}
-                  </th>
-                  <th class="text-center" width="10%">
-                    {{ __('posts.status') }}
-                  </th>
-                  <th width="10%" class="text-center">
-                    {{ __('posts.user_name') }}
-                  </th>
-                  <th class="text-center" width="12%">
-                    {{ __('posts.post_date') }}
-                  </th>
+                  <tr>
+                    <th class="text-center" width="5%">
+                      {{ __('posts.no') }}
+                    </th>
+                    <th class="text-center" width="30%">
+                      {{ __('posts.short_content') }}
+                    </th>
+                    <th class="text-center" width="10%">
+                      {{ __('posts.status') }}
+                    </th>
+                    <th width="18%" class="text-center">
+                      {{ __('posts.user_name') }}
+                    </th>
                     <th class="text-center" width="12%">
-                    {{ __('posts.total_comment') }}
-                  </th>
-                  <th class="text-center" width="15%">
-                    {{ __('posts.options') }}
-                  </th>
-                </tr>
+                      {{ __('posts.post_date') }}
+                    </th>
+                    <th class="text-center" width="10%">
+                      {{ __('posts.total_comment') }}
+                    </th>
+                    <th class="text-center" width="15%">
+                      {{ __('posts.options') }}
+                    </th>
+                  </tr>
                 </thead>
                 <tbody>
                   @foreach ($posts as $post)
                     <tr>
                       <td class="text-center">{{ $post->id }}</td>
-                      <td>{!! \Illuminate\Support\Str::words($post->content, 7,'...')  !!}</td>
+                      <td>{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots'))  !!}</td>
                       <td class="text-center">
                         @switch($post->status)
-                          @case(App\Model\Post::REVIEW_TYPE)
+                          @case(config('define.posts.type_review_book'))
                             {{ __('posts.review') }}
                             @break
-                          @case(App\Model\Post::STATUS_TYPE)
+                          @case(config('define.posts.type_status'))
                             {{ __('posts.status') }}
                             @break
-                          @case(App\Model\Post::FIND_TYPE)
+                          @case(config('define.posts.type_find_book'))
                             {{ __('posts.find_book') }}
                             @break
                         @endswitch
                       </td>
-                      <td>{{ $post->name }}</td>
-                      <td class="text-center">{{ date('H:A d/m/Y', strtotime($post->created_at)) }}</td>
+                      <td class="text-center">{{ $post->name }}</td>
+                      <td class="text-center">{{ date(config('define.posts.date_format'), strtotime($post->created_at)) }}</td>
                       <td class="text-center">{{ $post->comments_count }}</td>
                       <td class="text-center">
                         <div class="btn-option text-center">
@@ -84,15 +84,15 @@
                         </div>
                       </td>
                     </tr>
-                   @endforeach  
+                  @endforeach  
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                    <ul class="pagination">
-                      {{ $posts->links() }}
-                    </ul>
+                  <ul class="pagination">
+                    {{ $posts->links() }}
+                  </ul>
                 </nav>
               </div>
               <!-- /.pagination -->

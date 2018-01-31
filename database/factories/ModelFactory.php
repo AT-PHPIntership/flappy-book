@@ -33,10 +33,10 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
 });
 $factory->define(App\Model\Borrow::class, function (Faker $faker) {
     return [
-        'from_date' => $faker->datetime,
-        'to_date' => $faker->datetime,
+        'from_date' => $faker->date,
+        'to_date' => $faker->date,
         'status' => $faker->numberBetween(0,1),
-        'send_mail_date' => $faker->datetime,
+        'send_mail_date' => $faker->date,
     ];
 });
 $factory->define(App\Model\Post::class, function (Faker $faker) {
@@ -72,5 +72,10 @@ $factory->define(App\Model\Qrcode::class, function (Faker $faker) {
         'prefix' => 'ATB',
         'code_id' => $faker->numberBetween(0, 5000),
         'status' => $faker->numberBetween(0, 1),
+    ];
+});
+$factory->define(App\Model\Rating::class, function (Faker $faker) {
+    return [
+        'rating' => $faker->numberBetween(1,5),
     ];
 });

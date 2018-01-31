@@ -7,26 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
-     * Value of review post
-     */
-
-    const REVIEW_TYPE = 0;
-    /**
      * Value of status post
      */
+    const TYPE_STATUS = 0;
 
-    const STATUS_TYPE = 1;
     /**
      * Value of find book post
      */
-    
-    const FIND_TYPE = 2;
+    const TYPE_FIND_BOOK = 1;
+
+    /**
+     * Value of review book post
+     */
+    const TYPE_REVIEW_BOOK = 2;
+
     /**
      * Declare table
      *
      * @var string $tabel table name
      */
     protected $table = 'posts';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -66,5 +67,15 @@ class Post extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * Relationship hasOne with Rating
+     *
+     * @return array
+     */
+    public function rating()
+    {
+        return $this->hasOne(Rating::class);
     }
 }
