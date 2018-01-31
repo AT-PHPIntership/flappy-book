@@ -24,7 +24,6 @@ class SearchBorrowsTest extends DuskTestCase
     {
        parent::setUp();
 
-       $this->createAdminUser();
     }
 
      /**
@@ -36,7 +35,7 @@ class SearchBorrowsTest extends DuskTestCase
     {
         $this->makeData(6);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+           $browser->loginAs($this->user)
                     ->visit('/admin/borrows')
                     ->resize(1200,1600)
                     ->assertSee('List Borrower')
@@ -58,7 +57,7 @@ class SearchBorrowsTest extends DuskTestCase
     public function testSeeInputNullSelectBook(){
         $this->makeData(6);
         $this->browse(function (Browser $browser){
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/borrows')
                     ->resize(1200,1600)
                     ->assertSee('List Borrower')
@@ -80,11 +79,10 @@ class SearchBorrowsTest extends DuskTestCase
     public function testSearchSelectName(){
         $this->makeData(6);
         $this->browse(function (Browser $browser){
-            $browser->loginAs(User::first())
+           $browser->loginAs($this->user)
                     ->visit('/admin/borrows')
                     ->resize(1200,1600)
                     ->assertSee('List Borrower')
-                    // ->assertInputValue('search', 'Minh Dao T.')
                     ->type('search', 'Minh Dao T.')
                     ->select('filter', 'name')
                     ->click('#btn-search')
@@ -104,7 +102,7 @@ class SearchBorrowsTest extends DuskTestCase
     public function testSearchSelectBook(){
         $this->makeData(6);
         $this->browse(function (Browser $browser){
-            $browser->loginAs(User::first())
+           $browser->loginAs($this->user)
                     ->visit('/admin/borrows')
                     ->resize(1200,1600)
                     ->assertSee('List Borrower')
