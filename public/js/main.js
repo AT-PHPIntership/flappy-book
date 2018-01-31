@@ -88,13 +88,14 @@ $(document).on('click', '.btn-role', function(e) {
 });
 
 $('#add-category form').on('submit', function (event) {
+    var route = $(this).attr('action')
     var title = $('#title').val()
     var errorMessage = $('#add-category').find('span');
     $.ajax({
-        url: '/admin/categories',
+        url: route,
         type: 'post',
         data: {'title' : title},
-        success: function (data) {
+        success: function () {
             location.reload();
         },
         error: function (error) {

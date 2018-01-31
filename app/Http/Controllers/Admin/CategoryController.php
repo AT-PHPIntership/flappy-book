@@ -62,7 +62,7 @@ class CategoryController extends Controller
      *
      * @param CreateCategoryRequest $request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function store(CreateCategoryRequest $request)
     {

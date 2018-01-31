@@ -5,7 +5,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title">{{ __('categories.add_category') }}</h4>
         </div>
-        <form class="inline">
+        <form method="POST" action="{{ route('categories.store') }}" class="inline">
             <div class="modal-body">
                 <p><strong>{{ __('categories.title') }}:</strong></p>
                 <input type="text" class="form-control" name="title" id="title" placeholder="{{ __('categories.title') }}" autofocus>
