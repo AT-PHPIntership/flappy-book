@@ -24,252 +24,222 @@ class AdminSearchBookTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->createAdminUser();
-        factory(Category::class, 2)->create();
-        factory(User::class, 2)->create();
     }
 
     /**
-     * A Dusk test SearchNotInputValue.
+     * A Dusk test SearchNotInputValue SlectAll.
      *
      * @return void
      */
-    public function testSearchNotInputValue()
+    public function testSearchBookNotInputValueSelectAll()
     {
-        $this->makeData(16);
+        $this->makeData(6);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
+                    ->resize(1200,1600)
                     ->assertSee('List Books')
-                    ->press('#btn-search')
-                    ->assertPathIs('/admin/books')
-                    ->assertQueryStringMissing('Search');
-                    $paginate_element = $browser->elements('.pagination li');
-                    $number_page = count($paginate_element) - 2;
-                    $this->assertTrue($number_page == 2);
-        });
-    }
-
-    /**
-     *Test search if has input value with filter is title and has one record.
-     *
-     * @return void
-     */
-    public function testSearchTitleHasInputValue()
-    {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
-                    ->visit('/admin/books')
-                    ->resize(1000,1200)
-                    ->type('search', 'Jac-16')
-                    ->select('filter','Title')
-                    ->click('#btn-search');
+                    ->assertInputValue('search', '')
+                    ->select('filter', 'all')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=&filter=all')
+                    ->assertQueryStringHas('search', '')
+                    ->assertQueryStringHas('filter', 'all')->screenshot(1);
             $elements = $browser->elements('#list-books tbody tr');
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 1);
-            $browser->assertPathIs('/admin/books')
-                    ->assertQueryStringHas('search', 'Jac-16')
-                    ->assertMissing('.pagination');
+            $this->assertCount(7, $elements);
         });
     }
 
     /**
-     *Test search has input value with filter is title but not found.
+     * A Dusk test SearchNotInputValue SelectTitle.
      *
      * @return void
      */
-    public function testSearchTitleNotResult()
+    public function testSearchBookNotInputValueSelectTitle()
     {
-        $this->makeData(16);
+        $this->makeData(6);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->resize(1000,1200)
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
+                    ->assertInputValue('search', '')
+                    ->select('filter', 'title')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=&filter=title')
+                    ->assertQueryStringHas('search', '')
+                    ->assertQueryStringHas('filter', 'title')->screenshot(2);
+            $elements = $browser->elements('#list-books tbody tr');
+            $this->assertCount(7, $elements);
+        });
+    }
+
+    /**
+     * A Dusk test SearchNotInputValue SelectAuthor.
+     *
+     * @return void
+     */
+    public function testSearchBookNotInputValueSelectAuthor()
+    {
+        $this->makeData(6);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user)
+                    ->visit('/admin/books')
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
+                    ->assertInputValue('search', '')
+                    ->select('filter', 'author')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=&filter=author')
+                    ->assertQueryStringHas('search', '')
+                    ->assertQueryStringHas('filter', 'author')->screenshot(3);
+            $elements = $browser->elements('#list-books tbody tr');
+            $this->assertCount(7, $elements);
+        });
+    }
+
+    /**
+     *Test search if has input value with filter is all and has record.
+     *
+     * @return void
+     */
+    public function testSearchBookHasInputValueSelectAll()
+    {
+        $this->makeData(6);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user)
+                    ->visit('/admin/books')
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
+                    ->type('search', 'Java')
+                    ->select('filter', 'all')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=Java&filter=all')
+                    ->assertQueryStringHas('search', 'Java')
+                    ->assertQueryStringHas('filter', 'all')->screenshot(4);
+            $elements = $browser->elements('#list-books tbody tr');
+            $this->assertCount(1, $elements);
+        });
+    }
+
+    /**
+     *Test search if has input value with filter is title and has record.
+     *
+     * @return void
+     */
+    public function testSearchBookHasInputValueSelectTitle()
+    {
+        $this->makeData(6);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user)
+                    ->visit('/admin/books')
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
+                    ->type('search', 'Java')
+                    ->select('filter', 'title')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=Java&filter=title')
+                    ->assertQueryStringHas('search', 'Java')
+                    ->assertQueryStringHas('filter', 'title')->screenshot(5);
+            $elements = $browser->elements('#list-books tbody tr');
+            $this->assertCount(1, $elements);
+        });
+    }
+
+    /**
+     *Test search if has input value with filter is author and has record.
+     *
+     * @return void
+     */
+    public function testSearchBookHasInputValueSelectAuthor()
+    {
+        $this->makeData(6);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user)
+                    ->visit('/admin/books')
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
+                    ->type('search', 'Pytago')
+                    ->select('filter', 'author')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=Pytago&filter=author')
+                    ->assertQueryStringHas('search', 'Pytago')
+                    ->assertQueryStringHas('filter', 'author')->screenshot(6);
+            $elements = $browser->elements('#list-books tbody tr');
+            $this->assertCount(1, $elements);
+        });
+    }
+
+    /**
+     *Test search if has input value with filter is all and not has record.
+     *
+     * @return void
+     */
+    public function testSearchBookHasInputValueSelectAllNotResult()
+    {
+        $this->makeData(6);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user)
+                    ->visit('/admin/books')
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
                     ->type('search', 'Hello')
-                    ->select('filter','Title')
-                    ->click('#btn-search');
-            $elements = $browser->elements('#list-books tbody tr');
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 0);
-            $browser->assertPathIs('/admin/books')
+                    ->select('filter', 'all')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=Hello&filter=all')
                     ->assertQueryStringHas('search', 'Hello')
-                    ->assertMissing('.pagination');
-        });
-    }
-
-    /**
-     *Test search has input value with filter is title and has many record.
-     *
-     * @return void
-     */
-    public function testSearchTitleHasManyRecord()
-    {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
-                    ->visit('/admin/books')
-                    ->resize(1000,1200)
-                    ->type('search', 'Jac')
-                    ->select('filter','Title')
-                    ->press('#btn-search');
-            $elements = $browser->elements('#list-books tbody tr');        
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 10);
-            $browser->assertPathIs('/admin/books')
-                    ->assertQueryStringHas('search', 'Jac');
-            $paginate_element = $browser->elements('.pagination li');
-            $number_page = count($paginate_element) -2;
-            $this->assertTrue($number_page == 2);
-        }); 
-    }
-
-    /**
-     *Test search if has input value with filter is author and has one record.
-     *
-     * @return void
-     */
-    public function testSearchAuthorHasInputValue()
-    {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
-                    ->visit('/admin/books')
-                    ->resize(1000,1200)
-                    ->type('search', 'Jac-16')
-                    ->select('filter','Author')
-                    ->click('#btn-search');
+                    ->assertQueryStringHas('filter', 'all')->screenshot(7);
             $elements = $browser->elements('#list-books tbody tr');
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 1);
-            $browser->assertPathIs('/admin/books')
-                    ->assertQueryStringHas('search', 'Jac-16')
-                    ->assertMissing('.pagination');
+            $this->assertCount(0, $elements);
         });
     }
 
     /**
-     *Test search has input value with filter is author but not found.
+     *Test search if has input value with filter is title and not has record.
      *
      * @return void
      */
-    public function testSearchAuthorNotResult()
+    public function testSearchBookHasInputValueSelectTitleNotResult()
     {
-        $this->makeData(16);
+        $this->makeData(6);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->resize(1000,1200)
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
                     ->type('search', 'Hello')
-                    ->select('filter','Author')
-                    ->click('#btn-search');
-            $elements = $browser->elements('#list-books tbody tr');
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 0);
-            $browser->assertPathIs('/admin/books')
+                    ->select('filter', 'title')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=Hello&filter=title')
                     ->assertQueryStringHas('search', 'Hello')
-                    ->assertMissing('.pagination');
-        });
-    }
-
-    /**
-     *Test search has input value with filter is author and has many record.
-     *
-     * @return void
-     */
-    public function testAuthorHasManyRecord()
-    {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
-                    ->visit('/admin/books')
-                    ->resize(1000,1200)
-                    ->type('search', 'Jac')
-                    ->select('filter','Author')
-                    ->press('#btn-search');
-            $elements = $browser->elements('#list-books tbody tr');        
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 10);
-            $browser->assertPathIs('/admin/books')
-                    ->assertQueryStringHas('search', 'Jac');
-            $paginate_element = $browser->elements('.pagination li');
-            $number_page = count($paginate_element) -2;
-            $this->assertTrue($number_page == 2);
-        }); 
-    }
-
-    /**
-     *Test search if has input value with filter is all and has one record.
-     *
-     * @return void
-     */
-    public function testSearchAllHasInputValue()
-    {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
-                    ->visit('/admin/books')
-                    ->resize(1000,1200)
-                    ->type('search', 'Jac-16')
-                    ->select('filter','Title or Author')
-                    ->click('#btn-search');
+                    ->assertQueryStringHas('filter', 'title')->screenshot(8);
             $elements = $browser->elements('#list-books tbody tr');
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 1);
-            $browser->assertPathIs('/admin/books')
-                    ->assertQueryStringHas('search', 'Jac-16')
-                    ->assertMissing('.pagination');
+            $this->assertCount(0, $elements);
         });
     }
 
     /**
-     *Test search has input value with filter is all but not found.
+     *Test search if has input value with filter is author and not has record.
      *
      * @return void
      */
-    public function testSearchAllNotResult()
+    public function testSearchBookHasInputValueSelectAuthorNotResult()
     {
-        $this->makeData(16);
+        $this->makeData(6);
         $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
+            $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->resize(1000,1200)
+                    ->resize(1200,1600)
+                    ->assertSee('List Books')
                     ->type('search', 'Hello')
-                    ->select('filter','Title or Author')
-                    ->click('#btn-search');
-            $elements = $browser->elements('#list-books tbody tr');
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 0);
-            $browser->assertPathIs('/admin/books')
+                    ->select('filter', 'author')
+                    ->click('#btn-search')
+                    ->visit('/admin/books?search=Hello&filter=author')
                     ->assertQueryStringHas('search', 'Hello')
-                    ->assertMissing('.pagination');
+                    ->assertQueryStringHas('filter', 'author')->screenshot(9);
+            $elements = $browser->elements('#list-books tbody tr');
+            $this->assertCount(0, $elements);
         });
-    }
-
-    /**
-     *Test search has input value with filter is all and has many record.
-     *
-     * @return void
-     */
-    public function testAllHasManyRecord()
-    {
-        $this->makeData(16);
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::first())
-                    ->visit('/admin/books')
-                    ->resize(1000,1200)
-                    ->type('search', 'Jac')
-                    ->select('filter','Title or Author')
-                    ->press('#btn-search');
-            $elements = $browser->elements('#list-books tbody tr');        
-            $numAccounts = count($elements);
-            $this->assertTrue($numAccounts == 10);
-            $browser->assertPathIs('/admin/books')
-                    ->assertQueryStringHas('search', 'Jac');
-            $paginate_element = $browser->elements('.pagination li');
-            $number_page = count($paginate_element) -2;
-            $this->assertTrue($number_page == 2);
-        }); 
     }
 
     /**
@@ -277,19 +247,23 @@ class AdminSearchBookTest extends DuskTestCase
      *
      * @return void
      */
-    public function makeData(){
+    public function makeData($row){
         factory(Category::class, 2)->create();
         factory(User::class, 2)->create();
         $categoryId = DB::table('categories')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
-        for ($i = 1 ; $i <= 16; $i++) {
-            factory(Book::class)->create([
-              'title' => 'Jac-'.$i,
-              'author'=> 'Jac-'.$i,
-              'category_id' => $faker->randomElement($categoryId),
-              'from_person' => $faker->randomElement($userId)
+        for ($i = 0; $i < $row; $i++) {
+            factory(Book::class, 1)->create([
+                'category_id' => $faker->randomElement($categoryId),
+                'from_person' => $faker->randomElement($userId)
             ]);
         }
+        factory(Book::class, 1)->create([
+            'title' => 'Java',
+            'author' => 'Pytago',
+            'category_id' => $faker->randomElement($categoryId),
+            'from_person' => $faker->randomElement($userId)
+        ]);
     }
 }
