@@ -13,12 +13,6 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     * user log in
-     * @var App\Model\User
-     */
-    protected $user;
-
-    /**
      * Override function setUp()
      *
      * @return void
@@ -37,9 +31,9 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->resize(1600, 1200)
-                    ->loginAs($this->user)
-                    ->visit('/admin/users')
-                    ->assertSee('Role');
+                ->loginAs($this->user)
+                ->visit('/admin/users')
+                ->assertSee('Role');
         });
     }
 
@@ -57,9 +51,9 @@ class AdminUpdateRoleUserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser->resize(1600, 1200)
-                    ->loginAs($user)
-                    ->visit('/admin/users')
-                    ->assertDontSee('Role');
+                ->loginAs($user)
+                ->visit('/admin/users')
+                ->assertDontSee('Role');
         });
     }
 
@@ -72,9 +66,9 @@ class AdminUpdateRoleUserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->resize(1600, 1200)
-                    ->loginAs($this->user)
-                    ->visit('/admin/users')
-                    ->assertVisible('#role-user-1', 'disable');
+                ->loginAs($this->user)
+                ->visit('/admin/users')
+                ->assertVisible('#role-user-1', 'disable');
         });
     }
 
@@ -94,12 +88,12 @@ class AdminUpdateRoleUserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($userId) {
             $browser->resize(1600, 1200)
-                    ->loginAs($this->user)
-                    ->visit('/admin/users')
-                    ->assertSee('Role')
-                    ->assertVisible('#role-user-'.$userId, 'Admin')
-                    ->press('#role-user-'.$userId)
-                    ->assertVisible('#role-user-'.$userId, 'User');
+                ->loginAs($this->user)
+                ->visit('/admin/users')
+                ->assertSee('Role')
+                ->assertVisible('#role-user-'.$userId, 'Admin')
+                ->press('#role-user-'.$userId)
+                ->assertVisible('#role-user-'.$userId, 'User');
         });
     }
 
@@ -119,12 +113,12 @@ class AdminUpdateRoleUserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($userId) {
             $browser->resize(1600, 1200)
-                    ->loginAs($this->user)
-                    ->visit('/admin/users')
-                    ->assertSee('Role')
-                    ->assertVisible('#role-user-'.$userId, 'User')
-                    ->press('#role-user-'.$userId)
-                    ->assertVisible('#role-user-'.$userId, 'Admin');
+                ->loginAs($this->user)
+                ->visit('/admin/users')
+                ->assertSee('Role')
+                ->assertVisible('#role-user-'.$userId, 'User')
+                ->press('#role-user-'.$userId)
+                ->assertVisible('#role-user-'.$userId, 'Admin');
         });
     }
 }
