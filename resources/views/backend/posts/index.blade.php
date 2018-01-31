@@ -53,16 +53,16 @@
                   @foreach ($posts as $post)
                     <tr>
                       <td class="text-center">{{ $post->id }}</td>
-                      <td>{!! \Illuminate\Support\Str::words($post->content, config('define.posts.size_short_content'),'...')  !!}</td>
+                      <td>{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots'))  !!}</td>
                       <td class="text-center">
                         @switch($post->status)
-                          @case(App\Model\Post::TYPE_REVIEW_BOOK)
+                          @case(config('define.posts.type_review_book'))
                             {{ __('posts.review') }}
                             @break
-                          @case(App\Model\Post::TYPE_STATUS)
+                          @case(config('define.posts.type_status'))
                             {{ __('posts.status') }}
                             @break
-                          @case(App\Model\Post::TYPE_FIND_BOOK)
+                          @case(config('define.posts.type_find_book'))
                             {{ __('posts.find_book') }}
                             @break
                         @endswitch
