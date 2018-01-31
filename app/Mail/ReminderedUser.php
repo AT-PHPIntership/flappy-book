@@ -52,12 +52,12 @@ class ReminderedUser extends Mailable
     {
         $currentDate = date(config('define.borrows.current_date_format'));
         $borrowDate = $this->borrowing->from_date;
-        $numDateBorrowed = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
+        $numberDateBorrowed = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
         $bookId = $this->borrowing->book_id;
         $book = Book::findOrFail($bookId);
         $subject = 'Reminder User Borrowing Book';
-        return $this->view('backend.mails.sendmail', ['numberDateBorrowed' => $numDateBorrowed, 'book' => $book])
-                    ->from(Auth::user()->email,Auth::user()->name)
+        return $this->view('backend.mails.sendmail', ['numberDateBorrowed' => $numberDateBorrowed, 'book' => $book])
+                    ->from(Auth::user()->email, Auth::user()->name)
                     ->subject($subject);
     }
 }
