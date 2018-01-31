@@ -68,7 +68,8 @@
                       <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->to_date)) }}</td>
                       <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->send_mail_date)) }}</td>
                       <td class="text-center">
-                        <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="GET">
+                        <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="POST">
+                          {{ csrf_field() }}
                           <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 
                           data-title="{{ __('borrows.title_confirm_send_mail') }}"
                           data-confirm="{{ __('borrows.content_confirm_send_mail', ['name' => $borrow->name]) }}">

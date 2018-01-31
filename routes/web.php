@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/borrows', 'BorrowController');
     Route::resource('/categories', 'CategoryController');
     Route::resource('/posts', 'PostController');
-    Route::get('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
+    Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
