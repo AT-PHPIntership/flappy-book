@@ -16,6 +16,7 @@ class AdminEditCategoryTest extends DuskTestCase
 
     const DEFAULT_CATEGORY = 'Default Category';
     const NUMBER_RECORD_CREATE = 5;
+    const PRESS_ENTER = '{enter}';
 
     protected $buttonSelected = '.item-2 .btn-edit-category';
     protected $inputSelected = '.item-2 input';
@@ -48,7 +49,7 @@ class AdminEditCategoryTest extends DuskTestCase
                 ->resize(1200,1600)
                 ->assertSee('List Categories');
             $elements = $browser->elements('.btn-edit-category');
-            $this->assertCount(self::NUMBER_RECORD_CREATE, $elements);
+            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
         });
     }
 
@@ -79,11 +80,13 @@ class AdminEditCategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->visit('/admin/categories')
-                ->resize(1200,1600)
-                ->press($this->buttonSelected)
-                ->keys($this->inputSelected, '{enter}')
-                ->assertSee('Confirm edit!')
-                ->assertSee('Do you want edit from');
+                ->resize(1200,1600);
+            $text = $browser->text($this->textSelected);
+            $browser->press($this->buttonSelected)
+                ->keys($this->inputSelected, ' edited', self::PRESS_ENTER);
+            $input = $browser->value($this->inputSelected); 
+            $browser->assertSee('Confirm edit!')
+                ->assertSee('Do you want edit from ' . $text . ' to ' . $input . ' ?');
         });
     }
 
@@ -99,7 +102,7 @@ class AdminEditCategoryTest extends DuskTestCase
                 ->visit('/admin/categories')
                 ->resize(1200,1600)
                 ->press($this->buttonSelected)
-                ->keys($this->inputSelected, '{enter}', ' edited');
+                ->keys($this->inputSelected, ' edited', self::PRESS_ENTER);
             $value = $browser->value($this->inputSelected);
             $browser->press('Cancel')
                 ->assertInputValue($this->inputSelected, $value);
@@ -119,7 +122,7 @@ class AdminEditCategoryTest extends DuskTestCase
                 ->resize(1200,1600);
             $value = $browser->value($this->textSelected);
             $browser->press($this->buttonSelected)
-                ->keys($this->inputSelected, '{enter}', ' edited')
+                ->keys($this->inputSelected, ' edited', self::PRESS_ENTER)
                 ->press('Reset')
                 ->assertSelected($this->textSelected, $value);
         });
@@ -151,7 +154,7 @@ class AdminEditCategoryTest extends DuskTestCase
                 ->resize(1200,1600)
                 ->press($this->buttonSelected)
                 ->type($this->inputSelected, $content)
-                ->keys($this->inputSelected, '{enter}')
+                ->keys($this->inputSelected, self::PRESS_ENTER)
                 ->pause(1000)
                 ->press('Edit')
                 ->pause(1000)
