@@ -41,6 +41,8 @@ class AdminCreateBookTest extends DuskTestCase
 
     /**
      * List case for Test validate for input Create Book
+     *
+     * @return array
      */
     public function listCaseTestValidateForInput()
     {
@@ -185,7 +187,7 @@ class AdminCreateBookTest extends DuskTestCase
     /**
      * Make data  in database for test.
      *
-     * @return void
+     * @return App\Model\User
      */
     public function makeData()
     {
