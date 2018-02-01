@@ -15,6 +15,7 @@ use DB;
 class AdminListPosts extends DuskTestCase
 {
     use DatabaseMigrations;
+
     const NUMBER_RECORD_CREATE = 18;
 
     /**
@@ -35,10 +36,10 @@ class AdminListPosts extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin')
-                    ->clickLink('Posts')
-                    ->assertPathIs('/admin/posts')
-                    ->assertSee('List Posts');
+                ->visit('/admin')
+                ->clickLink('Posts')
+                ->assertPathIs('/admin/posts')
+                ->assertSee('List Posts');
         });
     }
 
@@ -51,8 +52,9 @@ class AdminListPosts extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/posts')
-                    ->assertSee('List Posts');
+                ->visit('/admin/posts')
+                ->resize(1200,1600)
+                ->assertSee('List Posts');
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(0, $elements);
             $this->assertNull($browser->element('.paginate'));
@@ -69,7 +71,8 @@ class AdminListPosts extends DuskTestCase
         $this->makeData(4);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/posts');
+                ->resize(1200,1600)
+                ->visit('/admin/posts');
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(4, $elements);
         });
@@ -85,7 +88,8 @@ class AdminListPosts extends DuskTestCase
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/posts');
+                ->resize(1200,1600)
+                ->visit('/admin/posts');
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(config('define.posts.limit_rows'), $elements);
             $this->assertNotNull($browser->element('.pagination'));
@@ -105,10 +109,11 @@ class AdminListPosts extends DuskTestCase
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/posts?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
+                ->resize(1200,1600)
+                ->visit('/admin/posts?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
             $elements = $browser->elements('#list-posts tbody tr');
             $browser->assertPathIs('/admin/posts')
-                    ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
+                ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
         });
     }
 
@@ -119,7 +124,7 @@ class AdminListPosts extends DuskTestCase
      */
     public function makeData($row)
     {
-       $faker = Faker::create();
+        $faker = Faker::create();
         $users = factory(User::class, 4)->create();
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
