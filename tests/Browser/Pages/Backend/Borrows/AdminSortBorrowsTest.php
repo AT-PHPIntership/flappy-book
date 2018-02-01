@@ -26,7 +26,6 @@ class AdminSortBorrowsTest extends DuskTestCase
     public function setUp()
     {
        parent::setUp();
-
     }
 
     /*
@@ -42,14 +41,13 @@ class AdminSortBorrowsTest extends DuskTestCase
 
             $browser->loginAs($this->user)
                     ->visit('/admin/borrows');
-
             foreach ($linkSortNames as $name) {
                 $browser->click("#link-sort-$name a")
-                    ->assertQueryStringHas('sort', $name)
-                    ->assertQueryStringHas('order', 'asc')
-                    ->click("#link-sort-$name a")
-                    ->assertQueryStringHas('sort', $name)
-                    ->assertQueryStringHas('order', 'desc');
+                        ->assertQueryStringHas('sort', $name)
+                        ->assertQueryStringHas('order', 'asc')
+                        ->click("#link-sort-$name a")
+                        ->assertQueryStringHas('sort', $name)
+                        ->assertQueryStringHas('order', 'desc');
             }
         });
     }
@@ -83,7 +81,6 @@ class AdminSortBorrowsTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $borrows = $this->makeQueryBorrows();
-
         $this->browse(function (Browser $browser) use ($name, $order, $columIndex, $borrows) {
             $browser->loginAs($this->user)
                     ->visit('admin/borrows')
@@ -109,7 +106,6 @@ class AdminSortBorrowsTest extends DuskTestCase
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $borrows = $this->makeQueryBorrows();
-
         $this->browse(function (Browser $browser) use ($name, $order, $columIndex, $borrows) {
             $browser->loginAs($this->user)
                     ->visit('admin/borrows')
@@ -117,7 +113,6 @@ class AdminSortBorrowsTest extends DuskTestCase
                     ->click("#link-sort-$name a");
 
             $arrDesc = $borrows->orderBy($order, 'desc')->get();
-                                   
             for ($i = 1; $i <= self::NUMBER_RECORD_CREATE; $i++) {
                 $selector = "#list-borrows tbody tr:nth-child($i) td:nth-child($columIndex)";
                 $this->assertEquals($browser->text($selector), $arrDesc[$i-1]->$name);
@@ -137,7 +132,6 @@ class AdminSortBorrowsTest extends DuskTestCase
     {
         $this->makeData(16);
         $borrows = $this->makeQueryBorrows();
-
         $this->browse(function (Browser $browser) use ($name) {
             $browser->loginAs($this->user)
                     ->resize(900, 1600)
