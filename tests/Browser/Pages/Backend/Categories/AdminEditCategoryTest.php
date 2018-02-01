@@ -86,7 +86,7 @@ class AdminEditCategoryTest extends DuskTestCase
                 ->keys($this->inputSelected, ' edited', self::PRESS_ENTER);
             $input = $browser->value($this->inputSelected); 
             $browser->assertSee('Confirm edit!')
-                ->assertSee('Do you want edit from ' . $text . ' to ' . $input . ' ?');
+                ->assertSee('Are you sure to edit this category from ' . $text . ' to ' . $input . ' ?');
         });
     }
 

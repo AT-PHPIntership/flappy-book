@@ -147,7 +147,7 @@ function resetCategoriesInput() {
 function confirmEditCategory(textField, inputField, errorMessage) {
     let title = textField.html();
     let titleEdited = inputField.val();
-    let dataConfirm = categories.you_want_edit
+    let dataConfirm = categories.are_you_sure_to_edit_this_category
                 +' <strong> ' + title + ' </strong> '
                 + categories.to
                 +' <strong> ' + titleEdited +' </strong> ?';
