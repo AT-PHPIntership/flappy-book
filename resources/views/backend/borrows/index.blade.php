@@ -47,9 +47,9 @@
               <table id="list-borrows" class="table table-bordered table-hover">
                 <thead>
                  <tr>
-                  <th class="text-center">@sortablelink('employ_code', __('borrows.employee_code'))</th>
-                  <th>@sortablelink('name', __('borrows.name'))</th>
-                  <th>@sortablelink('email', __('borrows.email'))</th>
+                  <th class="text-center" width="8%">@sortablelink('employ_code', __('borrows.employee_code'))</th>
+                  <th >@sortablelink('name', __('borrows.name'))</th>
+                  <th width="12%">@sortablelink('email', __('borrows.email'))</th>
                   <th>@sortablelink('title', __('borrows.book_borrowing'))</th>
                   <th class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
                   <th class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
