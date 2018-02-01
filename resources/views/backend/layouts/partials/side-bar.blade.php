@@ -21,7 +21,7 @@
         <a href="{{ route('books.index') }}"><i class="fa fa-book"></i> <span>{{ __('dashboard.books') }}</span></a>
       </li>
       <li class="{{ checkActiveRoutes(['users.index','users.show', 'users.edit']) }}">
-        <a href="{{ route('users.index') }}"><i class="fa fa-user-circle"></i> <span>{{ __('dashboard.users') }}</span></a>
+        <a href="{{ route('users.index') }}"><i class="fa fa-user"></i> <span>{{ __('dashboard.users') }}</span></a>
       </li>
       <li class="{{ checkActiveRoutes(['borrows.index','borrows.show', 'borrows.edit']) }}">
         <a href="{{ route('borrows.index') }}"><i class="glyphicon glyphicon-list-alt"></i> <span>{{ __('dashboard.borrows') }}</span></a>
