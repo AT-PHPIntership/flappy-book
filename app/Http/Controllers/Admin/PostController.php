@@ -35,7 +35,7 @@ class PostController extends Controller
     /**
      * Display a detail of the post.
      *
-     * @param int $id object book
+     * @param int $id id of post
      *
      * @return \Illuminate\Http\Response
      */
