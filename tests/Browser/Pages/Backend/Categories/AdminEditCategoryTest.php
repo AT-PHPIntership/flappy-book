@@ -37,9 +37,9 @@ class AdminEditCategoryTest extends DuskTestCase
         $this->makeData(5);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/categories')
-                    ->resize(1200,1600)
-                    ->assertSee('List Categories');
+                ->visit('/admin/categories')
+                ->resize(1200,1600)
+                ->assertSee('List Categories');
             $elements = $browser->elements('.btn-edit-category');
             $this->assertCount(5, $elements);
         });
@@ -55,11 +55,10 @@ class AdminEditCategoryTest extends DuskTestCase
         $category = $this->makeData(1)->first();
         $this->browse(function (Browser $browser) use ($category) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/categories')
-                    ->resize(1200,1600)
-                    ->assertSee('List Categories');
-            $browser->press('.btn-edit-category')
-                    ->assertInputValue('.item-2 input', $category->title);
+                ->visit('/admin/categories')
+                ->resize(1200,1600)
+                ->press('.btn-edit-category')
+                ->assertInputValue('.item-2 input', $category->title);
         });
     }
 
@@ -73,12 +72,12 @@ class AdminEditCategoryTest extends DuskTestCase
         $this->makeData(1);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/categories')
-                    ->resize(1200,1600)
-                    ->press('.btn-edit-category')
-                    ->keys('.item-2 input', '{enter}')
-                    ->assertSee('Confirm edit!')
-                    ->assertSee('Do you want edit from');
+                ->visit('/admin/categories')
+                ->resize(1200,1600)
+                ->press('.btn-edit-category')
+                ->keys('.item-2 input', '{enter}')
+                ->assertSee('Confirm edit!')
+                ->assertSee('Do you want edit from');
         });
     }
 
@@ -90,17 +89,17 @@ class AdminEditCategoryTest extends DuskTestCase
     public function testCancelButtonConfirm()
     {
         $this->makeData(1);
-        $this->browse(function (Browser $browser) {
-            $input = '.item-2 input';
-            $text = '.item-2 p';
+        $input = '.item-2 input';
+        $text = '.item-2 p';
+        $this->browse(function (Browser $browser) use ($input, $text) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/categories')
-                    ->resize(1200,1600)
-                    ->press('.btn-edit-category')
-                    ->keys($input, '{enter}', ' edited');
+                ->visit('/admin/categories')
+                ->resize(1200,1600)
+                ->press('.btn-edit-category')
+                ->keys($input, '{enter}', ' edited');
             $value = $browser->value($input);
             $browser->press('Cancel')
-                    ->assertInputValue($input, $value);
+                ->assertInputValue($input, $value);
         });
     }
 
@@ -112,23 +111,22 @@ class AdminEditCategoryTest extends DuskTestCase
     public function testResetButtonConfirm()
     {
         $this->makeData(1);
-        $this->browse(function (Browser $browser) {
-            $input = '.item-2 input';
-            $text = '.item-2 p';
+        $input = '.item-2 input';
+        $text = '.item-2 p';
+        $this->browse(function (Browser $browser) use ($input, $text) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/categories')
-                    ->resize(1200,1600);
+                ->visit('/admin/categories')
+                ->resize(1200,1600);
             $value = $browser->value($text);
             $browser->press('.btn-edit-category')
-                    ->keys($input, '{enter}', 'otwell')
-                    ->press('Reset')
-                    ->assertSelected($text, $value);
+                ->keys($input, '{enter}', 'otwell')
+                ->press('Reset')
+                ->assertSelected($text, $value);
         });
     }
 
     /**
      * List case for Test validate for input edit category
-     *
      */
     public function listCaseTestValidateForInput()
     {
@@ -148,19 +146,19 @@ class AdminEditCategoryTest extends DuskTestCase
     public function testValidateEditCategory($content, $message)
     {
         $this->makeData(1);
-        $this->browse(function (Browser $browser) use ($content, $message) {
-            $input = '.item-2 input';
-            $text = '.item-2 p';
+        $input = '.item-2 input';
+        $text = '.item-2 p';
+        $this->browse(function (Browser $browser) use ($content, $message, $input, $text) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/categories')
-                    ->resize(1200,1600)
-                    ->press('.btn-edit-category')
-                    ->type($input, $content)
-                    ->keys($input, '{enter}')
-                    ->pause(1000)
-                    ->press('Edit')
-                    ->pause(1000)
-                    ->assertSee($message);
+                ->visit('/admin/categories')
+                ->resize(1200,1600)
+                ->press('.btn-edit-category')
+                ->type($input, $content)
+                ->keys($input, '{enter}')
+                ->pause(1000)
+                ->press('Edit')
+                ->pause(1000)
+                ->assertSee($message);
         });
     }
 
