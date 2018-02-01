@@ -15,6 +15,7 @@ use Faker\Factory as Faker;
 class AdminSearchBookTest extends DuskTestCase
 {
     use DatabaseMigrations;
+    const NUMBER_RECORD_CREATE = 6;
 
     /**
      * Override function setUp()
@@ -24,6 +25,8 @@ class AdminSearchBookTest extends DuskTestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->makeData(self::NUMBER_RECORD_CREATE);
     }
 
     /**
@@ -33,20 +36,19 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookNotInputValueSelectAll()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->assertInputValue('search', '')
-                    ->select('filter', 'all')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=&filter=all')
-                    ->assertQueryStringHas('search', '')
-                    ->assertQueryStringHas('filter', 'all')->screenshot(1);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->assertInputValue('search', '')
+                ->select('filter', 'all')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=&filter=all')
+                ->assertQueryStringHas('search', '')
+                ->assertQueryStringHas('filter', 'all');
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(7, $elements);
+            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
         });
     }
 
@@ -57,20 +59,19 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookNotInputValueSelectTitle()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->assertInputValue('search', '')
-                    ->select('filter', 'title')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=&filter=title')
-                    ->assertQueryStringHas('search', '')
-                    ->assertQueryStringHas('filter', 'title')->screenshot(2);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->assertInputValue('search', '')
+                ->select('filter', 'title')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=&filter=title')
+                ->assertQueryStringHas('search', '')
+                ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(7, $elements);
+            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
         });
     }
 
@@ -81,20 +82,19 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookNotInputValueSelectAuthor()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->assertInputValue('search', '')
-                    ->select('filter', 'author')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=&filter=author')
-                    ->assertQueryStringHas('search', '')
-                    ->assertQueryStringHas('filter', 'author')->screenshot(3);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->assertInputValue('search', '')
+                ->select('filter', 'author')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=&filter=author')
+                ->assertQueryStringHas('search', '')
+                ->assertQueryStringHas('filter', 'author');
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(7, $elements);
+            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
         });
     }
 
@@ -105,18 +105,17 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookHasInputValueSelectAll()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->type('search', 'Java')
-                    ->select('filter', 'all')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=Java&filter=all')
-                    ->assertQueryStringHas('search', 'Java')
-                    ->assertQueryStringHas('filter', 'all')->screenshot(4);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->type('search', 'Java')
+                ->select('filter', 'all')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=Java&filter=all')
+                ->assertQueryStringHas('search', 'Java')
+                ->assertQueryStringHas('filter', 'all');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(1, $elements);
         });
@@ -129,18 +128,17 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookHasInputValueSelectTitle()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->type('search', 'Java')
-                    ->select('filter', 'title')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=Java&filter=title')
-                    ->assertQueryStringHas('search', 'Java')
-                    ->assertQueryStringHas('filter', 'title')->screenshot(5);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->type('search', 'Java')
+                ->select('filter', 'title')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=Java&filter=title')
+                ->assertQueryStringHas('search', 'Java')
+                ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(1, $elements);
         });
@@ -153,18 +151,17 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookHasInputValueSelectAuthor()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->type('search', 'Pytago')
-                    ->select('filter', 'author')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=Pytago&filter=author')
-                    ->assertQueryStringHas('search', 'Pytago')
-                    ->assertQueryStringHas('filter', 'author')->screenshot(6);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->type('search', 'Pytago')
+                ->select('filter', 'author')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=Pytago&filter=author')
+                ->assertQueryStringHas('search', 'Pytago')
+                ->assertQueryStringHas('filter', 'author');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(1, $elements);
         });
@@ -177,18 +174,17 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookHasInputValueSelectAllNotResult()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->type('search', 'Hello')
-                    ->select('filter', 'all')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=Hello&filter=all')
-                    ->assertQueryStringHas('search', 'Hello')
-                    ->assertQueryStringHas('filter', 'all')->screenshot(7);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->type('search', 'Hello')
+                ->select('filter', 'all')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=Hello&filter=all')
+                ->assertQueryStringHas('search', 'Hello')
+                ->assertQueryStringHas('filter', 'all');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(0, $elements);
         });
@@ -201,18 +197,17 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookHasInputValueSelectTitleNotResult()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->type('search', 'Hello')
-                    ->select('filter', 'title')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=Hello&filter=title')
-                    ->assertQueryStringHas('search', 'Hello')
-                    ->assertQueryStringHas('filter', 'title')->screenshot(8);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->type('search', 'Hello')
+                ->select('filter', 'title')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=Hello&filter=title')
+                ->assertQueryStringHas('search', 'Hello')
+                ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(0, $elements);
         });
@@ -225,18 +220,17 @@ class AdminSearchBookTest extends DuskTestCase
      */
     public function testSearchBookHasInputValueSelectAuthorNotResult()
     {
-        $this->makeData(6);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->resize(1200,1600)
-                    ->assertSee('List Books')
-                    ->type('search', 'Hello')
-                    ->select('filter', 'author')
-                    ->click('#btn-search')
-                    ->visit('/admin/books?search=Hello&filter=author')
-                    ->assertQueryStringHas('search', 'Hello')
-                    ->assertQueryStringHas('filter', 'author')->screenshot(9);
+                ->visit('/admin/books')
+                ->resize(1200,1600)
+                ->assertSee('List Books')
+                ->type('search', 'Hello')
+                ->select('filter', 'author')
+                ->click('#btn-search')
+                ->visit('/admin/books?search=Hello&filter=author')
+                ->assertQueryStringHas('search', 'Hello')
+                ->assertQueryStringHas('filter', 'author');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(0, $elements);
         });
