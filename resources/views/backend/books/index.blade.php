@@ -94,9 +94,7 @@
               </tbody>
             </table>
             <div class="text-right">
-              <ul class="pagination">
-                {{ $books->appends(\Request::except('page'))->render() }}
-              </ul>
+              {{ $books->appends(\Request::except('page'))->render() }}
             </div>
           </div>
           <!-- /.box-body -->
