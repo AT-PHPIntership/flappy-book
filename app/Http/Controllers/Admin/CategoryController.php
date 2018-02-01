@@ -62,11 +62,20 @@ class CategoryController extends Controller
      *
      * @param CreateCategoryRequest $request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function store(CreateCategoryRequest $request)
     {
-        return $request;
+        $title = $request->title;
+        try {
+            Category::create([
+                'title' => $title,
+            ]);
+            flash(__('categories.add_category_success', ['name' => $title]))->success();
+        } catch (Exception $e) {
+            \Log::error($e);
+            flash(__('categories.add_category_fail', ['name' => $title]))->error();
+        }
     }
     
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Post;
 
 class PostController extends Controller
 {
@@ -14,7 +15,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('backend.posts.index');
+        $fields = [
+            'posts.id',
+            'users.name',
+            'posts.status',
+            'posts.content',
+            'posts.created_at',
+        ];
+        $posts = Post::leftJoin('users', 'posts.user_id', '=', 'users.id')
+            ->select($fields)
+            ->withCount('comments')
+            ->paginate(config('define.posts.limit_rows'));
+        return view('backend.posts.index', compact('posts'));
     }
     
     /**
