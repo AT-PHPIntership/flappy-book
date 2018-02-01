@@ -45,15 +45,15 @@ class PostController extends Controller
             'posts.id',
             'posts.content',
             'posts.status',
-            'posts.created_at',
             'users.name',
             'users.team',
             'users.avatar_url',
             'ratings.rating',
             'books.title',
             DB::raw('COUNT(likes.id) AS likes'),
+            DB::raw('DATE_FORMAT(posts.created_at, "%h:%i:%p %d-%m-%Y") AS create_date'),
         ];
-        
+
         $post = Post::select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
                     ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
@@ -61,7 +61,6 @@ class PostController extends Controller
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->groupBy('posts.id', 'ratings.id')
                     ->findOrFail($id);
-
         $fieldsComment = [
             'id',
             'comment',
@@ -70,10 +69,11 @@ class PostController extends Controller
         ];
         $comments = Comment::select($fieldsComment)
                             ->with('comments')
-                            ->where('commentable_type', '=', 'post')
+                            ->where('commentable_type', '=', Post::COMMENTABLE_TYPE)
                             ->where('commentable_id', '=', $id)
+                            ->where('parent_id', '=', null)
                             ->paginate(config('define.posts.limit_rows_comment'));
-        
+ 
         return view('backend.posts.show', compact('post', 'comments'));
     }
 }

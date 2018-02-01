@@ -22,7 +22,6 @@ return [
     ],
     'posts' => [
         'limit_rows_comment' => 15,
-        'format_date_detail_post' => 'H:i:A d-m-Y',
         'limit_rows' => 10,
         'date_format' => 'H:A d-m-Y',
         'size_short_content' => 6,

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
+     * Commentable type
+     */
+    const COMMENTABLE_TYPE = 'post';
+
+    /**
      * Value of status post
      */
     const TYPE_STATUS = 0;

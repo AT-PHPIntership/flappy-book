@@ -66,7 +66,7 @@
               </li>
               <li class="list-group-item">
                 <b>{{ __('posts.create_date') }}</b>
-                <a class="pull-right">{{ date(config('define.posts.format_date_detail_post'), strtotime($post->created_at)) }}</a>
+                <a class="pull-right">{{ $post->create_date }}</a>
               </li>
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
               <p>{!! $post->content !!}</p>
@@ -98,11 +98,22 @@
                 </thead>
                 <tbody>
                   @foreach ($comments as $comment)
-                    @if ($comment->parent_id == null)
+                    <tr>
+                      <td class="text-center">{{ $comment->id }}</td>
+                      <td>{!! $comment->comment !!}</td>
+                      <td class="text-center">{{ $comment->created_at }}</td>
+                      <td class="text-center" width="15%">
+                        <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                          data-title="{{ __('common.confirm.title') }}"
+                          data-confirm="{{ __('common.confirm.delete_comment') }}">
+                        </a>
+                      </td>
+                    </tr>
+                    @foreach ($comment->comments as $index => $childComment)
                       <tr>
-                        <td class="text-center">{{ $comment->id }}</td>
-                        <td>{!! $comment->comment !!}</td>
-                        <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($comment->created_at)) }}</td>
+                        <td class="text-right">{{ $comment->id }}.{{ ++$index }}</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90"></i>&nbsp;&nbsp;{!! $childComment->comment !!}</td>
+                        <td class="text-center">{{ $childComment->created_at }}</td>
                         <td class="text-center" width="15%">
                           <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
                             data-title="{{ __('common.confirm.title') }}"
@@ -110,20 +121,7 @@
                           </a>
                         </td>
                       </tr>
-                      @foreach ($comment->comments as $index => $childComment)
-                        <tr>
-                          <td class="text-right">{{ $comment->id }}.{{ ++$index }}</td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90"></i>&nbsp;&nbsp;{!! $childComment->comment !!}</td>
-                          <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($childComment->created_at)) }}</td>
-                          <td class="text-center" width="15%">
-                            <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                              data-title="{{ __('common.confirm.title') }}"
-                              data-confirm="{{ __('common.confirm.delete_comment') }}">
-                            </a>
-                          </td>
-                        </tr>
-                      @endforeach
-                    @endif
+                    @endforeach
                   @endforeach
                 </tbody>
               </table>
