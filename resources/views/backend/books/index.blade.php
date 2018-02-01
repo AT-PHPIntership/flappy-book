@@ -62,7 +62,7 @@
                   <th id="btn-sort-title">@sortablelink('title', __('books.title'))</th>
                   <th id="btn-sort-author">@sortablelink('author', __('books.author'))</th>
                   <th id="btn-sort-rating" class="text-center">@sortablelink('rating', __('books.rating'))</th>
-                  <th id="btn-sort-total_borrow" class="text-center" width="12%">
+                  <th id="btn-sort-total_borrowed" class="text-center" width="12%">
                     @sortablelink('total_borrowed', __('books.total_borrowed'))
                   </th>
                   <th class="text-center" width="15%" __('books.options')</th>
@@ -94,7 +94,9 @@
               </tbody>
             </table>
             <div class="text-right">
-              {{ $books->appends(\Request::except('page'))->render() }}
+              <ul class="pagination">
+                {{ $books->appends(\Request::except('page'))->render() }}
+              </ul>
             </div>
           </div>
           <!-- /.box-body -->
