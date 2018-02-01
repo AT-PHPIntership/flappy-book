@@ -36,9 +36,8 @@ class AdminSortBorrowsTest extends DuskTestCase
     public function testClickLinksSort()
     {
         $linkSortNames = ['employ_code', 'name', 'email', 'title', 'from_date', 'to_date', 'send_mail_date'];
-
+        
         $this->browse(function (Browser $browser) use ($linkSortNames) {
-
             $browser->loginAs($this->user)
                     ->visit('/admin/borrows');
             foreach ($linkSortNames as $name) {
@@ -122,7 +121,7 @@ class AdminSortBorrowsTest extends DuskTestCase
     }
 
     /**
-     * A Dusk test data sort list borrows paginate
+     * A Dusk test data sort list borrows paginate.
      *
      * @dataProvider dataForTest
      *

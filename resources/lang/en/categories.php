@@ -11,7 +11,7 @@ return [
     'reset' => 'Reset',
     'cancel' => 'Cancel',
     'confirm_edit' => 'Confirm edit!',
-    'you_want_edit' => 'Do you want edit from',
+    'are_you_sure_to_edit_this_category' => 'Are you sure to edit this category from',
     'to' => 'to',
     'options' => 'Options',
     'confirm_deletion' => 'Confirm deletion!',
