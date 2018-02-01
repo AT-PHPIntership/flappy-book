@@ -104,7 +104,10 @@
                         <td>{!! $comment->comment !!}</td>
                         <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($comment->created_at)) }}</td>
                         <td class="text-center" width="15%">
-                          <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                          <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                            data-title="{{ __('common.confirm.title') }}"
+                            data-confirm="{{ __('common.confirm.delete_comment') }}">
+                          </a>
                         </td>
                       </tr>
                       @foreach ($comment->comments as $index => $childComment)
@@ -113,12 +116,15 @@
                           <td>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90"></i>&nbsp;&nbsp;{!! $childComment->comment !!}</td>
                           <td class="text-center">{{ date(config('define.posts.format_date_detail_post'), strtotime($childComment->created_at)) }}</td>
                           <td class="text-center" width="15%">
-                            <a href="#" class="btn btn-danger btn-flat fa fa-trash-o"></a>
+                            <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                              data-title="{{ __('common.confirm.title') }}"
+                              data-confirm="{{ __('common.confirm.delete_comment') }}">
+                            </a>
                           </td>
                         </tr>
                       @endforeach
                     @endif
-                  @endforeach                  
+                  @endforeach
                 </tbody>
               </table>
               <div class="text-right">
