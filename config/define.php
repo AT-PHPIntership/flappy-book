@@ -15,8 +15,8 @@ return [
     ],
     'borrows' => [
         'limit_rows' => 10,
-        'date_format' => 'd-m-Y',
-        'current_date_format' => 'Y-m-d',
+        'date_format_dmY' => 'd-m-Y',
+        'date_format_Ymd' => 'Y-m-d',
     ],
     'categories' => [
     	'limit_rows' => 10,

@@ -48,7 +48,7 @@
                 <thead>
                  <tr>
                   <th class="text-center" width="8%">@sortablelink('employ_code', __('borrows.employee_code'))</th>
-                  <th >@sortablelink('name', __('borrows.name'))</th>
+                  <th>@sortablelink('name', __('borrows.name'))</th>
                   <th width="12%">@sortablelink('email', __('borrows.email'))</th>
                   <th>@sortablelink('title', __('borrows.book_borrowing'))</th>
                   <th class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
@@ -64,9 +64,9 @@
                       <td>{{ $borrow->name }}</td>
                       <td>{{ $borrow->email }}</td>
                       <td>{{ $borrow->title }}</td>
-                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->from_date)) }}</td>
-                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->to_date)) }}</td>
-                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->send_mail_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format_dmY'), strtotime($borrow->from_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format_dmY'), strtotime($borrow->to_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format_dmY'), strtotime($borrow->send_mail_date)) }}</td>
                       <td class="text-center">
                         <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="POST">
                           {{ csrf_field() }}

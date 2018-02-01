@@ -10,6 +10,8 @@ use App\Model\Borrow;
 use App\Model\User;
 use App\Model\Book;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class ReminderedUser extends Mailable
 {
@@ -50,13 +52,11 @@ class ReminderedUser extends Mailable
      */
     public function build()
     {
-        $currentDate = date(config('define.borrows.current_date_format'));
-        $borrowDate = $this->borrowing->from_date;
-        $numberDateBorrowed = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
-        $bookId = $this->borrowing->book_id;
-        $book = Book::findOrFail($bookId);
-        $subject = 'Reminder User Borrowing Book';
-        return $this->view('backend.mails.sendmail', ['numberDateBorrowed' => $numberDateBorrowed, 'book' => $book])
+        $locale = App::getLocale();
+        $numberDateBorrowed = Carbon::now()->diffInDays(Carbon::parse($this->borrowing->from_date));
+        $book = Book::findOrFail($this->borrowing->book_id);
+        $subject =  __('borrows.subject_mail_reminder');
+        return $this->view('backend.mails.'.$locale.'.sendmail', ['numberDateBorrowed' => $numberDateBorrowed, 'book' => $book])
                     ->from(Auth::user()->email, Auth::user()->name)
                     ->subject($subject);
     }
