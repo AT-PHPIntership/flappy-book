@@ -32,10 +32,10 @@ class AdminCreateBookTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books')
-                    ->press('Add Book')
-                    ->assertPathIs('/admin/books/create')
-                    ->assertSee('Create Book');
+                ->visit('/admin/books')
+                ->press('Add Book')
+                ->assertPathIs('/admin/books/create')
+                ->assertSee('Create Book');
         });
     }
 
@@ -60,9 +60,9 @@ class AdminCreateBookTest extends DuskTestCase
     /**
      * Dusk test validate for input
      *
-     * @param  string $name    name of field      
-     * @param  string $content content 
-     * @param  string $message message show when validate  
+     * @param  string $name    name of field
+     * @param  string $content content
+     * @param  string $message message show when validate
      *
      * @dataProvider listCaseTestValidateForInput
      *
@@ -75,19 +75,19 @@ class AdminCreateBookTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($name, $content, $message, $employ_code)
         {
             $browser->loginAs($this->user)
-                    ->visit('admin/books/create')
-                    ->resize(900,1000)
-                    ->type('title', 'Title for book')
-                    ->type('price', '1000')
-                    ->type('author', 'Cao Nguyen V.')
-                    ->type('year', '1995')
-                    ->type('from_person', $employ_code)
-                    ->type($name, $content);
+                ->visit('admin/books/create')
+                ->resize(900,1000)
+                ->type('title', 'Title for book')
+                ->type('price', '1000')
+                ->type('author', 'Cao Nguyen V.')
+                ->type('year', '1995')
+                ->type('from_person', $employ_code)
+                ->type($name, $content);
 
             $this->fillTextArea('.wysihtml5-sandbox', $browser, 'Description for book');
 
             $browser->press('Create')
-                    ->assertSee($message);
+                ->assertSee($message);
         });
     }
 
@@ -103,18 +103,18 @@ class AdminCreateBookTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($employ_code)
         {
             $browser->loginAs($this->user)
-                    ->visit('admin/books/create')
-                    ->resize(900,1000)
-                    ->type('title', 'Title for book')
-                    ->type('price', '1000')
-                    ->type('author', 'Cao Nguyen V.')
-                    ->type('year', '1995')
-                    ->type('from_person', $employ_code);
+                ->visit('admin/books/create')
+                ->resize(900,1000)
+                ->type('title', 'Title for book')
+                ->type('price', '1000')
+                ->type('author', 'Cao Nguyen V.')
+                ->type('year', '1995')
+                ->type('from_person', $employ_code);
 
             $this->fillTextArea('.wysihtml5-sandbox', $browser, '');
 
             $browser->press('Create')
-                    ->assertSee('The description field is required.');
+                ->assertSee('The description field is required.');
         });
     }
 
@@ -148,28 +148,29 @@ class AdminCreateBookTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($employ_code)
         {
             $browser->loginAs($this->user)
-                    ->visit('admin/books/create')
-                    ->resize(900,1000)
-                    ->type('title', 'Title for book')
-                    ->type('price', '1000')
-                    ->type('author', 'Cao Nguyen V.')
-                    ->type('year', '1995')
-                    ->type('from_person', $employ_code);
+                ->visit('admin/books/create')
+                ->resize(900,1000)
+                ->type('title', 'Title for book')
+                ->type('price', '1000')
+                ->type('author', 'Cao Nguyen V.')
+                ->type('year', '1995')
+                ->type('from_person', $employ_code);
 
             $this->fillTextArea('.wysihtml5-sandbox', $browser, 'Description for book');
 
             $browser->press('Create')
-                    ->pause(1000)
-                    ->assertSee('Create Success');
+                ->pause(1000)
+                ->assertSee('Create Success');
         });
     }
 
     /**
      * Input value for description
+     *
      * @param  string               $selector selector
      * @param  Laravel\Dusk\Browser $browser  browser
      * @param  string               $content  description of books
-     * 
+     *
      * @return void
      */
     public function fillTextArea($selector, $browser, $content)
