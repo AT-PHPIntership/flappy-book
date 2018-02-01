@@ -24,6 +24,7 @@ class SearchBorrowsTest extends DuskTestCase
     public function setUp()
     {
        parent::setUp();
+
        $this->makeData(self::NUMBER_RECORD_CREATE);
     }
 
@@ -44,7 +45,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->click('#btn-search')
                 ->visit('/admin/borrows?search=&filter=name')
                 ->assertQueryStringHas('search', '')
-                ->assertQueryStringHas('filter', 'name')->screenshot(1);
+                ->assertQueryStringHas('filter', 'name');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
         });
@@ -66,7 +67,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->click('#btn-search')
                 ->visit('/admin/borrows?search=&filter=title')
                 ->assertQueryStringHas('search', '')
-                ->assertQueryStringHas('filter', 'title')->screenshot(2);
+                ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
         });
@@ -88,7 +89,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->click('#btn-search')
                 ->visit('/admin/borrows?search=Hello&filter=name')
                 ->assertQueryStringHas('search', 'Hello')
-                ->assertQueryStringHas('filter', 'name')->screenshot(3);
+                ->assertQueryStringHas('filter', 'name');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(0, $elements);
         });
@@ -110,7 +111,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->click('#btn-search')
                 ->visit('/admin/borrows?search=Hello&filter=title')
                 ->assertQueryStringHas('search', 'Hello')
-                ->assertQueryStringHas('filter', 'title')->screenshot(4);
+                ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(0, $elements);
         });
@@ -132,7 +133,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->click('#btn-search')
                 ->visit('/admin/borrows?search=Minh Dao T.&filter=name')
                 ->assertQueryStringHas('search', 'Minh Dao T.')
-                ->assertQueryStringHas('filter', 'name')->screenshot(5);
+                ->assertQueryStringHas('filter', 'name');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(1, $elements);
         });
@@ -154,7 +155,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->click('#btn-search')
                 ->visit('/admin/borrows?search=Java&filter=title')
                 ->assertQueryStringHas('search', 'Java')
-                ->assertQueryStringHas('filter', 'title')->screenshot(6);
+                ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(1, $elements);
         });
