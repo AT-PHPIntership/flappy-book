@@ -25,7 +25,7 @@ class EditBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required|min:8',
+            'title'       => 'required|min:6',
             'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
             'unit'        => 'in:'.Book::TYPE_VND.','
