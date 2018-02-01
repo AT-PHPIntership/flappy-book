@@ -175,8 +175,8 @@ class AdminCreateBookTest extends DuskTestCase
      */
     public function fillTextArea($selector, $browser, $content)
     {
-       $ckIframe = $browser->elements($selector)[0];
-       $browser->driver->switchTo()->frame($ckIframe);
+       $frame = $browser->elements($selector)[0];
+       $browser->driver->switchTo()->frame($frame);
        $body = $browser->driver->findElement(WebDriverBy::xpath('//body'));
        $body->sendKeys($content);
        $browser->driver->switchTo()->defaultContent();
