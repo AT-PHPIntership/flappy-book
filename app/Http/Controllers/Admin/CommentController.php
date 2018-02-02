@@ -18,16 +18,12 @@ class CommentController extends Controller
     */
     public function destroy(Comment $comment)
     {
-        DB::beginTransaction();
         try {
             $comment->delete();
-            DB::commit();
-            flash(__('common.delete_comment_success'))->success();
-            return redirect()->back();
+            flash(__('common.comment.delete_success'))->success();
         } catch (Exception $e) {
-            DB::rollBack();
-            flash(__('common.delete_comment_failed'))->error();
-            return redirect()->back();
+            flash(__('common.comment.delete_failed'))->error();
         }
+        return redirect()->back();
     }
 }

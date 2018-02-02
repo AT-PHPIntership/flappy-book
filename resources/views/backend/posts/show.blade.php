@@ -87,7 +87,7 @@
                   <td>This is comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <form method="POST" action="{{ route('comments.destroy', 12) }}">
+                    <form method="POST" action="{{ route('comments.destroy', 15) }}">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}
                       <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}">
