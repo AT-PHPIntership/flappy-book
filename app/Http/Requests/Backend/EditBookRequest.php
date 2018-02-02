@@ -34,7 +34,7 @@ class EditBookRequest extends FormRequest
                                   .Book::TYPE_YEN.',',
             'from_person' => 'required|exists:users,employ_code',
             'description' => 'required',
-            'year'        => 'required|integer|date_format:"Y"|max:'.(date('Y')),
+            'year'        => 'required|integer|date_format:"Y"|max:'.date('Y'),
             'author'      => 'required',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
