@@ -79,14 +79,13 @@ class AdminSortBorrowsTest extends DuskTestCase
     public function testSortListBorrowsAsc($name, $order, $columIndex)
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
-        $borrows = $this->makeQueryBorrows();
-        $this->browse(function (Browser $browser) use ($name, $order, $columIndex, $borrows) {
+        $arrAsc = $this->makeQueryBorrows($order, 'asc');
+        $this->browse(function (Browser $browser) use ($name, $columIndex, $arrAsc) {
             $browser->loginAs($this->user)
                     ->visit('admin/borrows')
                     ->resize(1200,1600)
                     ->click("#link-sort-$name a");
 
-            $arrAsc = $borrows->orderBy($order, 'asc')->get();
             for ($i = 1; $i <= self::NUMBER_RECORD_CREATE; $i++) {
                 $selector = "#list-borrows tbody tr:nth-child($i) td:nth-child($columIndex)";
                 $this->assertEquals($browser->text($selector), $arrAsc[$i-1]->$name);
@@ -104,14 +103,13 @@ class AdminSortBorrowsTest extends DuskTestCase
     public function testSortListBorrowsDesc($name, $order, $columIndex)
     {
         $this->makeData(self::NUMBER_RECORD_CREATE);
-        $borrows = $this->makeQueryBorrows();
-        $this->browse(function (Browser $browser) use ($name, $order, $columIndex, $borrows) {
+        $arrDesc = $this->makeQueryBorrows($order, 'desc');
+        $this->browse(function (Browser $browser) use ($name, $columIndex, $arrDesc) {
             $browser->loginAs($this->user)
                     ->visit('admin/borrows')
                     ->click("#link-sort-$name a")
                     ->click("#link-sort-$name a");
 
-            $arrDesc = $borrows->orderBy($order, 'desc')->get();
             for ($i = 1; $i <= self::NUMBER_RECORD_CREATE; $i++) {
                 $selector = "#list-borrows tbody tr:nth-child($i) td:nth-child($columIndex)";
                 $this->assertEquals($browser->text($selector), $arrDesc[$i-1]->$name);
@@ -130,7 +128,6 @@ class AdminSortBorrowsTest extends DuskTestCase
     public function testSortListBorrowsPaginate($name)
     {
         $this->makeData(16);
-        $borrows = $this->makeQueryBorrows();
         $this->browse(function (Browser $browser) use ($name) {
             $browser->loginAs($this->user)
                     ->resize(900, 1600)
@@ -174,7 +171,7 @@ class AdminSortBorrowsTest extends DuskTestCase
         }
     }
 
-    public function makeQueryBorrows()
+    public function makeQueryBorrows($order, $sort)
     {
        $fields = [
             'users.employ_code',
@@ -188,7 +185,9 @@ class AdminSortBorrowsTest extends DuskTestCase
         $borrows = Borrow::select($fields)
                         ->join('books', 'borrows.book_id', '=', 'books.id')
                         ->join('users','borrows.user_id', '=', 'users.id')
-                        ->where('borrows.status', Borrow::BORROWING);
+                        ->where('borrows.status', Borrow::BORROWING)
+                        ->orderBy($order, $sort)
+                        ->get();
         return $borrows;
     }
 }
