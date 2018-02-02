@@ -76,7 +76,7 @@ class Comment extends Model
     protected static function boot()
     {
         parent::boot();
- 
+
         static::deleting(function (Comment $comment) {
             $comment->comment()->delete();
         });
