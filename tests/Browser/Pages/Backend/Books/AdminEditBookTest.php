@@ -99,7 +99,6 @@ class AdminEditBooksTest extends DuskTestCase
             ['price', '', 'The price field is required.'],
             ['author', '', 'The author field is required.'],
             ['from_person','', 'The from person field is required.'],
-            ['title', 'Title', 'The title must be at least 6 characters.'],
             ['price', 'abcde', 'The price must be a number.'],
             ['year','12345','The year does not match the format Y.'],
         ];

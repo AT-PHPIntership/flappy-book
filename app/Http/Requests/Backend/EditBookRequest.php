@@ -25,7 +25,7 @@ class EditBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required|min:6',
+            'title'       => 'required',
             'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
             'unit'        => 'in:'.Book::TYPE_VND.','
@@ -34,7 +34,7 @@ class EditBookRequest extends FormRequest
                                   .Book::TYPE_YEN.',',
             'from_person' => 'required|exists:users,employ_code',
             'description' => 'required',
-            'year'        => 'date_format:"Y"',
+            'year'        => 'required|integer|date_format:"Y"|max:'.(date('Y')),
             'author'      => 'required',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
         ];
