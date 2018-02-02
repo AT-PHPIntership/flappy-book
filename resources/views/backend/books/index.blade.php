@@ -94,7 +94,7 @@
               </tbody>
             </table>
             <div class="text-right">
-              {{ $books->appends(\Request::except('page'))->render() }}
+              {{ $books->appends(Request::except('page'))->links() }}
             </div>
           </div>
           <!-- /.box-body -->
