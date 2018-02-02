@@ -60,13 +60,13 @@ class AdminEditBooksTest extends DuskTestCase
                     ->visit('/admin/books/'.$this->book->id.'/edit')
                     ->resize(900,1000)
                     ->assertSee('Edit Book')
-                    ->type('title','Zoey Toy Sr.')
+                    ->type('title',$this->book->title)
                     ->press('Update')
                     ->assertSee('Edit book success!')
                     ->assertPathIs('/admin/books');
         });
         $this->assertDatabaseHas('books', [
-                        'title' => 'Zoey Toy Sr.']);
+                        'title' => $this->book->title]);
     }
 
     /**
@@ -135,7 +135,7 @@ class AdminEditBooksTest extends DuskTestCase
         $this->book = factory(Book::class)->create([
             'category_id' => $faker->randomElement($categoryIds),
             'from_person' => $this->user->employ_code,
-            'title' => 'Zoey Toy Sr.',
+            'title' => $faker->name,
         ]);
     }
 }
