@@ -6,18 +6,29 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Model\Category;
-use App\Model\User;
 use App\Model\Book;
 use Illuminate\Http\UploadedFile;
 use Faker\Factory as Faker;
-use DB;
-use Carbon\Carbon;
 use Facebook\WebDriver\WebDriverBy;
 
 class AdminEditBooksTest extends DuskTestCase
 {
 
     use DatabaseMigrations;
+
+    const NUMBER_RECORD_CREATE = 2;
+
+    /**
+     * Override function setUp()
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+    }
 
     /**
      * Test Url Admin Edit Books.
@@ -26,16 +37,15 @@ class AdminEditBooksTest extends DuskTestCase
      */
     public function testUrlEditBooks()
     {
-        $this->makeData(10);
+
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->click('#list-books tbody tr:nth-child(1) td:nth-child(6) a')
+                    ->click('#list-books tbody tr:first-child td:nth-child(6) a')
                     ->assertSee('Edit Book')
-                    ->assertPathIs('/admin/books/10/edit');
+                    ->assertPathIs('/admin/books/1/edit');
         });
     }
-
 
     /**
      * Test Edit Books Success.
@@ -44,19 +54,18 @@ class AdminEditBooksTest extends DuskTestCase
      */
     public function testEditBooksSuccess()
     {
-        $this->makeData(10);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/books/1/edit')
                     ->resize(900,1000)
                     ->assertSee('Edit Book')
-                    ->type('title','Felicity Brekke')
+                    ->type('title','Zoey Toy Sr.')
                     ->press('Update')
                     ->assertSee('Edit book success!')
-                    ->assertPathIs('/admin/books');
+                    ->assertPathIs('/admin/books');                                                   
         });
         $this->assertDatabaseHas('books', [
-                        'title' => 'Felicity Brekke']);
+                        'title' => 'Zoey Toy Sr.']);
     }
 
     /**
@@ -66,11 +75,10 @@ class AdminEditBooksTest extends DuskTestCase
      */
     public function testBtnCancer()
     {
-        $this->makeData(10);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->click('#list-books tbody tr:nth-child(1) td:nth-child(6) a')
+                    ->click('#list-books tbody tr:first-child td:nth-child(6) a')
                     ->resize(900,1000)
                     ->assertSee('Edit Book')
                     ->press('Back')
@@ -103,18 +111,16 @@ class AdminEditBooksTest extends DuskTestCase
      */
     public function testValidateEditBooks($title, $content, $msg)
     {
-        $this->makeData(10);
         $this->browse(function (Browser $browser) use ($title, $content, $msg) {
             $browser->loginAs($this->user)
-                ->visit('/admin/books/1/edit')
-                ->resize(900,1000)
-                ->type($title, $content)
-                ->press('Update')
-                ->assertSee($msg)
-                ->assertPathIs('/admin/books/1/edit');
+                    ->visit('/admin/books/1/edit')
+                    ->resize(900,1000)
+                    ->type($title, $content)
+                    ->press('Update')
+                    ->assertSee($msg)
+                    ->assertPathIs('/admin/books/1/edit');
         });
     }
-
 
     /**
      * Make data for test.
@@ -124,14 +130,11 @@ class AdminEditBooksTest extends DuskTestCase
     public function makeData($row)
     {   
         factory(Category::class, 1)->create();
-        $categoryIds = Category::all('id')->pluck('id')->toArray();
+        $categoryIds = factory(Category::class)->create()->pluck('id')->toArray();
         $faker = Faker::create();
-        for ($i = 0; $i < $row; $i++) {
-            factory(Book::class, 1)->create([
-                'category_id' => $faker->randomElement($categoryIds),
-                'from_person' => "ATI0297",
-            ]);
-        }
+        factory(Book::class, 1)->create([
+            'category_id' => $faker->randomElement($categoryIds),
+            'from_person' => "ATI0297",
+        ]);
     }
-
 }
