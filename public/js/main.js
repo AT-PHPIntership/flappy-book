@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $(document).ready(function () {
     /**
      * Show delete confimation when click button delete
@@ -10,6 +16,21 @@ $(document).ready(function () {
         $('#body-content').html(body);
         $('#confirm').modal('show');
         $('#delete-btn').one('click', function () {
+            form.submit();
+        })
+    });
+    
+    /**
+     * Show send mail reminder for user confimation when click button reminder
+     */
+    $('.btn-reminder-item').bind('click', function (e) {
+        var form = $(this.form);
+        var title = $(this).attr('data-title');
+        var body = '<i>' + $(this).attr('data-confirm') + '</i>';
+        $('#title-content').html(title);
+        $('#body-content').html(body);
+        $('#confirm').modal('show');
+        $('#send-btn').one('click', function () {
             form.submit();
         })
     });
@@ -80,3 +101,94 @@ $(document).on('click', '.btn-role', function(e) {
         }
     });
 });
+
+$('#add-category form').on('submit', function (event) {
+    var route = $(this).attr('action')
+    var title = $('#title').val()
+    var errorMessage = $('#add-category').find('span');
+    $.ajax({
+        url: route,
+        type: 'post',
+        data: {'title' : title},
+        success: function () {
+            location.reload();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
+            $('#title').focus();
+        }
+    });
+    event.preventDefault();
+});
+
+$(document).on('click', '.btn-edit-category', function(e) {
+    resetCategoriesInput();
+    const PRESS_ENTER = 13;
+    let selectedRow = $(this).closest('tr').find('.category-title-field');
+    let textField = selectedRow.find('p');
+    let inputField = selectedRow.find('input');
+    let errorMessage = selectedRow.find('span');
+
+    inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
+        if (event.which == PRESS_ENTER) {
+            confirmEditCategory(textField, inputField, errorMessage);
+        }
+    });
+});
+
+function resetCategoriesInput() {
+    let allRows = $('tbody').find('.category-title-field');
+    allRows.find('span').html('');
+    allRows.find('p').show();
+    allRows.find('input').hide();
+}
+
+function confirmEditCategory(textField, inputField, errorMessage) {
+    let title = textField.html();
+    let titleEdited = inputField.val();
+    let dataConfirm = categories.you_want_edit
+                +' <strong> ' + title + ' </strong> '
+                + categories.to
+                +' <strong> ' + titleEdited +' </strong> ?';
+
+    $('#body-edit-content').html(dataConfirm);
+    $('#confirm-edit').modal('show');
+
+    $('#edit-btn').one('click', function () {
+        let id = inputField.attr('category-id');
+        $.ajax({
+            url: '/admin/categories/' + id,
+            type: 'put',
+            data: {
+                'title': titleEdited,
+                'id': id,
+            },
+            success: function (data) {
+                if (data.result) {
+                    errorMessage.html('');
+                    textField.html(titleEdited).show();
+                    inputField.hide();
+                } else {
+                    errorMessage.html(categories.error_when_edit_category);
+                    inputField.focus();
+                }
+            },
+            error: function (error) {
+                let errors = error.responseJSON.errors;
+                errorMessage.html(typeof errors !== 'undefined' ? errors.title : categories.error_when_edit_category);
+                inputField.focus();
+            }
+        });
+    });
+
+    $('#reset-btn').one('click', function () {
+        errorMessage.html('');
+        textField.show();
+        inputField.hide();
+    });
+
+    $('#cancel-btn').one('click', function () {
+        inputField.focus();
+    });
+}

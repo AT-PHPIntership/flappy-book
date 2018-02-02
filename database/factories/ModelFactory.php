@@ -74,3 +74,8 @@ $factory->define(App\Model\Qrcode::class, function (Faker $faker) {
         'status' => $faker->numberBetween(0, 1),
     ];
 });
+$factory->define(App\Model\Rating::class, function (Faker $faker) {
+    return [
+        'rating' => $faker->numberBetween(1,5),
+    ];
+});

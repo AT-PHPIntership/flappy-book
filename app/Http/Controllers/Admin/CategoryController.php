@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Backend\EditCategoryRequest;
 use App\Http\Controllers\Controller;
-use DB;
 use App\Model\Category;
 use App\Model\Book;
+use Exception;
+use DB;
+use App\Http\Requests\Backend\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -53,5 +55,47 @@ class CategoryController extends Controller
             flash(__('categories.delete_category_fail', ['name' => $title]))->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateCategoryRequest $request $request
+     *
+     * @return void
+     */
+    public function store(CreateCategoryRequest $request)
+    {
+        $title = $request->title;
+        try {
+            Category::create([
+                'title' => $title,
+            ]);
+            flash(__('categories.add_category_success', ['name' => $title]))->success();
+        } catch (Exception $e) {
+            \Log::error($e);
+            flash(__('categories.add_category_fail', ['name' => $title]))->error();
+        }
+    }
+    
+    /**
+     * Update infomation of Category.
+     *
+     * @param App\Http\Requests\Backend\EditCategoryRequest $request  category request
+     * @param App\Model\Category                            $category object category
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditCategoryRequest $request, Category $category)
+    {
+        DB::beginTransaction();
+        $result = false;
+        try {
+            $result = $category->update($request->only('title'));
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+        return response(array('result' => $result));
     }
 }

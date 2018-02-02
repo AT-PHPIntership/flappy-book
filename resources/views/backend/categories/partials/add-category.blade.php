@@ -9,9 +9,10 @@
             <div class="modal-body">
                 <p><strong>{{ __('categories.title') }}:</strong></p>
                 <input type="text" class="form-control" name="title" id="title" placeholder="{{ __('categories.title') }}" autofocus>
+                <span class="text-danger"></span>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-sm btn-flat btn-primary">&nbsp;&nbsp;{{ __('categories.add') }}&nbsp;&nbsp;</button>
+                <button type="submit" class="btn btn-sm btn-flat btn-primary" id="category-add">&nbsp;&nbsp;{{ __('categories.add') }}&nbsp;&nbsp;</button>
                 <button type="button" class="btn btn-sm btn-flat btn-default" data-dismiss="modal">{{ __('categories.close') }}</button>
             </div>
         </form> 
