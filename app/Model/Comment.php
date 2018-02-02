@@ -3,10 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-
+     use SoftDeletes;
     /**
      * Declare table
      *
@@ -20,8 +21,8 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'comment_id',
-        'comment_table',
+        'commentable_id',
+        'commentable_type',
         'user_id',
         'comment',
         'parent_id'
@@ -65,5 +66,19 @@ class Comment extends Model
     public function commentable()
     {
         return $this->morphTo();
+    }
+
+    /**
+      * Deleting comment hw_Children(connection, objectID)
+      *
+      * @return void
+    */
+    protected static function boot()
+    {
+        parent::boot();
+ 
+        static::deleting(function (Comment $comment) {
+            $comment->comment()->delete();
+        });
     }
 }

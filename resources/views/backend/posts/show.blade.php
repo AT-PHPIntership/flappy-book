@@ -26,6 +26,7 @@
 
   <!-- Main content -->
   <section class="content">
+    @include('flash::message')
     <div class="row">
       <div class="col-md-4">
         <!-- Profile Image -->
@@ -86,7 +87,12 @@
                   <td>This is comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
+                    <form method="POST" action="{{ route('comments.destroy', 12) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}">
+                      </button>
+                    </form>
                   </td>
                 </tr>
                 <tr>
@@ -94,7 +100,12 @@
                   <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
+                    <form method="POST" action="{{ route('comments.destroy', 1) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}">
+                      </button>
+                    </form>
                   </td>
                 </tr>
                 <tr>
@@ -102,7 +113,12 @@
                   <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
+                    <form method="POST" action="{{ route('comments.destroy', 1) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}">
+                      </button>
+                    </form>
                   </td>
                 </tr>
                 <tr>
@@ -110,7 +126,12 @@
                   <td>This is comment number 2</td>
                   <td class="text-center">Win 95+</td>
                   <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
+                    <form method="POST" action="{{ route('comments.destroy', 1) }}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}">
+                      </button>
+                    </form>
                   </td>
                 </tr>
               </table>
