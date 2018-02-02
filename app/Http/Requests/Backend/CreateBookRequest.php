@@ -25,7 +25,7 @@ class CreateBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required',
+            'title'       => 'required|min:6',
             'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
             'unit'        => 'in:'.Book::TYPE_VND.','
