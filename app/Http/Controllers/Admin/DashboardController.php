@@ -22,7 +22,7 @@ class DashboardController extends Controller
     {
         $users = User::count();
         $books = Book::count();
-        $borrows = Borrow::count();
+        $borrows = Borrow::where('borrows.status', Borrow::BORROWING)->count();
         $categories = Category::count();
         $posts = Post::count();
         $fields = [
