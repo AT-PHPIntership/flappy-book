@@ -62,7 +62,7 @@ class AdminEditBooksTest extends DuskTestCase
                     ->type('title','Zoey Toy Sr.')
                     ->press('Update')
                     ->assertSee('Edit book success!')
-                    ->assertPathIs('/admin/books');                                                   
+                    ->assertPathIs('/admin/books');
         });
         $this->assertDatabaseHas('books', [
                         'title' => 'Zoey Toy Sr.']);
@@ -127,7 +127,7 @@ class AdminEditBooksTest extends DuskTestCase
      * @return void
      */
     public function makeData($row)
-    {   
+    {
         factory(Category::class, 1)->create();
         $categoryIds = factory(Category::class)->create()->pluck('id')->toArray();
         $faker = Faker::create();
