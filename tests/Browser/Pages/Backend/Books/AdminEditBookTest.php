@@ -18,6 +18,8 @@ class AdminEditBooksTest extends DuskTestCase
 
     const NUMBER_RECORD_CREATE = 2;
 
+    protected $book;
+
     /**
      * Override function setUp()
      *
@@ -37,13 +39,12 @@ class AdminEditBooksTest extends DuskTestCase
      */
     public function testUrlEditBooks()
     {
-
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/books')
                     ->click('#list-books tbody tr:first-child td:nth-child(6) a')
                     ->assertSee('Edit Book')
-                    ->assertPathIs('/admin/books/1/edit');
+                    ->assertPathIs('/admin/books/'.$this->book->id.'/edit');
         });
     }
 
@@ -56,7 +57,7 @@ class AdminEditBooksTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books/1/edit')
+                    ->visit('/admin/books/'.$this->book->id.'/edit')
                     ->resize(900,1000)
                     ->assertSee('Edit Book')
                     ->type('title','Zoey Toy Sr.')
@@ -112,12 +113,12 @@ class AdminEditBooksTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) use ($title, $content, $msg) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/books/1/edit')
+                    ->visit('/admin/books/'.$this->book->id.'/edit')
                     ->resize(900,1000)
                     ->type($title, $content)
                     ->press('Update')
                     ->assertSee($msg)
-                    ->assertPathIs('/admin/books/1/edit');
+                    ->assertPathIs('/admin/books/'.$this->book->id.'/edit');
         });
     }
 
@@ -128,12 +129,13 @@ class AdminEditBooksTest extends DuskTestCase
      */
     public function makeData($row)
     {
-        factory(Category::class, 1)->create();
+        factory(Category::class)->create();
         $categoryIds = factory(Category::class)->create()->pluck('id')->toArray();
         $faker = Faker::create();
-        factory(Book::class, 1)->create([
+        $this->book = factory(Book::class)->create([
             'category_id' => $faker->randomElement($categoryIds),
-            'from_person' => "ATI0297",
+            'from_person' => $this->user->employ_code,
+            'title' => 'Zoey Toy Sr.',
         ]);
     }
 }
