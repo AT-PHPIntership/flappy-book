@@ -15,7 +15,7 @@ use Faker\Factory as Faker;
 class AdminSearchBookTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    const NUMBER_RECORD_CREATE = 6;
+    const NUMBER_BOOKS = 6;
 
     /**
      * Override function setUp()
@@ -26,7 +26,7 @@ class AdminSearchBookTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $this->makeData(self::NUMBER_BOOKS);
     }
 
     /**
@@ -48,7 +48,7 @@ class AdminSearchBookTest extends DuskTestCase
                 ->assertQueryStringHas('search', '')
                 ->assertQueryStringHas('filter', 'all');
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
+            $this->assertCount(self::NUMBER_BOOKS, $elements);
         });
     }
 
@@ -71,7 +71,7 @@ class AdminSearchBookTest extends DuskTestCase
                 ->assertQueryStringHas('search', '')
                 ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
+            $this->assertCount(self::NUMBER_BOOKS, $elements);
         });
     }
 
@@ -94,7 +94,7 @@ class AdminSearchBookTest extends DuskTestCase
                 ->assertQueryStringHas('search', '')
                 ->assertQueryStringHas('filter', 'author');
             $elements = $browser->elements('#list-books tbody tr');
-            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
+            $this->assertCount(self::NUMBER_BOOKS, $elements);
         });
     }
 
@@ -225,11 +225,11 @@ class AdminSearchBookTest extends DuskTestCase
                 ->visit('/admin/books')
                 ->resize(1200,1600)
                 ->assertSee('List Books')
-                ->type('search', 'Hello')
+                ->type('search', '123456789')
                 ->select('filter', 'author')
                 ->click('#btn-search')
-                ->visit('/admin/books?search=Hello&filter=author')
-                ->assertQueryStringHas('search', 'Hello')
+                ->visit('/admin/books?search=123456789&filter=author')
+                ->assertQueryStringHas('search', '123456789')
                 ->assertQueryStringHas('filter', 'author');
             $elements = $browser->elements('#list-books tbody tr');
             $this->assertCount(0, $elements);
@@ -242,12 +242,10 @@ class AdminSearchBookTest extends DuskTestCase
      * @return void
      */
     public function makeData($row){
-        factory(Category::class, 2)->create();
-        factory(User::class, 2)->create();
-        $categoryId = DB::table('categories')->pluck('id')->toArray();
-        $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
-        for ($i = 0; $i < $row; $i++) {
+        $userId = factory(User::class, 2)->create()->pluck('employ_code')->toArray();
+        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
+        for ($i = 0; $i < $row - 1; $i++) {
             factory(Book::class, 1)->create([
                 'category_id' => $faker->randomElement($categoryId),
                 'from_person' => $faker->randomElement($userId)
