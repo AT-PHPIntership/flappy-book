@@ -69,18 +69,19 @@ class PostController extends Controller
     /**
      * Delete a post and relationship.
      *
-     * @param Post $post object post
+     * @param Post    $post    object post
+     * @param Request $request request page
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, Request $request)
     {
         DB::beginTransaction();
         try {
             $post->delete();
             DB::commit();
             flash(__('posts.delete_post_success'))->success();
-            return redirect()->route('posts.index');
+            return redirect()->route('posts.index', ['page' => $request->page ?? 1]);
         } catch (Exception $e) {
             DB::rollBack();
             flash(__('posts.delete_post_fail'))->error();
