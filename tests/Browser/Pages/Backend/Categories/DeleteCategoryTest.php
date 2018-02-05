@@ -41,7 +41,7 @@ class DeleteCategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/categories');
-            $btnDelete = $browser->elements('#list-categories tbody tr:nth-child('.Category::CATEGORY_DEFAULT.') button');
+            $btnDelete = $browser->elements('#list-categories tbody tr:nth-child('.Category::CATEGORY_DEFAULT.') form button');
             $this->assertCount(0, $btnDelete);
         });
     }
