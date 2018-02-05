@@ -6,7 +6,6 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Faker\Factory as Faker;
-use App\Model\User;
 use App\Model\Borrow;
 use App\Model\Book;
 use App\Model\Category;
@@ -24,7 +23,7 @@ class SendMailReminderTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->makeData(4);
+        $this->makeData();
     }
 
     /**
@@ -40,7 +39,8 @@ class SendMailReminderTest extends DuskTestCase
                 ->resize(1920, 1080)
                 ->assertSee('List Borrower')
                 ->click('td button.fa-bell-o')
-                ->assertSee('Confirm reminder send mail!');
+                ->assertSee('Confirm reminder send mail!')
+                ->assertSee('Are you sure to send mail reminder for this user, ' . $this->user->name . ' ?');
         });
     }
 
@@ -87,26 +87,18 @@ class SendMailReminderTest extends DuskTestCase
      *
      * @return void
      */
-    public function makeData($row)
+    public function makeData()
     {   
         $faker = Faker::create();
-        $users = factory(User::class, 4)->create();
-        $userId = $users->pluck('id')->toArray();
-        $employeeCode = $users->pluck('employ_code')->toArray();
         $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        for ($i = 0; $i < $row; $i++) {
-            $books[] = factory(Book::class)->create([
-                'from_person' => $faker->randomElement($employeeCode),
-                'category_id' => $faker->randomElement($categoryId),
-            ]);
-        }
-        $bookId = array_pluck($books, 'id');
-        for ($i = 0; $i < $row; $i++) {
-            factory(Borrow::class)->create([
-                'book_id' => $faker->randomElement($bookId),
-                'user_id' => $faker->randomElement($userId),
-                'status' => Borrow::BORROWING
-            ]);
-        }
+        $book = factory(Book::class)->create([
+            'from_person' => $this->user->employ_code,
+            'category_id' => $faker->randomElement($categoryId),
+        ]);
+        factory(Borrow::class)->create([
+            'book_id' => $book->id,
+            'user_id' => $this->user->id,
+            'status' => Borrow::BORROWING
+        ]);
     }
 }
