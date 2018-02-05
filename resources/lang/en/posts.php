@@ -23,4 +23,5 @@ return [
     'options' => 'Options',
     'list_comments' => 'List comments',
     'delete' => 'Delete',
+    'book' => 'Book',
 ];

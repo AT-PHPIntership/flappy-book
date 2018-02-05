@@ -31,6 +31,7 @@ $(document).ready(function () {
         $('#body-content').html(body);
         $('#confirm').modal('show');
         $('#send-btn').one('click', function () {
+            $("#loading").removeClass("hidden");
             form.submit();
         })
     });
@@ -42,30 +43,7 @@ $(document).ready(function () {
         $('#add-category').modal('show');
     });
 });
-$(document).ready(function () {
-    let url = new URL(document.location);
-    let params = url.searchParams;
-    let sort = params.get('sort');
-    let order = params.get('order');
 
-    $('.sort-element').each(function(){
-        let attrName = $(this).attr('name');
-        params.set('sort', attrName);
-        
-        if (sort == attrName) {
-            if (order == 'desc') {
-                $(this).children().attr('class', 'fa fa-sort-desc');
-                params.set('order', 'asc');
-            } else {
-                $(this).children().attr('class', 'fa fa-sort-asc');
-                params.set('order', 'desc');
-            }
-        } else {
-            params.set('order', 'asc');
-        }
-        $(this).attr('href', url);
-    });
-});
 $(document).ready(function() {
  // change display picture after select
   $('#picture').change(function (){
