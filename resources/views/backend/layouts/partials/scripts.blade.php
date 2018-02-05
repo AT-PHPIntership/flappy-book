@@ -36,6 +36,9 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('bower_components/admin-lte/dist/js/demo.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <!-- custom script -->
 <script src="{{ asset('js/main.js') }}"></script>
 @yield('script')

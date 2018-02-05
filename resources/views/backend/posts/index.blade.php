@@ -24,7 +24,6 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
-              @include('backend.layouts.partials.modal')
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
@@ -75,12 +74,14 @@
                       <td class="text-center">
                         <div class="btn-option text-center">
                           <a href="" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                          <form method="POST" action="{{ route('posts.destroy', $post->id) }}" class="inline">
+                          <form method="POST" action="" class="inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
+                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                              data-title=""
+                              data-confirm="">
                             </button>
-                        </form>
+                          </form> 
                         </div>
                       </td>
                     </tr>
