@@ -32,28 +32,44 @@
         <div class="box box-primary">
           @include('backend.layouts.partials.modal')
           <div class="box-body box-profile">
-            <img class="profile-user-img img-responsive img-circle" src="{{ asset('bower_components/admin-lte/dist/img/user4-128x128.jpg') }}" alt="User profile picture">
-            <h3 class="profile-username text-center">Nina Mcintire</h3>
-            <p class="text-muted text-center">PHP Developer</p>
+            <img class="profile-user-img img-responsive img-circle" src="{{ $post->avatar_url }}" alt="User profile picture">
+            <h3 class="profile-username text-center">{{ $post->name }}</h3>
+            <p class="text-muted text-center">{{ $post->team }}</p>
             <ul class="list-group list-group-unbordered">
               <li class="list-group-item">
                 <b>{{ __('posts.status') }}</b>
-                <a class="pull-right">Reivew</a>
+                @switch($post->status)
+                  @case(config('define.posts.type_review_book'))
+                    <a class="pull-right">{{ __('posts.review') }}</a>
+                    @break
+                  @case(config('define.posts.type_status'))
+                    <a class="pull-right">{{ __('posts.status') }}</a>
+                    @break
+                  @case(config('define.posts.type_find_book'))
+                    <a class="pull-right">{{ __('posts.find_book') }}</a>
+                    @break
+                @endswitch
               </li>
-              <li class="list-group-item">
-                <b>{{ __('posts.rating') }}</b>
-                <a class="pull-right">4.5</a>
-              </li>
+              @if ($post->status == config('define.posts.type_review_book'))
+                <li class="list-group-item">
+                  <b>{{ __('posts.book') }}</b>
+                  <a class="pull-right">{{ $post->title }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>{{ __('posts.rating') }}</b>
+                  <a class="pull-right">{{ $post->rating }}</a>
+                </li>
+              @endif
               <li class="list-group-item">
                 <b>{{ __('posts.like') }}</b>
-                <a class="pull-right">23</a>
+                <a class="pull-right">{{ $post->likes }}</a>
               </li>
               <li class="list-group-item">
                 <b>{{ __('posts.create_date') }}</b>
-                <a class="pull-right">2018-01-24</a>
+                <a class="pull-right">{{ $post->create_date }}</a>
               </li>
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
-              <p>Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</p>
+              <p>{!! $post->content !!}</p>
             </ul>
             <a href="#" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
               <b>{{ __('posts.delete') }}</b>
@@ -74,65 +90,15 @@
               <table id="list-comments" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th class="text-center" width="10%">{{ __('posts.id') }}</th>
-                  <th>{{ __('posts.content') }}</th>
+                  <th width="60%">{{ __('posts.content') }}</th>
                   <th class="text-center">{{ __('posts.comment_date') }}</th>
                   <th class="text-center">{{ __('posts.options') }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td class="text-center">1</td>
-                  <td>This is comment number 1</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">2</td>
-                  <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">3</td>
-                  <td><i class="fa fa-mail-reply fa-rotate-180">&nbsp;&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;This is comment child of comment number 1</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">4</td>
-                  <td>This is comment number 2</td>
-                  <td class="text-center">Win 95+</td>
-                  <td class="text-center" width="15%">
-                    <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_comment') }}"></a>
-                  </td>
-                </tr>
+                  {!! showComment($comments) !!}
+                </tbody>
               </table>
-              <div class="text-right">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -146,4 +112,7 @@
   </section>
   <!-- /.content -->
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('js/dataTable-in-detail-post.js') }}"></script>
 @endsection
