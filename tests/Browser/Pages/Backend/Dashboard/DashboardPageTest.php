@@ -17,16 +17,6 @@ class DashboardPageTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     * Override function setUp()
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-       parent::setUp();
-    }
-
-    /**
      * A Dusk test show view dashboard page.
      *
      * @return void
