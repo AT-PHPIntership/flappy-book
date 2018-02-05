@@ -61,18 +61,8 @@ class PostController extends Controller
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->groupBy('posts.id', 'ratings.id')
                     ->findOrFail($id);
-        $fieldsComment = [
-            'id',
-            'comment',
-            'parent_id',
-            'created_at',
-        ];
-        $comments = Comment::select($fieldsComment)
-                            ->with('comments')
-                            ->where('commentable_type', '=', Post::COMMENTABLE_TYPE)
-                            ->where('commentable_id', '=', $id)
-                            ->where('parent_id', '=', null)
-                            ->paginate(config('define.posts.limit_rows_comment'));
+
+        $comments = $post->comments;
  
         return view('backend.posts.show', compact('post', 'comments'));
     }
