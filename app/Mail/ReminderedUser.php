@@ -56,7 +56,7 @@ class ReminderedUser extends Mailable
         $numberDateBorrowed = Carbon::now()->diffInDays(Carbon::parse($this->borrowing->from_date));
         $book = Book::findOrFail($this->borrowing->book_id);
         $subject =  __('borrows.subject_mail_reminder');
-        return $this->view('backend.mails.'.$locale.'.sendmail', ['numberDateBorrowed' => $numberDateBorrowed, 'book' => $book])
+        return $this->view('backend.mails.' . $locale . '.sendmail', ['numberDateBorrowed' => $numberDateBorrowed, 'book' => $book])
                     ->from(Auth::user()->email, Auth::user()->name)
                     ->subject($subject);
     }

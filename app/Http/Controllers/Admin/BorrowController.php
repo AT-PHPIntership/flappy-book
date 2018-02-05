@@ -56,7 +56,7 @@ class BorrowController extends Controller
             flash(__('borrows.send_mail_fail'))->error();
         } else {
             $sendDate = date(config('define.borrows.date_format_Ymd'));
-            if (Borrow::findOrFail($id)->update(['send_mail_date' => $sendDate])) {
+            if ($borrowing->update(['send_mail_date' => $sendDate])) {
                 flash(__('borrows.send_mail_success'))->success();
             }
         }
