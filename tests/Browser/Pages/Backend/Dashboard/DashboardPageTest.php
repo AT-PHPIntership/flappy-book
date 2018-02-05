@@ -16,6 +16,8 @@ class DashboardPageTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    const NUMBER_RECORD_CREATE = 8;
+
     /**
      * A Dusk test show view dashboard page.
      *
@@ -39,7 +41,7 @@ class DashboardPageTest extends DuskTestCase
      */
     public function testValueOnPage()
     {
-        $this->makeData(8);
+        $this->makeData(self::NUMBER_RECORD_CREATE);
         $linkNames = ['books', 'borrows', 'users', 'posts', 'categories'];
         $this->browse(function (Browser $browser) use($linkNames) {
             $browser->loginAs($this->user)
@@ -50,7 +52,7 @@ class DashboardPageTest extends DuskTestCase
                     ->assertSee('POSTS')
                     ->assertSee('CATEGORIES');
             foreach ($linkNames as $name) {
-                $browser->assertSeeIn("#dashboard-$name .info-box-number", 8);
+                $browser->assertSeeIn("#dashboard-$name .info-box-number", self::NUMBER_RECORD_CREATE);
             }
         });
     }
@@ -80,13 +82,29 @@ class DashboardPageTest extends DuskTestCase
     */
     public function testConnectPage($number, $link, $str) 
     {
-        $this->makeData(10);
         $this->browse(function (Browser $browser) use ($number, $link, $str) {
             $browser->loginAs($this->user)
                     ->visit('/admin')
                     ->click("#dashboard-$link a")
                     ->assertPathIs('/admin/'.$link)
                     ->assertSee('List '.$str);
+        });
+    }
+
+    /**
+    * A Dusk test test sidebar active
+    *
+    * @dataProvider caseTestConnectPage
+    *
+    * @return void
+    */
+    public function testSideBarActive($number, $link) 
+    {
+        $this->browse(function (Browser $browser) use ($number, $link) {
+            $browser->loginAs($this->user)
+                    ->visit('/admin')
+                    ->click("#dashboard-$link a")
+                    ->assertSeeIn('.active span', ucfirst($link));
         });
     }
 
