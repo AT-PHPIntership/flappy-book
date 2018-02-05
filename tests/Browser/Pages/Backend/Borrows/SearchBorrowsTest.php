@@ -14,7 +14,8 @@ use Faker\Factory as Faker;
 class SearchBorrowsTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    const NUMBER_RECORD_CREATE = 6;
+    
+    const NUMBER_BORROWS = 6;
 
     /**
      * Override function setUp()
@@ -25,7 +26,7 @@ class SearchBorrowsTest extends DuskTestCase
     {
        parent::setUp();
 
-       $this->makeData(self::NUMBER_RECORD_CREATE);
+       $this->makeData(self::NUMBER_BORROWS);
     }
 
      /**
@@ -47,7 +48,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->assertQueryStringHas('search', '')
                 ->assertQueryStringHas('filter', 'name');
             $elements = $browser->elements('#list-borrows tbody tr');
-            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
+            $this->assertCount(self::NUMBER_BORROWS, $elements);
         });
     }
 
@@ -69,7 +70,7 @@ class SearchBorrowsTest extends DuskTestCase
                 ->assertQueryStringHas('search', '')
                 ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-borrows tbody tr');
-            $this->assertCount(self::NUMBER_RECORD_CREATE + 1, $elements);
+            $this->assertCount(self::NUMBER_BORROWS, $elements);
         });
     }
 
@@ -173,14 +174,14 @@ class SearchBorrowsTest extends DuskTestCase
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
         $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        for ($i = 0; $i < $row; $i++) {
+        for ($i = 0; $i < $row - 1; $i++) {
             $books[] = factory(Book::class)->create([
                 'from_person' => $faker->randomElement($employeeCode),
                 'category_id' => $faker->randomElement($categoryId),
             ]);
         }
         $bookId = array_pluck($books, 'id');
-        for ($i = 0; $i < $row; $i++) {
+        for ($i = 0; $i < $row - 1; $i++) {
             factory(Borrow::class)->create([
                 'book_id' => $faker->randomElement($bookId),
                 'user_id' => $faker->randomElement($userId),
@@ -194,9 +195,9 @@ class SearchBorrowsTest extends DuskTestCase
             'title' => 'Java'
         ]);
         factory(Borrow::class)->create([
-                'book_id' => 7,
-                'user_id' => 1,
-                'status' => Borrow::BORROWING
-            ]);
+            'book_id' => 7,
+            'user_id' => 1,
+            'status' => Borrow::BORROWING
+        ]);
     }
 }
