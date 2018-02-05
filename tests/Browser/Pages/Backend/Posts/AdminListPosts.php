@@ -44,6 +44,25 @@ class AdminListPosts extends DuskTestCase
     }
 
     /**
+     * A Dusk test see link content.
+     *
+     * @return void
+     */
+    public function testSeeLinkContent()
+    {
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user)
+                ->visit('/admin')
+                ->clickLink('Posts')
+                ->assertPathIs('/admin/posts')
+                ->assertSee('List Posts')
+                ->visit($browser->attribute('#list-posts tbody td:nth-child(2) a ', 'href'))
+                ->assertSee('Detail post');
+        });
+    }
+
+    /**
      * A Dusk test list posts if empty data posts
      *
      * @return void
