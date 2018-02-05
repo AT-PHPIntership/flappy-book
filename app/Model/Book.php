@@ -5,10 +5,11 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Libraries\Traits\SearchTrait;
+use Kyslik\ColumnSortable\Sortable;
 
 class Book extends Model
 {
-    use SoftDeletes, SearchTrait;
+    use SoftDeletes, SearchTrait, Sortable;
     
     /**
      * Book currency unit
@@ -57,7 +58,27 @@ class Book extends Model
         'total_rating',
         'rating',
     ];
-    
+
+    /**
+    * Declare table sort
+    *
+    * @var array $sortable table sort
+    */
+    public $sortable = [
+        'title',
+        'author',
+        'rating',
+    ];
+
+    /**
+     * Declare table sort
+     *
+     * @var string $sortableAs
+     */
+    protected $sortableAs = [
+        'total_borrowed',
+    ];
+
     /**
      * Relationship belongsTo with Category
      *

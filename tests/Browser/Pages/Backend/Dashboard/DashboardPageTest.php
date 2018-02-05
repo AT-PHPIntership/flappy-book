@@ -10,7 +10,6 @@ use App\Model\Category;
 use App\Model\Borrow;
 use App\Model\Book;
 use App\Model\Post;
-use DB;
 use Faker\Factory as Faker;
 
 class DashboardPageTest extends DuskTestCase
@@ -79,7 +78,6 @@ class DashboardPageTest extends DuskTestCase
             [3, 'users', 'Users'],
             [4, 'posts', 'Posts'],
             [5, 'categories', 'Categories'],
-           
         ];
     }
 
@@ -110,7 +108,7 @@ class DashboardPageTest extends DuskTestCase
     public function makeData($row)
     {
         $faker = Faker::create();
-        $users = factory(User::class, $row -1 )->create();
+        $users = factory(User::class, $row - 1)->create();
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
         factory(Post::class, $row)->create([
