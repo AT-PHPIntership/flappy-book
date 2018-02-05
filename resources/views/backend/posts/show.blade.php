@@ -90,14 +90,13 @@
               <table id="list-comments" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  {{--  <th class="text-center" width="10%">{{ __('posts.id') }}</th>  --}}
                   <th width="60%">{{ __('posts.content') }}</th>
                   <th class="text-center">{{ __('posts.comment_date') }}</th>
                   <th class="text-center">{{ __('posts.options') }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                  {!! showComment($comments, null) !!}
+                  {!! showComment($comments) !!}
                 </tbody>
               </table>
             </div>
@@ -115,16 +114,5 @@
 </div>
 @endsection
 @section('script')
-<script>
-  $(function () {
-    $('#list-comments').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : false,
-      'ordering'    : false,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
+<script src="{{ asset('js/dataTable-in-detail-post.js') }}"></script>
 @endsection

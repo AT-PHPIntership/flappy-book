@@ -19,13 +19,13 @@ if (!function_exists('checkActiveRoutes')) {
 }
 
 /**
- * Display Layout Post Detail.
+ * Display multilevel comments in post detail
  *
  * @param array  $comments comments
  * @param int    $parentId parent id
  * @param string $char     char for subComment
  *
- * @return mixed
+ * @return string
  */
 function showComment($comments, $parentId = null, $char = '')
 {
