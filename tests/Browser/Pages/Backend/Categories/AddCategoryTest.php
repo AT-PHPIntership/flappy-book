@@ -5,17 +5,12 @@ namespace Tests\Browser\Pages\Backend\Categories;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\Model\User;
-use App\Model\Book;
 use App\Model\Category;
-use Faker\Factory as Faker;
-use DB;
 
 class AddCategoryTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    const NUMBER_RECORD_BOOK = 5;
     const TITLE_CREATED = 'Dr. Buford Mante';
     const TITLE_NOT_EXIST = 'Rodolfo Corwin';
 
@@ -28,9 +23,6 @@ class AddCategoryTest extends DuskTestCase
     {
         parent::setUp();
 
-        factory(Category::class)->create([
-            'title' => self::TITLE_CREATED,
-        ]);
         $this->makeData();        
     }
 
@@ -128,7 +120,7 @@ class AddCategoryTest extends DuskTestCase
                 ->type('title', self::TITLE_NOT_EXIST)
                 ->press('Add')
                 ->pause(2000)
-                ->assertSee('Successfully add the "'.self::TITLE_NOT_EXIST.'" category!');
+                ->assertSee('Successfully add the "' . self::TITLE_NOT_EXIST . '" category!');
         });
     }
     /**
@@ -138,14 +130,8 @@ class AddCategoryTest extends DuskTestCase
      */
     public function makeData()
     {   
-        $categoryId = DB::table('categories')->pluck('id')->toArray();
-        $userId = DB::table('users')->pluck('employ_code')->toArray();
-        $faker = Faker::create();
-        for ($i = 0; $i < self::NUMBER_RECORD_BOOK; $i++) {
-            factory(Book::class)->create([
-                'category_id' => $faker->randomElement($categoryId),
-                'from_person' => $faker->randomElement($userId)
-            ]);
-        }
+        factory(Category::class)->create([
+            'title' => self::TITLE_CREATED,
+        ]);
     }
 }
