@@ -58,9 +58,9 @@
                     </td>
                     <td class="text-center">{{ $category->total_books }}</td>
                     <td class="text-center">
-                      @if ($category->id != App\Model\Category::CATEGORY_DEFAULT)
-                        <div class="btn-option text-center">
-                          <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
+                      <div class="btn-option text-center">
+                        <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-category"></button>
+                        @if ($category->id != App\Model\Category::CATEGORY_DEFAULT)
                           <form method="POST" action="{{ route('categories.destroy', $category->id) }}" class="inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -69,8 +69,8 @@
                               data-confirm="{{ __('categories.are_you_sure_to_delete_this_category', ['name' => $category->title]) }}">
                             </button>
                           </form> 
-                        </div>
-                      @endif
+                        @endif
+                      </div>
                     </td>
                   </tr>
                 @endforeach

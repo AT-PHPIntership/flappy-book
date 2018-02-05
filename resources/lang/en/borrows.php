@@ -24,4 +24,5 @@ return [
     'close' => 'Close',
     'send_mail_success' => 'Send mail success!',
     'send_mail_fail' => 'Send mail fail',
+    'subject_mail_reminder' => 'Reminder User Borrowing Book',
 ];

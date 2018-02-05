@@ -33,25 +33,12 @@ class BookController extends Controller
             'books.rating',
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
         ];
-        
-        $sortFields = [
-            'title',
-            'author',
-            'rating',
-            'total_borrowed'
-        ];
 
-        $orderFields = [
-            'asc',
-            'desc'
-        ];
-
-        $sort = in_array($request->sort, $sortFields) ? $request->sort : 'id';
-        $order = in_array($request->order, $orderFields) ? $request->order : 'desc';
         $books = Book::search(request('search'), request('filter'))
             ->select($fields)
+            ->sortable()
             ->groupBy('books.id')
-            ->orderby($sort, $order);
+            ->orderby('books.id', 'desc');
         //check option when click number book on users list
         $userId = $request->userid ? $request->userid : '';
         $option = $request->option? $request->option : '';
@@ -69,14 +56,8 @@ class BookController extends Controller
                                ->where('users.id', '=', $userId);
                 break;
         }
-        $books = $books->paginate(config('define.books.limit_rows'))
-                        ->appends([
-                        'userid' => $userId,
-                        'option' => $option,
-                        'sort' => $sort,
-                        'order' => $order,
-                        'search' => request('search')
-                        ]);
+        $books = $books->paginate(config('define.books.limit_rows'));
+
         return view('backend.books.index', compact('books'));
     }
 
