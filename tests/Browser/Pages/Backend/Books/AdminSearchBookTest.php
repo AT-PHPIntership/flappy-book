@@ -15,6 +15,7 @@ use Faker\Factory as Faker;
 class AdminSearchBookTest extends DuskTestCase
 {
     use DatabaseMigrations;
+    
     const NUMBER_BOOKS = 6;
 
     /**
