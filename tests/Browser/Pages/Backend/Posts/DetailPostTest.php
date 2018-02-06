@@ -19,10 +19,6 @@ class DetailPostTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    const NUMBER_RECORD_POST = 3;
-    const NUMBER_RECORD_LIKE = 5;
-    const NUMBER_RECORD_COMMENT = 10;
-
     /**
      * Override function setUp()
      *
@@ -40,7 +36,7 @@ class DetailPostTest extends DuskTestCase
      *
      * @return void
      */
-    public function testClickLinkDetailPost()
+    public function testDetailPostStatus()
     {
         $this->browse(function (Browser $browser) {
             $post = $this->makeQueryDetailPost(1);
@@ -61,7 +57,7 @@ class DetailPostTest extends DuskTestCase
      *
      * @return void
      */
-    public function testDetailPostFindBookStatus()
+    public function testDetailPostFindBook()
     {
         $this->browse(function (Browser $browser) {
             $post = $this->makeQueryDetailPost(2);
@@ -83,7 +79,7 @@ class DetailPostTest extends DuskTestCase
      *
      * @return void
      */
-    public function testDetailPostReviewBookStatus()
+    public function testDetailPostReviewBook()
     {
         $this->browse(function (Browser $browser) {
             $post = $this->makeQueryDetailPost(3);
@@ -113,45 +109,40 @@ class DetailPostTest extends DuskTestCase
         $faker = Faker::create();
 
         // Create categories
-        factory(Category::class)->create();
+        $category = factory(Category::class)->create();
+        
         // Create books
-        $categoryId = DB::table('categories')->pluck('id')->toArray();
-        $employCode = DB::table('users')->pluck('employ_code')->toArray();
+        $categoryId = $category->pluck('id')->toArray();
+        $employCode = $this->user->employ_code;
         factory(Book::class)->create([
             'category_id' => $faker->randomElement($categoryId),
-            'from_person' => $faker->randomElement($employCode),
+            'from_person' => $employCode,
         ]);
 
         // Create posts
-        $userId = DB::table('users')->pluck('id')->toArray();
-        factory(Post::class)->create([
-            'status'  => '0',
-            'user_id' => $faker->randomElement($userId),
-        ]);
-        factory(Post::class)->create([
-            'status'  => '1',
-            'user_id' => $faker->randomElement($userId),
-        ]);
-        factory(Post::class)->create([
-            'status'  => '2',
-            'user_id' => $faker->randomElement($userId),
-        ]);
+        $userId = $this->user->id;
+        for ($i = 0; $i < 3; $i++) {
+            factory(Post::class)->create([
+                'status'  => $i,
+                'user_id' => $userId,
+            ]);
+        }
 
         // Create comments
         $postId = DB::table('posts')->pluck('id')->toArray();
         for ($i = 0; $i < 15; $i++) {
             factory(Comment::class)->create([
-                'user_id' => $faker->randomElement($userId),
+                'user_id' => $userId,
                 'commentable_type' => 'post',
                 'commentable_id' => $faker->randomElement($postId),
             ]);
         }
 
         // Create likes
-        for ($i = 0; $i <= 15; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             factory(Like::class)->create([
                 'post_id' => $faker->randomElement($postId),
-                'user_id' => $faker->randomElement($userId)
+                'user_id' => $userId,
             ]);
         }
 
