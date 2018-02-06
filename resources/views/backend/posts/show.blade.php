@@ -72,7 +72,7 @@
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
               <p>{!! $post->content !!}</p>
             </ul>
-            <form method="POST" action="{{ route('posts.destroy', [$post->id, 'page' => $_GET['page'] ?? 1]) }}">
+            <form method="POST" action="{{ route('posts.destroy', [$post->id, 'page' => request('page') ?? 1]) }}">
               {{ csrf_field() }}
               {{ method_field('DELETE') }}
               <button type="button" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">

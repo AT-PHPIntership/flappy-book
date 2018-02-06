@@ -54,7 +54,7 @@
                   @foreach ($posts as $index => $post)
                     <tr>
                       <td class="text-center">{{ $index + $posts->firstItem() }}</td>
-                      <td><a href="{{ route('posts.show', [$post->id, 'page' => $_GET['page'] ?? 1]) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots')) !!}</a></td>
+                      <td><a href="{{ route('posts.show', [$post->id, 'page' => request('page') ?? 1]) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots')) !!}</a></td>
                       <td class="text-left">
                         @switch($post->status)
                           @case(config('define.posts.type_review_book'))
