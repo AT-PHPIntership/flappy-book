@@ -12,11 +12,12 @@ use App\Model\Category;
 use App\Model\Borrow;
 use App\Model\Book;
 use DB;
+
 class AdminListPosts extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    const NUMBER_RECORD_CREATE = 18;
+    const NUMBER_POST = 18;
 
     /**
      * Override function setUp()
@@ -50,7 +51,7 @@ class AdminListPosts extends DuskTestCase
      */
     public function testSeeLinkContent()
     {
-        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $this->makeData(self::NUMBER_POST);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->visit('/admin')
@@ -87,7 +88,7 @@ class AdminListPosts extends DuskTestCase
     */
     public function testShowRecord()
     {
-        $this->makeData(4);
+        $this->makeData(5);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->resize(1200,1600)
@@ -104,7 +105,7 @@ class AdminListPosts extends DuskTestCase
      */
     public function testListPostsPagination()
     {
-        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $this->makeData(self::NUMBER_POST);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->resize(1200,1600)
@@ -112,9 +113,9 @@ class AdminListPosts extends DuskTestCase
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(config('define.posts.limit_rows'), $elements);
             $this->assertNotNull($browser->element('.pagination'));
-            $paginate_element = $browser->elements('.pagination li');
-            $number_page = count($paginate_element) - 2;
-            $this->assertTrue($number_page == ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
+            $paginateElement = $browser->elements('.pagination li');
+            $numberPage = count($paginateElement) - 2;
+            $this->assertTrue($numberPage == ceil((self::NUMBER_POST) / config('define.posts.limit_rows')));
         });
     }
 
@@ -125,14 +126,14 @@ class AdminListPosts extends DuskTestCase
      */
     public function testPathPagination()
     {
-        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $this->makeData(self::NUMBER_POST);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->resize(1200,1600)
-                ->visit('/admin/posts?page='.ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
+                ->visit('/admin/posts?page='.ceil((self::NUMBER_POST) / config('define.posts.limit_rows')));
             $elements = $browser->elements('#list-posts tbody tr');
             $browser->assertPathIs('/admin/posts')
-                ->assertQueryStringHas('page', ceil((self::NUMBER_RECORD_CREATE + 1) / (config('define.posts.limit_rows'))));
+                ->assertQueryStringHas('page', ceil((self::NUMBER_POST) / config('define.posts.limit_rows')));
         });
     }
 
@@ -147,15 +148,7 @@ class AdminListPosts extends DuskTestCase
         $users = factory(User::class, 4)->create();
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
-        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        for ($i = 0; $i < $row; $i++) {
-            $books[] = factory(Book::class)->create([
-                'from_person' => $faker->randomElement($employeeCode),
-                'category_id' => $faker->randomElement($categoryId),
-            ]);
-        }
-        $userId = DB::table('users')->pluck('id')->toArray();
-        for ($i = 0; $i < $row; $i++) {
+        for ($i = 0; $i < $row - 1; $i++) {
             factory(Post::class)->create([
                 'user_id' => $faker->randomElement($userId)
             ]);
