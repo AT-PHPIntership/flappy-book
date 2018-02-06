@@ -26,6 +26,7 @@
 
   <!-- Main content -->
   <section class="content">
+    @include('flash::message')
     <div class="row">
       <div class="col-md-4">
         <!-- Profile Image -->
@@ -71,9 +72,13 @@
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
               <p>{!! $post->content !!}</p>
             </ul>
-            <a href="#" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
-              <b>{{ __('posts.delete') }}</b>
-            </a>
+            <form method="POST" action="{{ route('posts.destroy', [$post->id, 'page' => request('page') ?? 1]) }}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <button type="button" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
+                <b>{{ __('posts.delete') }}</b>
+              </button>
+            </form>
           </div>
           <!-- /.box-body -->
         </div>
