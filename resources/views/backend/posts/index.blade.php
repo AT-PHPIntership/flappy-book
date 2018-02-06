@@ -18,6 +18,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -50,10 +51,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($posts as $post)
+                  @foreach ($posts as $index => $post)
                     <tr>
-                      <td class="text-center">{{ $post->id }}</td>
-                      <td><a href="{{ route('posts.show', $post->id) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots')) !!}</a></td>
+                      <td class="text-center">{{ $index + $posts->firstItem() }}</td>
+                      <td><a href="{{ route('posts.show', [$post->id, 'page' => request('page') ?? 1]) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots')) !!}</a></td>
                       <td class="text-left">
                         @switch($post->status)
                           @case(config('define.posts.type_review_book'))

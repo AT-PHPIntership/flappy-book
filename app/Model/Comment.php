@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-     use SoftDeletes;
+    use SoftDeletes;
+
     /**
      * Declare table
      *
