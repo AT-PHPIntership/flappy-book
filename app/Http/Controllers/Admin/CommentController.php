@@ -9,21 +9,22 @@ use DB;
 
 class CommentController extends Controller
 {
-  /**
-    * Delete a comment and relationship.
-    *
-    * @param comment $comment object comment
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function destroy(Comment $comment)
+    /**
+     * Delete a comment and relationship.
+     *
+     * @param comment $id object comment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
         try {
-            $comment->delete();
-            flash(__('common.comment.delete_success'))->success();
+            Comment::findOrFail($id)->delete();
+            if (request()->ajax()) {
+                return response()->json(Response::HTTP_NO_CONTENT);
+            }
         } catch (Exception $e) {
-            flash(__('common.comment.delete_failed'))->error();
+            return response()->json(Response::HTTP_NOT_FOUND);
         }
-        return redirect()->back();
     }
 }

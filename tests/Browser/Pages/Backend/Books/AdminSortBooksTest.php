@@ -41,13 +41,13 @@ class AdminSortBooksTest extends DuskTestCase
                     ->visit('admin/books');
 
             foreach ($btnSortNames as $name) {
-                $browser->press('#btn-sort-'.$name)
+                $browser->press("#btn-sort-$name a")
                         ->assertQueryStringHas('sort', $name)
                         ->assertQueryStringHas('order', 'asc')
-                        ->press('#btn-sort-'.$name)
+                        ->press("#btn-sort-$name a")
                         ->assertQueryStringHas('sort', $name)
                         ->assertQueryStringHas('order', 'desc')
-                        ->press('#btn-sort-'.$name)
+                        ->press("#btn-sort-$name a")
                         ->assertQueryStringHas('sort', $name)
                         ->assertQueryStringHas('order', 'asc');
             }
@@ -85,7 +85,7 @@ class AdminSortBooksTest extends DuskTestCase
             $browser->loginAs($this->user)
                     ->visit('admin/books')
                     ->resize(1200,1600)
-                    ->press('#btn-sort-'.$name);
+                    ->press("#btn-sort-$name a");
 
             // Test list Asc
             sort($arraySelected);
@@ -95,7 +95,7 @@ class AdminSortBooksTest extends DuskTestCase
             }
 
             // Test list Desc
-            $browser->press('#btn-sort-'.$name);
+            $browser->press("#btn-sort-$name a");
             rsort($arraySelected);
             for ($i = 1; $i <= 5; $i++) {
                 $selector = "#list-books tbody tr:nth-child($i) td:nth-child($columIndex)";
@@ -117,9 +117,10 @@ class AdminSortBooksTest extends DuskTestCase
         $arraySelected = $books->pluck($name)->toArray();
         $this->browse(function (Browser $browser) use ($name, $columIndex, $arraySelected) {
             $browser->loginAs($this->user)
-                    ->visit('admin/books?page=2')
+                    ->visit('admin/books')
                     ->resize(1200,1600)
-                    ->press('#btn-sort-'.$name);
+                    ->press("#btn-sort-$name a")
+                    ->press('.pagination li:nth-child(3) a');
 
             // Test list Asc
             sort($arraySelected);
@@ -130,7 +131,8 @@ class AdminSortBooksTest extends DuskTestCase
             }
 
             // Test list Desc
-            $browser->press('#btn-sort-'.$name);
+            $browser->press("#btn-sort-$name a")
+                    ->press('.pagination li:nth-child(3) a');
             rsort($arraySelected);
             $arraySortDesc = array_chunk($arraySelected, 10)[1];
             for ($i = 1; $i <= 6; $i++) {

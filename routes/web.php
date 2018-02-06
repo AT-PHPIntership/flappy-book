@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/posts', 'PostController');
     Route::resource('/comments', 'CommentController');
 
+    Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

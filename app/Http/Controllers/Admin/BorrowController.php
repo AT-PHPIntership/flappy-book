@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Borrow;
+use App\Model\User;
+use App\Mail\ReminderedUser;
+use Mail;
 
 class BorrowController extends Controller
 {
@@ -33,5 +36,31 @@ class BorrowController extends Controller
             ->paginate(config('define.borrows.limit_rows'));
 
         return view('backend.borrows.index', ['borrows' => $borrows]);
+    }
+
+    /**
+    * Send mail reminder user borrow book along time.
+    *
+    * @param int $id call borrows have id = $id
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function reminderSendMail($id)
+    {
+        $borrowing = Borrow::findOrFail($id);
+        $userId = $borrowing->user_id;
+        $user = User::findOrFail($userId);
+        $email = new ReminderedUser($borrowing, $user);
+        Mail::to($user->email)->send($email);
+        if (Mail::failures()) {
+            flash(__('borrows.send_mail_fail'))->error();
+        } else {
+            $sendDate = date(config('define.borrows.date_format_Ymd'));
+            if ($borrowing->update(['send_mail_date' => $sendDate])) {
+                flash(__('borrows.send_mail_success'))->success();
+            }
+        }
+
+        return redirect()->back();
     }
 }
