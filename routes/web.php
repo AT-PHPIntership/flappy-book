@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/categories', 'CategoryController');
     Route::resource('/posts', 'PostController');
     Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
+    Route::resource('/qrcodes', 'QrcodeController');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
