@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Model\User;
 use App\Model\Post;
 use App\Model\Comment;
 use Illuminate\Http\Request;
@@ -65,5 +64,28 @@ class PostController extends Controller
         $comments = $post->comments;
  
         return view('backend.posts.show', compact('post', 'comments'));
+    }
+
+    /**
+     * Delete a post and relationship.
+     *
+     * @param Post    $post    object post
+     * @param Request $request request page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post, Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $post->delete();
+            DB::commit();
+            flash(__('posts.delete_post_success'))->success();
+            return redirect()->route('posts.index', ['page' => $request->page ?? 1]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash(__('posts.delete_post_fail'))->error();
+            return redirect()->back();
+        }
     }
 }

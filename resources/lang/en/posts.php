@@ -1,5 +1,7 @@
 <?php
 return [
+    'delete_post_success' => 'Delete post success!',
+    'delete_post_fail' => 'Delete post failure!',
     'no' => 'No',
     'user_name' => 'User Name',
     'short_content' => 'Short Content',
