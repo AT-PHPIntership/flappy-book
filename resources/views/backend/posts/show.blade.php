@@ -72,7 +72,7 @@
               <div style="padding-top: 10px;"><b>{{ __('posts.content') }}</b></div>
               <p>{!! $post->content !!}</p>
             </ul>
-            <form method="POST" action="{{ route('posts.destroy', $post->id) }}">
+            <form method="POST" action="{{ route('posts.destroy', [$post->id, 'page' => request('page') ?? 1]) }}">
               {{ csrf_field() }}
               {{ method_field('DELETE') }}
               <button type="button" class="btn btn-danger btn-block btn-flat btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
@@ -95,44 +95,15 @@
               <table id="list-comments" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th class="text-center" width="10%">{{ __('posts.id') }}</th>
-                  <th width="50%">{{ __('posts.content') }}</th>
+                  <th width="60%">{{ __('posts.content') }}</th>
                   <th class="text-center">{{ __('posts.comment_date') }}</th>
                   <th class="text-center">{{ __('posts.options') }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach ($comments as $comment)
-                    <tr>
-                      <td class="text-center">{{ $comment->id }}</td>
-                      <td>{!! $comment->comment !!}</td>
-                      <td class="text-center">{{ $comment->created_at }}</td>
-                      <td class="text-center" width="15%">
-                        <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                          data-title="{{ __('common.confirm.title') }}"
-                          data-confirm="{{ __('common.confirm.delete_comment') }}">
-                        </a>
-                      </td>
-                    </tr>
-                    @foreach ($comment->comments as $index => $childComment)
-                      <tr>
-                        <td class="text-right">{{ $comment->id }}.{{ ++$index }}</td>
-                        <td>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90"></i>&nbsp;&nbsp;{!! $childComment->comment !!}</td>
-                        <td class="text-center">{{ $childComment->created_at }}</td>
-                        <td class="text-center" width="15%">
-                          <a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
-                            data-title="{{ __('common.confirm.title') }}"
-                            data-confirm="{{ __('common.confirm.delete_comment') }}">
-                          </a>
-                        </td>
-                      </tr>
-                    @endforeach
-                  @endforeach
+                  {!! showComment($comments) !!}
                 </tbody>
               </table>
-              <div class="text-right">
-                {{ $comments->links() }}
-              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -146,4 +117,7 @@
   </section>
   <!-- /.content -->
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('js/dataTable-in-detail-post.js') }}"></script>
 @endsection

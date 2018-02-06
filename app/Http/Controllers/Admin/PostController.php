@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\Post;
 use App\Model\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Post;
 use DB;
 
 class PostController extends Controller
@@ -60,37 +60,28 @@ class PostController extends Controller
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->groupBy('posts.id', 'ratings.id')
                     ->findOrFail($id);
-        $fieldsComment = [
-            'id',
-            'comment',
-            'parent_id',
-            'created_at',
-        ];
-        $comments = Comment::select($fieldsComment)
-                            ->with('comments')
-                            ->where('commentable_type', '=', Post::COMMENTABLE_TYPE)
-                            ->where('commentable_id', '=', $id)
-                            ->where('parent_id', '=', null)
-                            ->paginate(config('define.posts.limit_rows_comment'));
 
+        $comments = $post->comments;
+ 
         return view('backend.posts.show', compact('post', 'comments'));
     }
 
     /**
      * Delete a post and relationship.
      *
-     * @param Post $post object post
+     * @param Post    $post    object post
+     * @param Request $request request page
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, Request $request)
     {
         DB::beginTransaction();
         try {
             $post->delete();
             DB::commit();
             flash(__('posts.delete_post_success'))->success();
-            return redirect()->route('posts.index');
+            return redirect()->route('posts.index', ['page' => $request->page ?? 1]);
         } catch (Exception $e) {
             DB::rollBack();
             flash(__('posts.delete_post_fail'))->error();

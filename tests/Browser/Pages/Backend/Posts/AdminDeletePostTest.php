@@ -96,10 +96,10 @@ class AdminDeletePostTest extends DuskTestCase
         $faker = Faker::create();
 
         $users = factory(User::class, 2)->create();
-        $userId = $users->pluck('id')->toArray();
+        $userIds = $users->pluck('id')->toArray();
 
         return factory(Post::class, $row)->create([
-            'user_id' => $faker->randomElement($userId)
+            'user_id' => $faker->randomElement($userIds)
         ]);
     }
 }

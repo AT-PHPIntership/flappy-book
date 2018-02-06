@@ -24,7 +24,6 @@
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
-              @include('backend.layouts.partials.modal')
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
@@ -55,7 +54,7 @@
                   @foreach ($posts as $index => $post)
                     <tr>
                       <td class="text-center">{{ $index + $posts->firstItem() }}</td>
-                      <td><a href="{{ route('posts.show', $post->id) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots')) !!}</a></td>
+                      <td><a href="{{ route('posts.show', [$post->id, 'page' => request('page') ?? 1]) }}">{!! Str::words($post->content, config('define.posts.size_short_content'),config('define.posts.three_dots')) !!}</a></td>
                       <td class="text-left">
                         @switch($post->status)
                           @case(config('define.posts.type_review_book'))
@@ -75,12 +74,14 @@
                       <td class="text-center">
                         <div class="btn-option text-center">
                           <a href="" class="btn btn-primary btn-flat fa fa-pencil"></a>&nbsp;&nbsp;
-                          <form method="POST" action="{{ route('posts.destroy', $post->id) }}" class="inline">
+                          <form method="POST" action="" class="inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item" data-title="{{ __('common.confirm.title') }}" data-confirm="{{ __('common.confirm.delete_post') }}">
+                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                              data-title=""
+                              data-confirm="">
                             </button>
-                        </form>
+                          </form> 
                         </div>
                       </td>
                     </tr>
