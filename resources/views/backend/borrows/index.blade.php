@@ -18,6 +18,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -46,9 +47,9 @@
               <table id="list-borrows" class="table table-bordered table-hover">
                 <thead>
                  <tr>
-                  <th id="link-sort-employ_code" class="text-center">@sortablelink('employ_code', __('borrows.employee_code'))</th>
+                  <th id="link-sort-employ_code" class="text-center" width="8%">@sortablelink('employ_code', __('borrows.employee_code'))</th>
                   <th id="link-sort-name">@sortablelink('name', __('borrows.name'))</th>
-                  <th id="link-sort-email">@sortablelink('email', __('borrows.email'))</th>
+                  <th id="link-sort-email" width="12%">@sortablelink('email', __('borrows.email'))</th>
                   <th id="link-sort-title">@sortablelink('title', __('borrows.book_borrowing'))</th>
                   <th id="link-sort-from_date" class="text-center">@sortablelink('from_date', __('borrows.from_date'))</th>
                   <th id="link-sort-to_date" class="text-center">@sortablelink('to_date', __('borrows.end_date'))</th>
@@ -63,11 +64,12 @@
                       <td>{{ $borrow->name }}</td>
                       <td>{{ $borrow->email }}</td>
                       <td>{{ $borrow->title }}</td>
-                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->from_date)) }}</td>
-                      <td class="text-center">{{ date(config('define.borrows.date_format'), strtotime($borrow->to_date)) }}</td>
-                      <td>{{ date(config('define.borrows.date_format'), strtotime($borrow->send_mail_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format_dmY'), strtotime($borrow->from_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format_dmY'), strtotime($borrow->to_date)) }}</td>
+                      <td class="text-center">{{ date(config('define.borrows.date_format_dmY'), strtotime($borrow->send_mail_date)) }}</td>
                       <td class="text-center">
-                        <form>
+                        <form action="{{ route('borrows.sendmail', $borrow->id) }}" method="POST">
+                          {{ csrf_field() }}
                           <button type="button" class="btn btn-warning btn-flat btn-xs btn-send fa fa-bell-o btn-reminder-item" 
                           data-title="{{ __('borrows.title_confirm_send_mail') }}"
                           data-confirm="{{ __('borrows.content_confirm_send_mail', ['name' => $borrow->name]) }}">

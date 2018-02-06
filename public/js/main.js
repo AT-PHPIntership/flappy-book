@@ -31,6 +31,7 @@ $(document).ready(function () {
         $('#body-content').html(body);
         $('#confirm').modal('show');
         $('#send-btn').one('click', function () {
+            $("#loading").removeClass("hidden");
             form.submit();
         })
     });
