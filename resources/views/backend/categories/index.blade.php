@@ -15,7 +15,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> {{ __('categories.home') }}</a></li>
-        <li><a href="#">{{ __('categories.categories') }}</a></li>
+        <li><a href="{{ route('categories.index') }}">{{ __('categories.categories') }}</a></li>
         <li class="active">{{ __('categories.list') }}</li>
       </ol>
     </section>

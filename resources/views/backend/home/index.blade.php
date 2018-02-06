@@ -22,7 +22,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
           <span class="info-box-icon bg-aqua"><i class="fa fa-book"></i></span>
-          <div class="info-box-content">
+          <div id="dashboard-books" class="info-box-content">
             <span class="info-box-text">{{ __('dashboard.books') }}</span>
             <span class="info-box-number">{{ $books }}</span>
             <a href="{{ route('books.index') }}" class="small-box-footer">{{ __('dashboard.more_info') }}
@@ -34,7 +34,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
           <span class="info-box-icon bg-purple"><i class="fa fa-credit-card"></i></span>
-          <div class="info-box-content">
+          <div id="dashboard-borrows" class="info-box-content">
             <span class="info-box-text">{{ __('dashboard.borrows') }}</span>
             <span class="info-box-number">{{ $borrows }}</span>
             <a href="{{ route('borrows.index') }}" class="small-box-footer">{{ __('dashboard.more_info') }}
@@ -46,7 +46,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
           <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
-          <div class="info-box-content">
+          <div id="dashboard-users" class="info-box-content">
             <span class="info-box-text">{{ __('dashboard.users') }}</span>
             <span class="info-box-number">{{ $users }}</span>
             <a href="{{ route('users.index') }}" class="small-box-footer">{{ __('dashboard.more_info') }}
@@ -58,7 +58,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
           <span class="info-box-icon bg-red"><i class="fa fa-tags"></i></span>
-          <div class="info-box-content">
+          <div id="dashboard-posts" class="info-box-content">
             <span class="info-box-text">{{ __('dashboard.posts') }}</span>
             <span class="info-box-number">{{ $posts }}</span>
             <a href="{{ route('posts.index') }}" class="small-box-footer">{{ __('dashboard.more_info') }}
@@ -70,7 +70,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
           <span class="info-box-icon bg-navy"><i class="fa fa-tasks"></i></span>
-          <div class="info-box-content">
+          <div id="dashboard-categories" class="info-box-content">
             <span class="info-box-text">{{ __('dashboard.categories') }}</span>
             <span class="info-box-number">{{ $categories }}</span>
             <a href="{{ route('categories.index') }}" class="small-box-footer">{{ __('dashboard.more_info') }}
