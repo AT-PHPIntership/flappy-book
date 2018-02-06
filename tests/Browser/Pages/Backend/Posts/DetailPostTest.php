@@ -52,7 +52,7 @@ class DetailPostTest extends DuskTestCase
                 ->assertDontSee('Rating');
 
                 $likes = $browser->text('ul.list-group-unbordered li:nth-child(2) a');
-                $this->assertTrue($post->likes == $likes);
+                $this->assertEquals($post->likes, $likes);
         });
     }
 
@@ -74,7 +74,7 @@ class DetailPostTest extends DuskTestCase
                 ->assertDontSee('Rating');
 
                 $likes = $browser->text('ul.list-group-unbordered li:nth-child(2) a');
-                $this->assertTrue($post->likes == $likes);
+                $this->assertEquals($post->likes, $likes);
         });
     }
 
@@ -98,8 +98,8 @@ class DetailPostTest extends DuskTestCase
 
             $rating = $browser->text('ul.list-group-unbordered li:nth-child(3) a');
             $likes = $browser->text('ul.list-group-unbordered li:nth-child(4) a');
-            $this->assertTrue($post->rating == $rating);
-            $this->assertTrue($post->likes == $likes);
+            $this->assertEquals($post->rating, $rating);
+            $this->assertEquals($post->likes, $likes);
         });
     }
 
