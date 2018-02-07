@@ -30,7 +30,7 @@ class AdminDeletePostTest extends DuskTestCase
     }
 
     /**
-     * Test Admin click button delete book in List Posts
+     * Test Admin click button delete post in detail Post
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class AdminDeletePostTest extends DuskTestCase
                     ->pause(1000)
                     ->assertDontSee('Confirm Deletion!')
                     ->assertSee('Delete post success!');
-            $elements = $browser->elements('#example2 tbody tr');
+            $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(self::NUMBER_RECORD_CREATE - 1, $elements);
         });
     }
@@ -93,13 +93,8 @@ class AdminDeletePostTest extends DuskTestCase
      */
     public function makeData($row)
     {
-        $faker = Faker::create();
-
-        $users = factory(User::class, 2)->create();
-        $userIds = $users->pluck('id')->toArray();
-
         return factory(Post::class, $row)->create([
-            'user_id' => $faker->randomElement($userIds)
+            'user_id' => $this->user->id
         ]);
     }
 }
