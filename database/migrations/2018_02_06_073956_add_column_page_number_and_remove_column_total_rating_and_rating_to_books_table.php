@@ -14,7 +14,9 @@ class AddColumnPageNumberAndRemoveColumnTotalRatingAndRatingToBooksTable extends
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->integer('page_number')->unsigned()->after('author')->nullable();
+            $table->tinyInteger('status')->default(1)->comment('0 is not available, 1 is available')->after('description');
+            $table->string('language')->after('author');            
+            $table->integer('page_number')->unsigned()->after('language')->nullable();
             $table->dropColumn(['total_rating', 'rating']);
         });
     }
@@ -27,7 +29,7 @@ class AddColumnPageNumberAndRemoveColumnTotalRatingAndRatingToBooksTable extends
     public function down()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn('page_number');
+            $table->dropColumn(['status', 'page_number', 'language']);
             $table->integer('total_rating')->default(0);
             $table->decimal('rating', 4, 1)->default(0);
         });
