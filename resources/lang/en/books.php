@@ -38,6 +38,7 @@ return [
     'books_edit_failed' => 'Edit book failed!',
     'delete_book_success' => 'Delete Book Success!',
     'delete_book_fail' => 'Delete Book Fail!',
+    'not_rated' => 'Not rated',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',

@@ -74,7 +74,11 @@
                     <td class="text-center">{{ $index + $books->firstItem() }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
-                    <td class="text-center">{{ $book->rating }}</td>
+                    @if ($book->rating != null)
+                      <td class="text-center">{{ $book->rating }}</td>
+                    @else
+                      <td class="text-center">{{ __('books.not_rated') }}</td>                        
+                    @endif
                     <td class="text-center">{{ $book->total_borrowed }}</td>
                     <td class="text-center">
                       <div class="btn-option text-center">

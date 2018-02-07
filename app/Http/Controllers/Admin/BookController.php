@@ -30,13 +30,14 @@ class BookController extends Controller
             'books.id',
             'books.title',
             'books.author',
-            'books.rating',
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
+            DB::raw('round(sum(ratings.rating)/count(ratings.id), 1) as rating'),
         ];
 
         $books = Book::search(request('search'), request('filter'))
             ->select($fields)
             ->sortable()
+            ->leftJoin('ratings', 'ratings.book_id', '=', 'books.id')
             ->groupBy('books.id')
             ->orderby('books.id', 'desc');
         //check option when click number book on users list

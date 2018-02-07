@@ -64,7 +64,6 @@ class AdminSortBooksTest extends DuskTestCase
         return [
             ['title', 2],
             ['author', 3],
-            ['rating', 4],
             ['total_borrowed', 5],
         ];
     }

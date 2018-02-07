@@ -67,7 +67,6 @@ class Book extends Model
     public $sortable = [
         'title',
         'author',
-        'rating',
     ];
 
     /**
@@ -76,6 +75,7 @@ class Book extends Model
      * @var string $sortableAs
      */
     protected $sortableAs = [
+        'rating',
         'total_borrowed',
     ];
 
