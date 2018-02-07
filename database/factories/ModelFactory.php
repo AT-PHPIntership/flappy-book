@@ -22,8 +22,10 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
     return [
         'title' => $faker->name,
         'description' => $faker->text,
+        'status' => $faker->numberBetween(0, 1),
         'year' => $faker->year(),
         'author' => $faker->name,
+        'language' => $faker->name,
         'page_number' => $faker->numberBetween(50,1000),
         'price' => $faker->numberBetween(1000,9000),
         'unit' => $faker->randomElement([\App\Model\Book::TYPE_VND, \App\Model\Book::TYPE_DOLAR,\App\Model\Book::TYPE_YEN, \App\Model\Book::TYPE_EURO]),
