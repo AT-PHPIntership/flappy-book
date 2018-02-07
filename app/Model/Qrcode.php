@@ -16,6 +16,8 @@ class Qrcode extends Model
      */
     const DEFAULT_CODE_PREFIX = 'ATB';
 
+    const NOT_PRINT_STATUS = 0;
+
     /**
      * Declare table
      *
