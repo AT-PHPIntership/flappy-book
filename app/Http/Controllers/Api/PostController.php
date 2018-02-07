@@ -57,6 +57,12 @@ class PostController extends Controller
                     ->groupBy('posts.id', 'ratings.id')
                     ->paginate(config('define.posts.limit_rows'));
 
-        return response()->json($posts, Response::HTTP_OK);
+        return response()->json([
+            'meta' => [
+                'status' => 'successful',
+                'code' => 200
+            ],
+            'data' => $posts
+        ], Response::HTTP_OK);
     }
 }
