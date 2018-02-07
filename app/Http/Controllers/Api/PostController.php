@@ -35,7 +35,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reviews(int $book_id)
+    public function reviews(int $id)
     {
         $fields = [
             'posts.id',
@@ -53,7 +53,7 @@ class PostController extends Controller
                     ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
                     ->leftJoin('books', 'books.id', '=', 'ratings.book_id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
-                    ->where('books.id', '=', $book_id)
+                    ->where('books.id', '=', $id)
                     ->groupBy('posts.id', 'ratings.id')
                     ->paginate(config('define.posts.limit_rows'));
 
