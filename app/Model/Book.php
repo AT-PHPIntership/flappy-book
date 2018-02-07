@@ -25,6 +25,8 @@ class Book extends Model
     const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
+    const ZERO = 0;
+    const LENGTH_CODE_ID = 4;
     
     /**
      * Declare table
@@ -77,6 +79,7 @@ class Book extends Model
      */
     protected $sortableAs = [
         'total_borrowed',
+        'qrcode',
     ];
 
     /**

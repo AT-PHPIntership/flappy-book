@@ -32,12 +32,14 @@ class BookController extends Controller
             'books.author',
             'books.rating',
             DB::raw('COUNT(borrows.id) AS total_borrowed'),
+            DB::raw("concat(qrcodes.prefix, '-', IF(LENGTH(code_id) < " . Book::LENGTH_CODE_ID . ", concat(repeat(" . Book::ZERO . "," . Book::LENGTH_CODE_ID . " - LENGTH(code_id)), code_id), code_id)) as qrcode"),
         ];
 
         $books = Book::search(request('search'), request('filter'))
             ->select($fields)
+            ->join('qrcodes', 'qrcodes.book_id', '=', 'books.id')
             ->sortable()
-            ->groupBy('books.id')
+            ->groupBy('books.id', 'prefix', 'code_id')
             ->orderby('books.id', 'desc');
         //check option when click number book on users list
         $userId = $request->userid ? $request->userid : '';
