@@ -88,7 +88,7 @@ class AdminListPosts extends DuskTestCase
     */
     public function testShowRecord()
     {
-        $this->makeData(5);
+        $this->makeData(4);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->resize(1200,1600)
@@ -148,7 +148,7 @@ class AdminListPosts extends DuskTestCase
         $users = factory(User::class, 4)->create();
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
-        for ($i = 0; $i < $row - 1; $i++) {
+        for ($i = 0; $i < $row; $i++) {
             factory(Post::class)->create([
                 'user_id' => $faker->randomElement($userId)
             ]);
