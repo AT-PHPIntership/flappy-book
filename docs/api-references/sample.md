@@ -1,6 +1,3 @@
-Flappy Book API
-=======
-
 ## Flappy Api - Just sample API
 
 ### `GET` Birds
