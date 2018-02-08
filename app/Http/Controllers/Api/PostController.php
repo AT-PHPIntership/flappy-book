@@ -25,7 +25,9 @@ class PostController extends ApiController
             'users.avatar_url',
             'ratings.rating',
             DB::raw('COUNT(likes.id) AS likes'),
-            DB::raw('DATE_FORMAT(posts.created_at, "%h:%i:%p %d-%m-%Y") AS create_date'),
+            'posts.created_at',
+            'posts.updated_at',
+            'posts.deleted_at',
         ];
 
         $posts = Post::select($fields)
@@ -34,7 +36,7 @@ class PostController extends ApiController
                     ->leftJoin('books', 'books.id', '=', 'ratings.book_id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->where('books.id', '=', $id)
-                    ->groupBy('posts.id', 'ratings.id')
+                    ->groupBy('posts.id')
                     ->get();
 
         return $this->showAll($posts);

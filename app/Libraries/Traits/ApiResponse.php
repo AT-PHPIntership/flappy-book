@@ -21,9 +21,9 @@ trait ApiResponse
     {
         return response()->json($data, $code);
     }
-    
+
     /**
-     * Success response
+     * Response list data
      *
      * @param Collection $collection collection
      * @param int        $code       response status
@@ -32,37 +32,14 @@ trait ApiResponse
      */
     protected function showAll(Collection $collection, $code = 200)
     {
-        if ($collection->isEmpty()) {
-            return $this->successResponse(['data' => $collection], $code);
-        }
-                
-        $collection = $this->paginate($collection)->toArray();
+        $collection = $this->paginate($collection);
+        $collection = $this->structJson($collection, $code);
 
-        $count = count($collection['data']) % $collection['per_page'];
-        $collectStruct = collect([
-            'data' => $collection['data'],
-            'meta' => [
-                'pagination' => [
-                    'total' =>  $collection['total'],
-                    'count' =>  $count != 0 ? $count : $collection['per_page'],
-                    'per_page' =>  $collection['per_page'],
-                    'current_page' =>  $collection['current_page'],
-                    'total_pages' =>  $collection['last_page'],
-                    'links' => [
-                       'prev' => $collection['prev_page_url'],
-                       'next' =>$collection['next_page_url']
-                    ]
-                ],
-                'status' => 'successfully',
-                'code' => $code
-            ]
-        ]);
-
-        return $this->successResponse($collectStruct, $code);
+        return $this->successResponse($collection, $code);
     }
-    
+
     /**
-     * Success response
+     * Response data
      *
      * @param Model $instance instance of Model
      * @param int   $code     response status
@@ -73,9 +50,9 @@ trait ApiResponse
     {
         return $this->successResponse($instance, $code);
     }
-    
+
     /**
-     * Success response
+     * Pagination
      *
      * @param Collection $collection collection
      *
@@ -86,24 +63,56 @@ trait ApiResponse
         $rules = [
             'pre_page' => 'integer|min:2|max:50'
         ];
-        
+
         Validator::validate(request()->all(), $rules);
-        
+
         $page = LengthAwarePaginator::resolveCurrentPage();
-        
-        $perPage = 10;
+
+        $prePage = 10;
         if (request()->has('pre_page')) {
-            $perPage = request()->per_page;
+            $prePage = request()->pre_page;
         }
-        
-        $result = $collection->slice(($page - 1) * $perPage, $perPage);
-        
-        $paginated = new LengthAwarePaginator($result, $collection->count(), $perPage, $page, [
+
+        $result = $collection->slice(($page - 1) * $prePage, $prePage);
+
+        $paginated = new LengthAwarePaginator($result, $collection->count(), $prePage, $page, [
             'path' => LengthAwarePaginator::resolveCurrentPath()
         ]);
-        
+
         $paginated->appends(request()->all());
 
         return $paginated;
+    }
+
+    /**
+     * Structure of json
+     *
+     * @param Collection $collection array response
+     * @param int        $code       response status
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function structJson($collection, $code)
+    {
+        $collectionStruct = collect([
+            'data' => $collection->toArray()['data'],
+            'meta' => [
+                'pagination' => [
+                    'total' =>  $collection->get('total'),
+                    'count' =>  $collection->count(),
+                    'per_page' =>  $collection->get('per_page'),
+                    'current_page' =>  $collection->get('current_page'),
+                    'total_pages' =>  $collection->get('last_page'),
+                    'links' => [
+                       'prev' => $collection->get('prev_page_url'),
+                       'next' =>$collection->get('next_page_url')
+                    ]
+                ],
+                'status' => 'successfully',
+                'code' => $code
+            ]
+        ]);
+
+        return $collectionStruct;
     }
 }
