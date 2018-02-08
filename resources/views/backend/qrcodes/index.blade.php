@@ -23,7 +23,7 @@
           <div class="box">
             <div class="box-header" id="btn-download">
               <div class="pull-left">
-                <button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button>
+                <a href="{{ route('export.file') }}" title=""><button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button></a>
               </div>
             </div>
             <!-- /.box-header -->

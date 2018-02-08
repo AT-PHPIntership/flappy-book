@@ -33,6 +33,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/posts', 'PostController');
     Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
     Route::resource('/qrcodes', 'QrcodeController');
+    Route::get('exportqrcode', 'ExcelController@exportQrcodeExcel')->name('export.file');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

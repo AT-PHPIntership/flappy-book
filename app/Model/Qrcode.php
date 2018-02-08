@@ -16,7 +16,15 @@ class Qrcode extends Model
      */
     const DEFAULT_CODE_PREFIX = 'ATB';
 
+    /**
+     * Default not print status on qrcode table
+     */
     const NOT_PRINT_STATUS = 0;
+
+    /**
+     * Default number of number code_id
+     */
+    const NUMBER_OF_NUMBERS = 4;
 
     /**
      * Declare table
