@@ -58,6 +58,20 @@ class Book extends Model
         'total_rating',
         'rating',
     ];
+    
+    public $filterable = [
+        'title',
+        'category_id',
+        'description',
+        'year',
+        'author',
+        'price',
+        'unit',
+        'picture',
+        'from_person',
+        'total_rating',
+        'rating',
+    ];
 
     /**
     * Declare table sort
