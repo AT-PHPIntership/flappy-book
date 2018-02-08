@@ -147,7 +147,6 @@ class AdminListPosts extends DuskTestCase
         $faker = Faker::create();
         $users = factory(User::class, 4)->create();
         $userId = $users->pluck('id')->toArray();
-        $employeeCode = $users->pluck('employ_code')->toArray();
         for ($i = 0; $i < $row; $i++) {
             factory(Post::class)->create([
                 'user_id' => $faker->randomElement($userId)
