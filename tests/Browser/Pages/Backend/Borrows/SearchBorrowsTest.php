@@ -124,6 +124,22 @@ class SearchBorrowsTest extends DuskTestCase
      * @return void
      */
     public function testSearchSelectName(){
+        $faker = Faker::create();
+        $users = factory(User::class, 4)->create();
+        $userId = $users->pluck('id')->toArray();
+        $employeeCode = $users->pluck('employ_code')->toArray();
+        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
+        factory(Book::class)->create([
+            'from_person' => $faker->randomElement($employeeCode),
+            'category_id' => $faker->randomElement($categoryId),
+            'id' => 7,
+            'title' => 'Java'
+        ]);
+        factory(Borrow::class)->create([
+            'book_id' => 7,
+            'user_id' => 1,
+            'status' => Borrow::BORROWING
+        ]);
         $this->browse(function (Browser $browser){
             $browser->loginAs($this->user)
                 ->visit('/admin/borrows')
@@ -146,6 +162,22 @@ class SearchBorrowsTest extends DuskTestCase
      * @return void
      */
     public function testSearchSelectBook(){
+        $faker = Faker::create();
+        $users = factory(User::class, 4)->create();
+        $userId = $users->pluck('id')->toArray();
+        $employeeCode = $users->pluck('employ_code')->toArray();
+        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
+        factory(Book::class)->create([
+            'from_person' => $faker->randomElement($employeeCode),
+            'category_id' => $faker->randomElement($categoryId),
+            'id' => 7,
+            'title' => 'Java'
+            ]);
+        factory(Borrow::class)->create([
+            'book_id' => 7,
+            'user_id' => 1,
+            'status' => Borrow::BORROWING
+        ]);
         $this->browse(function (Browser $browser){
             $browser->loginAs($this->user)
                 ->visit('/admin/borrows')
@@ -174,30 +206,30 @@ class SearchBorrowsTest extends DuskTestCase
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
         $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        for ($i = 0; $i < $row - 1; $i++) {
+        for ($i = 0; $i < $row; $i++) {
             $books[] = factory(Book::class)->create([
                 'from_person' => $faker->randomElement($employeeCode),
                 'category_id' => $faker->randomElement($categoryId),
             ]);
         }
         $bookId = array_pluck($books, 'id');
-        for ($i = 0; $i < $row - 1; $i++) {
+        for ($i = 0; $i < $row; $i++) {
             factory(Borrow::class)->create([
                 'book_id' => $faker->randomElement($bookId),
                 'user_id' => $faker->randomElement($userId),
                 'status' => Borrow::BORROWING
             ]);
         }
-        factory(Book::class)->create([
-            'from_person' => $faker->randomElement($employeeCode),
-            'category_id' => $faker->randomElement($categoryId),
-            'id' => 7,
-            'title' => 'Java'
-        ]);
-        factory(Borrow::class)->create([
-            'book_id' => 7,
-            'user_id' => 1,
-            'status' => Borrow::BORROWING
-        ]);
+        // factory(Book::class)->create([
+        //     'from_person' => $faker->randomElement($employeeCode),
+        //     'category_id' => $faker->randomElement($categoryId),
+        //     'id' => 7,
+        //     'title' => 'Java'
+        // ]);
+        // factory(Borrow::class)->create([
+        //     'book_id' => 7,
+        //     'user_id' => 1,
+        //     'status' => Borrow::BORROWING
+        // ]);
     }
 }
