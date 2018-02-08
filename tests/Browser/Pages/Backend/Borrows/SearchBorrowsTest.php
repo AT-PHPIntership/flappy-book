@@ -220,16 +220,5 @@ class SearchBorrowsTest extends DuskTestCase
                 'status' => Borrow::BORROWING
             ]);
         }
-        // factory(Book::class)->create([
-        //     'from_person' => $faker->randomElement($employeeCode),
-        //     'category_id' => $faker->randomElement($categoryId),
-        //     'id' => 7,
-        //     'title' => 'Java'
-        // ]);
-        // factory(Borrow::class)->create([
-        //     'book_id' => 7,
-        //     'user_id' => 1,
-        //     'status' => Borrow::BORROWING
-        // ]);
     }
 }
