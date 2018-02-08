@@ -48,6 +48,7 @@ Get Posts with status review for Book
             "total_pages": 2,
             "links": {
                 "prev": "http://flappybook.tech/api/books/14/reviews?page=1"
+                "next": null
             }
         },
         "status": "successfully",
