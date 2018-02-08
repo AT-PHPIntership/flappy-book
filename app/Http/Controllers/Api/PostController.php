@@ -2,32 +2,12 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Book;
 use App\Model\Post;
-use App\Model\Comment;
 use DB;
 
-class PostController extends Controller
+class PostController extends ApiController
 {
-    /**
-     * The Book implementation.
-     *
-     * @var Book
-     */
-    protected $posts;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @param Post $posts instance of Post
-     */
-    public function __construct(Post $posts)
-    {
-        $this->posts = $posts;
-    }
-
     /**
      * Get list of the resource.
      *
@@ -55,14 +35,8 @@ class PostController extends Controller
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->where('books.id', '=', $id)
                     ->groupBy('posts.id', 'ratings.id')
-                    ->paginate(config('define.posts.limit_rows'));
+                    ->get();
 
-        return response()->json([
-            'meta' => [
-                'status' => 'successful',
-                'code' => 200
-            ],
-            'data' => $posts
-        ], Response::HTTP_OK);
+        return $this->showAll($posts);
     }
 }
