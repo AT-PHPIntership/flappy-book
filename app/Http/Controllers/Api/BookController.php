@@ -17,6 +17,7 @@ class BookController extends Controller
             'books.description',
             'books.language',
             'books.rating',
+            'books.total_rating',
             'books.picture',
             'books.author',
             'books.price','books.unit',
@@ -24,14 +25,14 @@ class BookController extends Controller
             'books.page_number',
 		    'borrows.status',
             'users.id AS user_id',
-            'users.name AS donater',
+            'users.name AS donator',
         ];
         $book = Book::select($fileds)
                     ->join('categories', 'books.category_id', '=', 'categories.id')
                     ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                     ->join('users', 'books.from_person', '=', 'users.employ_code')
-                    ->orderBy('borrows.id', 'DESC')
-                    ->firstOrFail($id);
+                    ->orderBy('borrows.created_at', 'DESC')
+                    ->find($id);
 
         if ($book) {
             return response()->json(collect(['success' => true])->merge($book));
