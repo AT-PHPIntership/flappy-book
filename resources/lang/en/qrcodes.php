@@ -7,4 +7,5 @@ return [
     'no' => 'No',
     'download' => 'Download',
     'qrcode' => 'Qrcode',
+    'book_title' => 'Book Title',
 ];

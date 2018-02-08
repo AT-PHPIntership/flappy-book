@@ -16,7 +16,6 @@
         <li class="active">{{ __('qrcodes.list') }}</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -33,49 +32,30 @@
                 <thead>
                  <tr>
                   <th class="text-center" width="15%">{{ __('qrcodes.no') }}</th>
+                  <th class="text-center">{{ __('qrcodes.book_title') }}</th>
                   <th class="text-center">{{ __('qrcodes.qrcode') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="text-center">1</td>
+                    <td class="text-center">Kristin A</td>
                     <td class="text-center">ATB-0345</td>
                   </tr>
                   <tr>
                     <td class="text-center">2</td>
+                    <td class="text-center">Kristin B</td>
                     <td class="text-center">ATB-2846</td>
                   </tr>
                   <tr>
                     <td class="text-center">3</td>
+                    <td class="text-center">Kristin C</td>
                     <td class="text-center">ATB-8947</td>
                   </tr>
                   <tr>
                     <td class="text-center">4</td>
-                    <td class="text-center">ATB-0345</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">5</td>
-                    <td class="text-center">ATB-2846</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">6</td>
-                    <td class="text-center">ATB-8947</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">7</td>
-                    <td class="text-center">ATB-0345</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">8</td>
-                    <td class="text-center">ATB-2846</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">9</td>
-                    <td class="text-center">ATB-8947</td>
-                  </tr>
-                   <tr>
-                    <td class="text-center">10</td>
-                    <td class="text-center">ATB-8947</td>
+                    <td class="text-center">Kristin D</td>
+                    <td class="text-center">ATB-8948</td>
                   </tr>
                 </tbody>
               </table>
