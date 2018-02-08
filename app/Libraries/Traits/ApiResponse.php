@@ -9,11 +9,27 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
+    /**
+     * Success response
+     *
+     * @param Collection $data collection
+     * @param int        $code response status
+     *
+     * @return \Illuminate\Http\Response
+     */
     private function successResponse($data, $code)
     {
         return response()->json($data, $code);
     }
     
+    /**
+     * Success response
+     *
+     * @param Collection $collection collection
+     * @param int        $code       response status
+     *
+     * @return \Illuminate\Http\Response
+     */
     protected function showAll(Collection $collection, $code = 200)
     {
         if ($collection->isEmpty()) {
@@ -41,22 +57,26 @@ trait ApiResponse
         return $this->successResponse($collectStruct, $code);
     }
     
+    /**
+     * Success response
+     *
+     * @param Model $instance instance of Model
+     * @param int   $code     response status
+     *
+     * @return \Illuminate\Http\Response
+     */
     protected function showOne(Model $instance, $code = 200)
     {
         return $this->successResponse($instance, $code);
     }
     
-    protected function filterData(Collection $collection)
-    {
-        $attribute = $collection->first()->filterable;
-        foreach (request()->query() as $query => $value) {
-            if (isset($value) && in_array($query, $attribute)) {
-                $collection = $collection->where($query, $value);
-            }
-        }
-        return $collection;
-    }
-    
+    /**
+     * Success response
+     *
+     * @param Collection $collection collection
+     *
+     * @return \Illuminate\Http\Response
+     */
     protected function paginate(Collection $collection)
     {
         $rules = [
