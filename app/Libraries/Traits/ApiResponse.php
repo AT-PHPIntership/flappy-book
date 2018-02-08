@@ -37,12 +37,14 @@ trait ApiResponse
         }
                 
         $collection = $this->paginate($collection)->toArray();
+
+        $count = count($collection['data']) % $collection['per_page'];
         $collectStruct = collect([
             'data' => $collection['data'],
             'meta' => [
                 'pagination' => [
                     'total' =>  $collection['total'],
-                    'count' =>  $collection['total'] % $collection['per_page'],
+                    'count' =>  $count != 0 ? $count : $collection['per_page'],
                     'per_page' =>  $collection['per_page'],
                     'current_page' =>  $collection['current_page'],
                     'total_pages' =>  $collection['last_page'],
@@ -51,9 +53,11 @@ trait ApiResponse
                        'next' =>$collection['next_page_url']
                     ]
                 ],
-                'code' => $code,
+                'status' => 'successfully',
+                'code' => $code
             ]
         ]);
+
         return $this->successResponse($collectStruct, $code);
     }
     

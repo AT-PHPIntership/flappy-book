@@ -47,7 +47,7 @@ Get Posts with status review for Book
             "current_page": 2,
             "total_pages": 2,
             "links": {
-                "prev": "http://flappybook.tech/api/books/14/reviews?page=1"
+                "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
                 "next": null
             }
         },
