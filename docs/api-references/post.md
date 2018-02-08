@@ -13,7 +13,7 @@ Get Posts with status review for Book
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| book_id | Integer | required | Id of book |
+| id | Integer | required | Id of book |
 #### Response
 ```json
 {
@@ -26,7 +26,9 @@ Get Posts with status review for Book
             "avatar_url": "http://172.16.110.17/images/user/avatar/366/64weew314e61ccc.png",
             "rating": "3.0",
             "likes": 1,
-            "create_date": "03:55:AM 07-02-2018"
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
+            "deleted_at": null
         },
         {
             "id": 15,
@@ -36,7 +38,9 @@ Get Posts with status review for Book
             "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
             "rating": "2.0",
             "likes": 0,
-            "create_date": "03:55:AM 07-02-2018"
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
+            "deleted_at": null
         }
     ],
     "meta": {
@@ -47,7 +51,8 @@ Get Posts with status review for Book
             "current_page": 2,
             "total_pages": 2,
             "links": {
-                "prev": "http://flappybook.tech/api/books/14/reviews?page=1"
+                "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
+                "next": null
             }
         },
         "status": "successfully",
