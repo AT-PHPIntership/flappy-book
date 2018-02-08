@@ -21,8 +21,10 @@ class QrcodeController extends Controller
             'qrcodes.id',
             'qrcodes.prefix',
             'qrcodes.code_id',
+            'books.title',
         ];
         $qrcodes = Qrcode::select($fields)
+            ->join('books', 'books.id', '=', 'qrcodes.book_id')
             ->where('qrcodes.status', Qrcode::NOT_PRINT_STATUS)
             ->paginate(config('define.qrcodes.limit_rows'));
         return view('backend.qrcodes.index', ['qrcodes' => $qrcodes]);

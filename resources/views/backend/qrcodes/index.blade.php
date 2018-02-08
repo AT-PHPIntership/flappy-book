@@ -16,7 +16,6 @@
         <li class="active">{{ __('qrcodes.list') }}</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -33,6 +32,7 @@
                 <thead>
                  <tr>
                   <th class="text-center" width="15%">{{ __('qrcodes.no') }}</th>
+                  <th>{{ __('qrcodes.book_title') }}</th>
                   <th class="text-center">{{ __('qrcodes.qrcode') }}</th>
                 </tr>
                 </thead>
@@ -40,7 +40,8 @@
                   @foreach($qrcodes as $index => $qrcode)
                     <tr>
                       <td class="text-center">{{ $index + $qrcodes->firstItem() }}</td>
-                      <td class="text-center">{{ $qrcode->prefix . '-' . sprintf(config('define.qrcodes.number_format'), $qrcode->code_id) }}</td>
+                      <td>{{ $qrcode->title }}</td>
+                      <td class="text-center">{{ $qrcode->prefix . sprintf(config('define.qrcodes.number_format'), $qrcode->code_id) }}</td>
                     </tr>
                   @endforeach
                 </tbody>
