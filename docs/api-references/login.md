@@ -1,6 +1,6 @@
-## LOGIN API
+## Login Api
 
-### `Post` user login
+### `POST` User Login - Successfully
 
 ```
 /api/login
@@ -10,7 +10,7 @@ Login system successfully
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| email | String | required, email | email to login |
+| email | String | required | email to login |
 | password | String | required | password |
 
 #### Request header
@@ -30,10 +30,6 @@ Login system successfully
 #### Sample Response
 ```json
 {
-    "meta": {
-        "status": "successfully",
-        "code": 200
-    },
     "data": {
         "id": 1,
         "employ_code": "ATI0290",
@@ -47,21 +43,25 @@ Login system successfully
         "created_at": "2018-02-01 09:04:57",
         "updated_at": "2018-02-07 06:53:46",
         "deleted_at": null
+    },
+    "meta": {
+        "status": "successfully",
+        "code": 200
     }
 }
 ```
 
-### `Post` user login
+### `POST` User Login - Fail
 
 ```
 /api/login
 ```
-Login Fail
+Login Fail - Email or password not correct
 
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| email | String | required, email | email to login |
+| email | String | required | email to login |
 | password | String | required | password |
 
 #### Request header
@@ -81,10 +81,48 @@ Login Fail
 #### Sample Response
 ```json
 {
-    "meta": {
-        "status": "failed",
-        "code": 400,
-        "messages": "email_or_password_not_correct"
-    }
+    "error": {
+        "messages": "Email or password not correct"
+    },
+    "status": "failed",
+    "code": 400
+}
+```
+### `POST` user login - Validation
+
+```
+/api/login
+```
+Login Fail 
+
+#### Parameters
+| Key | Type | Required | Description |
+|---|---|---|---|
+| email | String | required | email to login |
+| password | String | required | password |
+
+#### Request header
+| Key | Value |
+|---|---|
+| Accept | application/json |
+| Content-Type | application/json |
+
+#### Sample Request body
+```json
+{
+  "email": "",
+  "password": ""
+}
+```
+
+#### Sample Response
+```json
+{
+    "error": {
+        "email": "The name field is required.",
+        "password": "The password field is required."
+    },
+    "status": "failed",
+    "code": 422
 }
 ```
