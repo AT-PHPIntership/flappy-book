@@ -3,7 +3,7 @@
 ```
 /api/books/{id}/reviews
 ```
-Reviews for Book
+Get Posts with status review for Book
 
 #### Request Headers
 
