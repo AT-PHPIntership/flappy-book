@@ -1,11 +1,11 @@
 ## Login Api
 
-### `POST` User Login - Successfully
+### `POST` User Login
 
 ```
 /api/login
 ```
-Login system successfully
+Login system 
 
 #### Parameters
 | Key | Type | Required | Description |
@@ -16,8 +16,8 @@ Login system successfully
 #### Request header
 | Key | Value |
 |---|---|
-| Accept | application/json |
-| Content-Type | application/json |
+| Accept | form-data/json |
+| Content-Type | form-data/json|
 
 #### Sample Request body
 ```json
@@ -27,7 +27,7 @@ Login system successfully
 }
 ```
 
-#### Sample Response
+#### Sample Response - Success
 ```json
 {
     "data": {
@@ -42,7 +42,6 @@ Login system successfully
         "expires_at": "2018-02-07 08:54:43",
         "created_at": "2018-02-01 09:04:57",
         "updated_at": "2018-02-07 06:53:46",
-        "deleted_at": null
     },
     "meta": {
         "status": "successfully",
@@ -51,78 +50,25 @@ Login system successfully
 }
 ```
 
-### `POST` User Login - Fail
-
-```
-/api/login
-```
-Login Fail - Email or password not correct
-
-#### Parameters
-| Key | Type | Required | Description |
-|---|---|---|---|
-| email | String | required | email to login |
-| password | String | required | password |
-
-#### Request header
-| Key | Value |
-|---|---|
-| Accept | application/json |
-| Content-Type | application/json |
-
-#### Sample Request body
+#### Sample Response - Fail
 ```json
 {
-  "email": "hieu.le@asiantech.vn",
-  "password": "Ahihihihoho"
-}
-```
-
-#### Sample Response
-```json
-{
-    "error": {
-        "messages": "Email or password not correct"
+    "meta": {
+        "status": "failed",
+        "code": 400,
+        "messages": "email_or_password_not_correct"
     },
-    "status": "failed",
-    "code": 400
+    "data": {}
 }
 ```
-### `POST` user login - Validation
-
-```
-/api/login
-```
-Login Fail 
-
-#### Parameters
-| Key | Type | Required | Description |
-|---|---|---|---|
-| email | String | required | email to login |
-| password | String | required | password |
-
-#### Request header
-| Key | Value |
-|---|---|
-| Accept | application/json |
-| Content-Type | application/json |
-
-#### Sample Request body
+#### Sample Response - Validation
 ```json
 {
-  "email": "",
-  "password": ""
-}
-```
-
-#### Sample Response
-```json
-{
-    "error": {
-        "email": "The name field is required.",
-        "password": "The password field is required."
+    "meta": {
+        "status": "failed",
+        "code": 400,
+        "messages": "email_or_password_cannot_blank"
     },
-    "status": "failed",
-    "code": 422
+    "data": {}
 }
 ```

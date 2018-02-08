@@ -1,5 +1,38 @@
 ## Flappy Api - Just sample API
 
+### `SUCCESS` Response
+```json
+{
+    "data": {
+        "id": 20,
+        "name": "Mychim",
+        "category_id": 8,
+        "created_at": "2018-02-08 01:24:23",
+        "updated_at": "2018-02-08 02:24:23",
+        "deleted_at": null
+    },
+    "meta": {
+        "status": "successfully",
+        "code": 200
+    }
+}
+```
+### `ERROR` Response
+
+```json
+{
+    "error": {
+        "title": [
+            "The name field is required."
+        ]
+    },
+    "meta": {
+        "status": "failed",
+        "code": 422
+    }
+}
+```
+
 ### `GET` Birds
 ```
 /api/birds
@@ -230,8 +263,10 @@ Update the bird error validation
             "The name field is required."
         ]
     },
-    "status": "failed", 
-    "code": 422
+    "meta": {
+        "status": "failed",
+        "code": 422
+    }
 }
 ```
 
@@ -267,6 +302,6 @@ Delete the bird
     "meta": {
         "status": "successfully",
         "code": 200
-    },
+    }
 }
 ```
