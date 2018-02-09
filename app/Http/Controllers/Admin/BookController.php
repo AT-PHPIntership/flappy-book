@@ -57,7 +57,7 @@ class BookController extends Controller
                 break;
         }
         $books = $books->paginate(config('define.books.limit_rows'));
-
+        
         return view('backend.books.index', compact('books'));
     }
 

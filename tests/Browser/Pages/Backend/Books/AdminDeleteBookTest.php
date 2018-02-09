@@ -5,6 +5,7 @@ namespace Tests\Browser\Pages\Backend\Books;
 use App\Model\Book;
 use App\Model\User;
 use App\Model\Category;
+use App\Model\Qrcode;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Support\Facades\DB;
@@ -99,6 +100,12 @@ class AdminDeleteBookTest extends DuskTestCase
             factory(Book::class, 1)->create([
                 'category_id' => $faker->randomElement($categoryId),
                 'from_person' => $faker->randomElement($userId)
+            ]);
+        }
+        $bookId = DB::table('books')->pluck('id')->toArray();
+        for ($i = 0; $i < $row; $i++) {
+            factory(Qrcode::class)->create([
+                'book_id' => $faker->unique()->randomElement($bookId)
             ]);
         }
     }
