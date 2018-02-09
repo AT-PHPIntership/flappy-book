@@ -81,6 +81,28 @@ class AdminListBooksTest extends DuskTestCase
     }
 
     /**
+     * Test view Admin List Books if database has record column qrcode
+     *
+     * @return void
+     */
+    public function testListBooksHasRecordColumnQrcode()
+    {
+        $this->makeData(5);
+        $qrcode = $this->makeQueryQrcode()->toArray();
+        $this->browse(function (Browser $browser) use ($qrcode) {
+            $browser->loginAs($this->user)
+                    ->resize(1080,900)
+                    ->visit('/admin/books')
+                    ->assertSee('List Books')
+                    ->assertSee('QR Code');
+            for ($i = 1; $i <= 5; $i++) {
+                $selector = "#list-books tbody tr:nth-child($i) td:nth-child(2)";
+                $this->assertEquals($browser->text($selector), $qrcode[$i-1]['prefix'] . sprintf('%04d', $qrcode[$i-1]['code_id']));
+            }
+        });
+    }
+
+    /**
      * Test view Admin List Books with pagination
      *
      * @return void
@@ -144,5 +166,21 @@ class AdminListBooksTest extends DuskTestCase
                 'book_id' => $faker->unique()->randomElement($bookId)
             ]);
         }
+    }
+
+    public function makeQueryQrcode()
+    {
+        $fields = [
+            'books.id',
+            'qrcodes.prefix',
+            'qrcodes.code_id',
+        ];
+ 
+        $qrcode = Qrcode::select($fields)
+            ->join('books', 'books.id', '=', 'qrcodes.book_id')
+            ->orderBy('books.id', 'desc')
+            ->get();
+ 
+        return $qrcode;
     }
 }
