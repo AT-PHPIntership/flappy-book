@@ -39,6 +39,17 @@ class Qrcode extends Model
     ];
 
     /**
+     * Declare qrcode book
+     *
+     * @return $qrcode
+     */
+    public function getQrcodeBookAttribute()
+    {
+        $qrcode = $this->prefix . sprintf('%04d', $this->code_id);
+        return $qrcode;
+    }
+
+    /**
      * Relationship belongsTo with Book
      *
      * @return array
