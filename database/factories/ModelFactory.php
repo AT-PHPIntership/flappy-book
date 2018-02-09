@@ -24,6 +24,8 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
         'description' => $faker->text,
         'year' => $faker->year(),
         'author' => $faker->name,
+        'language' => $faker->randomElement(['VI', 'EN', 'JA', 'FR']),
+        'page_number' => $faker->numberBetween(50,1000),
         'price' => $faker->numberBetween(1000,9000),
         'unit' => $faker->randomElement([\App\Model\Book::TYPE_VND, \App\Model\Book::TYPE_DOLAR,\App\Model\Book::TYPE_YEN, \App\Model\Book::TYPE_EURO]),
         'picture' => $faker->image,
