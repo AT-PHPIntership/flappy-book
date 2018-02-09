@@ -15,7 +15,7 @@ class AdminDeletePostTest extends DuskTestCase
 
     const NUMBER_RECORD_CREATE = 5;
 
-    protected $postSelected;
+    protected $selectedPost;
 
     /**
      * Override function setUp() for make user login
@@ -26,7 +26,7 @@ class AdminDeletePostTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->postSelected = $this->makeData(self::NUMBER_RECORD_CREATE)->first();
+        $this->selectedPost = $this->makeData(self::NUMBER_RECORD_CREATE)->first();
     }
 
     /**
@@ -38,7 +38,7 @@ class AdminDeletePostTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                ->visit('/admin/posts/'.$this->postSelected->id)
+                ->visit('/admin/posts/'.$this->selectedPost->id)
                 ->resize(1200,1600)
                 ->assertSee('Detail Post')
                 ->press('Delete')
@@ -55,7 +55,7 @@ class AdminDeletePostTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                ->visit('/admin/posts/'.$this->postSelected->id)
+                ->visit('/admin/posts/'.$this->selectedPost->id)
                 ->resize(1200,1600)
                 ->press('Delete')
                 ->assertSee('Confirm Deletion!')
@@ -73,14 +73,14 @@ class AdminDeletePostTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
-                    ->visit('/admin/posts/'.$this->postSelected->id)
-                    ->resize(1200,1600)
-                    ->press('Delete')
-                    ->assertSee('Confirm Deletion!')
-                    ->press('Delete')
-                    ->pause(1000)
-                    ->assertDontSee('Confirm Deletion!')
-                    ->assertSee('Delete post success!');
+                ->visit('/admin/posts/'.$this->selectedPost->id)
+                ->resize(1200,1600)
+                ->press('Delete')
+                ->assertSee('Confirm Deletion!')
+                ->press('Delete')
+                ->pause(1000)
+                ->assertDontSee('Confirm Deletion!')
+                ->assertSee('Delete post success!');
             $elements = $browser->elements('#list-posts tbody tr');
             $this->assertCount(self::NUMBER_RECORD_CREATE - 1, $elements);
         });
