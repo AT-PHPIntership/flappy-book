@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use App\Model\Qrcode;
+use Excel;
 
 class QrcodeController extends Controller
 {
@@ -13,10 +14,16 @@ class QrcodeController extends Controller
     /**
      * Display a listing of the qrcodes.
      *
+     * @param Request $request send request
+     *
      * @return \Illuminate\Http\Response
     */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('export')) {
+            $this->exportQrcodes();
+        }
+
         $fields = [
             'qrcodes.id',
             'qrcodes.prefix',
@@ -28,5 +35,43 @@ class QrcodeController extends Controller
             ->where('qrcodes.status', Qrcode::NOT_PRINT_STATUS)
             ->paginate(config('define.qrcodes.limit_rows'));
         return view('backend.qrcodes.index', ['qrcodes' => $qrcodes]);
+    }
+
+    /**
+     * Export file list qrcode not print yet.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function exportQrcodes()
+    {
+        DB::beginTransaction();
+        try {
+            $fields = [
+                'qrcodes.id',
+                'books.title',
+                DB::raw('CONCAT(prefix, IF(LENGTH(code_id) < ' . Qrcode::NUMBER_OF_NUMBERS . ', CONCAT(repeat(0, ' . Qrcode::NUMBER_OF_NUMBERS . ' - LENGTH(code_id)), code_id), code_id)) as qrcode'),
+            ];
+            $qrcodes = Qrcode::select($fields)
+            ->join('books', 'books.id', '=', 'qrcodes.book_id')
+            ->where('qrcodes.status', Qrcode::NOT_PRINT_STATUS)
+            ->get()
+            ->toArray();
+            Excel::create('Qrcodes', function ($excel) use ($qrcodes) {
+                $excel->sheet('Export Qrcode', function ($sheet) use ($qrcodes) {
+                    $sheet->fromArray($qrcodes);
+                });
+                foreach ($qrcodes as $qrcode) {
+                    $id = $qrcode['id'];
+                    Qrcode::where('id', $id)->update(array(
+                        'status'=> Qrcode::PRINTED_STATUS,
+                    ));
+                }
+                DB::commit();
+            })->export(config('define.qrcodes.format_file_export'));
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash(__('qrcodes.export.fail'))->error();
+            return redirect()->back();
+        }
     }
 }

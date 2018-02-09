@@ -8,4 +8,8 @@ return [
     'download' => 'Download',
     'qrcode' => 'Qrcode',
     'book_title' => 'Book Title',
+    'export' => [
+        'success' => 'Export File Success',
+        'fail' => 'Export File Fail',
+    ],
 ];

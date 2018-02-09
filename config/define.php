@@ -34,5 +34,6 @@ return [
     'qrcodes' => [
         'limit_rows' => 10,
         'number_format' => '%04d',
+        'format_file_export' => 'csv',
     ],
 ];

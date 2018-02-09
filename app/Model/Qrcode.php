@@ -18,6 +18,10 @@ class Qrcode extends Model
 
     const NOT_PRINT_STATUS = 0;
 
+    const PRINTED_STATUS = 1;
+
+    const NUMBER_OF_NUMBERS = 4;
+
     /**
      * Declare table
      *
