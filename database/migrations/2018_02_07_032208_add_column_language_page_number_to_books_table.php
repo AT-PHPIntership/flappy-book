@@ -14,7 +14,7 @@ class AddColumnLanguagePageNumberToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->string('language')->after('author')->nullable();
+            $table->string('language', 10)->after('author')->nullable();
             $table->integer('page_number')->unsigned()->after('language')->nullable();
         });
     }

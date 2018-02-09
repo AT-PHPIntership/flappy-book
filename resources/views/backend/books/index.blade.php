@@ -59,19 +59,21 @@
                   <th class="text-center" width="5%">
                     {{ __('books.no') }}
                   </th>
+                  <th id="btn-sort-qrcode" class="text-center" width="10%">{{ __('books.qrcode') }}</th>
                   <th id="btn-sort-title">@sortablelink('title', __('books.title'))</th>
                   <th id="btn-sort-author">@sortablelink('author', __('books.author'))</th>
                   <th id="btn-sort-rating" class="text-center">@sortablelink('rating', __('books.rating'))</th>
                   <th id="btn-sort-total_borrowed" class="text-center" width="12%">
                     @sortablelink('total_borrowed', __('books.total_borrowed'))
                   </th>
-                  <th class="text-center" width="15%" __('books.options')</th>
+                  <th class="text-center" width="15%">{{ __('books.options') }}</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($books as $index => $book)  
                   <tr class="item-{{ $book->id }}">
                     <td class="text-center">{{ $index + $books->firstItem() }}</td>
+                    <td class="text-center">{{ $book->qrcode->qrcode_book }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
                     <td class="text-center">{{ $book->rating }}</td>

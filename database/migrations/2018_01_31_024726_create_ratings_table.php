@@ -17,7 +17,7 @@ class CreateRatingsTable extends Migration
             $table->increments('id');
             $table->integer('book_id')->unsigned();
             $table->decimal('rating', 4, 1)->default(0);
-            $table->integer('post_id')->unsigned()->unique();            
+            $table->integer('post_id')->unsigned(); 
             $table->softDeletes();
             $table->timestamps();
         });
