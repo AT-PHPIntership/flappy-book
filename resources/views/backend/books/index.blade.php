@@ -73,7 +73,7 @@
                 @foreach ($books as $index => $book)  
                   <tr class="item-{{ $book->id }}">
                     <td class="text-center">{{ $index + $books->firstItem() }}</td>
-                    <td class="text-center">{{ $book->qrcode->qrcodebook }}</td>
+                    <td class="text-center">{{ $book->qrcode->qrcode_book }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
                     <td class="text-center">{{ $book->rating }}</td>
