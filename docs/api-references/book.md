@@ -1,6 +1,6 @@
 ## Books API
 
-### `GET` Book Success
+### `GET` Book
 ```
 /api/books/{id}
 ```
@@ -10,7 +10,7 @@ Get a detail book with category
 |---|---|
 |Accept|application\json
 
-#### Response
+#### Response - Success
 ```json
 {
     "meta": {
@@ -25,7 +25,7 @@ Get a detail book with category
         "language": "VI",
         "rating": "0.0",
         "total_rating": 0,
-        "picture": "http://book.aug/images/books/20180209-snkSuP5ngcMHbePvGfwnC8UVlHLnwyh0MpJPxHyd.jpeg",
+        "picture": "http://book.aug/images/books/20180209.jpeg",
         "author": "Phạm Huy Hoàng",
         "price": "150000.00",
         "unit": "VND",
@@ -41,17 +41,7 @@ Get a detail book with category
     }
 }
 ```
-### `GET` Book Fail
-```
-/api/books/{id}
-```
-Get a detail book fail, id of book doesn't exist
-#### Request Headers
-| Key | Value |
-|---|---|
-|Accept|application\json
-
-#### Response
+#### Response - Fail
 ```json
 {
     "meta": {
