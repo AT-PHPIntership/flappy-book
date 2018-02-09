@@ -9,3 +9,11 @@
 .btn-confirm-edit {
   width: 80px;
 }
+
+#table-qrcodes {
+  padding: 10px 220px 10px 220px;
+}
+
+#btn-download {
+  margin: 10px 0 0 50px;
+}
