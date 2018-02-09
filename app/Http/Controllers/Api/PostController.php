@@ -32,8 +32,8 @@ class PostController extends ApiController
 
         $posts = Post::select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->leftJoin('books', 'books.id', '=', 'ratings.book_id')
+                    ->join('ratings', 'posts.id', '=', 'ratings.post_id')
+                    ->join('books', 'books.id', '=', 'ratings.book_id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->where('books.id', '=', $id)
                     ->groupBy('posts.id')
