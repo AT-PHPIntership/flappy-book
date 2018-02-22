@@ -3,17 +3,18 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Http\Response;
 use App\Model\Book;
 use App\Model\User;
 use App\Model\Category;
 use App\Model\Post;
 use App\Model\Rating;
-use Faker\Factory as Faker;
 
-class postsForBookApiTest extends TestCase
+class ReviewsForBookApiTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * test status response
      *
@@ -22,7 +23,7 @@ class postsForBookApiTest extends TestCase
     public function testStatusCode()
     {
         $response = $this->json('GET', 'api/books/1/posts');
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     /**
@@ -32,8 +33,8 @@ class postsForBookApiTest extends TestCase
      */
     public function testStructJson()
     {
-        $books_id = $this->makeData(2);
-        $response = $this->json('GET', 'api/books/'. $books_id . '/posts');
+        $bookId = $this->makeData(2);
+        $response = $this->json('GET', 'api/books/'. $bookId . '/posts');
         $response->assertJsonStructure([
             'meta' => [
                 'status',
@@ -64,7 +65,7 @@ class postsForBookApiTest extends TestCase
                 ]
             ],
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
      /**
@@ -74,8 +75,8 @@ class postsForBookApiTest extends TestCase
      */
     public function testCompareDatabase()
     {
-        $books_id = $this->makeData(2);
-        $response = $this->json('GET', 'api/books/'. $books_id . '/posts');
+        $bookId = $this->makeData(2);
+        $response = $this->json('GET', 'api/books/'. $bookId . '/posts');
         $data = json_decode($response->getContent())->data;
         foreach ($data as $post) {
             $arrayCompare = [
@@ -93,8 +94,8 @@ class postsForBookApiTest extends TestCase
      */
     public function testGetPaginationResult()
     {
-        $books_id = $this->makeData(15);
-        $response = $this->json('GET', 'api/books/'. $books_id . '/posts?page=2');
+        $bookId = $this->makeData(15);
+        $response = $this->json('GET', 'api/books/'. $bookId . '/posts?page=2');
         $response->assertJson([
             'pagination' => [
                 'total' => 15,
@@ -103,7 +104,7 @@ class postsForBookApiTest extends TestCase
                 'total_pages' => 2,
             ]
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     /**
@@ -113,8 +114,6 @@ class postsForBookApiTest extends TestCase
     */
     public function makeData($row)
     {
-        $faker = Faker::create();
-
         $users = factory(User::class)->create();
 
         $categories = factory(Category::class)->create();
