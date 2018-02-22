@@ -19,7 +19,7 @@ trait ApiResponse
     {
         return response()->json([
             'meta' => [
-                'status' => 'successfully',
+                'status' => __('api.successfully'),
                 'code' => $code
             ],
             'data' => $data
