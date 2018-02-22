@@ -7,7 +7,7 @@ Get Posts with status review for Book
 
 #### Parameters
 | Key | Type | Description |
-|---|---|---|---|
+|---|---|---|
 | id | Number | Id of book |
 
 #### Response - Success
@@ -16,6 +16,17 @@ Get Posts with status review for Book
 | meta | Object | Object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
+| data | Array | Array list posts |
+| id | Number | Id of post |
+| content | String | Content of post |
+| name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | Url of user's avatar |
+| rating | Number | Rating for book |
+| likes | Number | likes of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| deleted_at | String | Delete book time |
 | pagination | Object | Object pagination |
 | total | Number | Total posts |
 | per_page | Number | Posts per page |
@@ -24,17 +35,6 @@ Get Posts with status review for Book
 | links | Object | Object Links |
 | prev | String | Link of previous page |
 | next | String | Link of next page |
-| data | Array | Array list posts |
-| id | Number | Id of post |
-| content | String | Content of post |
-| name | String | Name of user |
-| team | String | Team of user |
-| avatar_url | String | Url of user's avatar |
-| rating | Number | rating for book |
-| likes | Number | likes of post |
-| created_at | String | Create book time |
-| updated_at | String | Update book time |
-| deleted_at | String | Delete book time |
 
 
 ```json
@@ -42,16 +42,6 @@ Get Posts with status review for Book
     "meta": {
         "status": "successfuly",
         "code": 200,
-        "pagination": {
-            "total": 12,
-            "per_page": 10,
-            "current_page": 2,
-            "total_pages": 2,
-            "links": {
-                "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
-                "next": null
-            }
-        },
     },
     "data": [
         {
@@ -78,18 +68,28 @@ Get Posts with status review for Book
             "updated_at": "2018-02-08 16:34:10",
             "deleted_at": null
         }
-    ]
+    ],
+    "pagination": {
+        "total": 12,
+        "per_page": 10,
+        "current_page": 2,
+        "total_pages": 2,
+        "links": {
+            "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
+            "next": null
+        }
+    }
 }
 ```
 
 #### Response - Fail
 | Field | Type | Description |
 |-------|------|-------------|
-| meta | Object | object meta |
+| meta | Object | Object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
-| error | Object | object error |
-| message | String |error message |
+| error | Object | Object error |
+| message | String | Error message |
 
 ```json
 {
