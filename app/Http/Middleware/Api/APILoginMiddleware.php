@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware\Api;
+
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -9,11 +10,12 @@ use Closure;
 
 class APILoginMiddleware
 {
-    /**
+      /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request request
+     * @param \Closure                 $next    next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

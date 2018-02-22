@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ServerException;
 use App\Model\User;
-use DB;
 
-class LoginController extends Controller
+class LoginController extends ApiController
 {
     /**
      * Handle a login request to the application.
@@ -27,14 +26,10 @@ class LoginController extends Controller
             $portal = $client->post(config('portal.base_url_api') . config('portal.end_point.login'), ['form_params' => $data]);
             $portalResponse = json_decode($portal->getBody()->getContents());
             if ($portalResponse->meta->status == config('define.login.msg_success')) {
-                $user = $this->saveUser($portalResponse, $request);
-                return  response()->json([
-                    'meta' => $portalResponse->meta,
-                    'data' => array_except($user->toArray(), 'deleted_at')
-                ], Response::HTTP_OK);
-            } else {
-                return response()->json(['message' => trans('portal.messages.server_error')], Response::HTTP_INTERNAL_SERVER_ERROR);
+                $user = $this->saveUser($portalResponse->data->user, $request);
+                return $this->showOne($user);
             }
+            return response()->json(['message' => trans('portal.messages.server_error')], Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (ServerException $e) {
             $portalResponse = json_decode($e->getResponse()->getBody()->getContents());
             return response()->json($portalResponse, Response::HTTP_BAD_REQUEST);
@@ -44,14 +39,13 @@ class LoginController extends Controller
     /**
      * Save data users
      *
-     * @param App\Http\Controllers\Auth $portalResponse $portalResponse
-     * @param \Illuminate\Http\Request  $request        $request
+     * @param App\Http\Controllers\Auth $userResponse $userResponse
+     * @param \Illuminate\Http\Request  $request      $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function saveUser($portalResponse, $request)
+    public function saveUser($userResponse, $request)
     {
-        $userResponse = $portalResponse->data->user;
         # Collect user data from response
         $userCondition = [
             'employ_code' => $userResponse->employee_code,
