@@ -12,7 +12,7 @@ Get list categories
 | meta | Object | object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
-| data | Object | Object book |
+| data | Array | List Categories |
 | id | Number | Id of category |
 | title | String | Title of category |
 
