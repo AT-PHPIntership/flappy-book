@@ -44,7 +44,7 @@ Comments for Book
     "data": [
         {
             "id": 1,
-            "content": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+            "comment": "Molestiae voluptas cum ullam accusantium fuga magnam.",
             "name": "Greta Lehner",
             "team": "SA",
             "avatar_url": "http://flappybook.tech/tmp/7c5266db2cd916e1af404a688980e4dd.jpg",
@@ -54,7 +54,7 @@ Comments for Book
         },
         {
             "id": 15,
-            "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "comment": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
             "username": "Mr. Morris Glover V",
             "team": "PHP",
             "avatar_url": "http://flappybook.tech/tmp/bb8ab0ad35b2ecfe6e23d5ed0aadbd39.jpg",
