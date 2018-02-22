@@ -130,6 +130,7 @@ Get list books with paginate
 "pagination": {
                 "total": 32,
                 "per_page": 20,
+                "count": 10,
                 "current_page": 1,
                 "total_pages": 2,
                 "links": {
