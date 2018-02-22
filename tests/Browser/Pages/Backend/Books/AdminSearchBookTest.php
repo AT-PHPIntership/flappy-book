@@ -9,6 +9,7 @@ use App\Model\Book;
 use App\Model\Borrow;
 use App\Model\User;
 use App\Model\Category;
+use App\Model\Qrcode;
 use DB;
 use Faker\Factory as Faker;
 
@@ -258,5 +259,11 @@ class AdminSearchBookTest extends DuskTestCase
             'category_id' => $faker->randomElement($categoryId),
             'from_person' => $faker->randomElement($userId)
         ]);
+        $bookId = DB::table('books')->pluck('id')->toArray();
+        for ($i = 0; $i < $row; $i++) {
+            factory(Qrcode::class)->create([
+                'book_id' => $faker->unique()->randomElement($bookId)
+            ]);
+        }
     }
 }
