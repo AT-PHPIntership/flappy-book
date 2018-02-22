@@ -9,6 +9,7 @@ use App\Model\Book;
 use App\Model\User;
 use App\Model\Borrow;
 use App\Model\Category;
+use App\Model\Qrcode;
 use Faker\Factory as Faker;
 use DB;
 
@@ -62,10 +63,10 @@ class AdminSortBooksTest extends DuskTestCase
     public function dataForTest()
     {
         return [
-            ['title', 2],
-            ['author', 3],
-            ['rating', 4],
-            ['total_borrowed', 5],
+            ['title', 3],
+            ['author', 4],
+            ['rating', 5],
+            ['total_borrowed', 6],
         ];
     }
 
@@ -120,7 +121,7 @@ class AdminSortBooksTest extends DuskTestCase
                     ->visit('admin/books')
                     ->resize(1200,1600)
                     ->press("#btn-sort-$name a")
-                    ->press('.pagination li:nth-child(3) a');
+                    ->press('.pagination li:nth-child(4) a');
 
             // Test list Asc
             sort($arraySelected);
@@ -132,7 +133,7 @@ class AdminSortBooksTest extends DuskTestCase
 
             // Test list Desc
             $browser->press("#btn-sort-$name a")
-                    ->press('.pagination li:nth-child(3) a');
+                    ->press('.pagination li:nth-child(4) a');
             rsort($arraySelected);
             $arraySortDesc = array_chunk($arraySelected, 10)[1];
             for ($i = 1; $i <= 6; $i++) {
@@ -165,6 +166,12 @@ class AdminSortBooksTest extends DuskTestCase
         ])->each(function($book) use ($faker) {
             $book->total_borrowed = $faker->numberBetween(1, 3);
         });
+        $bookId = DB::table('books')->pluck('id')->toArray();
+        for ($i = 0; $i < $row; $i++) {
+            factory(Qrcode::class)->create([
+                'book_id' => $faker->unique()->randomElement($bookId)
+            ]);
+        }
 
         foreach ($books as $book) {
             factory(Borrow::class, $book->total_borrowed)->create([
