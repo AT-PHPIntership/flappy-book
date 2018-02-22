@@ -18,7 +18,6 @@
     </section>
     <!-- Main content -->
     <section class="content">
-      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -28,33 +27,31 @@
                   <a href="{{ route('qrcodes.index', 'export') }}"><button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button></a>
                 </div>
               </div>
-              <!-- /.box-header -->
-              <div class="box-body" id="table-qrcodes">
-                <table id="list-qrcodes" class="table table-bordered table-hover">
-                  <thead>
-                   <tr>
-                    <th class="text-center" width="15%">{{ __('qrcodes.no') }}</th>
-                    <th>{{ __('qrcodes.book_title') }}</th>
-                    <th class="text-center">{{ __('qrcodes.qrcode') }}</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($qrcodes as $index => $qrcode)
-                      <tr>
-                        <td class="text-center">{{ $index + $qrcodes->firstItem() }}</td>
-                        <td>{{ $qrcode->title }}</td>
-                        <td class="text-center">{{ $qrcode->prefix . sprintf(config('define.qrcodes.number_format'), $qrcode->code_id) }}</td>
-                      </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                <!-- .pagination -->
-                <div class="text-right">
-                  <nav aria-label="...">
-                    {{ $qrcodes->links() }}
-                  </nav>
-                </div>
-                <!-- /.pagination -->
+            <!-- /.box-header -->
+            <div class="box-body" id="table-qrcodes">
+              <table id="list-qrcodes" class="table table-bordered table-hover">
+                <thead>
+                 <tr>
+                  <th class="text-center" width="15%">{{ __('qrcodes.no') }}</th>
+                  <th>{{ __('qrcodes.book_title') }}</th>
+                  <th class="text-center">{{ __('qrcodes.qrcode') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @foreach($qrcodes as $index => $qrcode)
+                    <tr>
+                      <td class="text-center">{{ $index + $qrcodes->firstItem() }}</td>
+                      <td>{{ $qrcode->title }}</td>
+                      <td class="text-center">{{ $qrcode->qrcode_book }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              <!-- .pagination -->
+              <div class="text-right">
+                <nav aria-label="...">
+                  {{ $qrcodes->links() }}
+                </nav>
               </div>
               <!-- /.box-body -->
             @endif

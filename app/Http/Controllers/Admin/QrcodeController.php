@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use App\Model\Qrcode;
 use Excel;
+use DB;
 
 class QrcodeController extends Controller
 {
@@ -32,7 +32,7 @@ class QrcodeController extends Controller
         ];
         $qrcodes = Qrcode::select($fields)
             ->join('books', 'books.id', '=', 'qrcodes.book_id')
-            ->where('qrcodes.status', Qrcode::NOT_PRINT_STATUS)
+            ->where('qrcodes.status', Qrcode::IS_NOT_PRINTED)
             ->paginate(config('define.qrcodes.limit_rows'));
         return view('backend.qrcodes.index', ['qrcodes' => $qrcodes]);
     }
@@ -53,7 +53,7 @@ class QrcodeController extends Controller
             ];
             $qrcodes = Qrcode::select($fields)
             ->join('books', 'books.id', '=', 'qrcodes.book_id')
-            ->where('qrcodes.status', Qrcode::NOT_PRINT_STATUS)
+            ->where('qrcodes.status', Qrcode::IS_NOT_PRINTED)
             ->get()
             ->toArray();
             Excel::create('Qrcodes', function ($excel) use ($qrcodes) {
@@ -63,14 +63,13 @@ class QrcodeController extends Controller
                 foreach ($qrcodes as $qrcode) {
                     $id = $qrcode['id'];
                     Qrcode::where('id', $id)->update(array(
-                        'status'=> Qrcode::PRINTED_STATUS,
+                        'status'=> Qrcode::IS_PRINTED,
                     ));
                 }
                 DB::commit();
             })->export(config('define.qrcodes.format_file_export'));
         } catch (Exception $e) {
             DB::rollBack();
-            flash(__('qrcodes.export.fail'))->error();
             return redirect()->back();
         }
     }
