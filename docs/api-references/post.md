@@ -1,23 +1,126 @@
-## List status of user Api
+## Post Api
+### `GET` Reviews for Book
+```
+/api/books/{id}/posts
+```
+Get Posts with status review for Book
 
-### Get list status of user have filter is all
+#### Parameters
+| Key | Type | Description |
+|---|---|---|
+| id | Number | Id of book |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list posts |
+| id | Number | Id of post |
+| content | String | Content of post |
+| name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | Url of user's avatar |
+| rating | Number | Rating for book |
+| likes | Number | likes of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| deleted_at | String | Delete book time |
+| pagination | Object | Object pagination |
+| total | Number | Total posts |
+| per_page | Number | Posts per page |
+| current_page | Number | Number of current page |
+| total_pages | Number | Total pages |
+| links | Object | Object Links |
+| prev | String | Link of previous page |
+| next | String | Link of next page |
+
+
+```json
+{
+    "meta": {
+        "status": "successfuly",
+        "code": 200,
+    },
+    "data": [
+        {
+            "id": 1,
+            "content": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+            "name": "Greta Lehner",
+            "team": "SA",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64weew314e61ccc.png",
+            "rating": "3.0",
+            "likes": 1,
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
+            "deleted_at": null
+        },
+        {
+            "id": 15,
+            "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "name": "Mr. Morris Glover V",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
+            "rating": "2.0",
+            "likes": 0,
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
+            "deleted_at": null
+        }
+    ],
+    "pagination": {
+        "total": 12,
+        "per_page": 10,
+        "current_page": 2,
+        "total_pages": 2,
+        "links": {
+            "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
+            "next": null
+        }
+    }
+}
+```
+
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | String | Error message |
+
+```json
+{
+    "meta": {
+        "status": "failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Page not found!"
+    }
+}
+```
+### Get List Status Of User
+#### Get list status of user have filter is all
 
 ```
 /api/users/{id}
 
 ```
 Get list all status of user with paginate
-#### Request header 
+##### Request header 
 | Key | Value |
 |---|---|
 |Accept|application\json|
 |Authorization|{token_type} {access_token}
-#### Parameters
+##### Parameters
 | Key | Value | Required | Description |
 |---|---|---|---|
 | id | Interger | required | Id of user |
 
-#### Response - Success
+##### Response - Success
 | Field | Type | Description |
 |---|---|---|
 | data | Object | Object posts |
@@ -25,16 +128,15 @@ Get list all status of user with paginate
 | content | String | Content of status |
 | status | Number | status of status |
 | user_id | Number | Id of user |
-| created_at | DateTime | Create date of the status |
-| updated_at | DateTime | Update date of the status |
-| deleted_at | DateTime | Delete date of the status |
+| created_at | String | Create date of the status |
+| updated_at | String | Update date of the status |
 | meta | Object | Object meta |
 | total | Number | Total item |
 | count | Number | Total item on current page |
 | per_page | Number | Total item on per page |
 | current_page | Number | Current page |
 | total_page | Number | Total page |
-| link | Url | Page url |
+| link | String | Page url |
 | status | String | Status result |
 | code | Number | HTTP status code |
 
@@ -50,27 +152,39 @@ Get list all status of user with paginate
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":1,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            "title": "HTML5 & CSS3",
+            "rating": "3.0",
+            "like": 1,
             "created_at": "2018-02-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
         {
             "id":3,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":0,
             "user_id":1,
+            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            "title": "HTML5",
+            "rating": "4.0",
+            "like": 1,
+            "like": 1,
             "created_at": "2018-01-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
         {
             "id":8,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":2,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            "title": "CSS3",
+            "rating": "5.0",
+            "like": 1,
             "created_at": "2018-02-20 07:35:34",
             "updated_at": "2018-02-22 08:35:30",
-            "deleted_at": null,
         }
     ],
     "pagination": {
@@ -80,30 +194,31 @@ Get list all status of user with paginate
         "curent_page": 1,
         "total_page": 2,
         "link": {
-            "prev": "http://flappybook.tech/users/1?page=1",
+            "prev": null,
             "next": "http://flappybook.tech/users/1?page=2",
         }
-    },
+    }
 }
 ```
-### Get list status of user have filter is status
+#### Get list status of user have filter is status
 
 ```
-/api/users/{id}?filter=status
+/api/users/{id}?status=0
 
 ```
 Get list all status of user with paginate
-#### Request header 
+##### Request header 
 | Key | Value |
 |---|---|
 |Accept|application\json|
 |Authorization|{token_type} {access_token}
-#### Parameters
+##### Parameters
 | Key | Value | Required | Description |
 |---|---|---|---|
 | id | Interger | required | Id of user |
+| status | Interger | required | Status of posts(status,find book,review) |
 
-#### Response - Success
+##### Response - Success
 | Field | Type | Description |
 |---|---|---|
 | data | Object | Object posts |
@@ -111,16 +226,15 @@ Get list all status of user with paginate
 | content | String | Content of status |
 | status | Number | status of status |
 | user_id | Number | Id of user |
-| created_at | DateTime | Create date of the status |
-| updated_at | DateTime | Update date of the status |
-| deleted_at | DateTime | Delete date of the status |
+| created_at | String | Create date of the status |
+| updated_at | String | Update date of the status |
 | meta | Object | Object meta |
 | total | Number | Total item |
 | count | Number | Total item on current page |
 | per_page | Number | Total item on per page |
 | current_page | Number | Current page |
 | total_page | Number | Total page |
-| link | Url | Page url |
+| link | String | Page url |
 | status | String | Status result |
 | code | Number | HTTP status code |
 
@@ -136,71 +250,48 @@ Get list all status of user with paginate
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":0,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": null,
+            "title": null,
+            "rating": null,
+            "like": 1,
             "created_at": "2018-02-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
         {
             "id":10,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":0,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": null,
+            "title": null,
+            "rating": null,
+            "like": 2,
             "created_at": "2018-01-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
     ],
     "pagination": {
-        "total": 10,
-        "count": 10,
+        "total": 22,
+        "count": 20,
         "per_page": 20,
         "curent_page": 1,
         "total_page": 1,
         "link": {
-            "prev": "http://flappybook.tech/users/1?filter=status&page=1",
-            "next": null,
+            "prev": null,
+            "next": "http://flappybook.tech/users/1?status=0&page=2",
         }
     }
 }
 ```
-### Get list status of user have filter is find book
+#### Get list status of user have filter is find book
 
 ```
-/api/users/{id}?filter=findbook
+/api/users/{id}?status=1
 
 ```
 Get list all status of user with paginate
-#### Request header 
-
-| Key | Value |
-|---|---|
-|Accept|application\json|
-|Authorization|{token_type} {access_token}
-#### Parameters
-| Key | Value | Required | Description |
-|---|---|---|---|
-| id | Interger | required | Id of user |
-
-#### Response - Success
-| Field | Type | Description |
-|---|---|---|
-| data | Object | Object posts |
-| id | Number | Id of status |
-| content | String | Content of status |
-| status | Number | status of status |
-| user_id | Number | Id of user |
-| created_at | DateTime | Create date of the status |
-| updated_at | DateTime | Update date of the status |
-| deleted_at | DateTime | Delete date of the status |
-| meta | Object | Object meta |
-| total | Number | Total item |
-| count | Number | Total item on current page |
-| per_page | Number | Total item on per page |
-| current_page | Number | Current page |
-| total_page | Number | Total page |
-| link | Url | Page url |
-| status | String | Status result |
-| code | Number | HTTP status code |
 
 ```json
 {
@@ -214,18 +305,26 @@ Get list all status of user with paginate
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":1,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": null,
+            "title": null,
+            "rating": null,
+            "like": 1,
             "created_at": "2018-02-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
         {
             "id":4,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":1,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": null,
+            "title": null,
+            "rating": null,
+            "like": 1,
             "created_at": "2018-01-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
     ],
     "pagination": {
@@ -235,50 +334,20 @@ Get list all status of user with paginate
         "curent_page": 1,
         "total_page": 1,
         "link": {
-            "prev": "http://flappybook.tech/users/1?filter=findbook&page=1",
+            "prev": null,
             "next": null,
         }
     }
 }
 ```
-### Get list status of user have filter is review
+#### Get list status of user have filter is review
 
 ```
-/api/users/{id}?filter=review
+/api/users/{id}?status=2
 
 ```
 Get list all status of user with paginate
-#### Request header 
 
-| Key | Value |
-|---|---|
-|Accept|application\json|
-|Authorization|{token_type} {access_token}
-#### Parameters
-| Key | Value | Required | Description |
-|---|---|---|---|
-| id | Interger | required | Id of user |
-
-#### Response - Success
-| Field | Type | Description |
-|---|---|---|
-| data | Object | Object posts |
-| id | Number | Id of status |
-| content | String | Content of status |
-| status | Number | status of status |
-| user_id | Number | Id of user |
-| created_at | DateTime | Create date of the status |
-| updated_at | DateTime | Update date of the status |
-| deleted_at | DateTime | Delete date of the status |
-| meta | Object | Object meta |
-| total | Number | Total item |
-| count | Number | Total item on current page |
-| per_page | Number | Total item on per page |
-| current_page | Number | Current page |
-| total_page | Number | Total page |
-| link | Url | Page url |
-| status | String | Status result |
-| code | Number | HTTP status code |
 
 ```json
 {
@@ -292,34 +361,41 @@ Get list all status of user with paginate
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":2,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            "title": "HTML",
+            "rating": "4.0",
+            "like": 2,
             "created_at": "2018-02-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
         {
             "id":9,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status":2,
             "user_id":1,
+            "name": "Tram Pham T.M.",
+            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            "title": "CSS3",
+            "rating": "5.0",
+            "like": 2,
             "created_at": "2018-01-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
-            "deleted_at": null,
         },
     ],
     "pagination": {
-        "total": 12,
         "count": 12,
         "per_page": 20,
         "curent_page": 1,
         "total_page": 1,
         "link": {
-            "prev": "http://flappybook.tech/users/1?filter=review&page=1",
+            "prev": null,
             "next": null,
         }
     }
 }
 ```
-#### Response - Fail
+##### Response - Fail
 | Field | Type | Description |
 |---|---|---|
 | meta | Object | Object meta |
@@ -335,7 +411,7 @@ Get list all status of user with paginate
         "code": 404,
     },
     "error": {
-        "message": "Page not found!",
+        "message": "Data not found!",
     }
 }
 ```
