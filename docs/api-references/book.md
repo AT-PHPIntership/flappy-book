@@ -88,3 +88,67 @@ Get a detail book
     }
 }
 ```
+
+### `GET` Top books borrow
+```
+/api/books/borrow/top
+```
+Get top books borrow
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Object | Object book |
+| title | String | Title of book |
+| total_borrowed | Number | total_borrowed of book |
+
+```json
+{
+    "meta": {
+        "status": "successfully",
+        "code": 200
+    },
+    "data": [
+        {
+            "title": "Prof. Aniyah McClure DDS",
+            "total_borrowed": 4
+        },
+        {
+            "title": "Callie Vandervort DVM",
+            "total_borrowed": 4
+        }
+    ],
+    "pagination": {
+        "total": 2,
+        "per_page": 20,
+        "current_page": 1,
+        "total_pages": 1,
+        "links": {
+            "prev": null,
+            "next": null
+        }
+    }    
+}
+```
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | object error |
+| message | String |error message |
+```json
+{
+    "meta": {
+        "status": "failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Page not found!"
+    }
+}
+```
