@@ -103,6 +103,7 @@ Get top books borrow
 | code | Number | HTTP status codes |
 | data | Object | Object book |
 | title | String | Title of book |
+| total_rating | Number | The total number of reviews of a book |
 | total_borrowed | Number | total_borrowed of book |
 
 ```json
@@ -114,10 +115,12 @@ Get top books borrow
     "data": [
         {
             "title": "Prof. Aniyah McClure DDS",
+            "total_rating": 4,
             "total_borrowed": 4
         },
         {
             "title": "Callie Vandervort DVM",
+            "total_rating": 3,
             "total_borrowed": 4
         }
     ],
