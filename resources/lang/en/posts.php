@@ -8,7 +8,7 @@ return [
     'post_date' => 'Post Date',
     'total_comment' => 'Total Comment',
     'list_posts' => 'List Posts',
-    'detail_post' => 'Detail post',
+    'detail_post' => 'Detail Post',
     'home' => 'Home',
     'posts' => 'Posts',
     'review' => 'Review',

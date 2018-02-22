@@ -30,7 +30,9 @@
         <div class="box">
           <div class="box-header">
             <div class="pull-left">
+            @include('backend.books.partials.import-data')
               <a href="{{ route('books.create') }}"><button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat">{{ __('books.add_book') }}</button></a>
+              <button type="button" name="btn-import" id="btn-import-data" class="btn btn-warning btn-flat">{{ __('books.import_data') }}</button>
             </div>
             <div class="pull-right col-xs-6">
               <form action="{{ route('books.index') }}" method="GET">
