@@ -46,6 +46,13 @@ class Post extends Model
         'content',
         'is_findbook',
     ];
+
+    public $filterable = [
+        'id',
+        'user_id',
+        'content',
+        'status',
+    ];
     
     /**
      * Relationship belongsTo with User
