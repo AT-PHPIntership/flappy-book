@@ -96,7 +96,7 @@ trait ApiResponse
     {
         $collectionStruct = collect([
             'meta' => [
-                'status' => 'successfully',
+                'status' => __('api.successfully'),
                 'code' => $code
             ],
             'data' => $collection->toArray()['data'],
