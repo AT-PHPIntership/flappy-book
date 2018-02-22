@@ -1,22 +1,47 @@
 ## Post Api
 ### `GET` Reviews for Book
 ```
-/api/books/{id}/reviews
+/api/books/{id}/posts
 ```
 Get Posts with status review for Book
 
-#### Request Headers
-
-| Key | Value |
-|---|---|
-|Accept|application\json
 #### Parameters
-| Key | Type | Required | Description |
-|---|---|---|---|
-| id | Integer | required | Id of book |
-#### Response
+| Key | Type | Description |
+|---|---|---|
+| id | Number | Id of book |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list posts |
+| id | Number | Id of post |
+| content | String | Content of post |
+| name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | Url of user's avatar |
+| rating | Number | Rating for book |
+| likes | Number | likes of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| deleted_at | String | Delete book time |
+| pagination | Object | Object pagination |
+| total | Number | Total posts |
+| per_page | Number | Posts per page |
+| current_page | Number | Number of current page |
+| total_pages | Number | Total pages |
+| links | Object | Object Links |
+| prev | String | Link of previous page |
+| next | String | Link of next page |
+
 ```json
 {
+    "meta": {
+        "status": "successfuly",
+        "code": 200,
+    },
     "data": [
         {
             "id": 1,
@@ -43,20 +68,36 @@ Get Posts with status review for Book
             "deleted_at": null
         }
     ],
+    "pagination": {
+        "total": 12,
+        "per_page": 10,
+        "current_page": 2,
+        "total_pages": 2,
+        "links": {
+            "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
+            "next": null
+        }
+    }
+}
+```
+
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | String | Error message |
+
+```json
+{
     "meta": {
-        "pagination": {
-            "total": 12,
-            "count": 2,
-            "per_page": 10,
-            "current_page": 2,
-            "total_pages": 2,
-            "links": {
-                "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
-                "next": null
-            }
-        },
-        "status": "successfully",
-        "code": 200
+        "status": "failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Page not found!"
     }
 }
 ```

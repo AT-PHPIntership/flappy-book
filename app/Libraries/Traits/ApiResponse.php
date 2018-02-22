@@ -87,30 +87,29 @@ trait ApiResponse
     /**
      * Structure of json
      *
-     * @param Collection $collection array response
-     * @param int        $code       response status
+     * @param LengthAwarePaginator $collection result response
+     * @param int                  $code       response status
      *
      * @return Illuminate\Support\Collection
      */
     public function structJson($collection, $code)
     {
         $collectionStruct = collect([
-            'data' => $collection->toArray()['data'],
             'meta' => [
-                'pagination' => [
-                    'total' =>  $collection->get('total'),
-                    'count' =>  $collection->count(),
-                    'per_page' =>  $collection->get('per_page'),
-                    'current_page' =>  $collection->get('current_page'),
-                    'total_pages' =>  $collection->get('last_page'),
-                    'links' => [
-                       'prev' => $collection->get('prev_page_url'),
-                       'next' =>$collection->get('next_page_url')
-                    ]
-                ],
                 'status' => 'successfully',
                 'code' => $code
-            ]
+            ],
+            'data' => $collection->toArray()['data'],
+            'pagination' => [
+                'total' =>  $collection->total(),
+                'per_page' =>  $collection->perPage(),
+                'current_page' =>  $collection->currentPage(),
+                'total_pages' =>  $collection->lastPage(),
+                'links' => [
+                   'prev' => $collection->previousPageUrl(),
+                   'next' =>$collection->nextPageUrl(),
+                ]
+            ],
         ]);
 
         return $collectionStruct;
