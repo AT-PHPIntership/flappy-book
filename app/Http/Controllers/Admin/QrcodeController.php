@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use App\Model\Qrcode;
 
 class QrcodeController extends Controller
@@ -25,7 +24,7 @@ class QrcodeController extends Controller
         ];
         $qrcodes = Qrcode::select($fields)
             ->join('books', 'books.id', '=', 'qrcodes.book_id')
-            ->where('qrcodes.status', Qrcode::NOT_PRINT_STATUS)
+            ->where('qrcodes.status', Qrcode::IS_NOT_PRINTED)
             ->paginate(config('define.qrcodes.limit_rows'));
         return view('backend.qrcodes.index', ['qrcodes' => $qrcodes]);
     }

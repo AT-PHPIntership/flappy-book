@@ -16,7 +16,7 @@ class Qrcode extends Model
      */
     const DEFAULT_CODE_PREFIX = 'ATB';
 
-    const NOT_PRINT_STATUS = 0;
+    const IS_NOT_PRINTED = 0;
 
     /**
      * Declare table
@@ -45,7 +45,7 @@ class Qrcode extends Model
      */
     public function getQrcodeBookAttribute()
     {
-        $qrcode = $this->prefix . sprintf('%04d', $this->code_id);
+        $qrcode = $this->prefix . sprintf(config('define.qrcodes.number_format'), $this->code_id);
         return $qrcode;
     }
 

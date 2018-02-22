@@ -41,7 +41,7 @@
                     <tr>
                       <td class="text-center">{{ $index + $qrcodes->firstItem() }}</td>
                       <td>{{ $qrcode->title }}</td>
-                      <td class="text-center">{{ $qrcode->prefix . sprintf(config('define.qrcodes.number_format'), $qrcode->code_id) }}</td>
+                      <td class="text-center">{{ $qrcode->qrcode_book }}</td>
                     </tr>
                   @endforeach
                 </tbody>
