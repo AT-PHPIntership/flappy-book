@@ -36,7 +36,6 @@ Get Posts with status review for Book
 | prev | String | Link of previous page |
 | next | String | Link of next page |
 
-
 ```json
 {
     "meta": {
