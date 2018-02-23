@@ -44,10 +44,7 @@ class BookController extends ApiController
                     ->join('users', 'books.from_person', '=', 'users.employ_code')
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
-                    
-        if ($book) {
-            $book->picture = url('/').'/'.config('define.books.folder_store_books').$book->picture;
-            return $this->showOne($book);
-        }
+
+        return $this->showOne($book);
     }
 }

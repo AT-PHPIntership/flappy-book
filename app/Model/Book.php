@@ -178,4 +178,14 @@ class Book extends Model
             'borrows' => ['books.id', 'borrows.book_id']
         ]
     ];
+
+    /**
+     * Get the book's picture.
+     *
+     * @return string
+     */
+    public function getPictureAttribute()
+    {
+        return url('/').'/'.config('define.books.folder_store_books').$this->attributes['picture'];
+    }
 }
