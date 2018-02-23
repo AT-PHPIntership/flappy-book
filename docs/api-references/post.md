@@ -1,9 +1,9 @@
-## Comment Api
-### `GET` Comments for Book
+## Post Api
+### `GET` Reviews for Book
 ```
-/api/books/{id}/comments
+/api/books/{id}/posts
 ```
-Comments for Book
+Get Posts with status review for Book
 
 #### Parameters
 | Key | Type | Description |
@@ -17,13 +17,13 @@ Comments for Book
 | status | String | Status result |
 | code | Number | HTTP status codes |
 | data | Array | Array list posts |
-| id | Number | Id of comment |
-| content | String | Content of comment |
+| id | Number | Id of post |
+| content | String | Content of post |
 | name | String | Name of user |
 | team | String | Team of user |
 | avatar_url | String | Url of user's avatar |
-| is_admin | Number | Role of user |
-| parent_id | Number | Parent comment id |
+| rating | Number | Rating for book |
+| likes | Number | likes of post |
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
 | deleted_at | String | Delete book time |
@@ -40,32 +40,32 @@ Comments for Book
 ```json
 {
     "meta": {
-        "status": "successfully",
-        "code": 200
+        "status": "successfuly",
+        "code": 200,
     },
     "data": [
         {
             "id": 1,
-            "comment": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+            "content": "Molestiae voluptas cum ullam accusantium fuga magnam.",
             "name": "Greta Lehner",
             "team": "SA",
-            "avatar_url": "http://flappybook.tech/tmp/7c5266db2cd916e1af404a688980e4dd.jpg",
-            "is_admin": 0,
-            "parent_id": null,
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64weew314e61ccc.png",
+            "rating": "3.0",
+            "likes": 1,
             "created_at": "2018-02-08 16:34:10",
             "updated_at": "2018-02-08 16:34:10",
             "deleted_at": null
         },
         {
             "id": 15,
-            "comment": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
             "name": "Mr. Morris Glover V",
             "team": "PHP",
-            "avatar_url": "http://flappybook.tech/tmp/bb8ab0ad35b2ecfe6e23d5ed0aadbd39.jpg",
-            "is_admin": 0,
-            "parent_id": null,
-            "created_at": "2018-02-08 16:34:18",
-            "updated_at": "2018-02-08 16:34:18",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
+            "rating": "2.0",
+            "likes": 0,
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
             "deleted_at": null
         }
     ],
@@ -73,11 +73,32 @@ Comments for Book
         "total": 12,
         "per_page": 10,
         "current_page": 2,
-        "total_page": 2,
-        "link": {
-            "prev": "http://flappybook.tech/books/1/comments?page=1",
-            "next": null,
+        "total_pages": 2,
+        "links": {
+            "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
+            "next": null
         }
+    }
+}
+```
+
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | String | Error message |
+
+```json
+{
+    "meta": {
+        "status": "failed",
+        "code": 404
     },
+    "error": {
+        "message": "Page not found!"
+    }
 }
 ```
