@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Model\Post;
+use App\Model\Rating;
+use Illuminate\Support\Facades\Auth;
+use Exception;
 use DB;
 
 class PostController extends ApiController
@@ -40,5 +43,69 @@ class PostController extends ApiController
                     ->get();
 
         return $this->showAll($posts);
+    }
+
+    /**
+     * Store new resource
+     *
+     * @param Request $request request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request['user_id'] = 11;
+
+        DB::beginTransaction();
+        try {
+            $post = Post::create($request->all());
+            if ($request->status == Post::TYPE_REVIEW_BOOK) {
+                $result = Rating::create([
+                    'post_id' => $post->id,
+                    'book_id' => $request->book_id,
+                    'rating' => $request->rating,
+                ]);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+
+        return $this->show($post->id);
+    }
+
+    /**
+     * Show detail post
+     *
+     * @param int $id id of post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show(int $id)
+    {
+        $fields = [
+            'posts.id',
+            'posts.content',
+            'posts.status',
+            'users.name',
+            'users.team',
+            'users.avatar_url',
+            'ratings.rating',
+            DB::raw('COUNT(likes.id) AS likes'),
+            'posts.created_at',
+            'posts.updated_at',
+            'posts.deleted_at',
+        ];
+
+        $post = Post::select($fields)
+                    ->join('users', 'posts.user_id', '=', 'users.id')
+                    ->join('ratings', 'posts.id', '=', 'ratings.post_id')
+                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
+                    ->where('posts.id', '=', $id)
+                    ->groupBy('posts.id')
+                    ->first();
+// dd($post);
+        return $this->showOne($post);
     }
 }

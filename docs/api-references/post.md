@@ -96,6 +96,7 @@ Add new Post
 #### Parameters
 | Key | Type | Description |
 |---|---|---|
+| book_id | Number | Id of book review |
 | content | String | Content of post |
 | status | Number | Status of post |
 | rating | Number | Rating of book |
@@ -116,7 +117,6 @@ Add new Post
 | likes | Number | Likes of post |
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
-
 
 ```json
 {
