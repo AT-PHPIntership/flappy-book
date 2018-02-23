@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
         if ($request->route()->getPrefix() === 'api') {
             if ($exception instanceof ModelNotFoundException) {
                 $code = Response::HTTP_NOT_FOUND;
-                $msg = __('api.page_not_found');
+                $msg = __('api.data_not_found');
                 return response()->json([
                     'meta' => [
                         'status' => __('api.failed'),

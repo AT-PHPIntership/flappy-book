@@ -1,6 +1,6 @@
 <?php
 return [
-    'page_not_found' => 'Page not found!',
+    'data_not_found' => 'data not found',
     'failed' => 'Failed',
     'successfully' => 'Successfully',
 ];
