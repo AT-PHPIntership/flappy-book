@@ -25,6 +25,8 @@ class CommentController extends ApiController
             'users.name',
             'users.team',
             'users.avatar_url',
+            'users.is_admin',
+            'comments.parent_id',
             'comments.created_at',
             'comments.updated_at',
             'comments.deleted_at',
