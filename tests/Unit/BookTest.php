@@ -28,7 +28,7 @@ class BookTest extends TestCase
         $response->assertStatus(200)
                 ->assertJson([
                     'meta' => [
-                        'status' => 'successfully',
+                        'status' => 'Successfully',
                     ],
                 ])
                 ->assertJsonStructure([
@@ -65,7 +65,7 @@ class BookTest extends TestCase
         $response->assertStatus(404)
                 ->assertJson([
                     'meta' => [
-                        'status' => 'failed'
+                        'status' => 'Failed'
                     ],
                 ]);
     }

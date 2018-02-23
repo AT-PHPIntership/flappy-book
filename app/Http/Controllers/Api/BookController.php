@@ -18,7 +18,7 @@ class BookController extends ApiController
      */
     public function show($id)
     {
-        $fileds = [
+        $fields = [
             'books.id',
             'books.title',
             'books.category_id',
@@ -36,7 +36,7 @@ class BookController extends ApiController
             'users.name AS donator',
         ];
 
-        $book = Book::select($fileds)
+        $book = Book::select($fields)
                     ->with(['category' => function ($query) {
                         $query->select('id', 'title');
                     }])
@@ -44,10 +44,7 @@ class BookController extends ApiController
                     ->join('users', 'books.from_person', '=', 'users.employ_code')
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
-                    
-        if ($book) {
-            $book->picture = url('/').'/'.config('define.books.folder_store_books').$book->picture;
-            return $this->showOne($book);
-        }
+
+        return $this->showOne($book);
     }
 }

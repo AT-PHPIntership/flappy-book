@@ -42,6 +42,13 @@ $(document).ready(function () {
     $('#btn-add-category').bind('click', function (e) {
         $('#add-category').modal('show');
     });
+
+    /**
+     * Show form import data when click button import data
+     */
+    $('#btn-import-data').bind('click', function (e) {
+        $('#import-data').modal('show');
+    });
 });
 
 $(document).ready(function() {
