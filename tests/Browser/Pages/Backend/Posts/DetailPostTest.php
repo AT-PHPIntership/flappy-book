@@ -20,7 +20,8 @@ class DetailPostTest extends DuskTestCase
     use DatabaseMigrations;
 
     const NUMBER_RECORD_LIKE = 5;
-    const RATING = 5;
+    const NUMBER_RECORD_COMMENT = 5;
+    const RATING = 3;
 
     /**
      * Override function setUp()
@@ -113,41 +114,38 @@ class DetailPostTest extends DuskTestCase
         $category = factory(Category::class)->create();
         
         // Create books
-        $categoryId = $category->pluck('id')->toArray();
         $employCode = $this->user->employ_code;
-        factory(Book::class)->create([
-            'category_id' => $faker->randomElement($categoryId),
-            'from_person' => $employCode,
-        ]);
+        $book = factory(Book::class)->create([
+                'category_id' => $category->id,
+                'from_person' => $employCode,
+            ]);
 
         // Create posts
         $userId = $this->user->id;
-        factory(Post::class)->create([
-            'status'  => $status,
-            'user_id' => $userId,
-        ]);
+        $post = factory(Post::class)->create([
+                'status'  => $status,
+                'user_id' => $userId,
+            ]);
 
         // Create likes
         factory(Like::class, self::NUMBER_RECORD_LIKE)->create([
-            'post_id' => 1,
+            'post_id' => $post->id,
             'user_id' => $userId,
         ]);
 
         // Create comments
-        for ($i = 0; $i < 15; $i++) {
-            factory(Comment::class)->create([
-                'user_id' => $userId,
-                'commentable_type' => 'post',
-                'commentable_id' => 1,
-            ]);
-        }
+        factory(Comment::class, self::NUMBER_RECORD_COMMENT)->create([
+            'user_id' => $userId,
+            'commentable_type' => 'post',
+            'commentable_id' => $post->id,
+        ]);
 
         // Create rating
-        $bookId = DB::table('books')->pluck('id')->toArray();
+        
         factory(Rating::class)->create([
             'rating' => self::RATING,
-            'post_id' => 1,
-            'book_id' => $faker->randomElement($bookId)
+            'post_id' => $post->id,
+            'book_id' => $book->id
         ]);
     }
 }
