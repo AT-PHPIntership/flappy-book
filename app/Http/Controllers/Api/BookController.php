@@ -18,7 +18,7 @@ class BookController extends ApiController
      */
     public function show($id)
     {
-        $fileds = [
+        $fields = [
             'books.id',
             'books.title',
             'books.category_id',
@@ -36,7 +36,7 @@ class BookController extends ApiController
             'users.name AS donator',
         ];
 
-        $book = Book::select($fileds)
+        $book = Book::select($fields)
                     ->with(['category' => function ($query) {
                         $query->select('id', 'title');
                     }])
