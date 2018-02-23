@@ -31,4 +31,8 @@ return [
         'type_find_book' => App\Model\Post::TYPE_FIND_BOOK,
         'three_dots' => '...'
     ],
+    'qrcodes' => [
+        'limit_rows' => 10,
+        'number_format' => '%04d',
+    ],
 ];
