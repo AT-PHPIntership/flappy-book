@@ -56,18 +56,23 @@ class QrcodeController extends Controller
             ->where('qrcodes.status', Qrcode::IS_NOT_PRINTED)
             ->get()
             ->toArray();
-            Excel::create('Qrcodes', function ($excel) use ($qrcodes) {
-                $excel->sheet('Export Qrcode', function ($sheet) use ($qrcodes) {
-                    $sheet->fromArray($qrcodes);
-                });
-                foreach ($qrcodes as $qrcode) {
-                    $id = $qrcode['id'];
-                    Qrcode::where('id', $id)->update(array(
-                        'status'=> Qrcode::IS_PRINTED,
-                    ));
-                }
-                DB::commit();
-            })->export(config('define.qrcodes.format_file_export'));
+            if (!empty($qrcodes)) {
+                Excel::create('Qrcodes', function ($excel) use ($qrcodes) {
+                    $excel->sheet('Export Qrcode', function ($sheet) use ($qrcodes) {
+                        $sheet->fromArray($qrcodes);
+                    });
+                    foreach ($qrcodes as $qrcode) {
+                        $id = $qrcode['id'];
+                        Qrcode::where('id', $id)->update(array(
+                            'status'=> Qrcode::IS_PRINTED,
+                        ));
+                    }
+                    DB::commit();
+                })->export(config('define.qrcodes.format_file_export'));
+            } else {
+                flash(__('qrcodes.download_failed'))->error();
+                return redirect()->route('qrcodes.index');
+            }
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back();
