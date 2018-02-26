@@ -5,6 +5,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Model\Post;
 use App\Model\Rating;
+use App\Http\Requests\Api\CreatePostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\Handler;
 use Exception;
@@ -49,11 +50,11 @@ class PostController extends ApiController
     /**
      * Store new resource
      *
-     * @param Request $request request
+     * @param CreatePostRequest $request request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
         $request['user_id'] = 1;
 

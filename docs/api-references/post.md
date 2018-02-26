@@ -124,7 +124,7 @@ Add new Post
         "status": "successfuly",
         "code": 200,
     },
-    "data": [
+    "data": {
         "id": 39,
         "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
         "status": 2,
@@ -138,6 +138,7 @@ Add new Post
         "created_at": "2018-02-26 03:29:01",
         "updated_at": "2018-02-26 03:29:01",
         "deleted_at": null
+    }
 }
 ```
 
