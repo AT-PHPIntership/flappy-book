@@ -13,21 +13,28 @@ use DB;
 class BookController extends ApiController
 {
     /**
-     * Get a listing of the category.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    * Get top borrow books with paginate and meta.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function topBorrow()
     {
         $fields = [
             'books.title',
             DB::raw('COUNT(borrows.book_id) AS total_borrowed'),
         ];
         $topBorrowed = Borrow::select($fields)
-                             ->join('books', 'books.id', '=', 'borrows.book_id')
-                             ->groupBy('books.id')
-                             ->orderBy('total_borrowed', 'desc')
-                             ->get();
-        return  $this->showAll($topBorrowed);
+                            ->join('books', 'books.id', '=', 'borrows.book_id')
+                            ->groupBy('books.id')
+                            ->orderBy('total_borrowed', 'desc')
+                            ->paginate(config('define.book.item_limit')); 
+        $meta = [
+            'meta' => [
+                'message' => 'successfully',
+                'code' => Response::HTTP_OK,
+            ]
+        ];
+        $books = collect($topBorrowed)->merge($topBorrowed);
+        return response()->json($topBorrowed);
     }
 }
