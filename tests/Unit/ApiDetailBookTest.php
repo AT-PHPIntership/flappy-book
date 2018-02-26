@@ -12,7 +12,7 @@ use App\Model\User;
 use App\Model\Book;
 use DB;
 
-class BookTest extends TestCase
+class ApiDetailBookTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -26,32 +26,32 @@ class BookTest extends TestCase
         $this->makeData(1);
         $response = $this->get('/api/books/1');
         $response->assertStatus(200)
-                ->assertJson([
-                    'meta' => [
-                        'status' => 'Successfully',
-                    ],
-                ])
-                ->assertJsonStructure([
-                    'data' => [
-                        'id',
-                        'title',
-                        'category_id',
-                        'description',
-                        'language',
-                        'rating',
-                        'total_rating',
-                        'picture',
-                        'author',
-                        'price',
-                        'unit',
-                        'year',
-                        'page_number',
-                        'status',
-                        'user_id',
-                        'donator',
-                        'category',
-                    ]
-                ]);
+            ->assertJson([
+                'meta' => [
+                    'status' => 'Successfully',
+                ],
+            ])
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'title',
+                    'category_id',
+                    'description',
+                    'language',
+                    'rating',
+                    'total_rating',
+                    'picture',
+                    'author',
+                    'price',
+                    'unit',
+                    'year',
+                    'page_number',
+                    'status',
+                    'user_id',
+                    'donator',
+                    'category',
+                ]
+            ]);
     }
 
     /**
@@ -63,11 +63,11 @@ class BookTest extends TestCase
     {
         $response = $this->get('/api/books/0');
         $response->assertStatus(404)
-                ->assertJson([
-                    'meta' => [
-                        'status' => 'Failed'
-                    ],
-                ]);
+            ->assertJson([
+                'meta' => [
+                    'status' => 'Failed'
+                ],
+            ]);
     }
 
     /**
