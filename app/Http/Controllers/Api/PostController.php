@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Post;
 use App\Model\Rating;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\Handler;
 use Exception;
 use DB;
 
@@ -35,8 +36,8 @@ class PostController extends ApiController
 
         $posts = Post::select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->join('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->join('books', 'books.id', '=', 'ratings.book_id')
+                    ->leftjoin('ratings', 'posts.id', '=', 'ratings.post_id')
+                    ->leftjoin('books', 'books.id', '=', 'ratings.book_id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->where('books.id', '=', $id)
                     ->groupBy('posts.id')
@@ -54,25 +55,24 @@ class PostController extends ApiController
      */
     public function store(Request $request)
     {
-        $request['user_id'] = 11;
+        $request['user_id'] = 1;
 
         DB::beginTransaction();
         try {
             $post = Post::create($request->all());
             if ($request->status == Post::TYPE_REVIEW_BOOK) {
-                $result = Rating::create([
+                Rating::create([
                     'post_id' => $post->id,
                     'book_id' => $request->book_id,
                     'rating' => $request->rating,
                 ]);
             }
             DB::commit();
+            return $this->show($post->id);
         } catch (Exception $e) {
             DB::rollBack();
+            return $e->getMessage();
         }
-
-
-        return $this->show($post->id);
     }
 
     /**
@@ -91,7 +91,9 @@ class PostController extends ApiController
             'users.name',
             'users.team',
             'users.avatar_url',
+            'users.is_admin',
             'ratings.rating',
+            'ratings.book_id',
             DB::raw('COUNT(likes.id) AS likes'),
             'posts.created_at',
             'posts.updated_at',
@@ -100,12 +102,12 @@ class PostController extends ApiController
 
         $post = Post::select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->join('ratings', 'posts.id', '=', 'ratings.post_id')
+                    ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->where('posts.id', '=', $id)
                     ->groupBy('posts.id')
                     ->first();
-// dd($post);
+
         return $this->showOne($post);
     }
 }

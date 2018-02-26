@@ -125,16 +125,19 @@ Add new Post
         "code": 200,
     },
     "data": [
-        "id": 15,
+        "id": 39,
         "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
-        "name": "Mr. Morris Glover V",
+        "status": 2,
+        "name": "Duane Hagenes",
         "team": "PHP",
         "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
         "is_admin": 0,
         "rating": "2.0",
+        "book_id": 1,
         "likes": 0,
-        "created_at": "2018-02-08 16:34:10",
-        "updated_at": "2018-02-08 16:34:10",
+        "created_at": "2018-02-26 03:29:01",
+        "updated_at": "2018-02-26 03:29:01",
+        "deleted_at": null
 }
 ```
 
