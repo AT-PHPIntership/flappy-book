@@ -1,25 +1,31 @@
 <?php
+
 namespace App\Libraries\Traits;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
     /**
-     * Success response
+     * Response detail of data
      *
-     * @param Collection $data collection
-     * @param int        $code response status
+     * @param Model $instance instance
+     * @param int   $code     response status
      *
      * @return \Illuminate\Http\Response
      */
-    private function successResponse($data, $code)
+    protected function showOne(Model $instance, $code = 200)
     {
-        return response()->json($data, $code);
+        return response()->json([
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
+            'data' => $instance
+        ]);
     }
 
     /**
@@ -35,21 +41,9 @@ trait ApiResponse
         $collection = $this->paginate($collection);
         $collection = $this->structJson($collection, $code);
 
-        return $this->successResponse($collection, $code);
+        return response()->json($collection);
     }
 
-    /**
-     * Response data
-     *
-     * @param Model $instance instance of Model
-     * @param int   $code     response status
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function showOne(Model $instance, $code = 200)
-    {
-        return $this->successResponse($instance, $code);
-    }
 
     /**
      * Pagination
