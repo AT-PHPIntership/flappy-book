@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ApiController;
 use App\Model\Book;
 use App\Model\Borrow;
 use DB;
@@ -19,14 +18,9 @@ class BookController extends ApiController
     */
     public function topBorrow()
     {
-        $fields = [
-            'books.title',
-            DB::raw('COUNT(borrows.book_id) AS total_borrowed'),
-        ];
-        $topBorrowed = Borrow::select($fields)
-                            ->join('books', 'books.id', '=', 'borrows.book_id')
-                            ->groupBy('books.id')
-                            ->orderBy('total_borrowed', 'desc')
+        $topBorrowed = Book::select(['title'])
+                            ->withCount('borrows')
+                            ->orderBy('borrows_count', 'desc')
                             ->paginate(config('define.book.item_limit')); 
         $meta = [
             'meta' => [
@@ -34,7 +28,46 @@ class BookController extends ApiController
                 'code' => Response::HTTP_OK,
             ]
         ];
-        $books = collect($topBorrowed)->merge($topBorrowed);
+        $topBorrowed = collect($meta)->merge($topBorrowed);
         return response()->json($topBorrowed);
+    }
+
+    /**
+     * API get detail book
+     *
+     * @param int $id id of book
+     *
+     * @return void
+     */
+    public function show($id)
+    {
+        $fields = [
+            'books.id',
+            'books.title',
+            'books.category_id',
+            'books.description',
+            'books.language',
+            'books.rating',
+            'books.total_rating',
+            'books.picture',
+            'books.author',
+            'books.price','books.unit',
+            'books.year',
+            'books.page_number',
+            'borrows.status',
+            'users.id AS user_id',
+            'users.name AS donator',
+        ];
+
+        $book = Book::select($fields)
+                    ->with(['category' => function ($query) {
+                        $query->select('id', 'title');
+                    }])
+                    ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
+                    ->join('users', 'books.from_person', '=', 'users.employ_code')
+                    ->orderBy('borrows.created_at', 'DESC')
+                    ->findOrFail($id);
+
+        return $this->showOne($book);
     }
 }

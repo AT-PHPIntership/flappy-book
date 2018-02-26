@@ -16,10 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-// Route::get('/', function (Request $request) {
-//     return $request->user();
-// });
 Route::group(['namespace' => 'Api'], function(){
-   Route::get('books/top-borrow', 'BookController@topBorrow');
- });
-// Route::get('books','Api\BookController@index');
+    Route::get('books/{book}', 'BookController@show');
+    Route::get('book/top-borrow', 'BookController@topBorrow');
+});
