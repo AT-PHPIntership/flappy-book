@@ -37,7 +37,7 @@ class PostController extends ApiController
                     ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
                     ->where('books.id', '=', $id)
                     ->groupBy('posts.id')
-                    ->get();
+                    ->paginate(config('define.posts.limit_rows'));
 
         return $this->showAll($posts);
     }
