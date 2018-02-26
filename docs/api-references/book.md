@@ -127,7 +127,7 @@ Get top books borrow
     "pagination": {
         "total": 2,
         "per_page": 20,
-        "count": 10,
+        "count": 20,
         "current_page": 1,
         "total_pages": 1,
         "links": {
