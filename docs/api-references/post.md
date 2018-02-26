@@ -36,7 +36,6 @@ Get Posts with status review for Book
 | prev | String | Link of previous page |
 | next | String | Link of next page |
 
-
 ```json
 {
     "meta": {
@@ -79,6 +78,66 @@ Get Posts with status review for Book
             "next": null
         }
     }
+}
+```
+
+### `POST` Add new Post
+```
+/api/posts
+```
+Add new Post
+
+#### Request Headers
+| Key | Value |
+|---|---|
+| Accept | application\json |
+| Authorization | {token_type} {access_token} |
+
+#### Parameters
+| Key | Type | Description |
+|---|---|---|
+| book_id | Number | Id of book review |
+| content | String | Content of post |
+| status | Number | Status of post |
+| rating | Number | Rating of book |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Object | Object post |
+| id | Number | Id of post |
+| content | String | Content of post |
+| name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | Url of user's avatar |
+| rating | Number | Rating for book |
+| likes | Number | Likes of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+
+```json
+{
+    "meta": {
+        "status": "successfuly",
+        "code": 200,
+    },
+    "data": [
+        "id": 39,
+        "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+        "status": 2,
+        "name": "Duane Hagenes",
+        "team": "PHP",
+        "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
+        "is_admin": 0,
+        "rating": "2.0",
+        "book_id": 1,
+        "likes": 0,
+        "created_at": "2018-02-26 03:29:01",
+        "updated_at": "2018-02-26 03:29:01",
+        "deleted_at": null
 }
 ```
 
