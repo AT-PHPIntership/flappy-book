@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Libraries\Traits;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Validator;
 
 trait ApiResponse
 {
@@ -104,5 +105,23 @@ trait ApiResponse
         ]);
 
         return $collection;
+    }
+    /**
+     * Response detail of data
+     *
+     * @param Model $instance instance
+     * @param int   $code     response status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function showOne(Model $instance, $code = 200)
+    {
+        return response()->json([
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
+            'data' => $instance
+        ]);
     }
 }
