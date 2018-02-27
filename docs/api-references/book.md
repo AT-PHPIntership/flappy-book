@@ -88,3 +88,76 @@ Get a detail book
     }
 }
 ```
+
+### `GET` List book
+```
+/api/books
+```
+Get list books with paginate
+
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Object | Object book |
+| id | Number | Id of book |
+| title | String | Title of book |
+| total_rating | Number | The total number of reviews of a book |
+| picture | String | Url for image of the book |
+| rating | Number | The number of reviews of a book |
+
+```json
+"meta": {
+            "status": "successfully",
+            "code": 200
+         }
+"data": [
+        {
+            "id": 32,
+            "title": "Miss Yolanda Moore I",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 15,
+            "rating": 4
+        },
+        {
+            "id": 31,
+            "title": "Mr. Conrad Ryan",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 2,
+            "rating": 3
+        },
+        ],
+"pagination": {
+                "total": 32,
+                "per_page": 20,
+                "count": 20,
+                "current_page": 1,
+                "total_pages": 2,
+                "links": {
+                    "prev": null,
+                    "next": "http://flappybook.tech/api/books?page=2"
+              }
+}
+```    
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | object error |
+| message | String |error message |
+```json
+{
+    "meta": {
+        "status": "failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Page not found!"
+    }
+}
+```

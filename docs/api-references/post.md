@@ -1,7 +1,7 @@
 ## Post Api
 ### `GET` Reviews for Book
 ```
-/api/books/{id}/posts
+/api/books/{id}/reviews
 ```
 Get Posts with status review for Book
 
