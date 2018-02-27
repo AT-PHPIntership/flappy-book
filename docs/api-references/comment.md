@@ -1,7 +1,7 @@
 ## Comment Api
-### `GET` Comments for Book
+### `GET` Comments for Book or Post
 ```
-/api/books/{id}/comments
+/api/comments
 ```
 Comments for Book
 
@@ -13,7 +13,8 @@ Comments for Book
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| id | Integer | required | Id of book |
+| commentable_type | String | required | Type of object |
+| commentable_id | Number | required | Id of book or post |
 #### Response
 ```json
 {

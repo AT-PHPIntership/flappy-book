@@ -17,7 +17,7 @@ class CommentController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function commentsOfBook(int $id)
+    public function comments(int $id)
     {
         $fields = [
             'comments.id',
