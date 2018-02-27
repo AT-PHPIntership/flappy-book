@@ -27,12 +27,16 @@ class UserController extends ApiController
             'users.email',
             'users.is_admin',
             'users.avatar_url',
-            DB::raw("(SELECT books.title FROM books WHERE id IN (SELECT borrows.book_id FROM borrows WHERE users.id = borrows.user_id AND borrows.status = " . Borrow::BORROWING . ")) AS book_borrowing")
+            'books.title AS book_borrowing'
         ];
 
         $user = User::select($fields)
+                    ->leftJoin('borrows', function ($query) {
+                        return $query->on('borrows.user_id', 'users.id')->where('borrows.status', Borrow::BORROWING);
+                    })
+                    ->leftJoin('books', 'books.id', 'borrows.book_id')
                     ->withCount(['books AS donated', 'borrows AS borrowed'])
-                    ->where('id', $id)
+                    ->where('users.id', $id)
                     ->firstOrFail();
 
         return $this->responseObject($user);
