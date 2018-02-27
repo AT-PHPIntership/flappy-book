@@ -64,9 +64,9 @@ class BookController extends ApiController
         ];
 
         $topBooks = Book::select($fields)
-                    ->orderBy('rating', 'DESC')
                     ->orderBy('total_rating', 'DESC')
-                    ->limit(config('define.books.top_books_review'))
+                    ->orderBy('rating', 'DESC')
+                    ->limit(config('define.books.amount_top_books_review'))
                     ->get();
         
         return $this->responseObject($topBooks);
