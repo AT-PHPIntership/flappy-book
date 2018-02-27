@@ -45,6 +45,6 @@ class BookController extends ApiController
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
 
-        return $this->showOne($book);
+        return $this->responseObject($book);
     }
 }

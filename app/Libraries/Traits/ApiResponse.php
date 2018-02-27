@@ -4,9 +4,8 @@ namespace App\Libraries\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
@@ -44,19 +43,19 @@ trait ApiResponse
     /**
      * Response detail of data
      *
-     * @param Model $instance instance
-     * @param int   $code     response status
+     * @param object $data instance
+     * @param int    $code response status
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showOne(Model $instance, $code = 200)
+    protected function responseObject($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
                 'status' => __('api.successfully'),
                 'code' => $code
             ],
-            'data' => $instance
+            'data' => $data
         ]);
     }
 }
