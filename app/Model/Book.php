@@ -27,6 +27,11 @@ class Book extends Model
     const TYPE_DONATED = 'donated';
     
     /**
+     * Commentable type
+     */
+    const COMMENTABLE_TYPE = 'book';
+
+    /**
      * Declare table
      *
      * @var string $tabel table name
