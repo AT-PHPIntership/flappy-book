@@ -6,14 +6,12 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Model\Book;
-use App\Model\User;
 use App\Model\Category;
 use App\Model\Rating;
 use App\Model\Comment;
 use App\Model\Like;
 use App\Model\Post;
 use Faker\Factory as Faker;
-use DB;
 
 class DetailPostTest extends DuskTestCase
 {
@@ -24,17 +22,7 @@ class DetailPostTest extends DuskTestCase
     const RATING = 3;
 
     /**
-     * Override function setUp()
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-       parent::setUp();
-    }
-
-    /**
-     * A Dusk test show link detail transfer to detail post page.
+     * A Dusk test show link detail of post status transfer to detail post page.
      *
      * @return void
      */
@@ -49,8 +37,8 @@ class DetailPostTest extends DuskTestCase
                 ->assertSee('List comments')
                 ->assertDontSee('Rating');
 
-                $likes = $browser->text('ul.list-group-unbordered li:nth-child(2) a');
-                $this->assertEquals(self::NUMBER_RECORD_LIKE, $likes);
+            $likes = $browser->text('ul.list-group-unbordered li:nth-child(2) a');
+            $this->assertEquals(self::NUMBER_RECORD_LIKE, $likes);
         });
     }
 
@@ -71,12 +59,12 @@ class DetailPostTest extends DuskTestCase
                 ->assertSee('List comments')
                 ->assertDontSee('Rating');
 
-                $likes = $browser->text('ul.list-group-unbordered li:nth-child(2) a');
-                $this->assertEquals(self::NUMBER_RECORD_LIKE, $likes);
+            $likes = $browser->text('ul.list-group-unbordered li:nth-child(2) a');
+            $this->assertEquals(self::NUMBER_RECORD_LIKE, $likes);
         });
     }
 
-     /**
+    /**
      * A Dusk test click link detail of review status transfer to detail post page.
      *
      * @return void
@@ -116,16 +104,16 @@ class DetailPostTest extends DuskTestCase
         // Create books
         $employCode = $this->user->employ_code;
         $book = factory(Book::class)->create([
-                'category_id' => $category->id,
-                'from_person' => $employCode,
-            ]);
+            'category_id' => $category->id,
+            'from_person' => $employCode,
+        ]);
 
         // Create posts
         $userId = $this->user->id;
         $post = factory(Post::class)->create([
-                'status'  => $status,
-                'user_id' => $userId,
-            ]);
+            'status'  => $status,
+            'user_id' => $userId,
+        ]);
 
         // Create likes
         factory(Like::class, self::NUMBER_RECORD_LIKE)->create([
@@ -141,7 +129,6 @@ class DetailPostTest extends DuskTestCase
         ]);
 
         // Create rating
-        
         factory(Rating::class)->create([
             'rating' => self::RATING,
             'post_id' => $post->id,
