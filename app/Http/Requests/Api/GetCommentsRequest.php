@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Http\Requests\Api\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use App\Model\Comment;
@@ -21,8 +21,6 @@ class GetCommentsRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @param Request $request request
      *
      * @return array
      */
