@@ -161,3 +161,77 @@ Get list books with paginate
     }
 }
 ```
+
+### `GET` Search book with keyword.
+```
+    .../api/books?search=Mueller
+```
+    Get list book with correct keyword.
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Object | Object book |
+| id | Number | Id of book |
+| title | String | Title of book |
+| total_rating | Number | The total number of reviews of a book |
+| author | String | The author of book |
+| rating | Number | The number of reviews of a book |
+
+```json
+"meta": {
+            "status": "successfully",
+            "code": 200
+         }
+"data": [
+        {
+            "id": 1,
+            "title": "Miss Yolanda Moore I",
+            "author": "Mueller",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 15,
+            "rating": 4
+        },
+        {
+            "id": 2,
+            "title": "Mueller Parker",
+            "author": "Edison",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 2,
+            "rating": 3
+        },
+        ],
+"current_page": 1,
+        "first_page_url": "http://flappybook.tech/api/books?search=Mueller&page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://flappybook.tech/api/books?search=Mueller&page=1",
+        "next_page_url": null,
+        "path": "http://flappybook.tech/api/books",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 2,
+}
+```
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | object error |
+| message | String |error message |
+```json
+{
+    "meta": {
+        "status": "failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Page not found!"
+    }
+}
