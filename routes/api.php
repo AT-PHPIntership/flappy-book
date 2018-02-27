@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group(['namespace' => 'Api'], function(){
     Route::get('/users/{id}', 'PostController@show');
+    Route::get('books/{book}', 'BookController@show');
 });

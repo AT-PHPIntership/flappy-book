@@ -4,10 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Libraries\Traits\FilterTrait;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, FilterTrait;
 
     /**
      * Commentable type
@@ -28,6 +29,7 @@ class Post extends Model
      * Value of review book post
      */
     const TYPE_REVIEW_BOOK = 2;
+    const STATUS_COLUMN = 'status';
 
     /**
      * Declare table
@@ -47,13 +49,6 @@ class Post extends Model
         'is_findbook',
     ];
 
-    public $filterable = [
-        'id',
-        'user_id',
-        'content',
-        'status',
-    ];
-    
     /**
      * Relationship belongsTo with User
      *
@@ -108,4 +103,21 @@ class Post extends Model
     {
         return $this->hasOne(Rating::class);
     }
+
+    /**
+     * The attributes that can be filter.
+     *
+     * @var array $filterableFields
+     */
+    protected $filterableFields = [
+        'columns' => [
+            self::STATUS_COLUMN,
+        ],
+        'joins' => [
+            'users' => ['posts.user_id', 'users.id'],
+            'ratings' => ['posts.id', 'ratings.post_id'],
+            'books' => ['books.id', 'ratings.book_id'],
+            'likes' => ['posts.id', 'likes.post_id'],
+        ],
+    ];
 }

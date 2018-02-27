@@ -32,15 +32,12 @@ class PostController extends ApiController
             DB::raw('COUNT(likes.id) AS likes'),
             DB::raw('DATE_FORMAT(posts.created_at, "%h:%i:%p %d-%m-%Y") AS create_date'),
         ];
-        $posts = Post::select($fields)
-                    ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->leftJoin('books', 'books.id', '=', 'ratings.book_id')
-                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
+        $posts =  Post::filter(request('status'))
+                    ->select($fields)
                     ->where('posts.user_id', $id)
                     ->groupBy('posts.id', 'ratings.id')
-                    ->get();
+                    ->paginate(config('define.posts.limit_rows_status'));
 
-        return $this->showAll($posts);
+        return $this->responsePaginate($posts);
     }
 }

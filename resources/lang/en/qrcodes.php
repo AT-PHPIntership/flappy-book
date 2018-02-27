@@ -8,4 +8,5 @@ return [
     'download' => 'Download',
     'qrcode' => 'Qrcode',
     'book_title' => 'Book Title',
+    'download_failed' => 'Data Empty',
 ];
