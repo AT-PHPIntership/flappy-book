@@ -12,19 +12,19 @@ trait ApiResponse
     /**
      * Response detail of data
      *
-     * @param Model $instance instance
-     * @param int   $code     response status
+     * @param object $data instance
+     * @param int    $code response status
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showOne(Model $instance, $code = 200)
+    protected function responseObject($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
                 'status' => __('api.successfully'),
                 'code' => $code
             ],
-            'data' => $instance
+            'data' => $data
         ]);
     }
 
@@ -36,7 +36,7 @@ trait ApiResponse
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showAll(LengthAwarePaginator $responseData, $code = 200)
+    protected function responsePaginate(LengthAwarePaginator $responseData, $code = 200)
     {
         return response()->json([
             'meta' => [
