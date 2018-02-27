@@ -22,7 +22,8 @@ class ReviewsForBookApiTest extends TestCase
      */
     public function testStatusCode()
     {
-        $response = $this->json('GET', 'api/books/1/posts');
+        $bookId = $this->makeData(1);
+        $response = $this->json('GET', 'api/books/' . $bookId . '/reviews');
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -34,7 +35,7 @@ class ReviewsForBookApiTest extends TestCase
     public function testStructJson()
     {
         $bookId = $this->makeData(2);
-        $response = $this->json('GET', 'api/books/'. $bookId . '/posts');
+        $response = $this->json('GET', 'api/books/'. $bookId . '/reviews');
         $response->assertJsonStructure([
             'meta' => [
                 'status',
@@ -76,7 +77,7 @@ class ReviewsForBookApiTest extends TestCase
     public function testCompareDatabase()
     {
         $bookId = $this->makeData(2);
-        $response = $this->json('GET', 'api/books/'. $bookId . '/posts');
+        $response = $this->json('GET', 'api/books/'. $bookId . '/reviews');
         $data = json_decode($response->getContent())->data;
         foreach ($data as $post) {
             $arrayCompare = [
@@ -95,7 +96,7 @@ class ReviewsForBookApiTest extends TestCase
     public function testGetPaginationResult()
     {
         $bookId = $this->makeData(15);
-        $response = $this->json('GET', 'api/books/'. $bookId . '/posts?page=2');
+        $response = $this->json('GET', 'api/books/'. $bookId . '/reviews?page=2');
         $response->assertJson([
             'pagination' => [
                 'total' => 15,
