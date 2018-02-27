@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\GetCommentsRequest;
 use App\Model\Comment;
 use App\Model\Book;
 use DB;
@@ -13,15 +14,17 @@ class CommentController extends ApiController
     /**
      * Get list of the resource.
      *
-     * @param int $id id of book
+     * @param GetCommentsRequest $request request of comment
      *
      * @return \Illuminate\Http\Response
      */
-    public function comments(int $id)
+    public function comments(GetCommentsRequest $request)
     {
         $fields = [
             'comments.id',
             'comments.comment',
+            'comments.commentable_id',
+            'comments.commentable_type',
             'users.name',
             'users.team',
             'users.avatar_url',
@@ -32,12 +35,13 @@ class CommentController extends ApiController
             'comments.deleted_at',
         ];
 
-        $comments = Book::findOrFail($id)
-                          ->comments()
-                          ->leftJoin('users', 'comments.user_id', '=', 'users.id')
-                          ->select($fields)
-                          ->get();
+        $comments = Comment::select($fields)
+                           ->join('users', 'comments.user_id', '=', 'users.id')
+                           ->where('commentable_id', $request->commentable_id)
+                           ->where('commentable_type', $request->commentable_type)
+                           ->paginate(config('define.comments.limit_rows'))
+                           ->appends($request->except('page'));
 
-        return $this->showAll($comments);
+        return $this->responsePaginate($comments);
     }
 }
