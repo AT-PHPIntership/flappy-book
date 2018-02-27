@@ -6,9 +6,33 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\Book;
+use DB;
 
 class BookController extends ApiController
 {
+    public function index(){
+        $fields = [
+            'books.id',
+            'books.title',
+            'books.author',
+            'books.picture',
+            'books.total_rating',
+         ];
+        $books = Book::search(request('search'), request('filter'))
+            ->select($fields)
+            ->groupBy('books.id')
+            ->orderBy('books.created_at', 'DESC')
+            ->paginate(config('define.book.item_limit'));
+            $meta = [
+                'meta' => [
+                    'message' => 'successfully',
+                    'code' => Response::HTTP_OK,
+                ]
+            ];
+            $books = collect($meta)->merge($books);
+        
+            return response()->json($books);
+    }
     /**
      * API get detail book
      *
