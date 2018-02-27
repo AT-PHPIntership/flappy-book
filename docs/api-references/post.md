@@ -1,7 +1,7 @@
 ## Post Api
 ### `GET` Reviews for Book
 ```
-/api/books/{id}/posts
+/api/books/{id}/reviews
 ```
 Get Posts with status review for Book
 
@@ -35,7 +35,6 @@ Get Posts with status review for Book
 | links | Object | Object Links |
 | prev | String | Link of previous page |
 | next | String | Link of next page |
-
 
 ```json
 {
