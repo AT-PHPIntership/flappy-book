@@ -6,9 +6,32 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\Book;
+use App\Model\Borrow;
+use DB;
 
 class BookController extends ApiController
 {
+    /**
+    * Get top borrow books with paginate and meta.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function topBorrow()
+    {
+        $topBorrowed = Book::select(['title'])
+                            ->withCount('borrows')
+                            ->orderBy('borrows_count', 'desc')
+                            ->paginate(config('define.book.item_limit')); 
+        $meta = [
+            'meta' => [
+                'message' => 'successfully',
+                'code' => Response::HTTP_OK,
+            ]
+        ];
+        $topBorrowed = collect($meta)->merge($topBorrowed);
+        return response()->json($topBorrowed);
+    }
+
     /**
      * API get detail book
      *

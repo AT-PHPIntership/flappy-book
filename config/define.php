@@ -36,4 +36,7 @@ return [
         'number_format' => '%04d',
         'format_file_export' => 'csv',
     ],
+    'book' => [
+      'item_limit' => 20,
+    ]
 ];
