@@ -18,6 +18,10 @@ class Qrcode extends Model
 
     const IS_NOT_PRINTED = 0;
 
+    const IS_PRINTED = 1;
+
+    const LENGTH_OF_QRCODE = 4;
+
     /**
      * Declare table
      *
