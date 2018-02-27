@@ -47,4 +47,28 @@ class BookController extends ApiController
 
         return $this->responseObject($book);
     }
+
+    /**
+     * Get top books review
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksReview()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                    ->orderBy('rating', 'DESC')
+                    ->orderBy('total_rating', 'DESC')
+                    ->limit(config('define.books.top_books_review'))
+                    ->get();
+        
+        return $this->responseObject($topBooks);
+    }
 }
