@@ -17,7 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['namespace' => 'Api'], function(){
-    Route::get('/users/{id}/posts', 'PostController@show');
+    Route::get('/users/{id}/posts', 'PostController@getPostsOfUser');
     Route::get('books/{book}', 'BookController@show');
     Route::get('books/{id}/reviews', 'PostController@reviews');
 });
+// Route::middleware('auth:api')->group(['namespace' => 'Api'], function() {
+//     Route::get('/users/{id}/posts', 'PostController@getPostsOfUser');
+// }

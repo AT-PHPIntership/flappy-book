@@ -11,6 +11,25 @@ trait ApiResponse
 {
 
     /**
+     * Response detail of data
+     *
+     * @param object $data instance
+     * @param int    $code response status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function responseObject($data = [], $code = 200)
+    {
+        return response()->json([
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
+            'data' => $data
+        ]);
+    }
+
+    /**
      * Response list data
      *
      * @param LengthAwarePaginator $responseData list resource
@@ -20,7 +39,6 @@ trait ApiResponse
      */
     protected function responsePaginate(LengthAwarePaginator $responseData, $code = 200)
     {
-        
         return response()->json([
             'meta' => [
                 'status' => __('api.successfully'),
@@ -37,25 +55,6 @@ trait ApiResponse
                    'next' =>$responseData->nextPageUrl(),
                 ]
             ],
-        ]);
-    }
-
-    /**
-     * Response detail of data
-     *
-     * @param object $data instance
-     * @param int    $code response status
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function responseObject($data = [], $code = 200)
-    {
-        return response()->json([
-            'meta' => [
-                'status' => __('api.successfully'),
-                'code' => $code
-            ],
-            'data' => $data
         ]);
     }
 }

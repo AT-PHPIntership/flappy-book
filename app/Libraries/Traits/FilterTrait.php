@@ -8,20 +8,22 @@ trait FilterTrait
 {
 
     /**
-     * Search the result follow the search request and columns filterableFields.
+     * Filter the result follow the filter request.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query  of Model.
-     * @param string                                $filter filter
+     * @param array                                $fields fields
      *
      * @return void.
      */
-    public function scopeFilter($query, $filter)
+    public function scopeFilter($query, $fields)
     {
-        $query->select($this->getTable() . '.*');
-        $this->makeJoins($query);
-        if (!empty($filter)) {
-            foreach ($this->getColumns() as $value) {
-                $query->where($value, $filter);
+        if (isset($fields)) {
+            foreach ($fields as $field => $value) {
+                foreach ($this->getColumns() as $key => $operator) {
+                    if($key == $field) {
+                        $query->where($key, $operator, $value);
+                    }
+                }
             }
         }
     }
@@ -33,32 +35,6 @@ trait FilterTrait
      */
     protected function getColumns()
     {
-        return array_get($this->filterableFields, 'columns', []);
-    }
-
-    /**
-     * Get joins
-     *
-     * @return mixed
-     */
-    protected function getJoins()
-    {
-        return array_get($this->filterableFields, 'joins', []);
-    }
-
-    /**
-     * Make joins
-     *
-     * @param Builder $query query model
-     *
-     * @return void
-     */
-    protected function makeJoins($query)
-    {
-        foreach ($this->getJoins() as $table => $keys) {
-            $query->leftJoin($table, function ($join) use ($keys) {
-                $join->on($keys[0], '=', $keys[1]);
-            });
-        }
+        return array_get($this->filterableFields, 'operator', []);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Libraries\Traits\FilterTrait;
+use DB;
+use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -29,7 +31,7 @@ class Post extends Model
      * Value of review book post
      */
     const TYPE_REVIEW_BOOK = 2;
-    const STATUS_COLUMN = 'status';
+    const FILTER_FIELD_STATUS = 'status';
 
     /**
      * Declare table
@@ -105,19 +107,49 @@ class Post extends Model
     }
 
     /**
+     * Get list of the resource.
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public static function getPosts(Request $request)
+    {
+        $fields = [
+            'posts.id',
+            'posts.user_id',
+            'posts.content',
+            'posts.status',
+            'users.name',
+            'users.team',
+            'users.avatar_url',
+            'users.is_admin',
+            'books.picture',
+            'books.title',
+            'ratings.book_id',
+            'ratings.rating',
+            DB::raw('COUNT(likes.id) AS likes'),
+            DB::raw('DATE_FORMAT(posts.created_at, "' . config('define.posts.date_time_format') . '") AS create_date'),
+            DB::raw('DATE_FORMAT(posts.updated_at, "' . config('define.posts.date_time_format') . '") AS update_date'),
+        ];
+        $params = $request->all();
+        $posts = Post::filter($params)
+                    ->select($fields)
+                    ->join('users', 'posts.user_id', '=', 'users.id')
+                    ->leftjoin('ratings', 'posts.id', '=', 'ratings.post_id')
+                    ->leftjoin('books', 'books.id', '=', 'ratings.book_id')
+                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
+                    ->groupBy('posts.id');
+
+        return $posts;
+    }
+
+    /**
      * The attributes that can be filter.
      *
      * @var array $filterableFields
      */
     protected $filterableFields = [
-        'columns' => [
-            self::STATUS_COLUMN,
-        ],
-        'joins' => [
-            'users' => ['posts.user_id', 'users.id'],
-            'ratings' => ['posts.id', 'ratings.post_id'],
-            'books' => ['books.id', 'ratings.book_id'],
-            'likes' => ['posts.id', 'likes.post_id'],
+        'operator' => [
+            self::FILTER_FIELD_STATUS => '=',
         ],
     ];
 }
