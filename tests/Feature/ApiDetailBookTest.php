@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Http\Response;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,41 +18,62 @@ class ApiDetailBookTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Test response Api detail book
+     * Receive status code 200 when get detail book success.
      *
      * @return void
      */
-    public function testDetailBook()
+    public function testStatusCodeSuccess()
     {
         $this->makeData(1);
-        $response = $this->get('/api/books/1');
-        $response->assertStatus(200)
-            ->assertJson([
-                'meta' => [
-                    'status' => 'Successfully',
-                ],
-            ])
-            ->assertJsonStructure([
-                'data' => [
+        $response = $this->json('GET', '/api/books/1');
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    /**
+     * Return structure of json.
+     *
+     * @return array
+     */
+    public function jsonStructureTopBooksReview(){
+        return [
+            'meta' => [
+                'status',
+                'code'
+            ],
+            'data' => [
+                'id',
+                'title',
+                'category_id',
+                'description',
+                'language',
+                'rating',
+                'total_rating',
+                'picture',
+                'author',
+                'price',
+                'unit',
+                'year',
+                'page_number',
+                'status',
+                'user_id',
+                'donator',
+                'category' => [
                     'id',
-                    'title',
-                    'category_id',
-                    'description',
-                    'language',
-                    'rating',
-                    'total_rating',
-                    'picture',
-                    'author',
-                    'price',
-                    'unit',
-                    'year',
-                    'page_number',
-                    'status',
-                    'user_id',
-                    'donator',
-                    'category',
+                    'title'
                 ]
-            ]);
+            ],
+        ];
+    }
+
+    /**
+     * Test structure of json response.
+     *
+     * @return void
+     */
+    public function testJsonTopBooksReviewStructure(){
+        $this->makeData(1);
+        $response = $this->json('GET', '/api/books/1');
+        $response->assertJsonStructure($this->jsonStructureTopBooksReview());
     }
 
     /**
@@ -62,7 +84,7 @@ class ApiDetailBookTest extends TestCase
     public function testGetBookDoesNotExist()
     {
         $response = $this->get('/api/books/0');
-        $response->assertStatus(404)
+        $response->assertStatus(Response::HTTP_NOT_FOUND)
             ->assertJson([
                 'meta' => [
                     'status' => 'Failed'
