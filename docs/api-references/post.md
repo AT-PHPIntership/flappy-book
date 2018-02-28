@@ -18,6 +18,7 @@ Get Posts with status review for Book
 | code | Number | HTTP status codes |
 | data | Array | Array list posts |
 | id | Number | Id of post |
+| user_id | Number | Id of user create post |
 | content | String | Content of post |
 | name | String | Name of user |
 | team | String | Team of user |
@@ -45,27 +46,37 @@ Get Posts with status review for Book
     "data": [
         {
             "id": 1,
+            "user_id": 10,
             "content": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+            "status": 2,
             "name": "Greta Lehner",
             "team": "SA",
             "avatar_url": "http://172.16.110.17/images/user/avatar/366/64weew314e61ccc.png",
+            "is_admin": 0,
+            "picture": "http://book.aug/images/books/20180209.jpeg",
+            "title": "Molestiae voluptas",
+            "book_id": 3,
             "rating": "3.0",
             "likes": 1,
-            "created_at": "2018-02-08 16:34:10",
-            "updated_at": "2018-02-08 16:34:10",
-            "deleted_at": null
+            "create_date": "03:39:AM 27-02-2018",
+            "update_date": "03:39:AM 27-02-2018",
         },
         {
             "id": 15,
+            "user_id": 2,
             "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "status": 2,
             "name": "Mr. Morris Glover V",
             "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
-            "rating": "2.0",
-            "likes": 0,
-            "created_at": "2018-02-08 16:34:10",
-            "updated_at": "2018-02-08 16:34:10",
-            "deleted_at": null
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/3122323e61drf.png",
+            "is_admin": 0,
+            "picture": "http://book.aug/images/books/er345ss34.jpeg",
+            "title": "Molestiae voluptas",
+            "book_id": 3,
+            "rating": "3.0",
+            "likes": 1,
+            "create_date": "02:59:AM 28-02-2018",
+            "update_date": "02:59:AM 28-02-2018",
         }
     ],
     "pagination": {

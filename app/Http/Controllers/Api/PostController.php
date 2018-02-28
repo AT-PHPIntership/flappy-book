@@ -17,27 +17,10 @@ class PostController extends ApiController
      */
     public function reviews(int $id)
     {
-        $fields = [
-            'posts.id',
-            'posts.content',
-            'users.name',
-            'users.team',
-            'users.avatar_url',
-            'ratings.rating',
-            DB::raw('COUNT(likes.id) AS likes'),
-            'posts.created_at',
-            'posts.updated_at',
-            'posts.deleted_at',
-        ];
-
-        $posts = Post::select($fields)
-                    ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->join('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->join('books', 'books.id', '=', 'ratings.book_id')
-                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
-                    ->where('books.id', '=', $id)
-                    ->groupBy('posts.id')
-                    ->paginate(config('define.posts.limit_rows'));
+        $posts = Post::getPosts()
+                     ->where('posts.status', Post::TYPE_REVIEW_BOOK)
+                     ->where('books.id', $id)
+                     ->paginate(config('define.posts.limit_rows'));
 
         return $this->responsePaginate($posts);
     }
