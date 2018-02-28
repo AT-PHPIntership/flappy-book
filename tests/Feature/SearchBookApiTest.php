@@ -44,7 +44,7 @@ class SearchBookApiTest extends TestCase
                     'title' => $book->title,
                     'author' => $book->author,
                     'picture' => $book->picture,
-                    'total_rating' => $book->total_rating,
+                    'total_rating' => $book->total_rating
                 ]
             ]
         ]);
@@ -67,7 +67,7 @@ class SearchBookApiTest extends TestCase
                     'title' => $book->title,
                     'author' => $book->author,
                     'picture' => $book->picture,
-                    'total_rating' => $book->total_rating,
+                    'total_rating' => $book->total_rating
                 ]
             ]
         ]);
