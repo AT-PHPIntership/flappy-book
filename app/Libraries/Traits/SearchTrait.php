@@ -27,6 +27,9 @@ trait SearchTrait
             if ($filter == 'all') {
                 $query->orwhere($value, "LIKE", "%$search%");
             }
+            if(empty($filter)){
+                $query->orwhere($value, "LIKE", "%$search%");
+            }
         }
     }
 
