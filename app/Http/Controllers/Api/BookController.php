@@ -45,7 +45,7 @@ class BookController extends ApiController
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
 
-        return $this->responseObject($book);
+        return $this->responseSuccess($book);
     }
 
     /**
@@ -69,6 +69,6 @@ class BookController extends ApiController
                     ->limit(config('define.books.amount_top_books_review'))
                     ->get();
         
-        return $this->responseObject($topBooks);
+        return $this->responseSuccess($topBooks);
     }
 }
