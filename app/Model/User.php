@@ -39,6 +39,10 @@ class User extends Authenticatable
     const TEAM_ANDROID = 'ANDROID';
     const TEAM_BO = 'BO';
     const TEAM_SA = 'SA';
+    const DEFAULT_EMAIL = 'example@asiantech.vn';
+    const DEFAULT_NAME = 'null';
+    const DEFAULT_TEAM = 'null';
+    const DEFAULT_AVATAR_URL = 'null';
 
     /**
      * The attributes that are mass assignable.
@@ -103,5 +107,22 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Save qr for imported list
+     *
+     * @param string $employcode employcode user
+     *
+     * @return void
+     */
+    public static function saveImportUser($employcode)
+    {
+        $user['employ_code'] = $employcode;
+        $user['email'] = User::DEFAULT_EMAIL;
+        $user['name'] = User::DEFAULT_NAME;
+        $user['team'] = User::DEFAULT_TEAM;
+        $user['avatar_url'] = User::DEFAULT_AVATAR_URL;
+        self::lockForUpdate()->firstOrCreate($user);
     }
 }

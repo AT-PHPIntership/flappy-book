@@ -179,6 +179,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
 
+        /*
+         * Package excel
+         */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -228,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Str' => Illuminate\Support\Str::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

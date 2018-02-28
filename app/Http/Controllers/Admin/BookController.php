@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditBookRequest;
 use App\Http\Requests\Backend\CreateBookRequest;
+use App\Http\Requests\Backend\ImportBookRequest;
+use Excel;
 use DB;
 use Exception;
 use App\Model\Book;
@@ -164,7 +166,8 @@ class BookController extends Controller
             // store book
             $book = Book::create($bookFields);
             // generate qrcode_id
-            $qrCode = Qrcode::orderBy('code_id', 'desc')->first();
+            $qrCode = Qrcode::where('prefix', Qrcode::DEFAULT_CODE_PREFIX)
+                        ->orderBy('code_id', 'desc')->first();
             $codeNumber = $qrCode ? $qrCode->code_id + 1 :  Qrcode::DEFAULT_CODE_ID ;
             // store qrcode
             $book->qrcode()->create([
@@ -203,5 +206,103 @@ class BookController extends Controller
             flash(__('books.delete_book_fail'))->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Load vcs file and save list into db
+     *
+     * @param Request $request get request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function import(ImportBookRequest $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            Excel::load($request->file('file'), function ($reader) {
+                $reader->ignoreEmpty()->each(function ($cell) {
+                    $this->addBookImport($cell->toArray());
+                });
+            });
+            DB::commit();
+            flash(__('books.import_book_success'))->success();
+        } catch (Exception $e) {
+            DB::rollBack();
+            flash(__('books.import_book_fail'))->error();
+        }
+    }
+    
+    /**
+     * Insert list into db
+     *
+     * @param array $attributes attribute list
+     *
+     * @return void
+     */
+    public function addBookImport($attributes)
+    {
+        // Create user if not exits
+        $user = User::select(['id', 'employ_code'])->where('employ_code', $attributes['employee_code'])->first();
+        $employeeCode = ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : Book::DEFAULT_DONATOR;
+        if (!$user) {
+            User::saveImportUser($employeeCode);
+        }
+
+        $book = $this->getAttributesBook($attributes);
+
+        // Create book and qrcode
+        $qrcodeList = explode(',', $attributes['qrcode']);
+        for ($i = 0, $length = count($qrcodeList); $i < $length; $i++) {
+            $this->updateOrCreateBook(trim($qrcodeList[$i], ' '), $book);
+        }
+    }
+
+    /**
+     * Insert book and qrcode into db
+     *
+     * @param string         $qrCode qrcode
+     * @param App\Model\Book $book   book
+     *
+     * @return void
+     */
+    public function updateOrCreateBook($qrCode, $book)
+    {
+        $prefix = substr($qrCode, 0, 4);
+        $codeId = substr($qrCode, 4);
+        
+        $qrcodedata = Qrcode::withTrashed()->where([['prefix', $prefix], ['code_id', $codeId]])->first();
+        if (!$qrcodedata) {
+            $bookdata = Book::lockForUpdate()->create($book);
+            Qrcode::saveImportQRCode($prefix, $codeId, $bookdata);
+        } else {
+            Book::withTrashed()->lockForUpdate()->where(['id' => $qrcodedata->book_id])->update($book);
+        }
+    }
+
+    /**
+     * Get attributes book
+     *
+     * @param array $attributes attribute list
+     *
+     * @return void
+     */
+    public function getAttributesBook($attributes)
+    {
+        $book = [
+            'title'       => $attributes['name'],
+            'category_id' => Category::lockForUpdate()->firstOrCreate(['title' => $attributes['category']])->id,
+            'description' => isset($attributes['description']) ? '<p>' . $attributes['description'] . '</p>' : Book::DEFAULT_DESCRIPTION,
+            'year'        => isset($attributes['year']) ? $attributes['year'] : Book::DEFAULT_YEAR,
+            'author'      => isset($attributes['author']) ? $attributes['author'] : Book::DEFAULT_AUTHOR,
+            'language'    => $attributes['language'],
+            'page_number' => isset($attributes['pages']) ? $attributes['pages'] : Book::DEFAULT_PAGE_NUMBER,
+            'price'       => Book::DEFAULT_PRICE,
+            'unit'        => Book::DEFAULT_UNIT,
+            'picture'     => config('define.books.default_name_image'),
+            'from_person' => ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : Book::DEFAULT_DONATOR,
+            'status'      => (isset($attributes['status']) && $attributes['status'] == 'available') ? 1 : 0,
+        ];
+        return $book;
     }
 }

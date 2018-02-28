@@ -25,6 +25,13 @@ class Book extends Model
     const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
+    const DEFAULT_DONATOR = 'AT0001';
+    const DEFAULT_PAGE_NUMBER = null;
+    const DEFAULT_YEAR = null;
+    const DEFAULT_AUTHOR = 'null';
+    const DEFAULT_DESCRIPTION = 'null';
+    const DEFAULT_PRICE = 0;
+    const DEFAULT_UNIT = 'null';
     
     /**
      * Declare table
@@ -57,6 +64,7 @@ class Book extends Model
         'from_person',
         'total_rating',
         'rating',
+        'status',
     ];
 
     /**
@@ -151,6 +159,7 @@ class Book extends Model
         static::deleting(function ($books) {
             $books->borrows()->delete();
             $books->comments()->delete();
+            $books->qrcode()->delete();
         });
     }
 

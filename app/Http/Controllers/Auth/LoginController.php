@@ -10,6 +10,8 @@ use GuzzleHttp\Exception\ServerException;
 use App\Model\User;
 use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
+use DB;
+use App\Model\Book;
 
 class LoginController extends Controller
 {
@@ -100,12 +102,43 @@ class LoginController extends Controller
     public function saveUser($portalResponse, $request)
     {
         $userResponse = $portalResponse->data->user;
+
+        /**
+         * Update employ code
+         *
+         * @param App\Http\Controllers\Auth $portalResponse $portalResponse
+         * @param \Illuminate\Http\Request  $request        $request
+         *
+         * @return employcode
+         */
+        function updateEmployCode($portalResponse, $request)
+        {
+            $employCode = $portalResponse->data->user->employee_code;
+            $user = User::select(['id', 'employ_code'])->where('email', $request->email)->first();
+            if ($user) {
+                if ($user->employ_code !== $employCode) {
+                    DB::beginTransaction();
+                    try {
+                        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+                        User::where('id', $user->id)
+                            ->update(['employ_code' => $employCode]);
+                        Book::where('from_person', $user->employ_code)
+                            ->update(['from_person' => $employCode]);
+                        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollBack();
+                    }
+                }
+            }
+            return $employCode;
+        }
         # Collect user data from response
         $userCondition = [
-            'employ_code' => $userResponse->employee_code,
-            'email' => $request->email,
+            'employ_code' => updateEmployCode($portalResponse, $request),
         ];
         $user = [
+            'email' => $request->email,
             'name' => $userResponse->name,
             'team' => $userResponse->teams[0]->name,
             'expires_at' => date(config('define.login.datetime_format'), strtotime($userResponse->expires_at)),

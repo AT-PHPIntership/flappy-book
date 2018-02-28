@@ -32,6 +32,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/categories', 'CategoryController');
     Route::resource('/posts', 'PostController');
     Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
+    Route::post('/books/import', 'BookController@import')->name('books.import');
+    Route::get('/users/{user}/updateuser', 'UserController@updateuser')->name('users.updateuser');
     Route::resource('/qrcodes', 'QrcodeController');
 });
 

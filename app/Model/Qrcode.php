@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Qrcode extends Model
 {
+    use SoftDeletes;
+
     /**
      * Default code_id of qrcode
      */
@@ -14,7 +17,7 @@ class Qrcode extends Model
     /**
      * Default qrcode prefix
      */
-    const DEFAULT_CODE_PREFIX = 'ATB';
+    const DEFAULT_CODE_PREFIX = 'ATB-';
 
     const IS_NOT_PRINTED = 0;
 
@@ -57,5 +60,24 @@ class Qrcode extends Model
     public function book()
     {
         return $this->belongsTo(Book::class, 'book_id');
+    }
+
+    /**
+     * Save qr for imported list
+     *
+     * @param string         $prefix   prefix qrcode
+     * @param string         $codeId   code id qrcode
+     * @param App\Model\Book $bookdata $bookdata
+     *
+     * @return void
+     */
+    public static function saveImportQRCode($prefix, $codeId, $bookdata)
+    {
+        $qrcodes = [
+            'book_id' => $bookdata->id,
+            'prefix' => $prefix,
+            'code_id' => $codeId,
+        ];
+        self::lockForUpdate()->firstOrCreate($qrcodes);
     }
 }
