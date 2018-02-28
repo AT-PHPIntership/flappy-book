@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
                 $code = Response::HTTP_UNPROCESSABLE_ENTITY;
                 $msg = $exception->errors();
             }
-            
+
             return response()->json([
                 'meta' => [
                     'status' => __('api.failed'),
