@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,12 +14,23 @@ class ApiGetInfoUserTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Return json structure of infomation user
+     * Receive status code 200 when get infomation of user success.
+     *
+     * @return void
+     */
+    public function testStatusCodeSuccess()
+    {
+        factory(User::class)->create();
+        $response = $this->json('GET', '/api/users/1');
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    /**
+     * Return structure of json.
      *
      * @return array
      */
-    public function JsonStructureInfoUser()
-    {
+    public function jsonStructureInfoUser(){
         return [
             'meta' => [
                 'status',
@@ -36,71 +47,54 @@ class ApiGetInfoUserTest extends TestCase
                 'book_borrowing',
                 'donated',
                 'borrowed'
-            ],
+            ]    
         ];
     }
 
     /**
-     * Test compare structure of json.
+     * Test structure of json response.
      *
      * @return void
      */
-    public function testJsonStructureInfoUser()
-    {
+    public function testJsonInfoUserStructure(){
         factory(User::class)->create();
         $response = $this->json('GET', '/api/users/1');
-        $response->assertJsonStructure($this->JsonStructureInfoUser());
+        $response->assertJsonStructure($this->jsonStructureInfoUser());
     }
 
     /**
-     * Test meta api get info user ís success
-     *
+     * Test compare database
+     * 
      * @return void
      */
-    public function testGetInfoUserSuccess()
+    public function testCompareDatabase()
     {
-        factory(User::class)->create();
-        $response = $this->get('/api/users/1');
-        $response->assertStatus(Response::HTTP_OK)
-            ->assertJson([
-                'meta' => [
-                    'status' => 'Successfully',
-                ],
-            ]);
-    }
-
-    /**
-     * Test compare database.
-     *
-     * @return void
-     */
-    public function testCompareDatabase(){
         factory(User::class)->create();
         $response = $this->json('GET', '/api/users/1');
         $data = json_decode($response->getContent());
-        $this->assertDatabaseHas('users', [
+        $arrayCompare = [
             'id' => $data->data->id,
             'employ_code' => $data->data->employ_code,
             'name' => $data->data->name,
-            'team' => $data->data->team,
             'email' => $data->data->email,
             'is_admin' => $data->data->is_admin,
-            'avatar_url' => $data->data->avatar_url
-        ]);
+            'avatar_url' => $data->data->avatar_url,
+        ];
+        $this->assertDatabaseHas('users', $arrayCompare);
     }
 
     /**
-     * Test get info user fail
+     * Test User doesn't exist
      *
      * @return void
      */
-    public function testGetInfoUserFail()
+    public function testUserDoesNotExist()
     {
-        $response = $this->get('/api/users/1');
+        $response = $this->get('/api/users/0');
         $response->assertStatus(Response::HTTP_NOT_FOUND)
             ->assertJson([
                 'meta' => [
-                    'status' => 'Failed',
+                    'status' => 'Failed'
                 ],
             ]);
     }
