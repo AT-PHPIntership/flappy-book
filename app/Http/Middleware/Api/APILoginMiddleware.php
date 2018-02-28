@@ -27,6 +27,7 @@ class APILoginMiddleware
 
         if ($user) {
             if (Carbon::parse($user->expires_at)->diffInSeconds(Carbon::now()) > 0) {
+                Auth::login($user);
                 return $next($request);
             }
 
