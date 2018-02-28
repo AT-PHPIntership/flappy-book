@@ -22,7 +22,7 @@ class BookController extends ApiController
             'picture',
             'total_rating',
             'rating',
-         ];
+        ];
         $books = Book::select($fields)
             ->orderBy('created_at', 'DESC')
             ->paginate(config('define.book.limit_item'));
