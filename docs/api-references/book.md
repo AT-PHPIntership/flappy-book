@@ -173,7 +173,7 @@ Get top 10 books review
 | meta | Object | Object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
-| data | Object | Object book |
+| data | Array | Array of list top books review |
 | id | Number | Id of book |
 | title | String | Title of book |
 | rating | Number | Average review of a book |
