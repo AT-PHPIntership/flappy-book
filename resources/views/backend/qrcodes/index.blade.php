@@ -18,14 +18,16 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header" id="btn-download">
-              <div class="pull-left">
-                <button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button>
+            @if(count($qrcodes) > 0)
+              <div class="box-header" id="btn-download">
+                <div class="pull-left">
+                  <a href="{{ route('qrcodes.index', 'export') }}"><button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button></a>
+                </div>
               </div>
-            </div>
             <!-- /.box-header -->
             <div class="box-body" id="table-qrcodes">
               <table id="list-qrcodes" class="table table-bordered table-hover">
@@ -52,9 +54,8 @@
                   {{ $qrcodes->links() }}
                 </nav>
               </div>
-              <!-- /.pagination -->
-            </div>
-            <!-- /.box-body -->
+              <!-- /.box-body -->
+            @endif
           </div>
           <!-- /.box -->
         </div>
