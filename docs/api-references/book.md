@@ -105,6 +105,7 @@ Get top books borrow
 | title | String | Title of book |
 | total_rating | Number | The total number of reviews of a book |
 | total_borrowed | Number | total_borrowed of book |
+| rating | Number | The rating number of reviews of a book |
 
 ```json
 {
@@ -116,18 +117,20 @@ Get top books borrow
         {
             "title": "Prof. Aniyah McClure DDS",
             "total_rating": 4,
-            "total_borrowed": 4
+            "total_borrowed": 4,
+            "rating": 3
         },
         {
             "title": "Callie Vandervort DVM",
             "total_rating": 3,
-            "total_borrowed": 4
+            "total_borrowed": 4,
+            "rating": 4
         }
     ],
     "pagination": {
         "total": 2,
         "per_page": 20,
-        "count": 20,
+        "count": 2,
         "current_page": 1,
         "total_pages": 1,
         "links": {
