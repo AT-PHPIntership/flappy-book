@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Api'], function(){
     Route::get('users/{user}', 'UserController@show');
     Route::get('books/{id}/reviews', 'PostController@reviews');
 
-	Route::group(['middleware' => 'apiLogin'], function(){
-	    //Route::post('login', 'PostController@store');
-	});
+    Route::group(['middleware' => 'apiLogin'], function(){
+        //Route::post('login', 'PostController@store');
+    });
 });
