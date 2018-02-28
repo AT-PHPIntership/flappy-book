@@ -21,19 +21,12 @@ class BookController extends ApiController
             'title',
             'picture',
             'total_rating',
+            'rating',
          ];
         $books = Book::select($fields)
             ->orderBy('created_at', 'DESC')
-            ->paginate(config('define.book.item_limit'));
-            $meta = [
-                'meta' => [
-                    'message' => 'successfully',
-                    'code' => Response::HTTP_OK,
-                ]
-            ];
-            $books = collect($meta)->merge($books);
-        
-            return response()->json($books);
+            ->paginate(config('define.book.limit_item'));
+            return $this->responseObject($books);
     }
     /**
      * API get detail book
@@ -71,6 +64,6 @@ class BookController extends ApiController
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
 
-        return $this->showOne($book);
+        return $this->responseObject($book);
     }
 }

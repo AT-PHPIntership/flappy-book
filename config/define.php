@@ -37,6 +37,6 @@ return [
         'format_file_export' => 'csv',
     ],
     'book' => [
-      'item_limit' => 20,
+      'limit_item' => 20,
     ],
 ];

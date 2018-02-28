@@ -4,9 +4,8 @@ namespace App\Libraries\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
@@ -44,39 +43,6 @@ trait ApiResponse
     }
 
     /**
-     * Pagination
-     *
-     * @param Collection $collection collection
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function paginate(Collection $collection)
-    {
-        $rules = [
-            'pre_page' => 'integer|min:2|max:50'
-        ];
-
-        Validator::validate(request()->all(), $rules);
-
-        $page = LengthAwarePaginator::resolveCurrentPage();
-
-        $perPage = 10;
-        if (request()->has('pre_page')) {
-            $perPage = request()->per_page;
-        }
-
-        $result = $collection->slice(($page - 1) * $perPage, $perPage);
-
-        $paginated = new LengthAwarePaginator($result, $collection->count(), $perPage, $page, [
-            'path' => LengthAwarePaginator::resolveCurrentPath()
-        ]);
-
-        $paginated->appends(request()->all());
-
-        return $paginated;
-    }
-
-    /**
      * Structure of json
      *
      * @param array $resonseArray array response
@@ -109,19 +75,48 @@ trait ApiResponse
     /**
      * Response detail of data
      *
-     * @param Model $instance instance
-     * @param int   $code     response status
+     * @param object $data instance
+     * @param int    $code response status
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showOne(Model $instance, $code = 200)
+    protected function responseObject($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
                 'status' => __('api.successfully'),
                 'code' => $code
             ],
-            'data' => $instance
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * Response list data
+     *
+     * @param LengthAwarePaginator $responseData list resource
+     * @param int                  $code         response status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function responsePaginate(LengthAwarePaginator $responseData, $code = 200)
+    {
+        return response()->json([
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
+            'data' => $responseData->toArray()['data'],
+            'pagination' => [
+                'total' =>  $responseData->total(),
+                'per_page' =>  $responseData->perPage(),
+                'current_page' =>  $responseData->currentPage(),
+                'total_pages' =>  $responseData->lastPage(),
+                'links' => [
+                   'prev' => $responseData->previousPageUrl(),
+                   'next' =>$responseData->nextPageUrl(),
+                ]
+            ],
         ]);
     }
 }
