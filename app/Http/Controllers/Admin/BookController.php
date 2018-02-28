@@ -38,6 +38,7 @@ class BookController extends Controller
 
         $books = Book::search(request('search'), request('filter'))
             ->select($fields)
+            ->with('qrcode')
             ->sortable()
             ->groupBy('books.id')
             ->orderby('books.id', 'desc');

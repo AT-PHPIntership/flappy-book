@@ -14,7 +14,7 @@ class AddColumnStatusAndEidtColumnLanguageToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->tinyInteger('status')->after('rating')->comment('0 is unavailable, 1 is available');
+            $table->tinyInteger('status')->after('rating')->default(1)->comment('0 is unavailable, 1 is available');
             $table->string('language', 30)->change();
         });
     }
