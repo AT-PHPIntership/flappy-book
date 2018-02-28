@@ -1,6 +1,10 @@
 <?php
-
 return [
+    'data_not_found' => 'data not found',
+    'failed' => 'Failed',
     'successfully' => 'Successfully',
-    'failured' => 'Failured'
+    'error' => [
+        'session_expired' => 'Your session expired',
+        'token_not_found' => 'Token not found',
+    ]
 ];

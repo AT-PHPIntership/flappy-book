@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -50,6 +53,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->route()->getPrefix() === 'api') {
+            $code = Response::HTTP_NOT_FOUND;
+            $msg = __('api.failed');
+
+            if ($exception instanceof ModelNotFoundException) {
+                $code = Response::HTTP_NOT_FOUND;
+                $msg = __('api.data_not_found');
+            } elseif ($exception instanceof TokenMismatchException) {
+                $code = $exception->getCode();
+                $msg = $exception->getMessage();
+            }
+
+            return response()->json([
+                'meta' => [
+                    'status' => __('api.failed'),
+                    'code' => $code,
+                ],
+                'error' => [
+                    'message' => $msg,
+                ],
+            ], $code);
+        }
         return parent::render($request, $exception);
     }
 }

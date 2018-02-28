@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Libraries\Traits\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Libraries\Traits\ApiResponse;
 
 class ApiController extends Controller
 {
