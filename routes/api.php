@@ -17,6 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['namespace' => 'Api', 'middleware' => 'apiLogin'], function () {
-    Route::post('/login', 'LoginController@login');
+Route::group(['namespace' => 'Api'], function(){
+    Route::get('books/{book}', 'BookController@show');
+    Route::get('books/{id}/reviews', 'PostController@reviews');
+
+	Route::group(['middleware' => 'apiLogin'], function(){
+	    //Route::post('login', 'PostController@store');
+	});
 });
