@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Response;
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -61,6 +62,10 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof TokenMismatchException) {
                 $code = $exception->getCode();
                 $msg = $exception->getMessage();
+                return $this->reponseError($code, $msg);
+            } elseif ($exception instanceof ValidationException) {
+                $code = Response::HTTP_UNPROCESSABLE_ENTITY;
+                $msg = $exception->errors();
                 return $this->reponseError($code, $msg);
             }
         }
