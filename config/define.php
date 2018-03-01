@@ -33,8 +33,7 @@ return [
         'type_review_book' => App\Model\Post::TYPE_REVIEW_BOOK,
         'type_status' => App\Model\Post::TYPE_STATUS,
         'type_find_book' => App\Model\Post::TYPE_FIND_BOOK,
-        'three_dots' => '...',
-        'date_time_format' => "%h:%i:%p %d-%m-%Y",
+        'three_dots' => '...'
     ],
     'qrcodes' => [
         'limit_rows' => 10,

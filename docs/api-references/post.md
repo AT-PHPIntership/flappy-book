@@ -20,14 +20,18 @@ Get Posts with status review for Book
 | id | Number | Id of post |
 | user_id | Number | Id of user create post |
 | content | String | Content of post |
+| status | Number | Status of post |
 | name | String | Name of user |
 | team | String | Team of user |
 | avatar_url | String | Url of user's avatar |
+| is_admin | Number | Role of user |
+| picture | String | Picture of book |
+| title | String | Title of book |
+| book_id | Number | Id for book |
 | rating | Number | Rating for book |
 | likes | Number | likes of post |
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
-| deleted_at | String | Delete book time |
 | pagination | Object | Object pagination |
 | total | Number | Total posts |
 | per_page | Number | Posts per page |
@@ -58,8 +62,8 @@ Get Posts with status review for Book
             "book_id": 3,
             "rating": "3.0",
             "likes": 1,
-            "create_date": "03:39:AM 27-02-2018",
-            "update_date": "03:39:AM 27-02-2018",
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
         },
         {
             "id": 15,
@@ -75,8 +79,8 @@ Get Posts with status review for Book
             "book_id": 3,
             "rating": "3.0",
             "likes": 1,
-            "create_date": "02:59:AM 28-02-2018",
-            "update_date": "02:59:AM 28-02-2018",
+            "created_at": "2018-02-08 16:34:10",
+            "updated_at": "2018-02-08 16:34:10",
         }
     ],
     "pagination": {
