@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api'], function(){
     Route::get('books/top-review', 'BookController@topBooksReview');    
     Route::get('books/{book}', 'BookController@show');
-    Route::get('books','BookController@index');
+    Route::get('books', 'BookController@index');
     Route::get('users/{user}', 'UserController@show');
     Route::get('books/{id}/reviews', 'PostController@reviews');
 });

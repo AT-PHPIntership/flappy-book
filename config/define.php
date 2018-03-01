@@ -10,6 +10,7 @@ return [
         'image_name_prefix' => date("Ymd"),
         'folder_store_books' => 'images/books/',
         'default_name_image' => 'book_image.png',
+        'limit_item' => 20,
     ],
     'users' => [
     	'limit_rows' => 10,
@@ -36,8 +37,5 @@ return [
         'limit_rows' => 10,
         'number_format' => '%04d',
         'format_file_export' => 'csv',
-    ],
-    'books' => [
-      'limit_item' => 20,
     ],
 ];
