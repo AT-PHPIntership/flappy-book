@@ -40,7 +40,7 @@ return [
         'number_format' => '%04d',
         'format_file_export' => 'csv',
     ],
-    'book' => [
+    'books' => [
       'limit_item' => 20,
     ]
 ];
