@@ -274,13 +274,13 @@ Get top books borrow
 | meta | Object | object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
-| data | Object | Array book |
+| data | Array | Array of list top books borrow |
 | id | Number | Id of book |
 | title | String | Title of book |
 | total_rating | Number | The total number of reviews of a book |
 | picture | String | Url for image of the book |
-| rating | Number | The number of reviews of a book |
-| borrows_count | Number | total_borrowed of book |
+| rating | Number | Average review of a book |
+| borrows_count | Number | Total borrowed of book |
 
 ```json
 {
@@ -289,33 +289,49 @@ Get top books borrow
                 "code": 200
     },
     "data": [
-            {
-                id": 1,
-                "title": "Luis Krajcik",
-                "picture": "http://flappybook.tech//tmp/b6fefc65117463c5963acfd909ee7214.jpg",
-                "total_rating": 12,
-                "rating": 2,
-                "borrows_count": 4
-            },
-            {
-                "id": 2,
-                "title": "Dr. General Kiehn DDS",
-                "picture": "http://flappybook.tech//tmp/48920de5e7c48a6d43468167442d7c15.jpg",
-                "total_rating": 17,
-                "rating": 2,
-                "borrows_count": 1
-            },
+        {
+            "id": 1,
+            "title": "Luis Krajcik",
+            "picture": "http://flappybook.tech//tmp/b6fefc65117463c5963acfd909ee7214.jpg",
+            "total_rating": 12,
+            "rating": 2,
+            "borrows_count": 4
+        },
+        {
+            "id": 5,
+            "title": "Dr. General Kiehn DDS",
+            "picture": "http://flappybook.tech//tmp/48920de5e7c48a6d43468167442d7c15.jpg",
+            "total_rating": 17,
+            "rating": 2,
+            "borrows_count": 2
+        },
+        {
+            "id": 8,
+            "title": "Eldon Blick",
+            "picture": "http://flappybook.tech//tmp/fba48ab59a27318b8fc28184e2e1673d.jpg",
+            "total_rating": 10,
+            "rating": 3,
+            "borrows_count": 1
+        },
+        {
+        "id": 3,
+        "title": "Mariano Mayer",
+        "rating": 4,
+        "total_rating": 6,
+        "picture": "http://flappybook.tech//tmp/b06495378012d94197a6d3e4fb3bd306.jpg",
+        "borrows_count": 1
+        },
     ],
     "pagination": {
-            "total": 32,
-            "per_page": 20,
-            "count": 2,
-            "current_page": 1,
-            "total_pages": 2,
-            "links": {
-                "prev": null,
-                "next": null
-          }
+        "total": 32,
+        "per_page": 20,
+        "count": 20,
+        "current_page": 1,
+        "total_pages": 2,
+        "links": {
+            "prev": null,
+            "next": "http://flappybook.tech/api/books/top-borrow?page=2"
+        }
     }
 }
 ```    
@@ -327,6 +343,7 @@ Get top books borrow
 | code | Number | HTTP status codes |
 | error | Object | object error |
 | message | String |error message |
+
 ```json
 {
     "meta": {
@@ -334,7 +351,7 @@ Get top books borrow
         "code": 404
     },
     "error": {
-        "message": "Page not found!"
+        "message": "Data not found!"
     }
 }
 ```
