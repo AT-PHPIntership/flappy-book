@@ -18,18 +18,20 @@ class BookController extends ApiController
     */
     public function topBorrow()
     {
-        $topBorrowed = Book::select(['title'])
-                            ->withCount('borrows')
-                            ->orderBy('borrows_count', 'desc')
-                            ->paginate(config('define.book.item_limit')); 
-        $meta = [
-            'meta' => [
-                'message' => 'successfully',
-                'code' => Response::HTTP_OK,
-            ]
+        $fields = [
+            'id',
+            'title',
+            'picture',
+            'total_rating',
+            'rating',
         ];
-        $topBorrowed = collect($meta)->merge($topBorrowed);
-        return response()->json($topBorrowed);
+
+        $topBorrowed = Book::select($fields)
+                    ->withCount('borrows')
+                    ->orderBy('borrows_count', 'desc')
+                    ->paginate(config('define.books.limit_item'));
+                        
+        return $this->responsePaginate($topBorrowed);
     }
 
     /**

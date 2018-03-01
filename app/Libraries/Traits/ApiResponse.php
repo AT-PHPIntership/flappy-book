@@ -6,8 +6,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
@@ -39,40 +37,7 @@ trait ApiResponse
 
         return $this->successResponse($collection, $code);
     }
-
-    /**
-     * Pagination
-     *
-     * @param Collection $collection collection
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function paginate(Collection $collection)
-    {
-        $rules = [
-            'pre_page' => 'integer|min:2|max:50'
-        ];
-        
-        Validator::validate(request()->all(), $rules);
-        
-        $page = LengthAwarePaginator::resolveCurrentPage();
-        
-        $prePage = 10;
-        if (request()->has('pre_page')) {
-            $prePage = request()->pre_page;
-        }
-        
-        $result = $collection->slice(($page - 1) * $prePage, $prePage);
-        
-        $paginated = new LengthAwarePaginator($result, $collection->count(), $prePage, $page, [
-            'path' => LengthAwarePaginator::resolveCurrentPath()
-        ]);
-        
-        $paginated->appends(request()->all());
-        
-        return $paginated;
-    }
-
+    
     /**
      * Structure of json
      *
