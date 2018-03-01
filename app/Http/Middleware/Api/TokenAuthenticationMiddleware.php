@@ -34,6 +34,6 @@ class TokenAuthenticationMiddleware
             throw new TokenMismatchException(__('api.error.session_expired'), Response::HTTP_UNAUTHORIZED);
         }
 
-        throw new TokenMismatchException(__('api.error.token_not_found'), Response::HTTP_UNAUTHORIZED);
+        throw new TokenMismatchException(__('api.error.unauthorized'), Response::HTTP_UNAUTHORIZED);
     }
 }
