@@ -78,4 +78,31 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Get commments
+     *
+     * @return array
+     */
+    public static function getComments()
+    {
+        $fields = [
+            'comments.id',
+            'comments.comment',
+            'comments.commentable_id',
+            'comments.commentable_type',
+            'users.name',
+            'users.team',
+            'users.avatar_url',
+            'users.is_admin',
+            'comments.parent_id',
+            'comments.created_at',
+            'comments.updated_at',
+            'comments.deleted_at',
+        ];
+
+        $comments = Comment::select($fields)->join('users', 'comments.user_id', 'users.id');
+
+        return $comments;
+    }
 }
