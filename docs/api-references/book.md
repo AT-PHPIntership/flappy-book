@@ -89,9 +89,82 @@ Get a detail book
 }
 ```
 
+### `GET` List book
+```
+/api/books
+```
+Get list books with paginate
+
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Object | Object book |
+| id | Number | Id of book |
+| title | String | Title of book |
+| total_rating | Number | The total number of reviews of a book |
+| picture | String | Url for image of the book |
+| rating | Number | The number of reviews of a book |
+
+```json
+"meta": {
+            "status": "successfully",
+            "code": 200
+         }
+"data": [
+        {
+            "id": 32,
+            "title": "Miss Yolanda Moore I",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 15,
+            "rating": 4
+        },
+        {
+            "id": 31,
+            "title": "Mr. Conrad Ryan",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 2,
+            "rating": 3
+        },
+        ],
+"pagination": {
+                "total": 32,
+                "per_page": 20,
+                "count": 20,
+                "current_page": 1,
+                "total_pages": 2,
+                "links": {
+                    "prev": null,
+                    "next": "http://flappybook.tech/api/books?page=2"
+              }
+}
+```    
+#### Response - Fail
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | object error |
+| message | String |error message |
+```json
+{
+    "meta": {
+        "status": "failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Page not found!"
+    }
+}
+```
+
 ### `GET` Top books borrow
 ```
-/api/books/borrow/top
+api/books/top-borrow
 ```
 Get top books borrow
 
@@ -102,44 +175,48 @@ Get top books borrow
 | status | String | Status result |
 | code | Number | HTTP status codes |
 | data | Object | Object book |
+| id | Number | Id of book |
 | title | String | Title of book |
 | total_rating | Number | The total number of reviews of a book |
-| total_borrowed | Number | total_borrowed of book |
-| rating | Number | The rating number of reviews of a book |
+| picture | String | Url for image of the book |
+| rating | Number | The number of reviews of a book |
+| borrows_count | Number | total_borrowed of book |
 
 ```json
-{
-    "meta": {
-        "status": "successfully",
-        "code": 200
-    },
-    "data": [
+"meta": {
+            "status": "successfully",
+            "code": 200
+         }
+"data": [
         {
-            "title": "Prof. Aniyah McClure DDS",
-            "total_rating": 4,
-            "total_borrowed": 4,
-            "rating": 3
+            id": 1,
+            "title": "Luis Krajcik",
+            "picture": "http://flappybook.tech//tmp/b6fefc65117463c5963acfd909ee7214.jpg",
+            "total_rating": 12,
+            "rating": 2,
+            "borrows_count": 4
         },
         {
-            "title": "Callie Vandervort DVM",
-            "total_rating": 3,
-            "total_borrowed": 4,
-            "rating": 4
-        }
-    ],
-    "pagination": {
-        "total": 2,
-        "per_page": 20,
-        "count": 2,
-        "current_page": 1,
-        "total_pages": 1,
-        "links": {
-            "prev": null,
-            "next": null
-        }
-    }    
+            "id": 2,
+            "title": "Dr. General Kiehn DDS",
+            "picture": "http://flappybook.tech//tmp/48920de5e7c48a6d43468167442d7c15.jpg",
+            "total_rating": 17,
+            "rating": 2,
+            "borrows_count": 1
+        },
+        ],
+"pagination": {
+                "total": 32,
+                "per_page": 20,
+                "count": 2,
+                "current_page": 1,
+                "total_pages": 2,
+                "links": {
+                    "prev": null,
+                    "next": null
+              }
 }
-```
+```    
 #### Response - Fail
 | Field | Type | Description |
 |-------|------|-------------|

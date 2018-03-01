@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -50,6 +53,38 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->route()->getPrefix() === 'api') {
+            if ($exception instanceof ModelNotFoundException) {
+                $code = Response::HTTP_NOT_FOUND;
+                $msg = __('api.data_not_found');
+                return $this->reponseError($code, $msg);
+            } elseif ($exception instanceof ValidationException) {
+                $code = Response::HTTP_UNPROCESSABLE_ENTITY;
+                $msg = $exception->errors();
+                return $this->reponseError($code, $msg);
+            }
+        }
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Show messages for exception
+     *
+     * @param Integer $code Http code
+     * @param Object  $msg  Messages error
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reponseError($code, $msg)
+    {
+        return response()->json([
+            'meta' => [
+                'status' => __('api.failed'),
+                'code' => $code,
+            ],
+            'error' => [
+                'message' => $msg,
+            ],
+        ], $code);
     }
 }
