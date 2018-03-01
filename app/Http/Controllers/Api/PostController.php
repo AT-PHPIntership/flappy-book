@@ -39,6 +39,6 @@ class PostController extends ApiController
                     ->groupBy('posts.id')
                     ->paginate(config('define.posts.limit_rows'));
 
-        return $this->showAll($posts);
+        return $this->responsePaginate($posts);
     }
 }

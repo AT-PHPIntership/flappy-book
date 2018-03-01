@@ -12,46 +12,46 @@ trait ApiResponse
     /**
      * Response detail of data
      *
-     * @param Model $instance instance
-     * @param int   $code     response status
+     * @param object $data instance
+     * @param int    $code response status
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showOne(Model $instance, $code = 200)
+    protected function responseSuccess($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
                 'status' => __('api.successfully'),
                 'code' => $code
             ],
-            'data' => $instance
+            'data' => $data
         ]);
     }
 
     /**
      * Response list data
      *
-     * @param LengthAwarePaginator $data list resource
-     * @param int                  $code response status
+     * @param LengthAwarePaginator $responseData list resource
+     * @param int                  $code         response status
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showAll(LengthAwarePaginator $data, $code = 200)
+    protected function responsePaginate(LengthAwarePaginator $responseData, $code = 200)
     {
         return response()->json([
             'meta' => [
                 'status' => __('api.successfully'),
                 'code' => $code
             ],
-            'data' => $data->toArray()['data'],
+            'data' => $responseData->toArray()['data'],
             'pagination' => [
-                'total' =>  $data->total(),
-                'per_page' =>  $data->perPage(),
-                'current_page' =>  $data->currentPage(),
-                'total_pages' =>  $data->lastPage(),
+                'total' =>  $responseData->total(),
+                'per_page' =>  $responseData->perPage(),
+                'current_page' =>  $responseData->currentPage(),
+                'total_pages' =>  $responseData->lastPage(),
                 'links' => [
-                   'prev' => $data->previousPageUrl(),
-                   'next' =>$data->nextPageUrl(),
+                   'prev' => $responseData->previousPageUrl(),
+                   'next' =>$responseData->nextPageUrl(),
                 ]
             ],
         ]);
