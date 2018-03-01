@@ -10,6 +10,16 @@ class Comment extends Model
     use SoftDeletes;
 
     /**
+     * Book type
+     */
+    const BOOK_TYPE = 'book';
+
+    /**
+     * Post type
+     */
+    const POST_TYPE = 'post';
+
+    /**
      * Declare table
      *
      * @var string $tabel table name
@@ -22,8 +32,8 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'comment_id',
-        'comment_table',
+        'commentable_id',
+        'commentable_type',
         'user_id',
         'comment',
         'parent_id'
