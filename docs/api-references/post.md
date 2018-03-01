@@ -423,3 +423,74 @@ Get list all posts by user with paginate
     }
 }
 ```
+
+### `POST` Create new Post
+```
+/api/posts
+```
+Create new post
+
+##### Request header 
+| Key | Value |
+|---|---|
+|Accept|application\json|
+|Authorization|{token_type} {access_token}
+
+#### Parameters
+| Key | Value | Required | Description |
+|---|---|---|---|
+| status | Number | required | Post type (status,find book,review) |
+| content | String | required | Content of post |
+| book_id | Number | optional | Id book review (required when status is review) |
+| rating | Number | optional | Rating for book (required when status is review) |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list posts |
+| id | Number | Id of post |
+| user_id | Number | Id of user create post |
+| content | String | Content of post |
+| status | Number | Status of post |
+| name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | Url of user's avatar |
+| is_admin | Number | Role of user |
+| picture | String | Picture of book |
+| title | String | Title of book |
+| book_id | Number | Id for book |
+| rating | Number | Rating for book |
+| likes | Number | likes of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 201
+    },
+    "data": [
+        {
+            "id": 25,
+            "user_id": 11,
+            "content": "nguyen vancao",
+            "status": 2,
+            "name": "Cao Nguyen V.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61c9.png",
+            "is_admin": 0,
+            "picture": "http://book.aug/images/books/20180209.jpeg",
+            "title": "Prof. Julio Bechtelar III",
+            "book_id": 3,
+            "rating": "3.0",
+            "likes": 0,
+            "created_at": "2018-03-01 09:27:38",
+            "updated_at": "2018-03-01 09:27:38"
+        }
+    ]
+}
+```
