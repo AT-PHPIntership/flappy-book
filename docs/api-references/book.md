@@ -178,43 +178,44 @@ Get list books with paginate
 | id | Number | Id of book |
 | title | String | Title of book |
 | total_rating | Number | The total number of reviews of a book |
+| picture | String | Url for image of the book |
 | author | String | The author of book |
 | rating | Number | The number of reviews of a book |
 
 ```json
-"meta": {
-            "status": "successfully",
-            "code": 200
-         }
-"data": [
-        {
-            "id": 1,
-            "title": "Miss Yolanda Moore I",
-            "author": "Mueller",
-            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
-            "total_rating": 15,
-            "rating": 4
-        },
-        {
-            "id": 2,
-            "title": "Mueller Parker",
-            "author": "Edison",
-            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
-            "total_rating": 2,
-            "rating": 3
-        },
-        ],
-"current_page": 1,
-        "first_page_url": "http://flappybook.tech/api/books?search=Mueller&page=1",
-        "from": 1,
-        "last_page": 1,
-        "last_page_url": "http://flappybook.tech/api/books?search=Mueller&page=1",
-        "next_page_url": null,
-        "path": "http://flappybook.tech/api/books",
-        "per_page": 10,
-        "prev_page_url": null,
-        "to": 1,
-        "total": 2,
+{
+    "meta": {
+                "status": "successfully",
+                "code": 200
+    }
+    "data": [
+            {
+                "id": 1,
+                "title": "Miss Yolanda Moore I",
+                "author": "Mueller",
+                "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+                "total_rating": 15,
+                "rating": 4
+            },
+            {
+                "id": 2,
+                "title": "Mueller Parker",
+                "author": "Edison",
+                "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+                "total_rating": 2,
+                "rating": 3
+            },
+    ],
+    "pagination": {
+                    "total": 1,
+                    "per_page": 20,
+                    "current_page": 1,
+                    "total_pages": 1,
+                    "links": {
+                        "prev": null,
+                        "next": null
+                    }
+    }
 }
 ```
 #### Response - Fail
