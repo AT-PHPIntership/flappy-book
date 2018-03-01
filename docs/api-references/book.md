@@ -162,19 +162,19 @@ Get list books with paginate
 }
 ```
 
-### `GET` Search book with keyword.
+### `GET` Search books with keyword.
 ```
-/api/books?search=Mueller
+/api/books?search={key}
 ```
     Get list book with correct keyword.
 
 #### Response - Success
-| Field | Type | Description |
+| Field | Type | Array |
 |-------|------|-------------|
 | meta | Object | object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
-| data | Object | Object book |
+| data | Array | Array book |
 | id | Number | Id of book |
 | title | String | Title of book |
 | total_rating | Number | The total number of reviews of a book |
