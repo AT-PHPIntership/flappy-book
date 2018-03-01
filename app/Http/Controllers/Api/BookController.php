@@ -25,9 +25,11 @@ class BookController extends ApiController
         ];
         $books = Book::select($fields)
             ->orderBy('created_at', 'DESC')
-            ->paginate(config('define.book.limit_item'));
-            return $this->responseObject($books);
+            ->paginate(config('define.books.limit_item'));
+
+            return $this->responseSuccess($books);
     }
+    
     /**
      * API get detail book
      *
@@ -64,6 +66,30 @@ class BookController extends ApiController
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
 
-        return $this->responseObject($book);
+        return $this->responseSuccess($book);
+    }
+
+    /**
+     * Get top books review
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksReview()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                    ->orderBy('total_rating', 'DESC')
+                    ->orderBy('rating', 'DESC')
+                    ->limit(config('define.books.amount_top_books_review'))
+                    ->get();
+        
+        return $this->responseSuccess($topBooks);
     }
 }

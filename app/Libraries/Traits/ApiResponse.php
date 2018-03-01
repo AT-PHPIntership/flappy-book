@@ -10,39 +10,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 trait ApiResponse
 {
     /**
-     * Success response
-     *
-     * @param Collection $data collection
-     * @param int        $code response status
-     *
-     * @return \Illuminate\Http\Response
-     */
-    private function successResponse($data, $code)
-    {
-        return response()->json($data, $code);
-    }
-
-    /**
-     * Response list data
-     *
-     * @param Collection $collection collection
-     * @param int        $code       response status
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function showAll(Collection $collection, $code = 200)
-    {
-        if ($collection->isEmpty()) {
-            return $this->successResponse(['data' => $collection], $code);
-        }
-
-        $collection = $this->paginate($collection);
-        $collection = $this->structJson($collection->toArray(), $code);
-
-        return $this->successResponse($collection, $code);
-    }
-
-    /**
      * Structure of json
      *
      * @param array $resonseArray array response
@@ -80,7 +47,7 @@ trait ApiResponse
      *
      * @return \Illuminate\Http\Response
      */
-    protected function responseObject($data = [], $code = 200)
+    protected function responseSuccess($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
