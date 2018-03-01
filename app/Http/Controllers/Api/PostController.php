@@ -72,6 +72,8 @@ class PostController extends ApiController
                 ]);
             }
             DB::commit();
+
+            $post = Post::getPosts()->where('posts.id', $post->id)->get();
             return $this->responseObject($post, Response::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollBack();
