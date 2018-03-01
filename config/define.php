@@ -6,6 +6,7 @@ return [
     ],
     'books' => [
         'limit_rows' => 10,
+        'amount_top_books_review' => 10,
         'image_name_prefix' => date("Ymd"),
         'folder_store_books' => 'images/books/',
         'default_name_image' => 'book_image.png',
@@ -20,6 +21,9 @@ return [
     ],
     'categories' => [
     	'limit_rows' => 10,
+    ],
+    'comments' => [
+        'limit_rows' => 10,
     ],
     'posts' => [
         'limit_rows_comment' => 15,

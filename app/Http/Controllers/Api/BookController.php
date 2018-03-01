@@ -68,6 +68,30 @@ class BookController extends ApiController
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
 
-        return $this->showOne($book);
+        return $this->responseSuccess($book);
+    }
+
+    /**
+     * Get top books review
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksReview()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                    ->orderBy('total_rating', 'DESC')
+                    ->orderBy('rating', 'DESC')
+                    ->limit(config('define.books.amount_top_books_review'))
+                    ->get();
+        
+        return $this->responseSuccess($topBooks);
     }
 }
