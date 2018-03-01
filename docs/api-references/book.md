@@ -164,7 +164,7 @@ Get list books with paginate
 
 ### `GET` Search book with keyword.
 ```
-    .../api/books?search=Mueller
+/api/books?search=Mueller
 ```
     Get list book with correct keyword.
 
@@ -185,36 +185,36 @@ Get list books with paginate
 ```json
 {
     "meta": {
-                "status": "successfully",
-                "code": 200
+        "status": "successfully",
+        "code": 200
     }
     "data": [
-            {
-                "id": 1,
-                "title": "Miss Yolanda Moore I",
-                "author": "Mueller",
-                "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
-                "total_rating": 15,
-                "rating": 4
-            },
-            {
-                "id": 2,
-                "title": "Mueller Parker",
-                "author": "Edison",
-                "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
-                "total_rating": 2,
-                "rating": 3
-            },
+        {
+            "id": 1,
+            "title": "Miss Yolanda Moore I",
+            "author": "Mueller",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 15,
+            "rating": 4
+        },
+        {
+            "id": 2,
+            "title": "Mueller Parker",
+            "author": "Edison",
+            "picture": "http://flappybook.tech/images/books/639802f65e69608edf2700e979022e1d.png",
+            "total_rating": 2,
+            "rating": 3
+        },
     ],
     "pagination": {
-                    "total": 1,
-                    "per_page": 20,
-                    "current_page": 1,
-                    "total_pages": 1,
-                    "links": {
-                        "prev": null,
-                        "next": null
-                    }
+        "total": 1,
+        "per_page": 20,
+        "current_page": 1,
+        "total_pages": 1,
+        "links": {
+            "prev": null,
+            "next": null
+        }
     }
 }
 ```
