@@ -78,7 +78,7 @@ trait ApiResponse
      *
      * @return \Illuminate\Http\Response
      */
-    protected function responseObject($data = [], $code = 200)
+    protected function responseSuccess($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
