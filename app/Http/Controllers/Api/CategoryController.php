@@ -20,6 +20,6 @@ class CategoryController extends ApiController
             'title',
         ];
         $categories = Category::select($fields)->get();
-        return $this->showAll($categories);
+        return $this->responseSuccess($categories);
     }
 }
