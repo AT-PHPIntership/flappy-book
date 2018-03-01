@@ -26,7 +26,7 @@ class APILoginMiddleware
         $user = $accessToken ? User::where('access_token', $accessToken)->firstOrFail() : null;
 
         if ($user) {
-            if (Carbon::parse($user->expires_at)->diffInSeconds(Carbon::now()) > 0) {
+            if (Carbon::parse($user->expires_at)->gt(Carbon::now()) > 0) {
                 Auth::login($user);
                 return $next($request);
             }

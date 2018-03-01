@@ -56,11 +56,14 @@ class PostController extends ApiController
      */
     public function store(CreatePostRequest $request)
     {
-        $request['user_id'] = 1;
+        $request['user_id'] = Auth::id();
 
         DB::beginTransaction();
         try {
+            // Create post
             $post = Post::create($request->all());
+
+            // Create rating when post's status is review
             if ($request->status == Post::TYPE_REVIEW_BOOK) {
                 Rating::create([
                     'post_id' => $post->id,
@@ -69,46 +72,9 @@ class PostController extends ApiController
                 ]);
             }
             DB::commit();
-            return $this->show($post->id);
+            return $this->responseObject($post, Response::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
         }
-    }
-
-    /**
-     * Show detail post
-     *
-     * @param int $id id of post
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(int $id)
-    {
-        $fields = [
-            'posts.id',
-            'posts.content',
-            'posts.status',
-            'users.name',
-            'users.team',
-            'users.avatar_url',
-            'users.is_admin',
-            'ratings.rating',
-            'ratings.book_id',
-            DB::raw('COUNT(likes.id) AS likes'),
-            'posts.created_at',
-            'posts.updated_at',
-            'posts.deleted_at',
-        ];
-
-        $post = Post::select($fields)
-                    ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->leftJoin('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
-                    ->where('posts.id', '=', $id)
-                    ->groupBy('posts.id')
-                    ->first();
-
-        return $this->showOne($post);
     }
 }
