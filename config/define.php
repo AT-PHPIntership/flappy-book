@@ -35,7 +35,6 @@ return [
         'type_find_book' => App\Model\Post::TYPE_FIND_BOOK,
         'three_dots' => '...',
         'limit_rows_posts_of_user' => 20,
-        'date_time_format' => '%h:%i:%p %d-%m-%Y',
     ],
     'qrcodes' => [
         'limit_rows' => 10,

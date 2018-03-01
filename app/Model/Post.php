@@ -109,6 +109,8 @@ class Post extends Model
     /**
      * Get list of the resource.
      *
+     * @param Request $request send request
+     *
      * @return Illuminate\Database\Eloquent\Builder
      */
     public static function getPosts(Request $request)
@@ -127,8 +129,8 @@ class Post extends Model
             'ratings.book_id',
             'ratings.rating',
             DB::raw('COUNT(likes.id) AS likes'),
-            DB::raw('DATE_FORMAT(posts.created_at, "' . config('define.posts.date_time_format') . '") AS create_date'),
-            DB::raw('DATE_FORMAT(posts.updated_at, "' . config('define.posts.date_time_format') . '") AS update_date'),
+            'posts.created_at',
+            'posts.updated_at',
         ];
         $params = $request->all();
         $posts = Post::filter($params)

@@ -13,7 +13,8 @@ class PostController extends ApiController
     /**
      * Get a listing of the posts of user.
      *
-     * @param int $userId id of user
+     * @param Request $request send request
+     * @param int     $userId  id of user
      *
      * @return \Illuminate\Http\Response
     */

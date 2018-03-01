@@ -11,7 +11,7 @@ trait FilterTrait
      * Filter the result follow the filter request.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query  of Model.
-     * @param array                                $fields fields
+     * @param array                                 $fields fields
      *
      * @return void.
      */
@@ -20,7 +20,7 @@ trait FilterTrait
         if (isset($fields)) {
             foreach ($fields as $field => $value) {
                 foreach ($this->getColumns() as $key => $operator) {
-                    if($key == $field) {
+                    if ($key == $field) {
                         $query->where($key, $operator, $value);
                     }
                 }
