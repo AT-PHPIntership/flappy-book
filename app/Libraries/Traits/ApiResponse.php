@@ -10,36 +10,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 trait ApiResponse
 {
     /**
-     * Structure of json
-     *
-     * @param array $resonseArray array response
-     * @param int   $code         response status
-     *
-     * @return Illuminate\Support\Collection
-     */
-    public function structJson($resonseArray, $code = 200)
-    {
-        $collection = collect([
-            'meta' => [
-                'status' => 'successfully',
-                'code' => $code
-            ],
-            'data' => array_values($resonseArray['data']),
-            'pagination' => [
-                    'total' =>  $resonseArray['total'],
-                    'per_page' =>  $resonseArray['per_page'],
-                    'current_page' =>  $resonseArray['current_page'],
-                    'total_pages' =>  $resonseArray['last_page'],
-                    'links' => [
-                       'prev' => $resonseArray['prev_page_url'],
-                       'next' =>$resonseArray['next_page_url']
-                    ]
-            ]
-        ]);
-
-        return $collection;
-    }
-    /**
      * Response detail of data
      *
      * @param object $data instance
