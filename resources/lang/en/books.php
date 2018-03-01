@@ -38,6 +38,9 @@ return [
     'books_edit_failed' => 'Edit book failed!',
     'delete_book_success' => 'Delete Book Success!',
     'delete_book_fail' => 'Delete Book Fail!',
+    'qrcode' => 'QR Code',
+    'import_data' => 'Import Data',
+    'import' => 'Import',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',

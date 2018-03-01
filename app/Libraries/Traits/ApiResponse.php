@@ -3,40 +3,57 @@
 namespace App\Libraries\Traits;
 
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
     /**
-     * Success response
+     * Response detail of data
      *
-     * @param Collection $data collection
-     * @param int        $code response status
+     * @param object $data instance
+     * @param int    $code response status
      *
      * @return \Illuminate\Http\Response
      */
-    private function successResponse($data, $code)
+    protected function responseSuccess($data = [], $code = 200)
     {
         return response()->json([
             'meta' => [
-                'status' => 'successfully',
-                'code' => $code],
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
             'data' => $data
-          ]);
+        ]);
     }
-    
+
     /**
      * Response list data
      *
-     * @param Collection $collection collection
-     * @param int        $code       response status
+     * @param LengthAwarePaginator $responseData list resource
+     * @param int                  $code         response status
      *
      * @return \Illuminate\Http\Response
      */
-    protected function showAll(Collection $collection, $code = 200)
+    protected function responsePaginate(LengthAwarePaginator $responseData, $code = 200)
     {
-        if ($collection->isEmpty()) {
-            return $this->successResponse(['data' => $collection], $code);
-        }
-        return $this->successResponse($collection, $code);
+        return response()->json([
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
+            'data' => $responseData->toArray()['data'],
+            'pagination' => [
+                'total' =>  $responseData->total(),
+                'per_page' =>  $responseData->perPage(),
+                'current_page' =>  $responseData->currentPage(),
+                'total_pages' =>  $responseData->lastPage(),
+                'links' => [
+                   'prev' => $responseData->previousPageUrl(),
+                   'next' =>$responseData->nextPageUrl(),
+                ]
+            ],
+        ]);
     }
 }
