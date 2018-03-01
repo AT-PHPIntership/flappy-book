@@ -27,7 +27,7 @@ class BookController extends ApiController
             ->orderBy('created_at', 'DESC')
             ->paginate(config('define.books.limit_item'));
 
-            return $this->responseSuccess($books);
+            return $this->responsePaginate($books);
     }
     
     /**
