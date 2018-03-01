@@ -162,6 +162,106 @@ Get list books with paginate
 }
 ```
 
+### `GET` Top 10 Books Review
+```
+/api/books/top-review
+```
+Get top 10 books review
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array of list top books review |
+| id | Number | Id of book |
+| title | String | Title of book |
+| rating | Number | Average review of a book |
+| total_rating | Number | The total number of reviews of a book |
+| picture | String | Url for image of the book |
+
+
+```json
+{
+    "meta": {
+        "status": "Successfuly",
+        "code": 200
+    },
+    "data": [
+        {
+            "id": 1,
+            "title": "Book 1",
+            "rating": 4.0,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/20180201.jpeg",
+        },
+        {
+            "id": 2,
+            "title": "Book 2",
+            "rating": 4.0,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/20180202.jpeg",
+        },
+        {
+            "id": 3,
+            "title": "Book 3",
+            "rating": 4.0,
+            "total_rating": 3,
+            "picture": "http://book.aug/images/books/20180209.jpeg",
+        },
+        {
+            "id": 4,
+            "title": "Book 4",
+            "rating": 4.5,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/20180206.jpeg",
+        },
+        {
+            "id": 5,
+            "title": "Book 5",
+            "rating": 3.0,
+            "total_rating": 2,
+            "picture": "http://book.aug/images/books/20180207.jpeg",
+        },
+        {
+            "id": 6,
+            "title": "Book 6",
+            "rating": 4.0,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/20180208.jpeg",
+        },
+        {
+            "id": 7,
+            "title": "Book 7",
+            "rating": 4.0,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/20180209.jpeg",
+        },
+        {
+            "id": 8,
+            "title": "Book 8",
+            "rating": 4.0,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/201802023.jpeg",
+        },
+        {
+            "id": 9,
+            "title": "Book 9",
+            "rating": 4.0,
+            "total_rating": 5,
+            "picture": "http://book.aug/images/books/10180209.jpeg",
+        },
+        {
+            "id": 10,
+            "title": "Book 10",
+            "rating": 4.5,
+            "total_rating": 3,
+            "picture": "http://book.aug/images/books/20480209.jpeg",
+        },
+    ]
+}
+```
+
 ### `GET` Search books with keyword.
 ```
 /api/books?search={key}

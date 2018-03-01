@@ -22,6 +22,9 @@ return [
     'categories' => [
     	'limit_rows' => 10,
     ],
+    'comments' => [
+        'limit_rows' => 10,
+    ],
     'posts' => [
         'limit_rows_comment' => 15,
         'limit_rows' => 10,
