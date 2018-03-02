@@ -193,12 +193,9 @@ Create new Comment
     },
     "error": {
         "message": {
-            "commentable_type": [
-                "The selected commentable type is invalid."
+            "comment": [
+                "The comment field is required."
             ],
-            "commentable_id": [
-                "The commentable id must be an integer."
-            ]
         }
     }
 }
