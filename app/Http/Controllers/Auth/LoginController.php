@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ClientException;
 use App\Model\User;
 use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
@@ -68,9 +68,15 @@ class LoginController extends Controller
             $client = new Client();
             $portal = $client->post(config('portal.base_url_api') . config('portal.end_point.login'), ['form_params' => $data]);
             $portalResponse = json_decode($portal->getBody()->getContents());
-
-            if ($portalResponse->meta->status == config('define.login.msg_success')) {
-                $user = $this->saveUser($portalResponse, $request);
+            if ($portalResponse->access_token) {
+                $accessToken = $portalResponse->access_token;
+                $portalUserProfiles = $client->request('GET', config('portal.base_url_api') . config('portal.end_point.user_profiles'), [
+                    'headers' => [
+                        'authorization' => $accessToken,
+                    ]
+                ]);
+                $portalUserResponse = json_decode($portalUserProfiles->getBody()->getContents());
+                $user = $this->saveUser($portalUserResponse, $accessToken, $request);
                 Auth::login($user, $request->filled('remember'));
                 if ($user->is_admin == true) {
                     return redirect("/admin");
@@ -81,38 +87,37 @@ class LoginController extends Controller
                 redirect('/login')
                 ->withErrors(['error' => trans('portal.messages.server_error')]);
             }
-        } catch (ServerException $e) {
+        } catch (ClientException $e) {
             $portalResponse = json_decode($e->getResponse()->getBody()->getContents());
             return redirect()
                 ->back()
                 ->withInput()
-                ->withErrors(['error' => trans('portal.messages.' . $portalResponse->meta->messages)]);
+                ->withErrors(['error' => trans('portal.messages.' . $portalResponse->errors->email_password)]);
         }
     }
     /**
      * Save data users
      *
-     * @param App\Http\Controllers\Auth $portalResponse $portalResponse
-     * @param \Illuminate\Http\Request  $request        $request
+     * @param App\Http\Controllers\Auth $portalUserResponse $portalUserResponse
+     * @param App\Http\Controllers\Auth $accessToken        $accessToken
+     * @param \Illuminate\Http\Request  $request            $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function saveUser($portalResponse, $request)
+    public function saveUser($portalUserResponse, $accessToken, $request)
     {
-        $userResponse = $portalResponse->data->user;
         # Collect user data from response
         $userCondition = [
-            'employ_code' => $userResponse->employee_code,
+            'employ_code' => $portalUserResponse->employee_code,
             'email' => $request->email,
         ];
         $user = [
-            'name' => $userResponse->name,
-            'team' => $userResponse->teams[0]->name,
-            'expires_at' => date(config('define.login.datetime_format'), strtotime($userResponse->expires_at)),
-            'avatar_url' => $userResponse->avatar_url,
-            'access_token' => $userResponse->access_token,
+            'name' => $portalUserResponse->name,
+            'team' => $portalUserResponse->teams[0]->name,
+            'avatar_url' => $portalUserResponse->avatar->file,
+            'access_token' => $accessToken,
         ];
-        if ($userResponse->teams[0]->name == User::TEAM_SA) {
+        if ($portalUserResponse->teams[0]->name == User::TEAM_SA) {
             $user['is_admin'] = User::ROLE_ADMIN;
         }
         # Get user from database OR create User
