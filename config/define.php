@@ -6,9 +6,11 @@ return [
     ],
     'books' => [
         'limit_rows' => 10,
+        'amount_top_books_review' => 10,
         'image_name_prefix' => date("Ymd"),
         'folder_store_books' => 'images/books/',
         'default_name_image' => 'book_image.png',
+        'limit_item' => 20,
     ],
     'users' => [
     	'limit_rows' => 10,
@@ -20,6 +22,9 @@ return [
     ],
     'categories' => [
     	'limit_rows' => 10,
+    ],
+    'comments' => [
+        'limit_rows' => 10,
     ],
     'posts' => [
         'limit_rows_comment' => 15,
@@ -34,5 +39,6 @@ return [
     'qrcodes' => [
         'limit_rows' => 10,
         'number_format' => '%04d',
+        'format_file_export' => 'csv',
     ],
 ];
