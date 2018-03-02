@@ -5,8 +5,6 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Libraries\Traits\FilterTrait;
-use DB;
-use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -107,51 +105,11 @@ class Post extends Model
     }
 
     /**
-     * Get list of the resource.
+     * The attributes that can be search.
      *
-     * @param Request $request send request
-     *
-     * @return Illuminate\Database\Eloquent\Builder
+     * @var array $fieldSearchable
      */
-    public static function getPosts(Request $request)
-    {
-        $fields = [
-            'posts.id',
-            'posts.user_id',
-            'posts.content',
-            'posts.status',
-            'users.name',
-            'users.team',
-            'users.avatar_url',
-            'users.is_admin',
-            'books.picture',
-            'books.title',
-            'ratings.book_id',
-            'ratings.rating',
-            DB::raw('COUNT(likes.id) AS likes'),
-            'posts.created_at',
-            'posts.updated_at',
-        ];
-        $params = $request->all();
-        $posts = Post::filter($params)
-                    ->select($fields)
-                    ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->leftjoin('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->leftjoin('books', 'books.id', '=', 'ratings.book_id')
-                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
-                    ->groupBy('posts.id');
-
-        return $posts;
-    }
-
-    /**
-     * The attributes that can be filter.
-     *
-     * @var array $filterableFields
-     */
-    protected $filterableFields = [
-        'operator' => [
-            self::FILTER_FIELD_STATUS => '=',
-        ],
+    protected $fieldSearchable = [
+        'status' => ['posts.status' => '='],
     ];
 }

@@ -44,15 +44,20 @@ class ReviewsForBookApiTest extends TestCase
             'data' => [
                 [
                     'id',
+                    'user_id',
                     'content',
+                    'status',
                     'name',
                     'team',
                     'avatar_url',
+                    'is_admin',
+                    'picture',
+                    'title',
+                    'book_id',
                     'rating',
                     'likes',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
                 ],
             ],
             'pagination' => [
@@ -126,6 +131,7 @@ class ReviewsForBookApiTest extends TestCase
 
         $posts = factory(Post::class, $row)->create([
             'user_id' => $users->id,
+            'status' => Post::TYPE_REVIEW_BOOK
         ]);
 
         foreach ($posts as $post) {

@@ -19,22 +19,56 @@ trait FilterTrait
     {
         if (isset($fields)) {
             foreach ($fields as $field => $value) {
-                foreach ($this->getColumns() as $key => $operator) {
-                    if ($key == $field) {
-                        $query->where($key, $operator, $value);
-                    }
+                foreach ($this->getColumns($field) as $key => $operator) {
+                    $this->addCondition($query, $key, $operator, $value);
                 }
             }
         }
     }
 
     /**
-     * Get columns filterableFields
+     * Add query condition
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query    of Model.
+     * @param string                                $column   filter field
+     * @param string                                $operator operator
+     * @param string                                $value    keyword
+     *
+     * @return void.
+     */
+    private function addCondition($query, $column, $operator, $value)
+    {
+        switch ($operator) {
+            case 'like':
+                $query->where($column, 'like', '%' . $value . '%');
+                break;
+            case 'between':
+                $query->whereBetween($column, explode(',', $value));
+                break;
+            case 'not_null':
+                $query->whereNotNull($column);
+                break;
+            case 'null':
+                $query->whereNull($column);
+                break;
+            case 'in':
+                $query->whereIn($column, explode(',', $value));
+                break;
+            default:
+                $query->where($column, $operator, $value);
+                break;
+        }
+    }
+
+    /**
+     * Get columns fieldSearchable
+     *
+     * @param array $field field
      *
      * @return mixed
      */
-    protected function getColumns()
+    protected function getColumns($field)
     {
-        return array_get($this->filterableFields, 'operator', []);
+        return array_get($this->fieldSearchable, $field);
     }
 }
