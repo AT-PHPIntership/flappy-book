@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Api'], function(){
     Route::get('books/top-review', 'BookController@topBooksReview');    
     Route::get('books/{book}', 'BookController@show');
     Route::get('users/{user}', 'UserController@show')->middleware('tokenAuthentication');
+    Route::get('books', 'BookController@index');
     Route::get('books/{id}/reviews', 'PostController@reviews');
     Route::get('comments', 'CommentController@comments');
 });
