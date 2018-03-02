@@ -10,6 +10,27 @@ use App\Model\Book;
 class BookController extends ApiController
 {
     /**
+     * Get list of books
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $fields = [
+            'id',
+            'title',
+            'picture',
+            'total_rating',
+            'rating',
+        ];
+        $books = Book::select($fields)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('define.books.limit_item'));
+
+            return $this->responsePaginate($books);
+    }
+    
+    /**
      * API get detail book
      *
      * @param int $id id of book

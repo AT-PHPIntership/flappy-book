@@ -18,15 +18,20 @@ Get Posts with status review for Book
 | code | Number | HTTP status codes |
 | data | Array | Array list posts |
 | id | Number | Id of post |
+| user_id | Number | Id of user create post |
 | content | String | Content of post |
+| status | Number | Status of post |
 | name | String | Name of user |
 | team | String | Team of user |
 | avatar_url | String | Url of user's avatar |
+| is_admin | Number | Role of user |
+| picture | String | Picture of book |
+| title | String | Title of book |
+| book_id | Number | Id for book |
 | rating | Number | Rating for book |
 | likes | Number | likes of post |
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
-| deleted_at | String | Delete book time |
 | pagination | Object | Object pagination |
 | total | Number | Total posts |
 | per_page | Number | Posts per page |
@@ -45,27 +50,37 @@ Get Posts with status review for Book
     "data": [
         {
             "id": 1,
+            "user_id": 10,
             "content": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+            "status": 2,
             "name": "Greta Lehner",
             "team": "SA",
             "avatar_url": "http://172.16.110.17/images/user/avatar/366/64weew314e61ccc.png",
-            "rating": 3.0,
+            "is_admin": 0,
+            "picture": "http://book.aug/images/books/20180209.jpeg",
+            "title": "Molestiae voluptas",
+            "book_id": 3,
+            "rating": "3.0",
             "likes": 1,
             "created_at": "2018-02-08 16:34:10",
             "updated_at": "2018-02-08 16:34:10",
-            "deleted_at": null
         },
         {
             "id": 15,
+            "user_id": 2,
             "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "status": 2,
             "name": "Mr. Morris Glover V",
             "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61ccc.png",
-            "rating": 2.0,
-            "likes": 0,
+            "avatar_url": "http://172.16.110.17/images/user/avatar/366/3122323e61drf.png",
+            "is_admin": 0,
+            "picture": "http://book.aug/images/books/er345ss34.jpeg",
+            "title": "Molestiae voluptas",
+            "book_id": 3,
+            "rating": "3.0",
+            "likes": 1,
             "created_at": "2018-02-08 16:34:10",
             "updated_at": "2018-02-08 16:34:10",
-            "deleted_at": null
         }
     ],
     "pagination": {
@@ -430,7 +445,7 @@ Get list all posts by user with paginate
 ```
 Create new post
 
-##### Request header 
+##### Request header
 | Key | Value |
 |---|---|
 |Accept|application\json|
@@ -486,7 +501,7 @@ Create new post
             "picture": "http://book.aug/images/books/20180209.jpeg",
             "title": "Prof. Julio Bechtelar III",
             "book_id": 3,
-            "rating": "3.0",
+            "rating": 3.0,
             "likes": 0,
             "created_at": "2018-03-01 09:27:38",
             "updated_at": "2018-03-01 09:27:38"
