@@ -13,6 +13,8 @@ class ApiGetInfoUserTest extends TestCase
 {
     use DatabaseMigrations;
 
+    const NUMBER_RECORD_CREATE = 5;
+
     /**
      * Receive status code 200 when get infomation of user success.
      *
@@ -20,7 +22,8 @@ class ApiGetInfoUserTest extends TestCase
      */
     public function testStatusCodeSuccess()
     {
-        factory(User::class)->create();
+        factory(User::class, self::NUMBER_RECORD_CREATE)->create();
+        $this->app->instance('middleware.disable', true);
         $response = $this->json('GET', '/api/users/1');
         $response->assertStatus(Response::HTTP_OK);
     }
@@ -57,7 +60,8 @@ class ApiGetInfoUserTest extends TestCase
      * @return void
      */
     public function testJsonInfoUserStructure(){
-        factory(User::class)->create();
+        factory(User::class, self::NUMBER_RECORD_CREATE)->create();
+        $this->app->instance('middleware.disable', true);
         $response = $this->json('GET', '/api/users/1');
         $response->assertJsonStructure($this->jsonStructureInfoUser());
     }
@@ -69,7 +73,8 @@ class ApiGetInfoUserTest extends TestCase
      */
     public function testCompareDatabase()
     {
-        factory(User::class)->create();
+        factory(User::class, self::NUMBER_RECORD_CREATE)->create();
+        $this->app->instance('middleware.disable', true);
         $response = $this->json('GET', '/api/users/1');
         $data = json_decode($response->getContent());
         $arrayCompare = [
@@ -90,8 +95,26 @@ class ApiGetInfoUserTest extends TestCase
      */
     public function testUserDoesNotExist()
     {
+        $this->app->instance('middleware.disable', true);
         $response = $this->get('/api/users/0');
         $response->assertStatus(Response::HTTP_NOT_FOUND)
+            ->assertJson([
+                'meta' => [
+                    'status' => 'Failed'
+                ],
+            ]);
+    }
+
+    /**
+     * test Get information of user when unauthorized
+     *
+     * @return void
+     */
+    public function testUnauthorized()
+    {
+        factory(User::class, self::NUMBER_RECORD_CREATE)->create();        
+        $response = $this->get('/api/users/1');
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson([
                 'meta' => [
                     'status' => 'Failed'
