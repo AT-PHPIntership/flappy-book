@@ -181,8 +181,6 @@ Create new Comment
 | code | Number | HTTP status codes |
 | error | Object | Object error |
 | message | Object | Object message |
-| commentable_type | Array | Error type |
-| commentable_id | Array | Error id |
 | comment | Array | Error comment |
 
 ```json
