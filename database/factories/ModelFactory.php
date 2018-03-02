@@ -71,7 +71,7 @@ $factory->define(App\Model\User::class, function (Faker $faker) {
 });
 $factory->define(App\Model\Qrcode::class, function (Faker $faker) {
     return [
-        'prefix' => 'ATB',
+        'prefix' => 'ATB-',
         'code_id' => $faker->numberBetween(0, 5000),
         'status' => $faker->numberBetween(0, 1),
     ];

@@ -17,5 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('books/{id}/posts', 'Api\PostController@reviews');
-Route::get('books/{id}/comments', 'Api\CommentController@commentsOfBook');
+Route::group(['namespace' => 'Api'], function(){
+    Route::get('categories', 'CategoryController@index');
+    Route::get('books/top-review', 'BookController@topBooksReview');    
+    Route::get('books/{book}', 'BookController@show');
+    Route::get('users/{user}', 'UserController@show');
+    Route::get('books/{id}/reviews', 'PostController@reviews');
+    Route::get('comments', 'CommentController@comments');
+});
