@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Closure;
 
-class APILoginMiddleware
+class TokenAuthenticationMiddleware
 {
     /**
      * Handle an incoming request.
@@ -23,17 +23,17 @@ class APILoginMiddleware
     {
         $accessToken = $request->headers->get('access-token');
 
-        $user = $accessToken ? User::where('access_token', $accessToken)->firstOrFail() : null;
+        $user = $accessToken ? User::where('access_token', $accessToken)->first() : null;
 
         if ($user) {
-            if (Carbon::parse($user->expires_at)->diffInSeconds(Carbon::now()) > 0) {
+            if (Carbon::parse($user->expires_at)->gt(Carbon::now())) {
                 Auth::login($user);
                 return $next($request);
             }
 
-            throw new TokenMismatchException(__('api.error.session_expired'), Response::HTTP_NOT_FOUND);
+            throw new TokenMismatchException(__('api.error.session_expired'), Response::HTTP_UNAUTHORIZED);
         }
 
-        throw new TokenMismatchException(__('api.error.token_not_found'), Response::HTTP_NOT_FOUND);
+        throw new TokenMismatchException(__('api.error.unauthorized'), Response::HTTP_UNAUTHORIZED);
     }
 }
