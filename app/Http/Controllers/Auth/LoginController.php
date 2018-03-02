@@ -12,6 +12,7 @@ use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Model\Book;
+use App\Libraries\Portal;
 
 class LoginController extends Controller
 {
@@ -67,17 +68,9 @@ class LoginController extends Controller
     {
         $data = $request->except('_token');
         try {
-            $client = new Client();
-            $portal = $client->post(config('portal.base_url_api') . config('portal.end_point.login'), ['form_params' => $data]);
-            $portalResponse = json_decode($portal->getBody()->getContents());
-            if ($portalResponse->access_token) {
-                $accessToken = $portalResponse->access_token;
-                $portalUserProfiles = $client->request('GET', config('portal.base_url_api') . config('portal.end_point.user_profiles'), [
-                    'headers' => [
-                        'authorization' => $accessToken,
-                    ]
-                ]);
-                $portalUserResponse = json_decode($portalUserProfiles->getBody()->getContents());
+            $accessToken = Portal::login($data);
+            if ($accessToken) {
+                $portalUserResponse = Portal::userProfile($accessToken);
                 $user = $this->saveUser($portalUserResponse, $accessToken, $request);
                 Auth::login($user, $request->filled('remember'));
                 if ($user->is_admin == true) {

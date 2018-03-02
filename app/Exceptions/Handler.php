@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Http\Response;
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -57,6 +58,10 @@ class Handler extends ExceptionHandler
             if ($exception instanceof ModelNotFoundException) {
                 $code = Response::HTTP_NOT_FOUND;
                 $msg = __('api.data_not_found');
+                return $this->reponseError($code, $msg);
+            } elseif ($exception instanceof TokenMismatchException) {
+                $code = $exception->getCode();
+                $msg = $exception->getMessage();
                 return $this->reponseError($code, $msg);
             } elseif ($exception instanceof ValidationException) {
                 $code = Response::HTTP_UNPROCESSABLE_ENTITY;
