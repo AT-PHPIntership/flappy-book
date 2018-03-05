@@ -25,6 +25,9 @@ class Book extends Model
     const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
+    const VIETNAMESE = 'Vietnamese';
+    const ENGLISH = 'English';
+    const JAPANESE = 'Japanese';
     
     /**
      * Declare table
@@ -57,6 +60,8 @@ class Book extends Model
         'from_person',
         'total_rating',
         'rating',
+        'language',
+        'page_number',
     ];
 
     /**

@@ -9,7 +9,8 @@ return [
     'title' => 'Title',
     'price' => 'Price',
     'unit' => 'Unit',
-    'vnd' => 'VND',
+    'page_number' => 'Page Number',
+    'language' => 'Language',
     'description' => 'Description',
     'from_person' => 'From Person',
     'category' => 'Category',
@@ -46,6 +47,11 @@ return [
         \App\Model\Book::TYPE_DOLAR => '$',
         \App\Model\Book::TYPE_EURO => '€',
         \App\Model\Book::TYPE_YEN => '¥'
+    ],
+    'listlanguage' => [
+        \App\Model\Book::VIETNAMESE => 'Vietnamese',
+        \App\Model\Book::ENGLISH => 'English',
+        \App\Model\Book::JAPANESE => 'Japanese',
     ],
     'list_search' =>[
         \App\Model\Book::TYPE_ALL => 'Title or Author',
