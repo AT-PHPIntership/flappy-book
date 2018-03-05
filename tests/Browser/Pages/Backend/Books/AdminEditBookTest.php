@@ -7,6 +7,8 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Model\Category;
 use App\Model\Book;
+use App\Model\Qrcode;
+use DB;
 use Illuminate\Http\UploadedFile;
 use Faker\Factory as Faker;
 use Facebook\WebDriver\WebDriverBy;
@@ -42,7 +44,7 @@ class AdminEditBooksTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->click('#list-books tbody tr:first-child td:nth-child(6) a')
+                    ->click('#list-books tbody tr:first-child td:nth-child(7) a')
                     ->assertSee('Edit Book')
                     ->assertPathIs('/admin/books/'.$this->book->id.'/edit');
         });
@@ -79,7 +81,7 @@ class AdminEditBooksTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit('/admin/books')
-                    ->click('#list-books tbody tr:first-child td:nth-child(6) a')
+                    ->click('#list-books tbody tr:first-child td:nth-child(7) a')
                     ->resize(900,1000)
                     ->assertSee('Edit Book')
                     ->press('Back')
@@ -136,6 +138,10 @@ class AdminEditBooksTest extends DuskTestCase
             'category_id' => $faker->randomElement($categoryIds),
             'from_person' => $this->user->employ_code,
             'title' => $faker->name,
+        ]);
+        $bookId = DB::table('books')->pluck('id')->toArray();
+        factory(Qrcode::class)->create([
+            'book_id' => $faker->unique()->randomElement($bookId)
         ]);
     }
 }

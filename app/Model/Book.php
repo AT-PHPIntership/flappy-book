@@ -25,6 +25,12 @@ class Book extends Model
     const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
+    const DEFAULT_PAGE_NUMBER = null;
+    const DEFAULT_YEAR = null;
+    const DEFAULT_AUTHOR = 'null';
+    const DEFAULT_DESCRIPTION = 'null';
+    const DEFAULT_PRICE = 0;
+    const DEFAULT_UNIT = 'null';
     
     /**
      * Declare table
@@ -57,6 +63,7 @@ class Book extends Model
         'from_person',
         'total_rating',
         'rating',
+        'status',
     ];
 
     /**
@@ -77,6 +84,16 @@ class Book extends Model
      */
     protected $sortableAs = [
         'total_borrowed',
+    ];
+
+    /**
+     * Declare casts
+     *
+     * @var array
+     */
+    protected $casts = [
+        'rating'=> 'real',
+        'price' => 'real',
     ];
 
     /**
@@ -151,6 +168,7 @@ class Book extends Model
         static::deleting(function ($books) {
             $books->borrows()->delete();
             $books->comments()->delete();
+            $books->qrcode()->delete();
         });
     }
 
@@ -168,4 +186,14 @@ class Book extends Model
             'borrows' => ['books.id', 'borrows.book_id']
         ]
     ];
+
+    /**
+     * Get the book's picture.
+     *
+     * @return string
+     */
+    public function getPictureAttribute()
+    {
+        return url('/').'/'.config('define.books.folder_store_books').$this->attributes['picture'];
+    }
 }
