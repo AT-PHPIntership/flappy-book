@@ -5,31 +5,21 @@
 ```
 /api/login
 ```
-Login system 
+Login api
 
 #### Parameters
 | Key | Type | Required | Description |
 |---|---|---|---|
-| email | String | required | email to login |
-| password | String | required | password |
+| email | String | required | Email to login |
+| password | String | required | Password |
 
-#### Request header
-| Key | Value |
-|---|---|
-| Accept | form-data/json |
-| Content-Type | form-data/json|
-
-#### Sample Request body
+#### Response - Success
 ```json
 {
-  "email": "hieu.le@asiantech.vn",
-  "password": "Ahihihi"
-}
-```
-
-#### Sample Response - Success
-```json
-{
+    "meta": {
+        "status": "successfully",
+        "code": 200
+    },
     "data": {
         "id": 1,
         "employ_code": "ATI0290",
@@ -39,36 +29,23 @@ Login system
         "avatar_url": "http://172.16.110.17/images/user/avatar/373/1eb050875d.png",
         "is_admin": 1,
         "access_token": "f0ec55260f410328e98b35836e4624c6",
-        "expires_at": "2018-02-07 08:54:43",
         "created_at": "2018-02-01 09:04:57",
         "updated_at": "2018-02-07 06:53:46",
-    },
-    "meta": {
-        "status": "successfully",
-        "code": 200
     }
 }
 ```
 
-#### Sample Response - Fail
+#### Response - Fail
 ```json
 {
     "meta": {
         "status": "failed",
         "code": 400,
-        "messages": "email_or_password_not_correct"
     },
-    "data": {}
-}
-```
-#### Sample Response - Validation
-```json
-{
-    "meta": {
-        "status": "failed",
-        "code": 400,
-        "messages": "email_or_password_cannot_blank"
-    },
-    "data": {}
+    "error": {
+        "messages": [
+            "email_or_password_not_correct"
+        ]
+    }
 }
 ```
