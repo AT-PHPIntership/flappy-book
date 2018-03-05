@@ -1,38 +1,5 @@
 ## Flappy Api - Just sample API
 
-### `SUCCESS` Response
-```json
-{
-    "data": {
-        "id": 20,
-        "name": "Mychim",
-        "category_id": 8,
-        "created_at": "2018-02-08 01:24:23",
-        "updated_at": "2018-02-08 02:24:23",
-        "deleted_at": null
-    },
-    "meta": {
-        "status": "successfully",
-        "code": 200
-    }
-}
-```
-### `ERROR` Response
-
-```json
-{
-    "error": {
-        "title": [
-            "The name field is required."
-        ]
-    },
-    "meta": {
-        "status": "failed",
-        "code": 422
-    }
-}
-```
-
 ### `GET` Birds
 ```
 /api/birds
@@ -113,9 +80,7 @@ Get list all birds with paginate
             "links": {
                 "next": "http://hoichim.test/birds?page=2"
             }
-        },
-        "status": "successfully",
-        "code": 200
+        }
     }
 }
 ```
@@ -165,10 +130,6 @@ Create new bird
         "created_at": "2018-02-08 01:24:23",
         "updated_at": "2018-02-08 01:24:23",
         "deleted_at": ""
-    },
-    "meta": {
-        "status": "successfully",
-        "code": 200
     }
 }
 ```
@@ -218,10 +179,6 @@ Update the bird
         "created_at": "2018-02-08 01:24:23",
         "updated_at": "2018-02-08 02:24:23",
         "deleted_at": ""
-    },
-    "meta": {
-        "status": "successfully",
-        "code": 200
     }
 }
 ```
@@ -263,10 +220,7 @@ Update the bird error validation
             "The name field is required."
         ]
     },
-    "meta": {
-        "status": "failed",
-        "code": 422
-    }
+    "code": 422
 }
 ```
 
@@ -298,10 +252,6 @@ Delete the bird
         "created_at": "2018-02-08 01:24:23",
         "updated_at": "2018-02-08 02:24:23",
         "deleted_at": "2018-02-08 03:24:23"
-    },
-    "meta": {
-        "status": "successfully",
-        "code": 200
     }
 }
 ```
