@@ -149,13 +149,12 @@ Create new Comment
 | parent_id | Number | Parent comment id |
 | created_at | String | Create comment time |
 | updated_at | String | Update comment time |
-| deleted_at | String | Delete comment time |
 
 ```json
 {
     "meta": {
         "status": "successfully",
-        "code": 200
+        "code": 201
     },
     "data": {
         "id": 20,
@@ -168,8 +167,7 @@ Create new Comment
         "is_admin": 0,
         "parent_id": null,
         "created_at": "2018-02-08 16:34:10",
-        "updated_at": "2018-02-08 16:34:10",
-        "deleted_at": null
+        "updated_at": "2018-02-08 16:34:10"
     }
 }
 ```
