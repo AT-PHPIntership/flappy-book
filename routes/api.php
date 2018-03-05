@@ -25,4 +25,8 @@ Route::group(['namespace' => 'Api'], function(){
     Route::get('users/{user}', 'UserController@show');
     Route::get('books/{id}/reviews', 'PostController@reviews');
     Route::get('comments', 'CommentController@comments');
+
+    Route::group(['middleware' => 'tokenAuthentication'], function(){
+        Route::get('/users/{id}/posts', 'PostController@getPostsOfUser');
+    });
 });
