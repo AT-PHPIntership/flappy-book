@@ -38,8 +38,8 @@ class CreatePostRequest extends FormRequest
 
         if ($request->status == Post::TYPE_REVIEW_BOOK) {
             $rules = array_merge($rules, [
-                'rating'  => 'required|integer',
                 'book_id' => 'required|exists:books,id',
+                'rating'  => 'required|numeric',
             ]);
         }
 
