@@ -180,6 +180,10 @@ return [
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        /*
+         * Package excel
+         */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*

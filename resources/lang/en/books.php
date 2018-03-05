@@ -42,6 +42,9 @@ return [
     'qrcode' => 'QR Code',
     'import_data' => 'Import Data',
     'import' => 'Import',
+    'validate_file_type' => 'Only support csv file type',
+    'import_book_success' => 'Import Book Success!',
+    'import_book_fail' => 'Import Book Fail!',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',

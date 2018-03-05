@@ -28,6 +28,12 @@ class Book extends Model
     const VIETNAMESE = 'Vietnamese';
     const ENGLISH = 'English';
     const JAPANESE = 'Japanese';
+    const DEFAULT_PAGE_NUMBER = null;
+    const DEFAULT_YEAR = null;
+    const DEFAULT_AUTHOR = 'null';
+    const DEFAULT_DESCRIPTION = 'null';
+    const DEFAULT_PRICE = 0;
+    const DEFAULT_UNIT = 'null';
     
     /**
      * Declare table
@@ -62,6 +68,7 @@ class Book extends Model
         'rating',
         'language',
         'page_number',
+        'status',
     ];
 
     /**
@@ -166,6 +173,7 @@ class Book extends Model
         static::deleting(function ($books) {
             $books->borrows()->delete();
             $books->comments()->delete();
+            $books->qrcode()->delete();
         });
     }
 
