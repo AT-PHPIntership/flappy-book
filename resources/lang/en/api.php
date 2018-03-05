@@ -4,7 +4,6 @@ return [
     'failed' => 'Failed',
     'successfully' => 'Successfully',
     'error' => [
-        'session_expired' => 'Your session expired',
         'unauthorized' => 'Unauthorized',
     ]
 ];
