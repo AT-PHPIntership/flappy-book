@@ -26,12 +26,8 @@ class APILoginMiddleware
         $user = $accessToken ? User::where('access_token', $accessToken)->firstOrFail() : null;
 
         if ($user) {
-            if (Carbon::parse($user->expires_at)->diffInSeconds(Carbon::now()) > 0) {
-                Auth::login($user);
-                return $next($request);
-            }
-
-            throw new TokenMismatchException(__('api.error.session_expired'), Response::HTTP_NOT_FOUND);
+            Auth::login($user);
+            return $next($request);
         }
 
         throw new TokenMismatchException(__('api.error.token_not_found'), Response::HTTP_NOT_FOUND);
