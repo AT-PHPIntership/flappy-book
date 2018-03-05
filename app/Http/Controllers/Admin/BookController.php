@@ -245,7 +245,7 @@ class BookController extends Controller
     {
         // Create user if not exits
         $user = User::select(['id', 'employ_code'])->where('employ_code', $attributes['employee_code'])->first();
-        $employeeCode = ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : Book::DEFAULT_DONATOR;
+        $employeeCode = ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : User::DEFAULT_EMPLOYEE_CODE;
         if (!$user) {
             User::saveImportUser($employeeCode);
         }
@@ -301,7 +301,7 @@ class BookController extends Controller
             'price'       => Book::DEFAULT_PRICE,
             'unit'        => Book::DEFAULT_UNIT,
             'picture'     => config('define.books.default_name_image'),
-            'from_person' => ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : Book::DEFAULT_DONATOR,
+            'from_person' => ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : User::DEFAULT_EMPLOYEE_CODE,
             'status'      => (isset($attributes['status']) && $attributes['status'] == 'available') ? 1 : 0,
         ];
         return $book;

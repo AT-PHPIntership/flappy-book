@@ -43,6 +43,7 @@ class User extends Authenticatable
     const DEFAULT_NAME = 'null';
     const DEFAULT_TEAM = 'null';
     const DEFAULT_AVATAR_URL = 'null';
+    const DEFAULT_EMPLOYEE_CODE = 'AT0001';
 
     /**
      * The attributes that are mass assignable.
