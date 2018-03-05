@@ -150,17 +150,17 @@ class ListQrcodesAndDownloadTest extends DuskTestCase
         $faker = Faker::create();
         $users = factory(User::class, 4)->create();
         $employeeCodes = $users->pluck('employ_code')->toArray();
-        $categoriesId = factory(Category::class, 2)->create()->pluck('id')->toArray();
+        $categoryIds = factory(Category::class, 2)->create()->pluck('id')->toArray();
         for ($i = 0; $i < $row; $i++) {
             $books[] = factory(Book::class)->create([
                 'from_person' => $faker->randomElement($employeeCodes),
-                'category_id' => $faker->randomElement($categoriesId),
+                'category_id' => $faker->randomElement($categoryIds),
             ]);
         }
-        $booksId = array_pluck($books, 'id');
+        $bookIds = array_pluck($books, 'id');
         for ($i = 0; $i < $row; $i++) {
             factory(Qrcode::class)->create([
-                'book_id' => $faker->randomElement($booksId),
+                'book_id' => $faker->randomElement($bookIds),
                 'status' => Qrcode::IS_NOT_PRINTED,
             ]);
         }
