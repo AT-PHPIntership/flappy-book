@@ -19,30 +19,31 @@ class PostsOfUserApiTest extends TestCase
     use DatabaseMigrations;
 
     const NUMBER_RECORD_CREATE = 25;
+    protected $user;
 
     /**
      * Override function setUp() for make user login
      *
      * @return void
      */
-     public function setUp()
-     {
+    public function setUp()
+    {
         parent::setUp();
 
         $this->withoutMiddleWare();
         $this->makeData(self::NUMBER_RECORD_CREATE);
-     }
+        $this->user = User::first();
+        $this->be($this->user);
+    }
 
     /**
-     * test status response
+     * Test status response
      *
      * @return void
      */
     public function testStatusCode()
     {
-        $user = User::first();
-        $this->be($user);
-        $response = $this->json('GET', 'api/users/' . $user->id . '/posts');
+        $response = $this->json('GET', 'api/users/' . $this->user->id . '/posts');
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -53,9 +54,7 @@ class PostsOfUserApiTest extends TestCase
      */
     public function testStructJson()
     {
-        $user = User::first();
-        $this->be($user);
-        $response = $this->json('GET', 'api/users/' . $user->id . '/posts');
+        $response = $this->json('GET', 'api/users/' . $this->user->id . '/posts');
         $response->assertJsonStructure([
             'meta' => [
                 'status',
@@ -101,9 +100,7 @@ class PostsOfUserApiTest extends TestCase
      */
     public function testCompareDatabase()
     {
-        $user = User::first();
-        $this->be($user);
-        $response = $this->json('GET', 'api/users/' . $user->id . '/posts');
+        $response = $this->json('GET', 'api/users/' . $this->user->id . '/posts');
         $data = json_decode($response->getContent())->data;
         foreach ($data as $post) {
             $arrayCompare = [
@@ -121,9 +118,7 @@ class PostsOfUserApiTest extends TestCase
      */
     public function testGetPaginationResult()
     {
-        $user = User::first();
-        $this->be($user);
-        $response = $this->json('GET', 'api/users/' . $user->id . '/posts?page=2');
+        $response = $this->json('GET', 'api/users/' . $this->user->id . '/posts?page=2');
         $response->assertJson([
             'pagination' => [
                 'total' => self::NUMBER_RECORD_CREATE,
@@ -142,9 +137,11 @@ class PostsOfUserApiTest extends TestCase
      */
     public function testPaginationResultHasFilter()
     {
-        $user = User::first();
-        $this->be($user);
-        $response = $this->json('GET', 'api/users/' . $user->id . '/posts?status=' . Post::TYPE_REVIEW_BOOK . '&page=2');
+        $data = [
+            'status' => Post::TYPE_REVIEW_BOOK,
+            'page' => 2
+        ];
+        $response = $this->json('GET', 'api/users/' . $this->user->id . '/posts', $data);
         $response->assertJson([
             'pagination' => [
                 'total' => self::NUMBER_RECORD_CREATE,
@@ -158,6 +155,8 @@ class PostsOfUserApiTest extends TestCase
 
     /**
      * Make data for test.
+     *
+     * @param int $row number record create
      *
      * @return void
      */
