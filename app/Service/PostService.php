@@ -35,7 +35,7 @@ class PostService
             'posts.created_at',
             'posts.updated_at',
         ];
-        $params = $request ? $request->all() : null;
+        $params = $request ? $request->except('page') : null;
         $posts = Post::filter($params)
                     ->select($fields)
                     ->join('users', 'posts.user_id', '=', 'users.id')
