@@ -15,7 +15,7 @@ class AddForeignKeyLanguageIdToBooksTable extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->renameColumn('language', 'language_id');
-            $table->foreign('language_id')->references('id')->on('language')->onDelete('restrict');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('restrict');
         });
     }
 
