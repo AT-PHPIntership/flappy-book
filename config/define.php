@@ -42,4 +42,7 @@ return [
         'number_format' => '%04d',
         'format_file_export' => 'csv',
     ],
+    'languages' => [
+        'limit_rows' => 10,
+    ],
 ];
