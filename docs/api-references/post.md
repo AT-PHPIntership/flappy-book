@@ -445,7 +445,7 @@ Get list all posts by user with paginate
 ```
 Create new post
 
-##### Request header
+#### Request header
 | Key | Value |
 |---|---|
 |Accept|application\json|
@@ -458,6 +458,7 @@ Create new post
 | content | String | required | Content of post |
 | book_id | Number | optional | Id book review (required when status is review) |
 | rating | Number | optional | Rating for book (required when status is review) |
+| include | Array | optional | Table include |
 
 #### Response - Success
 | Field | Type | Description |
@@ -467,20 +468,15 @@ Create new post
 | code | Number | HTTP status codes |
 | data | Array | Array list posts |
 | id | Number | Id of post |
-| user_id | Number | Id of user create post |
 | content | String | Content of post |
-| status | Number | Status of post |
-| name | String | Name of user |
-| team | String | Team of user |
-| avatar_url | String | Url of user's avatar |
-| is_admin | Number | Role of user |
-| picture | String | Picture of book |
-| title | String | Title of book |
-| book_id | Number | Id for book |
-| rating | Number | Rating for book |
-| likes | Number | likes of post |
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
+| user | Object | Object user |
+| book | Object | Object book |
+| rating | Object | Object rating |
+
+
+`url`: `/api/posts`
 
 ```json
 {
@@ -488,24 +484,62 @@ Create new post
         "status": "Successfully",
         "code": 201
     },
-    "data": [
-        {
-            "id": 25,
-            "user_id": 11,
-            "content": "nguyen vancao",
-            "status": 2,
+    "data": {
+        "id": 145,
+        "content": "nguyen van cao",
+        "status": 2,
+        "created_at": "2018-03-06 08:53:31",
+        "updated_at": "2018-03-06 08:53:31",
+    }
+}
+```
+
+`url`: `api/posts?include=user,book,rating`
+
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 201
+    },
+    "data": {
+        "id": 145,
+        "content": "nguyen van cao",
+        "status": 2,
+        "created_at": "2018-03-06 08:53:31",
+        "updated_at": "2018-03-06 08:53:31",
+        "user": {
+            "id": 1,
             "name": "Cao Nguyen V.",
+            "employ_code": "AT0470",
+            "email": "cao.nguyen@asiantech.vn",
             "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64314e61c9.png",
+            "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
             "is_admin": 0,
-            "picture": "http://book.aug/images/books/20180209.jpeg",
-            "title": "Prof. Julio Bechtelar III",
-            "book_id": 3,
-            "rating": 3.0,
-            "likes": 0,
-            "created_at": "2018-03-01 09:27:38",
-            "updated_at": "2018-03-01 09:27:38"
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02"
+        },
+        "book": {
+            "id": 1,
+            "title": "Maymie Kuhic",
+            "category_id": 10,
+            "description": "Quisquam veritatis debitis consequatur corporis doloribus quod non voluptatum. Voluptas eos fugit incidunt voluptatibus. Voluptatem facere labore aut.",
+            "language": 0,
+            "rating": 2,
+            "total_rating": 18,
+            "picture": "http://flappybook.tech/images/books//tmp/42a4b9d43447b40733f2befb146829c8.jpg",
+            "author": "Mrs. Laura Nolan III",
+            "price": 7927,
+            "unit": "0",
+            "year": 1978,
+            "page_number": 358
+        },
+        "rating": {
+            "id": 51,
+            "book_id": 1,
+            "post_id": 145,
+            "rating": 3
         }
-    ]
+    }
 }
 ```
