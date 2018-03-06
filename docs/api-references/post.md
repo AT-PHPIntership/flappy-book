@@ -143,6 +143,10 @@ Get list all posts by user with paginate
 | status | Number | Post type |
 | user_id | Number | Id of user |
 | name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | User's picture |
+| is_admin | Number | Role of user |
+| book_id | Number | Id of book |
 | picture | String | Book's picture |
 | title | String | Book's name |
 | rating | Number | Rating for post |
@@ -172,24 +176,33 @@ Get list all posts by user with paginate
             "status": 1,
             "user_id": 1,
             "name": "Tram Pham T.M.",
-            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            "title": "HTML5 & CSS3",
-            "rating": 3.0,
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": null,
+            "picture": null,
+            "title": null,
+            "rating": null,
             "like": 1,
-            "created_at": "2018-02-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "created_at": "2018-02-22 07:17:06",
+            "updated_at": "2018-02-22 07:17:06",
         },
         {
             "id": 3,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 0,
             "user_id": 1,
-            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            "title": "HTML5",
-            "rating": 4.0,
+            "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": null,
+            "picture": null,
+            "title": null,
+            "rating": null,
             "like": 1,
-            "created_at": "2018-01-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "created_at": "2018-02-22 07:17:06",
+            "updated_at": "2018-02-22 07:17:06",
         },
         {
             "id": 8,
@@ -197,12 +210,16 @@ Get list all posts by user with paginate
             "status": 2,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": 3,
             "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
             "title": "CSS3",
             "rating": 5.0,
             "like": 1,
-            "created_at": "2018-02-20 07:35:34",
-            "updated_at": "2018-02-22 08:35:30",
+            "created_at": "2018-02-22 07:17:06",
+            "updated_at": "2018-02-22 07:17:06",
         }
     ],
     "pagination": {
@@ -245,6 +262,10 @@ Get list all posts by user with paginate
 | status | Number | Post type |
 | user_id | Number | Id of user |
 | name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | User's picture |
+| is_admin | Number | Role of user |
+| book_id | Number | Id of book |
 | picture | String | Book's picture |
 | title | String | Book's name |
 | rating | Number | Rating for post |
@@ -274,6 +295,10 @@ Get list all posts by user with paginate
             "status": 0,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": null,
             "picture": null,
             "title": null,
             "rating": null,
@@ -287,12 +312,16 @@ Get list all posts by user with paginate
             "status": 0,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": null,
             "picture": null,
             "title": null,
             "rating": null,
             "like": 2,
-            "created_at": "2018-01-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "created_at": "2018-02-22 07:17:06",
+            "updated_at": "2018-02-22 07:17:06",
         },
     ],
     "pagination": {
@@ -329,12 +358,16 @@ Get list all posts by user with paginate
             "status": 1,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": null,
             "picture": null,
             "title": null,
             "rating": null,
             "like": 1,
-            "created_at": "2018-02-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "created_at": "2018-02-22 07:17:06",
+            "updated_at": "2018-02-22 07:17:06",
         },
         {
             "id": 4,
@@ -342,12 +375,16 @@ Get list all posts by user with paginate
             "status": 1,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": null,
             "picture": null,
             "title": null,
             "rating": null,
             "like": 1,
-            "created_at": "2018-01-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "created_at": "2018-02-22 07:17:06",
+            "updated_at": "2018-02-22 07:17:06",
         },
     ],
     "pagination": {
@@ -385,9 +422,13 @@ Get list all posts by user with paginate
             "status": 2,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": 3,
             "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            "title": "HTML",
-            "rating": 4.0,
+            "title": "CSS3",
+            "rating": 5.0,
             "like": 2,
             "created_at": "2018-02-08 07:35:34",
             "updated_at": "2018-02-10 08:35:30",
@@ -398,6 +439,10 @@ Get list all posts by user with paginate
             "status": 2,
             "user_id": 1,
             "name": "Tram Pham T.M.",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
+            "is_admin": 1,
+            "book_id": 3,
             "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
             "title": "CSS3",
             "rating": 5.0,
@@ -458,7 +503,6 @@ Create new post
 | content | String | required | Content of post |
 | book_id | Number | optional | Id book review (required when status is review) |
 | rating | Number | optional | Rating for book (required when status is review) |
-| include | Array | optional | Table include |
 
 #### Response - Success
 | Field | Type | Description |
@@ -472,12 +516,8 @@ Create new post
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
 | user | Object | Object user |
-| book | Object | Object book |
 | rating | Object | Object rating |
 
-
-`url`: `/api/posts`
-
 ```json
 {
     "meta": {
@@ -488,24 +528,7 @@ Create new post
         "id": 145,
         "content": "nguyen van cao",
         "status": 2,
-        "created_at": "2018-03-06 08:53:31",
-        "updated_at": "2018-03-06 08:53:31",
-    }
-}
-```
-
-`url`: `api/posts?include=user,book,rating`
-
-```json
-{
-    "meta": {
-        "status": "Successfully",
-        "code": 201
-    },
-    "data": {
-        "id": 145,
-        "content": "nguyen van cao",
-        "status": 2,
+        "user_id": 1,
         "created_at": "2018-03-06 08:53:31",
         "updated_at": "2018-03-06 08:53:31",
         "user": {
@@ -519,26 +542,11 @@ Create new post
             "created_at": "2018-03-06 02:22:53",
             "updated_at": "2018-03-06 02:37:02"
         },
-        "book": {
-            "id": 1,
-            "title": "Maymie Kuhic",
-            "category_id": 10,
-            "description": "Quisquam veritatis debitis consequatur corporis doloribus quod non voluptatum. Voluptas eos fugit incidunt voluptatibus. Voluptatem facere labore aut.",
-            "language": 0,
-            "rating": 2,
-            "total_rating": 18,
-            "picture": "http://flappybook.tech/images/books//tmp/42a4b9d43447b40733f2befb146829c8.jpg",
-            "author": "Mrs. Laura Nolan III",
-            "price": 7927,
-            "unit": "0",
-            "year": 1978,
-            "page_number": 358
-        },
         "rating": {
             "id": 51,
+            "rating": 3,
             "book_id": 1,
-            "post_id": 145,
-            "rating": 3
+            "post_id":145
         }
     }
 }
