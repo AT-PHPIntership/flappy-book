@@ -10,6 +10,7 @@ use Faker\Factory as Faker;
 use App\Model\Category;
 use App\Model\User;
 use App\Model\Book;
+use App\Model\Language;
 use DB;
 use Illuminate\Http\Response;
 
@@ -51,7 +52,7 @@ class ApiTopBooksReviewTest extends TestCase
                     'total_rating',
                     'picture',
                 ]
-            ]    
+            ]
         ];
     }
 
@@ -69,7 +70,7 @@ class ApiTopBooksReviewTest extends TestCase
 
     /**
      * Test compare database
-     * 
+     *
      * @return void
      */
     public function testCompareDatabase()
@@ -96,7 +97,7 @@ class ApiTopBooksReviewTest extends TestCase
      */
     public function testEmptyBooks()
     {
-        $response = $this->json('GET', '/api/books/top-review');   
+        $response = $this->json('GET', '/api/books/top-review');
         $response->assertJson([
             'data' => []
         ]);
@@ -111,12 +112,15 @@ class ApiTopBooksReviewTest extends TestCase
     {
         factory(Category::class)->create();
         factory(User::class)->create();
+        factory(Language::class)->create();
         $categoryId = DB::table('categories')->pluck('id')->toArray();
+        $languageId = DB::table('languages')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
         $faker = Faker::create();
         for ($i = 0; $i < $row; $i++) {
             factory(Book::class)->create([
                 'category_id' => $faker->randomElement($categoryId),
+                'language_id' => $faker->randomElement($languageId),
                 'from_person' => $faker->randomElement($userId)
             ]);
         }
