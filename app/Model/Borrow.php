@@ -5,10 +5,11 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 use App\Libraries\Traits\SearchTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Borrow extends Model
 {
-    use Sortable, SearchTrait;
+    use Sortable, SearchTrait, SoftDeletes;
 
     /**
      * Borrows currency status

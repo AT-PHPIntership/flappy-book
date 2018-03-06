@@ -73,6 +73,6 @@ class UserController extends ApiController
                     ->orderBy('books.created_at', 'DESC')
                     ->paginate(config('define.books.amount_books_donated'));
 
-        return $this->responsePaginate($books, 200);
+        return $this->responsePaginate($books);
     }
 }
