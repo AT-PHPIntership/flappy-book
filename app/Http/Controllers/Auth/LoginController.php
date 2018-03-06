@@ -10,6 +10,8 @@ use GuzzleHttp\Exception\ClientException;
 use App\Model\User;
 use App\Http\Requests\LoginFormValidation;
 use Illuminate\Support\Facades\Auth;
+use DB;
+use App\Model\Book;
 use App\Libraries\Portal;
 
 class LoginController extends Controller
@@ -99,12 +101,41 @@ class LoginController extends Controller
      */
     public function saveUser($portalUserResponse, $accessToken, $request)
     {
+        /**
+         * Update employ code
+         *
+         * @param string $employCode $employCode
+         * @param string $email      $email
+         *
+         * @return employcode
+         */
+        function updateEmployCode($employCode, $email)
+        {
+            $user = User::select(['id', 'employ_code'])->where('email', $email)->first();
+            if ($user) {
+                if ($user->employ_code !== $employCode) {
+                    DB::beginTransaction();
+                    try {
+                        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+                        Book::where('from_person', $user->employ_code)
+                            ->update(['from_person' => $employCode]);
+                        $user->employ_code = $employCode;
+                        $user->save();
+                        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollBack();
+                    }
+                }
+            }
+            return $employCode;
+        }
         # Collect user data from response
         $userCondition = [
-            'employ_code' => $portalUserResponse->employee_code,
-            'email' => $request->email,
+            'employ_code' => updateEmployCode($portalUserResponse->employee_code, $request->email),
         ];
         $user = [
+            'email' => $request->email,
             'name' => $portalUserResponse->name,
             'team' => $portalUserResponse->teams[0]->name,
             'avatar_url' => $portalUserResponse->avatar->file,
