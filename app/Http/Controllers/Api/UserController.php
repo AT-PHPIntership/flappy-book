@@ -39,6 +39,6 @@ class UserController extends ApiController
                     ->where('users.id', $id)
                     ->firstOrFail();
 
-        return $this->responseObject($user);
+        return $this->responseSuccess($user);
     }
 }

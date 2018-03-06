@@ -64,7 +64,7 @@
                   <th id="btn-sort-qrcode" class="text-center" width="10%">{{ __('books.qrcode') }}</th>
                   <th id="btn-sort-title">@sortablelink('title', __('books.title'))</th>
                   <th id="btn-sort-author">@sortablelink('author', __('books.author'))</th>
-                  <th id="btn-sort-rating" class="text-center">@sortablelink('rating', __('books.rating'))</th>
+                  <th id="btn-sort-rating" class="text-center" width="7%">@sortablelink('rating', __('books.rating'))</th>
                   <th id="btn-sort-total_borrowed" class="text-center" width="12%">
                     @sortablelink('total_borrowed', __('books.total_borrowed'))
                   </th>

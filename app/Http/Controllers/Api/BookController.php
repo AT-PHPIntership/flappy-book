@@ -10,6 +10,27 @@ use App\Model\Book;
 class BookController extends ApiController
 {
     /**
+     * Get list of books
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $fields = [
+            'id',
+            'title',
+            'picture',
+            'total_rating',
+            'rating',
+        ];
+        $books = Book::select($fields)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('define.books.limit_item'));
+
+            return $this->responsePaginate($books);
+    }
+    
+    /**
      * API get detail book
      *
      * @param int $id id of book
@@ -45,6 +66,30 @@ class BookController extends ApiController
                     ->orderBy('borrows.created_at', 'DESC')
                     ->findOrFail($id);
 
-        return $this->responseObject($book);
+        return $this->responseSuccess($book);
+    }
+
+    /**
+     * Get top books review
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksReview()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                    ->orderBy('total_rating', 'DESC')
+                    ->orderBy('rating', 'DESC')
+                    ->limit(config('define.books.amount_top_books_review'))
+                    ->get();
+        
+        return $this->responseSuccess($topBooks);
     }
 }

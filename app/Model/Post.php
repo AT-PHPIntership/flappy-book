@@ -4,11 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DB;
+use App\Libraries\Traits\FilterTrait;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, FilterTrait;
 
     /**
      * Commentable type
@@ -29,6 +29,7 @@ class Post extends Model
      * Value of review book post
      */
     const TYPE_REVIEW_BOOK = 2;
+    const FILTER_FIELD_STATUS = 'status';
 
     /**
      * Declare table
@@ -47,7 +48,7 @@ class Post extends Model
         'content',
         'status',
     ];
-    
+
     /**
      * Relationship belongsTo with User
      *
@@ -103,38 +104,12 @@ class Post extends Model
         return $this->hasOne(Rating::class);
     }
 
-     /**
-     * Get list of the resource.
+    /**
+     * The attributes that can be search.
      *
-     * @return Illuminate\Database\Eloquent\Builder
+     * @var array $fieldSearchable
      */
-    public static function getPosts()
-    {
-        $fields = [
-            'posts.id',
-            'posts.user_id',
-            'posts.content',
-            'posts.status',
-            'users.name',
-            'users.team',
-            'users.avatar_url',
-            'users.is_admin',
-            'books.picture',
-            'books.title',
-            'ratings.book_id',
-            'ratings.rating',
-            DB::raw('COUNT(likes.id) AS likes'),
-            'posts.created_at',
-            'posts.updated_at',
-        ];
-
-        $posts = Post::select($fields)
-                    ->join('users', 'posts.user_id', '=', 'users.id')
-                    ->leftjoin('ratings', 'posts.id', '=', 'ratings.post_id')
-                    ->leftjoin('books', 'books.id', '=', 'ratings.book_id')
-                    ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
-                    ->groupBy('posts.id');
-
-        return $posts;
-    }
+    protected $fieldSearchable = [
+        'status' => ['posts.status' => '='],
+    ];
 }
