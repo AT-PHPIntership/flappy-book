@@ -161,13 +161,19 @@ Create new Comment
         "comment": "Molestiae voluptas cum ullam accusantium fuga magnam.",
         "commentable_id": 1,
         "commentable_type": "book",
-        "name": "Greta Lehner",
-        "team": "SA",
-        "avatar_url": "http://flappybook.tech/tmp/7c5266db2cd916e1af404a688980e4dd.jpg",
-        "is_admin": 0,
         "parent_id": null,
-        "created_at": "2018-02-08 16:34:10",
-        "updated_at": "2018-02-08 16:34:10"
+        "user_id": 1,
+        "user": {
+            "id": 1,
+            "name": "Cao Nguyen V.",
+            "employ_code": "AT0470",
+            "email": "cao.nguyen@asiantech.vn",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
+            "is_admin": 0,
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02"
+        },
     }
 }
 ```
