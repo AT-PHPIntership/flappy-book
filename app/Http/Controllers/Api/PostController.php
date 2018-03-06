@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Service\PostService;
+use App\Transformers\PostTransformer;
+use League\Fractal\Manager;
 use App\Model\Post;
 use App\Model\Rating;
 use App\Http\Requests\Api\CreatePostRequest;
@@ -18,6 +20,10 @@ use DB;
 
 class PostController extends ApiController
 {
+    function __construct(Manager $fractal, PostTransformer $transformer)
+    {
+        parent::__construct($fractal, $transformer);
+    }
 
     /**
      * Get a list of the posts of user.
@@ -72,14 +78,14 @@ class PostController extends ApiController
             // Create rating when post's status is review
             if ($request->status == Post::TYPE_REVIEW_BOOK) {
                 Rating::create([
-                    'post_id' => $post->id,
-                    'book_id' => $request->book_id,
-                    'rating' => $request->rating,
-                ]);
+                        'post_id' => $post->id,
+                        'book_id' => $request->book_id,
+                        'rating' => $request->rating,
+                    ]);
             }
             DB::commit();
 
-            $post = PostService::getPosts()->where('posts.id', $post->id)->first();
+            $post = $this->getItem($post, $this->transformer, 'user,rating');
             return $this->responseSuccess($post, Response::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollBack();
@@ -87,3 +93,4 @@ class PostController extends ApiController
         }
     }
 }
+    
