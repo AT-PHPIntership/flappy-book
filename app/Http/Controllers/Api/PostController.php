@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Service\PostService;
+use App\Model\Post;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Transformers\PostTransformer;
 use League\Fractal\Manager;
-use App\Model\Post;
 use App\Model\Rating;
 use App\Http\Requests\Api\CreatePostRequest;
 use Illuminate\Support\Facades\Auth;
@@ -17,12 +17,20 @@ use App\Exceptions\Handler;
 use Exception;
 use DB;
 
-
 class PostController extends ApiController
 {
-    function __construct(Manager $fractal, PostTransformer $transformer)
+    /**
+     * PostController construct
+     *
+     * @param Manager         $fractal     fractal
+     * @param PostTransformer $transformer transformer
+     *
+     * @return void
+     */
+    public function __construct(Manager $fractal, PostTransformer $transformer)
     {
-        parent::__construct($fractal, $transformer);
+        $this->fractal = $fractal;
+        $this->transformer = $transformer;
     }
 
     /**
@@ -93,4 +101,3 @@ class PostController extends ApiController
         }
     }
 }
-    

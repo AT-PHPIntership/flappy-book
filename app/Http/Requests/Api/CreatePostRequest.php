@@ -45,24 +45,4 @@ class CreatePostRequest extends FormRequest
 
         return $rules;
     }
-
-    /**
-     * Response messages when failed validation
-     *
-     * @param Validator $validator validator
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'meta' => [
-                'status' => __('api.failured'),
-                'code' => 422
-            ],
-            'error' => [
-                'message' => $validator->errors()
-            ]
-        ], 422));
-    }
 }

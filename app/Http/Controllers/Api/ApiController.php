@@ -15,21 +15,28 @@ class ApiController extends Controller
     use ApiResponse;
 
     /**
+     * Declare fractal
+     *
      * @var Manager
      */
     protected $fractal;
 
     /**
-     * @var PostTransformer
+     * Declare teansformer
+     *
+     * @var TransformerAbstract
      */
     protected $transformer;
 
-    function __construct(Manager $fractal, TransformerAbstract $transformer)
-    {
-        $this->fractal = $fractal;
-        $this->transformer = $transformer;
-    }
-
+    /**
+     * Create a resource item transformer and Transform data
+     *
+     * @param Model               $resource    resource
+     * @param TransformerAbstract $transformer transformer
+     * @param String              $include     table include
+     *
+     * @return Array
+     */
     public function getItem($resource, $transformer, $include = '')
     {
         $resource = new Item($resource, $transformer);
