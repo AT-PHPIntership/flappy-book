@@ -4,7 +4,6 @@ return [
     'failed' => 'Failed',
     'successfully' => 'Successfully',
     'error' => [
-        'session_expired' => 'Your session expired',
-        'token_not_found' => 'Token not found',
+        'unauthorized' => 'Unauthorized',
     ]
 ];
