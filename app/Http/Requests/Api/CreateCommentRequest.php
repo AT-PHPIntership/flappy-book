@@ -34,26 +34,7 @@ class CreateCommentRequest extends FormRequest
             'parent_id'        => 'integer|exists:comments,id',
             'comment'          => 'required|min:10',
         ];
-        
+
         return $rules;
-    }
-    /**
-     * Response messages when failed validation
-     *
-     * @param Validator $validator validator
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'meta' => [
-                'status' => __('api.failured'),
-                'code' => 422
-            ],
-            'error' => [
-                'message' => $validator->errors()
-            ]
-        ], 422));
     }
 }

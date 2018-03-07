@@ -163,6 +163,8 @@ Create new Comment
         "commentable_type": "book",
         "parent_id": null,
         "user_id": 1,
+        "created_at": "2018-03-06 02:22:53",
+        "updated_at": "2018-03-06 02:37:02",
         "user": {
             "id": 1,
             "name": "Cao Nguyen V.",
