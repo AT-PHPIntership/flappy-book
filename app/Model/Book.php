@@ -69,6 +69,7 @@ class Book extends Model
         'total_rating',
         'rating',
         'status',
+        'language_id',
     ];
 
     /**
@@ -109,6 +110,16 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Relationship belongsTo with Category
+     *
+     * @return array
+     */
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     /**
