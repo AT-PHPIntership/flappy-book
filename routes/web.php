@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
     Route::post('/books/import', 'BookController@import')->name('books.import');
     Route::resource('/qrcodes', 'QrcodeController');
+    Route::resource('/languages', 'LanguageController');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

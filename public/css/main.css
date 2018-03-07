@@ -10,10 +10,11 @@
   width: 80px;
 }
 
-#table-qrcodes {
+#table-modified {
   padding: 10px 220px 10px 220px;
 }
 
-#btn-download {
+#btn-modified {
   margin: 10px 0 0 50px;
 }
+
