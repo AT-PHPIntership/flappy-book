@@ -33,6 +33,7 @@ class PostTransformer extends TransformerAbstract
             'id' => (int) $post->id,
             'content' => (string) $post->content,
             'status' => (int) $post->status,
+            'user_id' => (int) $post->user_id,
             'created_at' => (string) $post->created_at,
             'updated_at' => (string) $post->updated_at
         ];
