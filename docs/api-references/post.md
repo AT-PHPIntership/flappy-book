@@ -483,3 +483,71 @@ Get list all posts by user with paginate
     }
 }
 ```
+
+### `POST` Create new Post
+```
+/api/posts
+```
+Create new post
+
+#### Request header
+| Key | Value |
+|---|---|
+|Accept|application\json|
+|Authorization|{token_type} {access_token}
+
+#### Parameters
+| Key | Value | Required | Description |
+|---|---|---|---|
+| status | Number | required | Post type (status,find book,review) |
+| content | String | required | Content of post |
+| book_id | Number | optional | Id book review (required when status is review) |
+| rating | Number | optional | Rating for book (required when status is review) |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list posts |
+| id | Number | Id of post |
+| content | String | Content of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| user | Object | Object user |
+| rating | Object | Object rating |
+
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 201
+    },
+    "data": {
+        "id": 145,
+        "content": "nguyen van cao",
+        "status": 2,
+        "user_id": 1,
+        "created_at": "2018-03-06 08:53:31",
+        "updated_at": "2018-03-06 08:53:31",
+        "user": {
+            "id": 1,
+            "name": "Cao Nguyen V.",
+            "employ_code": "AT0470",
+            "email": "cao.nguyen@asiantech.vn",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
+            "is_admin": 0,
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02"
+        },
+        "rating": {
+            "id": 51,
+            "rating": 3,
+            "book_id": 1,
+            "post_id":145
+        }
+    }
+}
+```
