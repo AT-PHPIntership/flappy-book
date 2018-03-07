@@ -67,7 +67,7 @@ class ApiCreatePostTest extends TestCase
      *
      * @return array
      */
-    public function listCaseTestCreatePost()
+    public function listCaseTypeOfPost()
     {
         return [
             [Post::TYPE_STATUS],
@@ -79,7 +79,7 @@ class ApiCreatePostTest extends TestCase
     /**
      * Test create success
      *
-     * @dataProvider listCaseTestCreatePost
+     * @dataProvider listCaseTypeOfPost
      *
      * @return void
      */
@@ -103,25 +103,27 @@ class ApiCreatePostTest extends TestCase
             ],
             'data' => [
                 'id',
-                'user_id',
                 'content',
                 'status',
-                'name',
-                'team',
-                'avatar_url',
-                'is_admin',
-                'picture',
-                'title',
-                'book_id',
-                'rating',
-                'likes',
+                'user_id',
                 'created_at',
                 'updated_at',
+                'user' => [
+                    'id',
+                    'name',
+                    'employ_code',
+                    'email',
+                    'team',
+                    'avatar_url',
+                    'is_admin',
+                    'created_at',
+                    'updated_at'
+                ],
             ]
         ])->assertStatus(Response::HTTP_CREATED);
                 
         $data = $response->baseResponse->getData(true)['data'];
-        $post = array_only($data, ['id', 'content', 'status', 'created_at', 'updated_at']);
+        $post = array_except($data, ['user', 'rating']);
         
         $this->assertDatabaseHas('posts', $post);
     }

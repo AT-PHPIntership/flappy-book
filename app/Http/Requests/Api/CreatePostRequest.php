@@ -38,31 +38,11 @@ class CreatePostRequest extends FormRequest
 
         if ($request->status == Post::TYPE_REVIEW_BOOK) {
             $rules = array_merge($rules, [
-                'book_id' => 'required|exists:books,id',
                 'rating'  => 'required|numeric',
+                'book_id' => 'required|exists:books,id',
             ]);
         }
 
         return $rules;
-    }
-
-    /**
-     * Response messages when failed validation
-     *
-     * @param Validator $validator validator
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'meta' => [
-                'status' => __('api.failured'),
-                'code' => 422
-            ],
-            'error' => [
-                'message' => $validator->errors()
-            ]
-        ], 422));
     }
 }
