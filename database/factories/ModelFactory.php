@@ -82,6 +82,6 @@ $factory->define(App\Model\Rating::class, function (Faker $faker) {
 });
 $factory->define(App\Model\Language::class, function (Faker $faker) {
     return [
-        'language' => $faker->name,
+        
     ];
 });

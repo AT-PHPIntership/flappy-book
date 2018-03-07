@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
 {
+    const LANGUAGES = [
+        'Vietnamese',
+        'English',
+        'Japanese',
+    ];
+
      /**
      * Declare table
      *
@@ -19,7 +25,7 @@ class Language extends Model
      * @var array
      */
     protected $fillable = [
-        'languages',
+        'language',
     ];
     
     /**
