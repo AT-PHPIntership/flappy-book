@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Model;
 
 class LanguagesTableSeeder extends Seeder
@@ -13,11 +12,9 @@ class LanguagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
-        $numberLanguages = count(App\Model\Language::LANGUAGES);
-        for ($i=0; $i < $numberLanguages; $i++) {
+        foreach (App\Model\Language::LANGUAGES as $language) {
             factory(App\Model\Language::class)->create([
-                'language' => $faker->unique()->randomElement(App\Model\Language::LANGUAGES),
+                'language' => $language,
             ]);
         }
     }

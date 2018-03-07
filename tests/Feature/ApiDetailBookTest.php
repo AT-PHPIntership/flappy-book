@@ -104,19 +104,21 @@ class ApiDetailBookTest extends TestCase
      */
     public function makeData($row)
     {
+        $faker = Faker::create();
         factory(Category::class)->create();
         factory(User::class)->create();
-        factory(Language::class)->create();
+        factory(Language::class)->create([
+            'language' =>  $faker->randomElement(Language::LANGUAGES),
+        ]);
         $categoryId = DB::table('categories')->pluck('id')->toArray();
         $languageId = DB::table('languages')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
-        $faker = Faker::create();
         for ($i = 0; $i < $row; $i++) {
             factory(Book::class)->create([
                 'category_id' => $faker->randomElement($categoryId),
                 'language_id' => $faker->randomElement($languageId),
                 'from_person' => $faker->randomElement($userId)
-                ]);
+            ]);
         }
     }
 }

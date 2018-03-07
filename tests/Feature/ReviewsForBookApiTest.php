@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Response;
+use Faker\Factory as Faker;
 use App\Model\Book;
 use App\Model\User;
 use App\Model\Category;
@@ -121,11 +122,15 @@ class ReviewsForBookApiTest extends TestCase
     */
     public function makeData($row)
     {
+        $faker = Faker::create();
+
         $users = factory(User::class)->create();
 
         $categories = factory(Category::class)->create();
 
-        $language = factory(Language::class)->create();
+        $language = factory(Language::class)->create([
+            'language' =>  $faker->randomElement(Language::LANGUAGES),
+        ]);
 
         $books = factory(Book::class)->create([
             'category_id' => $categories->id,
