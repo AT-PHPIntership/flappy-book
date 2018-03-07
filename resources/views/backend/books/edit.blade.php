@@ -113,12 +113,12 @@
                       </div>
                       <div class="col-xs-3">
                           <label>{{ __('books.language') }}</label>
-                          <select class="form-control" name="language" >
-                            @foreach( __('books.listlanguage') as $key => $language )
-                              @if($language == $book->language)
-                                <option value="{{ $key }}" selected>{{ $language }}</option>
+                          <select class="form-control" name="language_id" >
+                            @foreach($languages as $language)
+                              @if($book->language_id == $language->id)
+                                <option value="{{ $language->id }}" selected>{{ $language->language }}</option>
                               @else
-                                <option value="{{ $key }}">{{ $language }}</option>
+                                <option value="{{ $language->id }}">{{ $language->language }}</option>
                               @endif
                             @endforeach
                           </select>
