@@ -11,7 +11,7 @@
 
 return [
     'messages' => [
-        'email_or_password_not_correct' => 'Email or password not correct',
+        'login_failure' => 'Email or password incorrect.',
         'server_error' => 'Server error',
     ]
 ];
