@@ -13,6 +13,7 @@ use Exception;
 use App\Model\Book;
 use App\Model\Qrcode;
 use App\Model\Category;
+use App\Model\Language;
 use App\Model\User;
 use App\Libraries\Image;
 
@@ -296,7 +297,7 @@ class BookController extends Controller
             'description' => isset($attributes['description']) ? '<p>' . $attributes['description'] . '</p>' : Book::DEFAULT_DESCRIPTION,
             'year'        => isset($attributes['year']) ? $attributes['year'] : Book::DEFAULT_YEAR,
             'author'      => isset($attributes['author']) ? $attributes['author'] : Book::DEFAULT_AUTHOR,
-            'language'    => $attributes['language'],
+            'language_id' => Language::lockForUpdate()->firstOrCreate(['language' => $attributes['language']])->id,
             'page_number' => isset($attributes['pages']) ? $attributes['pages'] : Book::DEFAULT_PAGE_NUMBER,
             'price'       => Book::DEFAULT_PRICE,
             'unit'        => Book::DEFAULT_UNIT,
