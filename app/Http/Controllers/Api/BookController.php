@@ -6,28 +6,23 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\Book;
+use App\Service\BookService;
 
 class BookController extends ApiController
 {
     /**
      * Get list of books
      *
+     * @param Request $request send request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fields = [
-            'id',
-            'title',
-            'picture',
-            'total_rating',
-            'rating',
-        ];
-        $books = Book::select($fields)
-            ->orderBy('created_at', 'DESC')
-            ->paginate(config('define.books.limit_item'));
+        $books = BookService::getBooks($request)
+                    ->paginate(config('define.books.limit_item'));
 
-            return $this->responsePaginate($books);
+        return $this->responsePaginate($books);
     }
     
     /**
