@@ -32,7 +32,7 @@ class ApiCreatePostTest extends TestCase
             ['book_id', '', Post::TYPE_REVIEW_BOOK, 'The book id field is required.'],
             ['book_id', 'abc', Post::TYPE_REVIEW_BOOK, 'The selected book id is invalid.'],
             ['rating', '', Post::TYPE_REVIEW_BOOK, 'The rating field is required.'],
-            ['rating', 'abc', Post::TYPE_REVIEW_BOOK, 'The rating must be a number.'],            
+            ['rating', 'abc', Post::TYPE_REVIEW_BOOK, 'The rating must be a number.'],
         ];
     }
 
@@ -72,7 +72,6 @@ class ApiCreatePostTest extends TestCase
         return [
             [Post::TYPE_STATUS],
             [Post::TYPE_FIND_BOOK],
-            [Post::TYPE_REVIEW_BOOK],
         ];
     }
 
@@ -88,9 +87,58 @@ class ApiCreatePostTest extends TestCase
         $this->withoutMiddleWare();
         $bookId = $this->makeData();
         $this->be(User::first());
-        
+
         $dataTest = [
             'status' => $status,
+            'content' => 'Content for comment',
+        ];
+
+        $response = $this->post('api/posts', $dataTest);
+        $response->assertJsonStructure([
+            'meta' => [
+                'status',
+                'code'
+            ],
+            'data' => [
+                'id',
+                'content',
+                'status',
+                'user_id',
+                'created_at',
+                'updated_at',
+                'user' => [
+                    'id',
+                    'name',
+                    'employ_code',
+                    'email',
+                    'team',
+                    'avatar_url',
+                    'is_admin',
+                    'created_at',
+                    'updated_at'
+                ],
+            ]
+        ])->assertStatus(Response::HTTP_CREATED);
+
+        $data = $response->baseResponse->getData(true)['data'];
+        $post = array_except($data, 'user');
+
+        $this->assertDatabaseHas('posts', $post);
+    }
+
+    /**
+     * Test create review success
+     *
+     * @return void
+     */
+    public function testCreateReviewSuccess()
+    {
+        $this->withoutMiddleWare();
+        $bookId = $this->makeData();
+        $this->be(User::first());
+
+        $dataTest = [
+            'status' => Post::TYPE_REVIEW_BOOK,
             'content' => 'Content for comment',
             'book_id' => $bookId,
             'rating' => 4,
@@ -119,13 +167,21 @@ class ApiCreatePostTest extends TestCase
                     'created_at',
                     'updated_at'
                 ],
+                'rating' => [
+                    'id',
+                    'book_id',
+                    'post_id',
+                    'rating'
+                ]
             ]
         ])->assertStatus(Response::HTTP_CREATED);
-                
+
         $data = $response->baseResponse->getData(true)['data'];
         $post = array_except($data, ['user', 'rating']);
-        
+        $rating = $data['rating'];
+
         $this->assertDatabaseHas('posts', $post);
+        $this->assertDatabaseHas('ratings', $rating);
     }
 
     /**
@@ -134,7 +190,7 @@ class ApiCreatePostTest extends TestCase
      * @return void
      */
     public function makeData()
-    {   
+    {
         $faker = Faker::create();
 
         $categoryIds = factory(Category::class, 2)->create()->pluck('id')->toArray();
