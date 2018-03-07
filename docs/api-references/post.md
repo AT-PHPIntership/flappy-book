@@ -551,3 +551,33 @@ Create new post
     }
 }
 ```
+#### Response - Failure validate
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | Object | Object message |
+| status | Array | Error status |
+| content | Array | Error content |
+
+
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 400
+    },
+    "error": {
+        "message": {
+            "status": [
+                "The status field is required."
+            ],
+            "content": [
+                "The content field is required."
+            ]
+        }
+    }
+}
+```
