@@ -3,6 +3,9 @@
     {{ __('languages.list_languages') }}
 @endsection
 @section('content')
+<script type="text/javascript">
+  languages = {!! json_encode(trans('languages')) !!};
+</script>
  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -27,6 +30,7 @@
               </div>
             </div>
             <!-- /.box-header -->
+            @include('backend.languages.partials.confirm-edit-language')
             <div class="box-body" id="table-modified">
               <table id="list-languages" class="table table-bordered table-hover">
                 <thead>
@@ -43,7 +47,7 @@
                     <td class="text-center">1</td>
                     <td class="language-title-field">
                       <p>English</p>
-                      <input type="text" language-id="" value="" spellcheck="false" hidden>
+                      <input type="text" language-id="1" value="" spellcheck="false" hidden>
                       <span class="text-danger"></span>
                     </td>
                     <td class="text-center">

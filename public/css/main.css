@@ -18,3 +18,10 @@
   margin: 10px 0 0 50px;
 }
 
+.language-title-field input {
+  width: 100%;
+  border: none;
+  border-bottom: solid 1px #3c8dbc;
+  outline: none;
+  background-color: inherit;
+}
