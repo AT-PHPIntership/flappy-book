@@ -97,20 +97,42 @@
                   </div>
                   <div class="form-group">
                     <div class="row">
-                      <div class="col-xs-6">
+                      <div class="col-xs-3">
                         <label for="InputAuthor">{{ __('books.author') }}</label>
                         <input type="text" class="form-control" name="author" id="InputAuthor" placeholder="{{ __('books.author') }}" value="{{ $book->author }}">
                         @if($errors->first('author')) 
                           <span class="text-danger">{{ $errors->first('author') }}</span>
                         @endif
                       </div>
-                      <div class="col-xs-6">
+                      <div class="col-xs-3">
                         <label for="InputYear">{{ __('books.year') }}</label>
                         <input type="number" class="form-control" name="year" id="InputYear" placeholder="" value="{{ $book->year }}">
                         @if($errors->first('year')) 
                           <span class="text-danger">{{ $errors->first('year') }}</span>
                         @endif
                       </div>
+                      <div class="col-xs-3">
+                          <label>{{ __('books.language') }}</label>
+                          <select class="form-control" name="language" >
+                            @foreach( __('books.listlanguage') as $key => $language )
+                              @if($language == $book->language)
+                                <option value="{{ $key }}" selected>{{ $language }}</option>
+                              @else
+                                <option value="{{ $key }}">{{ $language }}</option>
+                              @endif
+                            @endforeach
+                          </select>
+                          @if($errors->first('language')) 
+                            <span class="text-danger">{{ $errors->first('language') }}</span>
+                          @endif
+                        </div>
+                        <div class="col-xs-3">
+                          <label for="InputPageNumber">{{ __('books.page_number') }}</label>
+                          <input type="text" class="form-control" name="page_number" placeholder="{{ __('books.page_number') }}" value="{{ $book->page_number }}">
+                          @if($errors->first('page_number')) 
+                            <span class="text-danger">{{ $errors->first('page_number') }}</span>
+                          @endif
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -121,9 +143,7 @@
                 @if($errors->first('picture')) 
                   <span class="text-danger">{{ $errors->first('picture') }}</span>
                 @endif
-                @if(isset($book->picture))
-                  <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
-                @endif
+                <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
               </div>
             </div>
             <div class="box-footer">
