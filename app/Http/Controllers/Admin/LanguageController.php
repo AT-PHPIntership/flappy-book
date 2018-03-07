@@ -22,8 +22,8 @@ class LanguageController extends Controller
         ];
         $languages = Language::select($fields)
                         ->paginate(config('define.languages.limit_rows'));
-
-        return view('backend.languages.index', ['languages' => $languages]);
+                        
+        return view('backend.languages.index', compact('languages'));
     }
 
     /**
