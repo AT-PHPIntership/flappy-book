@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Transformers\PostTransformer;
 use League\Fractal\Manager;
 use App\Model\Rating;
+use App\Model\Book;
 use App\Http\Requests\Api\CreatePostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\Handler;
@@ -86,10 +87,18 @@ class PostController extends ApiController
             // Create rating when post's status is review
             if ($request->status == Post::TYPE_REVIEW_BOOK) {
                 Rating::create([
-                        'post_id' => $post->id,
-                        'book_id' => $request->book_id,
-                        'rating' => $request->rating,
-                    ]);
+                    'post_id' => $post->id,
+                    'book_id' => $request->book_id,
+                    'rating' => $request->rating,
+                ]);
+
+                //Update rating in book
+                $book = Book::find($request->book_id);
+                $rating = ($book->rating * $book->total_rating + $request->rating) / ($book->total_rating + 1);
+                $book = $book->update([
+                    'rating' => $rating,
+                    'total_rating' => $book->total_rating + 1
+                ]);
             }
             DB::commit();
 
