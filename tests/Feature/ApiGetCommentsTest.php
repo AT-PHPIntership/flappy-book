@@ -12,9 +12,17 @@ use App\Model\Category;
 use App\Model\Comment;
 use App\Model\Post;
 
-class CreateCommentsApiTest extends TestCase
+class ApiGetCommentsTest extends TestCase
 {
     use DatabaseMigrations;
+
+    const COMMENTABLE_ID = 1;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->makeData(15);
+    }
 
     /**
      * Make cases test add comment for book or post.
@@ -38,9 +46,8 @@ class CreateCommentsApiTest extends TestCase
      */
     public function testStatusCode($commentableType)
     {
-        $commentableId = $this->makeData(1, $commentableType);
         $request = [
-            'commentable_id' => $commentableId,
+            'commentable_id' => self::COMMENTABLE_ID,
             'commentable_type' => $commentableType
         ];
 
@@ -57,9 +64,8 @@ class CreateCommentsApiTest extends TestCase
      */
     public function testStructJson($commentableType)
     {
-        $commentableId = $this->makeData(1, $commentableType);
         $request = [
-            'commentable_id' => $commentableId,
+            'commentable_id' => self::COMMENTABLE_ID,
             'commentable_type' => $commentableType
         ];
 
@@ -108,9 +114,8 @@ class CreateCommentsApiTest extends TestCase
      */
     public function testCompareDatabase($commentableType)
     {
-        $commentableId = $this->makeData(3, $commentableType);
         $request = [
-            'commentable_id' => $commentableId,
+            'commentable_id' => self::COMMENTABLE_ID,
             'commentable_type' => $commentableType
         ];
 
@@ -137,9 +142,8 @@ class CreateCommentsApiTest extends TestCase
      */
     public function testGetPaginationResult($commentableType)
     {
-        $commentableId = $this->makeData(15, $commentableType);
         $request = [
-            'commentable_id' => $commentableId,
+            'commentable_id' => self::COMMENTABLE_ID,
             'commentable_type' => $commentableType
         ];
 
@@ -199,7 +203,7 @@ class CreateCommentsApiTest extends TestCase
     *
     * @return void
     */
-    public function makeData($row, $commentableType)
+    public function makeData($row)
     {
         $faker = Faker::create();
 
@@ -209,23 +213,25 @@ class CreateCommentsApiTest extends TestCase
 
         $categoryIds = factory(Category::class, 2)->create()->pluck('id')->toArray();
 
-        if ($commentableType == Comment::BOOK_TYPE) {
-            $commentableId = factory(Book::class)->create([
-                'category_id' => $faker->randomElement($categoryIds),
-                'from_person' => $faker->randomElement($employCodes)
-            ])->id;
-        } else {
-            $commentableId = factory(Post::class)->create([
-                'user_id' => $faker->randomElement($userIds),
-            ])->id;
-        }
-
-        $comments = factory(Comment::class, $row)->create([
-            'user_id' => $faker->randomElement($userIds),
-            'commentable_id' => $commentableId,
-            'commentable_type' => $commentableType,
+        $bookId = factory(Book::class)->create([
+            'category_id' => $faker->randomElement($categoryIds),
+            'from_person' => $faker->randomElement($employCodes)
         ]);
 
-        return $commentableId;
+        $postId = factory(Post::class)->create([
+            'user_id' => $faker->randomElement($userIds),
+        ]);
+
+        factory(Comment::class, $row)->create([
+            'user_id' => $faker->randomElement($userIds),
+            'commentable_id' => self::COMMENTABLE_ID,
+            'commentable_type' => Comment::BOOK_TYPE,
+        ]);
+
+        factory(Comment::class, $row)->create([
+            'user_id' => $faker->randomElement($userIds),
+            'commentable_id' => self::COMMENTABLE_ID,
+            'commentable_type' => Comment::POST_TYPE,
+        ]);
     }
 }
