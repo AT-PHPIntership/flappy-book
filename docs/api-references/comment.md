@@ -117,3 +117,88 @@ Comments for Book
     }
 }
 ```
+
+### `POST` Create new Comment
+```
+/api/comments
+```
+Create new Comment
+
+#### Parameters
+| Key | Type | Description |
+|---|---|---|
+| commentable_type | String | Type of object |
+| commentable_id | Number | Id of object |
+| comment | String | Comment |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list comments |
+| id | Number | Id of comment |
+| comment | String | Comment |
+| commentable_id | Number | Id of object |
+| commentable_type | String | Type of object |
+| name | String | Name of user |
+| team | String | Team of user |
+| avatar_url | String | Url of user's avatar |
+| is_admin | Number | Role of user |
+| parent_id | Number | Parent comment id |
+| created_at | String | Create comment time |
+| updated_at | String | Update comment time |
+
+```json
+{
+    "meta": {
+        "status": "successfully",
+        "code": 201
+    },
+    "data": {
+        "id": 20,
+        "comment": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+        "commentable_id": 1,
+        "commentable_type": "book",
+        "parent_id": null,
+        "user_id": 1,
+        "user": {
+            "id": 1,
+            "name": "Cao Nguyen V.",
+            "employ_code": "AT0470",
+            "email": "cao.nguyen@asiantech.vn",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
+            "is_admin": 0,
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02"
+        },
+    }
+}
+```
+#### Response - Failure validate
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | Object | Object message |
+| comment | Array | Error comment |
+
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 422
+    },
+    "error": {
+        "message": {
+            "comment": [
+                "The comment field is required."
+            ],
+        }
+    }
+}
+```

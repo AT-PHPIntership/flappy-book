@@ -22,14 +22,13 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            @if(count($qrcodes) > 0)
-              <div class="box-header" id="btn-download">
-                <div class="pull-left">
-                  <a href="{{ route('qrcodes.index', 'export') }}"><button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button></a>
-                </div>
+            <div class="box-header" id="btn-modified">
+              <div class="pull-left">
+                <a href="{{ route('qrcodes.index', 'export') }}"><button type="button" name="btn-add" id="btn-download-qrcodes" class="btn btn-success btn-flat">{{ __('qrcodes.download') }}</button></a>
               </div>
+            </div>
             <!-- /.box-header -->
-            <div class="box-body" id="table-qrcodes">
+            <div class="box-body" id="table-modified">
               <table id="list-qrcodes" class="table table-bordered table-hover">
                 <thead>
                  <tr>
@@ -55,7 +54,7 @@
                 </nav>
               </div>
               <!-- /.box-body -->
-            @endif
+            </div>
           </div>
           <!-- /.box -->
         </div>

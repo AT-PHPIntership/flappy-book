@@ -28,15 +28,17 @@ class EditBookRequest extends FormRequest
             'title'       => 'required',
             'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
-            'unit'        => 'in:'.Book::TYPE_VND.','
-                                  .Book::TYPE_DOLAR.','
-                                  .Book::TYPE_EURO.','
-                                  .Book::TYPE_YEN.',',
-            'from_person' => 'required|exists:users,employ_code',
+            'unit'        => 'in:' . Book::TYPE_VND . ','
+                                   . Book::TYPE_DOLAR . ','
+                                   . Book::TYPE_EURO . ','
+                                   . Book::TYPE_YEN . ',',
+            'from_person' => 'required|max:10|exists:users,employ_code',
             'description' => 'required',
-            'year'        => 'required|integer|date_format:"Y"|max:'.date('Y'),
-            'author'      => 'required',
+            'year'        => 'required|integer|date_format:"Y"|max:' . date('Y'),
+            'author'      => 'required|max:100',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
+            'language_id' => 'required|exists:languages,id',
+            'page_number' => 'numeric|max:2000',
         ];
     }
 }

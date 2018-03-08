@@ -264,7 +264,7 @@ Get top 10 books review
 
 ### `GET` Top books borrow
 ```
-api/books/top-borrow
+api/books/top-borrows
 ```
 Get top books borrow
 
@@ -280,13 +280,13 @@ Get top books borrow
 | total_rating | Number | The total number of reviews of a book |
 | picture | String | Url for image of the book |
 | rating | Number | Average review of a book |
-| borrows_count | Number | Total borrowed of book |
+| borrowed | Number | Total borrowed of book |
 
 ```json
 {
     "meta": {
-                "status": "successfully",
-                "code": 200
+        "status": "successfully",
+        "code": 200
     },
     "data": [
         {
@@ -295,7 +295,7 @@ Get top books borrow
             "picture": "http://flappybook.tech//tmp/b6fefc65117463c5963acfd909ee7214.jpg",
             "total_rating": 12,
             "rating": 2,
-            "borrows_count": 4
+            "borrowed": 4
         },
         {
             "id": 5,
@@ -303,7 +303,7 @@ Get top books borrow
             "picture": "http://flappybook.tech//tmp/48920de5e7c48a6d43468167442d7c15.jpg",
             "total_rating": 17,
             "rating": 2,
-            "borrows_count": 2
+            "borrowed": 2
         },
         {
             "id": 8,
@@ -311,15 +311,15 @@ Get top books borrow
             "picture": "http://flappybook.tech//tmp/fba48ab59a27318b8fc28184e2e1673d.jpg",
             "total_rating": 10,
             "rating": 3,
-            "borrows_count": 1
+            "borrowed": 1
         },
         {
-        "id": 3,
-        "title": "Mariano Mayer",
-        "rating": 4,
-        "total_rating": 6,
-        "picture": "http://flappybook.tech//tmp/b06495378012d94197a6d3e4fb3bd306.jpg",
-        "borrows_count": 1
+            "id": 3,
+            "title": "Mariano Mayer",
+            "rating": 4,
+            "total_rating": 6,
+            "picture": "http://flappybook.tech//tmp/b06495378012d94197a6d3e4fb3bd306.jpg",
+            "borrowed": 1
         },
     ],
     "pagination": {
@@ -330,28 +330,9 @@ Get top books borrow
         "total_pages": 2,
         "links": {
             "prev": null,
-            "next": "http://flappybook.tech/api/books/top-borrow?page=2"
+            "next": "http://flappybook.tech/api/books/top-borrows?page=2"
         }
     }
 }
 ```    
-#### Response - Fail
-| Field | Type | Description |
-|-------|------|-------------|
-| meta | Object | object meta |
-| status | String | Status result |
-| code | Number | HTTP status codes |
-| error | Object | object error |
-| message | String |error message |
 
-```json
-{
-    "meta": {
-        "status": "failed",
-        "code": 404
-    },
-    "error": {
-        "message": "Data not found!"
-    }
-}
-```
