@@ -12,6 +12,13 @@ class Language extends Model
      * @type int
      */
     const LANGUAGE_DEFAULT = 1;
+
+    const LANGUAGES = [
+        'Vietnamese',
+        'English',
+        'Japanese',
+    ];
+
      /**
      * Declare table
      *
@@ -25,7 +32,7 @@ class Language extends Model
      * @var array
      */
     protected $fillable = [
-        'languages',
+        'language',
     ];
     
     /**
