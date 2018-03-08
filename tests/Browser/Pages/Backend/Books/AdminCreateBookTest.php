@@ -5,6 +5,7 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Model\User;
 use App\Model\Category;
+use App\Model\Language;
 use Faker\Factory as Faker;
 use Facebook\WebDriver\WebDriverBy;
 use DB;
@@ -52,19 +53,19 @@ class AdminCreateBookTest extends DuskTestCase
             ['author', '', 'The author field is required.'],
             ['year', '', 'The year field is required.'],
             ['from_person','', 'The from person field is required.'],
-            ['title', 'Title', 'The title must be at least 6 characters.'],
             ['price', 'abcde', 'The price must be a number.'],
-            ['from_person','AT0002', 'The selected from person is invalid.'],
-            ['year','12345','The year does not match the format Y.'],
+            ['from_person', 'AT0002', 'The selected from person is invalid.'],
+            ['year', '12345', 'The year does not match the format Y.'],
+            ['page_number', 'abcde', 'The page number must be a number.'],
         ];
     }
 
     /**
      * Dusk test validate for input
      *
-     * @param  string $name    name of field
-     * @param  string $content content
-     * @param  string $message message show when validate
+     * @param string $name    name of field
+     * @param string $content content
+     * @param string $message message show when validate
      *
      * @dataProvider listCaseTestValidateForInput
      *
@@ -74,16 +75,16 @@ class AdminCreateBookTest extends DuskTestCase
     {
         $employ_code = $this->makeData()->employ_code;
 
-        $this->browse(function (Browser $browser) use ($name, $content, $message, $employ_code)
-        {
+        $this->browse(function (Browser $browser) use ($name, $content, $message, $employ_code) {
             $browser->loginAs($this->user)
                 ->visit('admin/books/create')
-                ->resize(900,1000)
+                ->resize(900, 1000)
                 ->type('title', 'Title for book')
                 ->type('price', '1000')
                 ->type('author', 'Cao Nguyen V.')
                 ->type('year', '1995')
                 ->type('from_person', $employ_code)
+                ->type('page_number', '200')
                 ->type($name, $content);
 
             $this->fillTextArea('.wysihtml5-sandbox', $browser, 'Description for book');
@@ -102,16 +103,17 @@ class AdminCreateBookTest extends DuskTestCase
     {
         $employ_code = $this->makeData()->employ_code;
 
-        $this->browse(function (Browser $browser) use ($employ_code)
-        {
+        $this->browse(function (Browser $browser) use ($employ_code) {
             $browser->loginAs($this->user)
                 ->visit('admin/books/create')
-                ->resize(900,1000)
+                ->resize(900, 1000)
                 ->type('title', 'Title for book')
                 ->type('price', '1000')
                 ->type('author', 'Cao Nguyen V.')
                 ->type('year', '1995')
-                ->type('from_person', $employ_code);
+                ->type('from_person', $employ_code)
+                ->type('page_number', '200');
+                
 
             $this->fillTextArea('.wysihtml5-sandbox', $browser, '');
 
@@ -156,7 +158,8 @@ class AdminCreateBookTest extends DuskTestCase
                 ->type('price', '1000')
                 ->type('author', 'Cao Nguyen V.')
                 ->type('year', '1995')
-                ->type('from_person', $employ_code);
+                ->type('from_person', $employ_code)
+                ->type('page_number', '200');
 
             $this->fillTextArea('.wysihtml5-sandbox', $browser, 'Description for book');
 
@@ -169,19 +172,19 @@ class AdminCreateBookTest extends DuskTestCase
     /**
      * Input value for description
      *
-     * @param  string               $selector selector
-     * @param  Laravel\Dusk\Browser $browser  browser
-     * @param  string               $content  description of books
+     * @param string               $selector selector
+     * @param Laravel\Dusk\Browser $browser  browser
+     * @param string               $content  description of books
      *
      * @return void
      */
     public function fillTextArea($selector, $browser, $content)
     {
-       $frame = $browser->elements($selector)[0];
-       $browser->driver->switchTo()->frame($frame);
-       $body = $browser->driver->findElement(WebDriverBy::xpath('//body'));
-       $body->sendKeys($content);
-       $browser->driver->switchTo()->defaultContent();
+        $frame = $browser->elements($selector)[0];
+        $browser->driver->switchTo()->frame($frame);
+        $body = $browser->driver->findElement(WebDriverBy::xpath('//body'));
+        $body->sendKeys($content);
+        $browser->driver->switchTo()->defaultContent();
     }
 
     /**
@@ -191,7 +194,11 @@ class AdminCreateBookTest extends DuskTestCase
      */
     public function makeData()
     {
+        $faker = Faker::create();
         factory(Category::class, 2)->create();
+        factory(Language::class)->create([
+            'language' => $faker->randomElement(Language::LANGUAGES),
+        ]);
         return factory(User::class)->create();
     }
 }
