@@ -37,9 +37,7 @@ class EditBookRequest extends FormRequest
             'year'        => 'required|integer|date_format:"Y"|max:' . date('Y'),
             'author'      => 'required|max:100',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
-            'language'    => 'in:' . Book::VIETNAMESE . ','
-                                   . Book::ENGLISH . ','
-                                   . Book::JAPANESE . ',',
+            'language_id' => 'required|exists:languages,id',
             'page_number' => 'numeric|max:2000',
         ];
     }

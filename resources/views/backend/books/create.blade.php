@@ -103,9 +103,9 @@
                         </div>
                         <div class="col-xs-3">
                           <label>{{ __('books.language') }}</label>
-                          <select class="form-control" name="language" >
-                            @foreach( __('books.listlanguage') as $key => $language )
-                              <option value="{{ $key }}">{{ $language }}</option>
+                          <select class="form-control" name="language_id" >
+                            @foreach ($languages as $language)
+                              <option value="{{ $language->id }}">{{ $language->language }}</option>
                             @endforeach
                           </select>
                           @if($errors->first('language')) 
