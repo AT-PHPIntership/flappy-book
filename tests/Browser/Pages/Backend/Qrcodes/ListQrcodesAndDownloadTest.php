@@ -43,8 +43,10 @@ class ListQrcodesAndDownloadTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                 ->visit('/admin/qrcodes')
-                ->assertSee('List Qrcodes')
-                ->assertDontSee('Download');
+                ->assertSee('List Qrcodes');
+        $elements = $browser->elements('#list-qrcodes tbody tr');
+        $this->assertCount(0, $elements);
+        $this->assertNull($browser->element('.paginate'));
         });
     }
 
@@ -115,8 +117,10 @@ class ListQrcodesAndDownloadTest extends DuskTestCase
                 ->assertSee('Download')
                 ->press('Download')
                 ->pause(4000)
-                ->visit('admin/qrcodes')
-                ->assertDontSee('Download');
+                ->visit('admin/qrcodes');
+        $elements = $browser->elements('#list-qrcodes tbody tr');
+        $this->assertCount(0, $elements);
+        $this->assertNull($browser->element('.paginate'));
         });
     }
 
@@ -135,8 +139,7 @@ class ListQrcodesAndDownloadTest extends DuskTestCase
                 ->press('Download')
                 ->pause(4000)
                 ->press('Download')
-                ->assertSee('Data Empty')
-                ->assertDontSee('Download');
+                ->assertSee('Data Empty');
         });
     }
 
