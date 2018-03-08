@@ -32,7 +32,7 @@ class CreateCommentRequest extends FormRequest
             'commentable_type' => 'required|in:'.Post::COMMENTABLE_TYPE.','
                                                 .Book::COMMENTABLE_TYPE,
             'parent_id'        => 'integer|exists:comments,id',
-            'comment'          => 'required|min:10',
+            'comment'          => 'required',
         ];
 
         return $rules;

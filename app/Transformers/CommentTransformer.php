@@ -33,7 +33,7 @@ class CommentTransformer extends TransformerAbstract
             'comment' => (string) $comment->comment,
             'commentable_id' => (int) $comment->commentable_id,
             'commentable_type' => (string) $comment->commentable_type,
-            'parent_id' => (int) $comment->parent_id,
+            'parent_id' => $comment->parent_id,
             'user_id' => (int) $comment->user_id,
             'created_at' => (string) $comment->created_at,
             'updated_at' => (string) $comment->updated_at,
