@@ -10,6 +10,27 @@ use App\Model\Book;
 class BookController extends ApiController
 {
     /**
+     * Get list of books
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $fields = [
+            'id',
+            'title',
+            'picture',
+            'total_rating',
+            'rating',
+        ];
+        $books = Book::select($fields)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('define.books.limit_item'));
+
+            return $this->responsePaginate($books);
+    }
+    
+    /**
      * API get detail book
      *
      * @param int $id id of book
@@ -23,7 +44,7 @@ class BookController extends ApiController
             'books.title',
             'books.category_id',
             'books.description',
-            'books.language',
+            'books.language_id',
             'books.rating',
             'books.total_rating',
             'books.picture',
@@ -39,6 +60,9 @@ class BookController extends ApiController
         $book = Book::select($fields)
                     ->with(['category' => function ($query) {
                         $query->select('id', 'title');
+                    }])
+                    ->with(['language' => function ($query) {
+                        $query->select('id', 'language');
                     }])
                     ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                     ->join('users', 'books.from_person', '=', 'users.employ_code')

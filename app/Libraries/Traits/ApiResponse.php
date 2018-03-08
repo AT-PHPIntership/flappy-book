@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
+
     /**
      * Response detail of data
      *
@@ -25,7 +26,7 @@ trait ApiResponse
                 'code' => $code
             ],
             'data' => $data
-        ]);
+        ], $code);
     }
 
     /**
@@ -54,6 +55,6 @@ trait ApiResponse
                    'next' =>$responseData->nextPageUrl(),
                 ]
             ],
-        ]);
+        ], $code);
     }
 }

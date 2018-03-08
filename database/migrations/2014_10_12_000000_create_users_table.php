@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('employ_code', 10)->index('employ_code');
             $table->string('name', 100);
-            $table->string('email', 100)->unique();
+            $table->string('email', 100);
             $table->string('team', 10);
             $table->string('avatar_url');
             $table->tinyInteger('is_admin')->nullable();
