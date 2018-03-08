@@ -3,27 +3,33 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Http\Response;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\Model\User;
-use App\Model\Category;
-use App\Model\Borrow;
-use App\Model\Book;
-use DB;
 use Faker\Factory as Faker;
+use App\Model\Category;
+use App\Model\User;
+use App\Model\Book;
+use App\Model\Borrow;
+use App\Model\Language;
+use DB;
+use Illuminate\Http\Response;
 
 class TopBookApiTest extends TestCase
 {
-		use DatabaseMigrations;
+    use DatabaseMigrations;
 
+    const NUMBER_RECORD_CREATE = 25;
+    
     /**
-     * Receive status code 200 when get list top book.
+     * Receive status code 200 when get top books borrow success.
      *
      * @return void
      */
-    public function testStatusCodeInTopBookBorrow()
+    public function testStatusCodeSuccess()
     {
-        $response = $this->get('/api/books/top-borrow');
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $response = $this->json('GET', '/api/books/top-borrow');
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -32,75 +38,66 @@ class TopBookApiTest extends TestCase
      *
      * @return array
      */
-    public function jsonStructureTopBorrowBooks(){
+    public function jsonStructureTopBooksBorrow()
+    {
         return [
             'meta' => [
                 'status',
                 'code'
             ],
-           	'data' => [
+            'data' => [
                 [
                     'id',
                     'title',
-                    'picture',
-                    'total_rating',
                     'rating',
+                    'total_rating',
+                    'picture',
                     'borrows_count',
-                ]
-            ],
-            'pagination' => [
-                'total',
-                'per_page',
-                'current_page',
-                'total_pages',
-                'links' => [
-                    'prev',
-                    'next',
                 ]
             ]
         ];
     }
 
     /**
-     * Test structure of json.
+     * Test structure of json response.
      *
      * @return void
      */
-    public function testJsonTopBorrowStructure(){
-        $this->makeData(1);
-        $response = $this->json('GET', '/api/books/top-borrow');
-        $response->assertJsonStructure($this->jsonStructureTopBorrowBooks());
-    }
-
-    /**
-     * Test result pagination.
-     *
-     * @return void
-     */
-    public function testWithPaginationTopBorrowBooks()
+    public function testJsonTopBooksBorrowStructure()
     {
-        $this->makeData(21);
-        $response = $this->json('GET', '/api/books/top-borrow' . '?page=2');
-        $response->assertJson([
-            'pagination' => [
-                'total' => 21,
-                'per_page' => 20,
-                'current_page' => 2,
-                'total_pages' => 2,
-                'links' => [
-                    'prev' => "http://localhost/api/books/top-borrow?page=1",
-                    'next' => null
-                ]
-            ]
-        ]);
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $response = $this->json('GET', '/api/books/top-borrow');
+        $response->assertJsonStructure($this->jsonStructureTopBooksBorrow());
     }
 
     /**
-     * Test structure of json when empty top books.
+     * Test compare database
      *
      * @return void
      */
-    public function testEmptyTopBorrowBooks(){
+    public function testCompareDatabase()
+    {
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $response = $this->json('GET', '/api/books/top-borrow');
+        $data = json_decode($response->getContent());
+        $imagePath = explode(url('/') . '/' . config('define.books.folder_store_books'), $data->data[0]->picture)[1];
+        $arrayCompare = [
+            'id' => $data->data[0]->id,
+            'title' => $data->data[0]->title,
+            'rating' => $data->data[0]->rating,
+            'total_rating' => $data->data[0]->total_rating,
+            'picture' => $imagePath,
+        ];
+        $this->assertDatabaseHas('books', $arrayCompare);
+    }
+
+    /**
+     * Test structure of json when empty books.
+     *
+     * @return void
+     */
+    public function testEmptyBooks()
+    {
         $response = $this->json('GET', '/api/books/top-borrow');
         $response->assertJson([
             'data' => []
@@ -108,29 +105,54 @@ class TopBookApiTest extends TestCase
     }
 
     /**
-     * A Data test for users, books and borrows
+     * Test result pagination.
+     *
+     * @return void
+     */
+    public function testGetPaginationResult()
+    {
+        $this->makeData(self::NUMBER_RECORD_CREATE);
+        $response = $this->json('GET', 'api/books/top-borrow?page=2');
+        $response->assertJson([
+            'pagination' => [
+                'total' => self::NUMBER_RECORD_CREATE,
+                'per_page' => config('define.books.limit_item'),
+                'current_page' => 2,
+                'total_pages' => 2,
+            ]
+        ]);
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    /**
+     * Make data for test
      *
      * @return void
      */
     public function makeData($row)
     {
         $faker = Faker::create();
-        $users = factory(User::class, 4)->create();
-        $userId = $users->pluck('id')->toArray();
-        $employeeCode = $users->pluck('employ_code')->toArray();
-        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
+        factory(Category::class)->create();
+        factory(User::class)->create();
+        factory(Language::class)->create([
+            'language' =>  $faker->randomElement(Language::LANGUAGES),
+        ]);
+        $categoryIds = DB::table('categories')->pluck('id')->toArray();
+        $languageIds = DB::table('languages')->pluck('id')->toArray();
+        $employCodes = DB::table('users')->pluck('employ_code')->toArray();
         for ($i = 0; $i < $row; $i++) {
-            $books[] = factory(Book::class)->create([
-                'from_person' => $faker->randomElement($employeeCode),
-                'category_id' => $faker->randomElement($categoryId),
+            factory(Book::class)->create([
+                'category_id' => $faker->randomElement($categoryIds),
+                'language_id' => $faker->randomElement($languageIds),
+                'from_person' => $faker->randomElement($employCodes)
             ]);
         }
-        $bookId = array_pluck($books, 'id');
+        $bookIds = DB::table('books')->pluck('id')->toArray();
+        $userIds = DB::table('users')->pluck('id')->toArray();
         for ($i = 0; $i < $row; $i++) {
             factory(Borrow::class)->create([
-                'book_id' => $faker->randomElement($bookId),
-                'user_id' => $faker->randomElement($userId),
-                'status' => Borrow::BORROWING
+                'book_id' => $faker->randomElement($bookIds),
+                'user_id' => $faker->randomElement($userIds)
             ]);
         }
     }

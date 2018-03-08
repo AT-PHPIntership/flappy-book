@@ -6,17 +6,16 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\Book;
-use App\Model\Borrow;
-use DB;
 
 class BookController extends ApiController
 {
+
     /**
-    * Get top borrow books with paginate and meta.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function topBorrow()
+     * Get list of books
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         $fields = [
             'id',
@@ -25,15 +24,13 @@ class BookController extends ApiController
             'total_rating',
             'rating',
         ];
+        $books = Book::select($fields)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('define.books.limit_item'));
 
-        $topBorrowed = Book::select($fields)
-                    ->withCount('borrows')
-                    ->orderBy('borrows_count', 'desc')
-                    ->paginate(config('define.books.limit_item'));
-                        
-        return $this->responsePaginate($topBorrowed);
+        return $this->responsePaginate($books);
     }
-
+    
     /**
      * API get detail book
      *
@@ -48,7 +45,7 @@ class BookController extends ApiController
             'books.title',
             'books.category_id',
             'books.description',
-            'books.language',
+            'books.language_id',
             'books.rating',
             'books.total_rating',
             'books.picture',
@@ -64,6 +61,9 @@ class BookController extends ApiController
         $book = Book::select($fields)
                     ->with(['category' => function ($query) {
                         $query->select('id', 'title');
+                    }])
+                    ->with(['language' => function ($query) {
+                        $query->select('id', 'language');
                     }])
                     ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                     ->join('users', 'books.from_person', '=', 'users.employ_code')
@@ -95,5 +95,28 @@ class BookController extends ApiController
                     ->get();
         
         return $this->responseSuccess($topBooks);
+    }
+
+    /**
+     * Get top books borrow.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksBorrow()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                    ->withCount('borrows')
+                    ->orderBy('borrows_count', 'desc')
+                    ->paginate(config('define.books.limit_item'));
+                        
+        return $this->responsePaginate($topBooks);
     }
 }
