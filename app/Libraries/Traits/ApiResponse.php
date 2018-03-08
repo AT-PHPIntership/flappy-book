@@ -26,7 +26,7 @@ trait ApiResponse
                 'code' => $code
             ],
             'data' => $data
-        ]);
+        ], $code);
     }
 
     /**
@@ -55,6 +55,6 @@ trait ApiResponse
                    'next' =>$responseData->nextPageUrl(),
                 ]
             ],
-        ]);
+        ], $code);
     }
 }

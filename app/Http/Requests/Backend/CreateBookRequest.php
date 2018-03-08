@@ -25,18 +25,22 @@ class CreateBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required|min:6',
+            'title'       => 'required',
             'category_id' => 'required|exists:categories,id',
             'price'       => 'required|numeric',
-            'unit'        => 'in:'.Book::TYPE_VND.','
-                                  .Book::TYPE_DOLAR.','
-                                  .Book::TYPE_EURO.','
-                                  .Book::TYPE_YEN.',',
+            'unit'        => 'in:' . Book::TYPE_VND . ','
+                                   . Book::TYPE_DOLAR . ','
+                                   . Book::TYPE_EURO . ','
+                                   . Book::TYPE_YEN . ',',
             'from_person' => 'required|max:10|exists:users,employ_code',
             'description' => 'required',
-            'year'        => 'required|integer|date_format:"Y"|max:'.date('Y'),
+            'year'        => 'required|integer|date_format:"Y"|max:' . date('Y'),
             'author'      => 'required|max:100',
             'picture'     => 'image|mimes:png,jpg,jpeg|dimensions:min_width=100,min_height=200',
+            'language'    => 'in:' . Book::VIETNAMESE . ','
+                                   . Book::ENGLISH . ','
+                                   . Book::JAPANESE . ',',
+            'page_number' => 'numeric|max:2000',
         ];
     }
 }
