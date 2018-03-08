@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponse
 {
-  
+
     /**
      * Response detail of data
      *
