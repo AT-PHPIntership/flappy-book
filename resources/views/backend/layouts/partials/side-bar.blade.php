@@ -35,6 +35,9 @@
       <li class="{{ checkActiveRoutes(['qrcodes.index']) }}">
         <a href="{{ route('qrcodes.index') }}"><i class="fa fa-qrcode"></i> <span>{{ __('dashboard.qrcodes') }}</span></a>
       </li>
+      <li class="{{ checkActiveRoutes(['languages.index']) }}">
+        <a href="{{ route('languages.index') }}"><i class="fa fa-language"></i> <span>{{ __('dashboard.languages') }}</span></a>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

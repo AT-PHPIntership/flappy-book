@@ -11,6 +11,7 @@ use Faker\Factory as Faker;
 use App\Model\Category;
 use App\Model\User;
 use App\Model\Book;
+use App\Model\Language;
 use DB;
 
 class ApiDetailBookTest extends TestCase
@@ -45,7 +46,7 @@ class ApiDetailBookTest extends TestCase
                 'title',
                 'category_id',
                 'description',
-                'language',
+                'language_id',
                 'rating',
                 'total_rating',
                 'picture',
@@ -60,6 +61,10 @@ class ApiDetailBookTest extends TestCase
                 'category' => [
                     'id',
                     'title'
+                ],
+                'language' => [
+                    'id',
+                    'language'
                 ]
             ],
         ];
@@ -98,15 +103,20 @@ class ApiDetailBookTest extends TestCase
      * @return void
      */
     public function makeData($row)
-    {   
+    {
+        $faker = Faker::create();
         factory(Category::class)->create();
         factory(User::class)->create();
+        factory(Language::class)->create([
+            'language' =>  $faker->randomElement(Language::LANGUAGES),
+        ]);
         $categoryId = DB::table('categories')->pluck('id')->toArray();
+        $languageId = DB::table('languages')->pluck('id')->toArray();
         $userId = DB::table('users')->pluck('employ_code')->toArray();
-        $faker = Faker::create();
         for ($i = 0; $i < $row; $i++) {
             factory(Book::class)->create([
                 'category_id' => $faker->randomElement($categoryId),
+                'language_id' => $faker->randomElement($languageId),
                 'from_person' => $faker->randomElement($userId)
             ]);
         }
