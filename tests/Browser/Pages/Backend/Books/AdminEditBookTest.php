@@ -6,6 +6,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Model\Category;
+use App\Model\Language;
 use App\Model\Book;
 use App\Model\Qrcode;
 use DB;
@@ -134,7 +135,11 @@ class AdminEditBooksTest extends DuskTestCase
         factory(Category::class)->create();
         $categoryIds = factory(Category::class)->create()->pluck('id')->toArray();
         $faker = Faker::create();
+        $language = factory(Language::class)->create([
+            'language' =>  $faker->randomElement(Language::LANGUAGES),
+        ]);
         $this->book = factory(Book::class)->create([
+            'language_id' => $language->id,
             'category_id' => $faker->randomElement($categoryIds),
             'from_person' => $this->user->employ_code,
             'title' => $faker->name,
