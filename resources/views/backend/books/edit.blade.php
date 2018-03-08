@@ -46,11 +46,7 @@
                         <label>{{ __('books.category') }}</label>
                         <select class="form-control" name="category_id" >
                           @foreach($categories as $category)
-                            @if($book->category_id == $category->id)
-                              <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
-                            @else
-                              <option value="{{ $category->id }}">{{ $category->title }}</option>
-                            @endif
+                            <option value="{{ $category->id }}" {{ $book->category_id == $category->id ? "selected" : "" }}>{{ $category->title }}</option>
                           @endforeach
                         </select>
                         @if($errors->first('category')) 
@@ -113,13 +109,9 @@
                       </div>
                       <div class="col-xs-3">
                           <label>{{ __('books.language') }}</label>
-                          <select class="form-control" name="language" >
-                            @foreach( __('books.listlanguage') as $key => $language )
-                              @if($language == $book->language)
-                                <option value="{{ $key }}" selected>{{ $language }}</option>
-                              @else
-                                <option value="{{ $key }}">{{ $language }}</option>
-                              @endif
+                          <select class="form-control" name="language_id" >
+                            @foreach($languages as $language)
+                              <option value="{{ $language->id }}" {{ $book->language_id == $language->id ? "selected" : "" }}>{{ $language->language }}</option>
                             @endforeach
                           </select>
                           @if($errors->first('language')) 

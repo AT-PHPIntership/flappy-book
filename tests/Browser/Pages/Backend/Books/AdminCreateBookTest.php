@@ -5,6 +5,7 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Model\User;
 use App\Model\Category;
+use App\Model\Language;
 use Faker\Factory as Faker;
 use Facebook\WebDriver\WebDriverBy;
 use DB;
@@ -193,7 +194,11 @@ class AdminCreateBookTest extends DuskTestCase
      */
     public function makeData()
     {
+        $faker = Faker::create();
         factory(Category::class, 2)->create();
+        factory(Language::class)->create([
+            'language' => $faker->randomElement(Language::LANGUAGES),
+        ]);
         return factory(User::class)->create();
     }
 }
