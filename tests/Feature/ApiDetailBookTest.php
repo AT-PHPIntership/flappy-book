@@ -118,7 +118,7 @@ class ApiDetailBookTest extends TestCase
                 'category_id' => $faker->randomElement($categoryId),
                 'language_id' => $faker->randomElement($languageId),
                 'from_person' => $faker->randomElement($userId)
-                ]);
+            ]);
         }
     }
 }
