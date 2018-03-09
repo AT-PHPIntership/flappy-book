@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Language;
 
 class LanguageController extends Controller
 {
@@ -15,6 +16,13 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        return view('backend.languages.index');
+        $fields = [
+            'languages.id',
+            'languages.language',
+        ];
+        $languages = Language::select($fields)
+                        ->paginate(config('define.languages.limit_rows'));
+
+        return view('backend.languages.index', compact('languages'));
     }
 }
