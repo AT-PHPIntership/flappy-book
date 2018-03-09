@@ -12,7 +12,7 @@ class Language extends Model
      * @type int
      */
     const LANGUAGE_DEFAULT = 1;
-
+    
     const LANGUAGES = [
         'Vietnamese',
         'English',
