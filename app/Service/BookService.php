@@ -22,8 +22,6 @@ class BookService
             'books.picture',
             'books.total_rating',
             'books.rating',
-            'books.category_id',
-            'books.status'
         ];
 
         $params = $request ? $request->all() : null;

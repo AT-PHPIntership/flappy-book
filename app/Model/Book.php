@@ -224,5 +224,6 @@ class Book extends Model
         'borrow' => ['books.status' => '='],
         'title' => ['books.title' => 'like'],
         'author' => ['books.author' => 'like'],
+        'language' => ['books.language_id' => '=']
     ];
 }
