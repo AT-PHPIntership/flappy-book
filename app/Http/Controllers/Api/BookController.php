@@ -113,7 +113,7 @@ class BookController extends ApiController
 
         $topBooks = Book::select($fields)
                         ->withCount('borrows AS borrowed')
-                        ->orderBy('borrowed', 'desc')
+                        ->orderBy('borrowed', 'DESC')
                         ->paginate(config('define.books.limit_item'));
                 
         return $this->responsePaginate($topBooks);

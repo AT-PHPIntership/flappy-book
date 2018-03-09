@@ -19,8 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Api'], function(){
     Route::get('categories', 'CategoryController@index');
-    Route::get('books/top-borrow', 'BookController@topBooksBorrow');
     Route::get('books/top-review', 'BookController@topBooksReview');    
+    Route::get('books/top-borrows', 'BookController@topBooksBorrow');
     Route::get('books/{book}', 'BookController@show');
     Route::get('users/{user}', 'UserController@show')->middleware('tokenAuthentication');
     Route::get('books', 'BookController@index');
