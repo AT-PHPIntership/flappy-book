@@ -36,6 +36,11 @@ class Book extends Model
     const DEFAULT_UNIT = 'null';
     
     /**
+     * Commentable type
+     */
+    const COMMENTABLE_TYPE = 'book';
+
+    /**
      * Declare table
      *
      * @var string $tabel table name

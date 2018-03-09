@@ -30,5 +30,6 @@ Route::group(['namespace' => 'Api'], function(){
     Route::group(['middleware' => 'tokenAuthentication'], function(){
         Route::post('posts', 'PostController@store');
         Route::get('/users/{id}/posts', 'PostController@getPostsOfUser');
+        Route::post('comments', 'CommentController@store');
     });
 });
