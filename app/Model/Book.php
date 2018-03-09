@@ -26,6 +26,9 @@ class Book extends Model
     const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
+    const VIETNAMESE = 'Vietnamese';
+    const ENGLISH = 'English';
+    const JAPANESE = 'Japanese';
     const DEFAULT_PAGE_NUMBER = null;
     const DEFAULT_YEAR = null;
     const DEFAULT_AUTHOR = 'null';
@@ -64,7 +67,10 @@ class Book extends Model
         'from_person',
         'total_rating',
         'rating',
+        'language',
+        'page_number',
         'status',
+        'language_id',
     ];
 
     /**
@@ -105,6 +111,16 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Relationship belongsTo with Category
+     *
+     * @return array
+     */
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     /**
