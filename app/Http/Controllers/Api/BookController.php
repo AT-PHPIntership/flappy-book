@@ -27,7 +27,7 @@ class BookController extends ApiController
             ->orderBy('created_at', 'DESC')
             ->paginate(config('define.books.limit_item'));
 
-            return $this->responsePaginate($books);
+        return $this->responsePaginate($books);
     }
     
     /**
@@ -94,5 +94,28 @@ class BookController extends ApiController
                     ->get();
         
         return $this->responseSuccess($topBooks);
+    }
+
+    /**
+     * Get list top books borrow
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksBorrow()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                        ->withCount('borrows AS borrowed')
+                        ->orderBy('borrowed', 'DESC')
+                        ->paginate(config('define.books.limit_item'));
+                
+        return $this->responsePaginate($topBooks);
     }
 }

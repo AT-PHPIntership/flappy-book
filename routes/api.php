@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api'], function(){
     Route::get('categories', 'CategoryController@index');
     Route::get('books/top-review', 'BookController@topBooksReview');    
+    Route::get('books/top-borrows', 'BookController@topBooksBorrow');
     Route::get('books/{book}', 'BookController@show');
     Route::get('books', 'BookController@index');
     Route::get('books/{id}/reviews', 'PostController@reviews');
@@ -30,5 +31,6 @@ Route::group(['namespace' => 'Api'], function(){
         Route::get('/users/{id}/posts', 'PostController@getPostsOfUser');
         Route::get('users/{user}/donated', 'UserController@getBooksDonated');        
         Route::get('users/{user}', 'UserController@show');
+        Route::post('comments', 'CommentController@store');
     });
 });

@@ -39,78 +39,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-center">1</td>
-                    <td class="language-title-field">
-                      <p>English</p>
-                      <input type="text" language-id="" value="" spellcheck="false" hidden>
-                      <span class="text-danger"></span>
-                    </td>
-                    <td class="text-center">
-                      <div class="btn-option text-center">
-                        <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-language"></button>
-                        <form method="" action="" class="inline">
-                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item">
-                          </button>
-                        </form> 
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td class="language-title-field">
-                      <p>Japanese</p>
-                      <input type="text" language-id="" value="" spellcheck="false" hidden>
-                      <span class="text-danger"></span>
-                    </td>
-                    <td class="text-center">
-                      <div class="btn-option text-center">
-                        <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-language"></button>
-                        <form method="" action="" class="inline">
-                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item">
-                          </button>
-                        </form> 
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">3</td>
-                    <td class="language-title-field">
-                      <p>Vietnamese</p>
-                      <input type="text" language-id="" value="" spellcheck="false" hidden>
-                      <span class="text-danger"></span>
-                    </td>
-                    <td class="text-center">
-                      <div class="btn-option text-center">
-                        <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-language"></button>
-                        <form method="" action="" class="inline">
-                          <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item">
-                          </button>
-                        </form> 
-                      </div>
-                    </td>
-                  </tr>
+                  @foreach ($languages as $index => $language)
+                    <tr class="item-{{ $language->id }}">
+                      <td class="text-center">{{ $index + $languages->firstItem() }}</td>
+                      <td class="language-title-field">
+                        <p>{{ $language->language }}</p>
+                        <input type="text" language-id="" value="" spellcheck="false" hidden>
+                        <span class="text-danger"></span>
+                      </td>
+                      <td class="text-center">
+                        <div class="btn-option text-center">
+                          <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-language"></button>
+                          <form method="" action="" class="inline">
+                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item">
+                            </button>
+                          </form> 
+                        </div>
+                      </td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
               <!-- .pagination -->
               <div class="text-right">
                 <nav aria-label="...">
-                  <ul class="pagination">
-                    <li class="page-item disabled">
-                      <span class="page-link">Previous</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active">
-                      <span class="page-link">
-                        2
-                        <span class="sr-only">(current)</span>
-                      </span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
+                  {{ $languages->links() }}
                 </nav>
               </div>
               <!-- /.pagination -->
