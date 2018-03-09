@@ -3,14 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 use App\Http\Requests\Api\GetCommentsRequest;
+use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\Api\CreateCommentRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Transformers\CommentTransformer;
+use League\Fractal\Manager;
 use App\Model\Comment;
-use App\Model\Book;
-use DB;
 
 class CommentController extends ApiController
 {
+    /**
+     * PostController construct
+     *
+     * @param Manager         $fractal     fractal
+     * @param PostTransformer $transformer transformer
+     *
+     * @return void
+     */
+    public function __construct(Manager $fractal, CommentTransformer $transformer)
+    {
+        $this->fractal = $fractal;
+        $this->transformer = $transformer;
+    }
+
     /**
      * Get list of the resource.
      *
@@ -43,5 +59,20 @@ class CommentController extends ApiController
                            ->appends($request->except('page'));
 
         return $this->responsePaginate($comments);
+    }
+
+    /**
+     * Store new resource
+     *
+     * @param CreatePostRequest $request request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateCommentRequest $request)
+    {
+        $request['user_id'] = Auth::id();
+        $comment = Comment::create($request->all());
+        $comment = $this->getItem($comment, $this->transformer, 'user');
+        return $this->responseSuccess($comment, Response::HTTP_CREATED);
     }
 }
