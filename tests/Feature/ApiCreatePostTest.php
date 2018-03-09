@@ -13,6 +13,7 @@ use App\Model\User;
 use App\Model\Category;
 use App\Model\Post;
 use App\Model\Rating;
+use App\Model\Language;
 
 class ApiCreatePostTest extends TestCase
 {
@@ -197,9 +198,14 @@ class ApiCreatePostTest extends TestCase
 
         $employeeCodes = factory(User::class, 2)->create()->pluck('employ_code')->toArray();
 
+        $language = factory(Language::class)->create([
+            'language' => $faker->randomElement(Language::LANGUAGES),
+        ]);
+
         $bookId = factory(Book::class)->create([
             'category_id' => $faker->randomElement($categoryIds),
-            'from_person' => $faker->randomElement($employeeCodes)
+            'from_person' => $faker->randomElement($employeeCodes),
+            'language_id' => $language->id
         ])->id;
 
         return $bookId;
