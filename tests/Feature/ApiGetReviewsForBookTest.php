@@ -13,7 +13,7 @@ use App\Model\Post;
 use App\Model\Rating;
 use App\Model\Language;
 
-class ReviewsForBookApiTest extends TestCase
+class ApiGetReviewsForBookTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -49,17 +49,24 @@ class ReviewsForBookApiTest extends TestCase
                     'user_id',
                     'content',
                     'status',
-                    'name',
-                    'team',
-                    'avatar_url',
-                    'is_admin',
-                    'picture',
-                    'title',
-                    'book_id',
-                    'rating',
-                    'likes',
                     'created_at',
                     'updated_at',
+                    'like' => [
+                        'likes',
+                    ],
+                    'user' => [
+                        'id',
+                        'name',
+                        'team',
+                        'avatar_url',
+                        'is_admin',
+                    ],
+                    'rating' => [
+                        'id',
+                        'post_id',
+                        'book_id',
+                        'rating'
+                    ],
                 ],
             ],
             'pagination' => [
@@ -67,10 +74,7 @@ class ReviewsForBookApiTest extends TestCase
                 'per_page',
                 'current_page',
                 'total_pages',
-                'links' => [
-                    'prev',
-                    'next'
-                ]
+                'links'
             ],
         ]);
         $response->assertStatus(Response::HTTP_OK);

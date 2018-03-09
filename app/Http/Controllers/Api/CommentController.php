@@ -36,29 +36,14 @@ class CommentController extends ApiController
      */
     public function comments(GetCommentsRequest $request)
     {
-        $fields = [
-            'comments.id',
-            'comments.comment',
-            'comments.commentable_id',
-            'comments.commentable_type',
-            'users.name',
-            'users.team',
-            'users.avatar_url',
-            'users.is_admin',
-            'comments.parent_id',
-            'comments.created_at',
-            'comments.updated_at',
-            'comments.deleted_at',
-        ];
-
-        $comments = Comment::select($fields)
-                           ->join('users', 'comments.user_id', '=', 'users.id')
+        $comments = Comment::join('users', 'comments.user_id', 'users.id')
                            ->where('commentable_id', $request->commentable_id)
                            ->where('commentable_type', $request->commentable_type)
                            ->paginate(config('define.comments.limit_rows'))
                            ->appends($request->except('page'));
 
-        return $this->responsePaginate($comments);
+        $comments = $this->transformerResource($comments, 'user');
+        return $this->responseResource($comments);
     }
 
     /**
@@ -72,7 +57,8 @@ class CommentController extends ApiController
     {
         $request['user_id'] = Auth::id();
         $comment = Comment::create($request->all());
-        $comment = $this->getItem($comment, $this->transformer, 'user');
-        return $this->responseSuccess($comment, Response::HTTP_CREATED);
+
+        $comment = $this->transformerResource($comment, 'user');
+        return $this->responseResource($comment, Response::HTTP_CREATED);
     }
 }

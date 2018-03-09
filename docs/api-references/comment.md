@@ -22,16 +22,19 @@ Comments for Book
 | comment | String | Comment |
 | commentable_id | Number | Id of object |
 | commentable_type | String | Type of object |
+| parent_id | Number | Parent comment id |
+| user_id | Number | Id of user |
+| created_at | String | Create comment time |
+| updated_at | String | Update comment time |
+| user | Object | Object of user |
+| id | Number | Id of user |
 | name | String | Name of user |
 | team | String | Team of user |
 | avatar_url | String | Url of user's avatar |
 | is_admin | Number | Role of user |
-| parent_id | Number | Parent comment id |
-| created_at | String | Create comment time |
-| updated_at | String | Update comment time |
-| deleted_at | String | Delete comment time |
 | pagination | Object | Object pagination |
 | total | Number | Total posts |
+| count | Number | Total posts in current page |
 | per_page | Number | Posts per page |
 | current_page | Number | Number of current page |
 | total_pages | Number | Total pages |
@@ -48,36 +51,43 @@ Comments for Book
     },
     "data": [
         {
-            "id": 1,
+            "id": 20,
             "comment": "Molestiae voluptas cum ullam accusantium fuga magnam.",
             "commentable_id": 1,
             "commentable_type": "book",
-            "name": "Greta Lehner",
-            "team": "SA",
-            "avatar_url": "http://flappybook.tech/tmp/7c5266db2cd916e1af404a688980e4dd.jpg",
-            "is_admin": 0,
             "parent_id": null,
-            "created_at": "2018-02-08 16:34:10",
-            "updated_at": "2018-02-08 16:34:10",
-            "deleted_at": null
+            "user_id": 1,
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02",
+            "user": {
+                "id": 1,
+                "name": "Cao Nguyen V.",
+                "team": "PHP",
+                "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
+                "is_admin": 0,
+            }
         },
         {
-            "id": 15,
-            "comment": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "id": 22,
+            "comment": "Molestiae voluptas cum ullam accusantium fuga magnam.",
             "commentable_id": 1,
             "commentable_type": "book",
-            "name": "Mr. Morris Glover V",
-            "team": "PHP",
-            "avatar_url": "http://flappybook.tech/tmp/bb8ab0ad35b2ecfe6e23d5ed0aadbd39.jpg",
-            "is_admin": 0,
             "parent_id": null,
-            "created_at": "2018-02-08 16:34:18",
-            "updated_at": "2018-02-08 16:34:18",
-            "deleted_at": null
+            "user_id": 1,
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02",
+            "user": {
+                "id": 1,
+                "name": "Cao Nguyen V.",
+                "team": "PHP",
+                "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
+                "is_admin": 0,
+            }
         }
     ],
     "pagination": {
         "total": 12,
+        "count": 2,
         "per_page": 10,
         "current_page": 2,
         "total_page": 2,
@@ -142,13 +152,16 @@ Create new Comment
 | comment | String | Comment |
 | commentable_id | Number | Id of object |
 | commentable_type | String | Type of object |
+| parent_id | Number | Parent comment id |
+| user_id | Number | Id of user |
+| created_at | String | Create comment time |
+| updated_at | String | Update comment time |
+| user | Object | Object of user |
+| id | Number | Id of user |
 | name | String | Name of user |
 | team | String | Team of user |
 | avatar_url | String | Url of user's avatar |
 | is_admin | Number | Role of user |
-| parent_id | Number | Parent comment id |
-| created_at | String | Create comment time |
-| updated_at | String | Update comment time |
 
 ```json
 {
@@ -168,14 +181,10 @@ Create new Comment
         "user": {
             "id": 1,
             "name": "Cao Nguyen V.",
-            "employ_code": "AT0470",
-            "email": "cao.nguyen@asiantech.vn",
             "team": "PHP",
             "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
             "is_admin": 0,
-            "created_at": "2018-03-06 02:22:53",
-            "updated_at": "2018-03-06 02:37:02"
-        },
+        }
     }
 }
 ```
