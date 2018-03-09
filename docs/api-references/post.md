@@ -551,3 +551,27 @@ Create new post
     }
 }
 ```
+### `DELETE` Post
+```
+api/posts/{id}
+```
+Delete the post
+#### Request header
+| Key | Value |
+|---|---|
+|Accept|application\json|
+|Authorization|{token_type} {access_token}
+#### Response
+| Field | Type | Description |
+|---|---|---|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status code |
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 200
+    },
+}
+```
