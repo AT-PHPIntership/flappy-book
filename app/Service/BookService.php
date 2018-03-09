@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use DB;
 use App\Model\Book;
 use Illuminate\Http\Request;
 
@@ -29,8 +28,8 @@ class BookService
 
         $params = $request ? $request->all() : null;
         $books = Book::filter($params)
-                ->select($fields)
-                ->orderBy('books.created_at', 'DESC');
+                    ->select($fields)
+                    ->orderBy('books.created_at', 'DESC');
 
         return $books;
     }
