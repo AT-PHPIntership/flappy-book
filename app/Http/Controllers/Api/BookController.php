@@ -44,7 +44,7 @@ class BookController extends ApiController
             'books.title',
             'books.category_id',
             'books.description',
-            'books.language',
+            'books.language_id',
             'books.rating',
             'books.total_rating',
             'books.picture',
@@ -60,6 +60,9 @@ class BookController extends ApiController
         $book = Book::select($fields)
                     ->with(['category' => function ($query) {
                         $query->select('id', 'title');
+                    }])
+                    ->with(['language' => function ($query) {
+                        $query->select('id', 'language');
                     }])
                     ->leftJoin('borrows', 'books.id', '=', 'borrows.book_id')
                     ->join('users', 'books.from_person', '=', 'users.employ_code')

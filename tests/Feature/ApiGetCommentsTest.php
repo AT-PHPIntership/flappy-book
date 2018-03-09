@@ -10,6 +10,7 @@ use App\Model\Book;
 use App\Model\User;
 use App\Model\Category;
 use App\Model\Comment;
+use App\Model\Language;
 use App\Model\Post;
 
 class ApiGetCommentsTest extends TestCase
@@ -212,26 +213,25 @@ class ApiGetCommentsTest extends TestCase
         $userIds = $users->pluck('id')->toArray();
 
         $categoryIds = factory(Category::class, 2)->create()->pluck('id')->toArray();
-
+        $language = factory(Language::class)->create([
+            'language' =>  $faker->randomElement(Language::LANGUAGES),
+        ]);
         $bookId = factory(Book::class)->create([
             'category_id' => $faker->randomElement($categoryIds),
-            'from_person' => $faker->randomElement($employCodes)
+            'from_person' => $faker->randomElement($employCodes),
+            'language_id' => $language->id
         ]);
 
         $postId = factory(Post::class)->create([
             'user_id' => $faker->randomElement($userIds),
         ]);
 
-        factory(Comment::class, $row)->create([
-            'user_id' => $faker->randomElement($userIds),
-            'commentable_id' => self::COMMENTABLE_ID,
-            'commentable_type' => Comment::BOOK_TYPE,
-        ]);
-
-        factory(Comment::class, $row)->create([
-            'user_id' => $faker->randomElement($userIds),
-            'commentable_id' => self::COMMENTABLE_ID,
-            'commentable_type' => Comment::POST_TYPE,
-        ]);
+        foreach ($this->commentableType() as $commentableType) {
+            factory(Comment::class, $row)->create([
+                'user_id' => $faker->randomElement($userIds),
+                'commentable_id' => self::COMMENTABLE_ID,
+                'commentable_type' => $commentableType[0],
+            ]);
+        }
     }
 }
