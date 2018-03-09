@@ -57,4 +57,24 @@ trait ApiResponse
             ],
         ], $code);
     }
+
+    /**
+     * Response resource
+     *
+     * @param object $resource resource
+     * @param int    $code     response status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function responseResource($resource = [], $code = 200)
+    {
+        $meta = [
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ]
+        ];
+        $data = array_merge($meta, $resource);
+        return response()->json($data, $code);
+    }
 }

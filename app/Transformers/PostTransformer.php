@@ -3,9 +3,10 @@
 namespace App\Transformers;
 
 use App\Model\Post;
+use App\Model\Rating;
+use App\Model\Like;
+use App\Model\Book;
 use League\Fractal\TransformerAbstract;
-use League\Fractal\Serializer\ArraySerializer;
-use League\Fractal\Serializer\DataArraySerializer;
 use Illuminate\Support\Facades\App;
 
 class PostTransformer extends TransformerAbstract
@@ -17,7 +18,17 @@ class PostTransformer extends TransformerAbstract
      */
     protected $availableIncludes = [
         'user',
+        'book',
         'rating'
+    ];
+
+    /**
+     * The attributes that are default include.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'like',
     ];
 
     /**
@@ -48,7 +59,7 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeUser(Post $post)
     {
-        return $this->item($post->users, App::make(UserTransformer::class));
+        return $this->item($post->users, App::make(UserIncludeTransformer::class));
     }
 
     /**
@@ -60,10 +71,44 @@ class PostTransformer extends TransformerAbstract
      */
     public function includeRating(Post $post)
     {
-        if (!$post->rating) {
-            return null;
-        }
+        $rating = Rating::where('post_id', $post->id)->first();
 
-        return $this->item($post->rating, App::make(RatingTransformer::class));
+        if (!$rating) {
+            return $this->null();
+        }
+        return $this->item($rating, App::make(RatingTransformer::class));
+    }
+
+    /**
+     * Transform
+     *
+     * @param Post $post post
+     *
+     * @return Item
+     */
+    public function includeLike(Post $post)
+    {
+        $likes = Like::where('post_id', $post->id)->count();
+
+        return $this->item($likes, function ($likes) {
+            return ['likes' => $likes];
+        });
+    }
+
+    /**
+     * Transform
+     *
+     * @param Post $post post
+     *
+     * @return Item
+     */
+    public function includeBook(Post $post)
+    {
+        $rating = Rating::where('post_id', $post->id)->first();
+
+        if (!$rating) {
+            return $this->null();
+        }
+        return $this->item($rating->books, App::make(BookIncludeTransformer::class));
     }
 }

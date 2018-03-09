@@ -46,10 +46,10 @@ class PostController extends ApiController
         $posts = PostService::getPosts($request)
                     ->where('posts.user_id', $userId)
                     ->paginate(config('define.posts.limit_rows_posts_of_user'));
-
-        return $this->responsePaginate($posts);
+        $posts = $this->transformerResource($posts, 'book,rating');
+        return $this->responseResource($posts);
     }
-    
+
     /**
      * Get list of the resource.
      *
@@ -60,11 +60,10 @@ class PostController extends ApiController
     public function reviews(int $id)
     {
         $posts = PostService::getPosts()
-            ->where('posts.status', Post::TYPE_REVIEW_BOOK)
-            ->where('books.id', $id)
-            ->paginate(config('define.posts.limit_rows'));
-
-        return $this->responsePaginate($posts);
+                    ->where([['posts.status', Post::TYPE_REVIEW_BOOK],['books.id', $id]])
+                    ->paginate(config('define.posts.limit_rows'));
+        $posts = $this->transformerResource($posts, 'user,rating');
+        return $this->responseResource($posts);
     }
 
     /**
@@ -93,8 +92,8 @@ class PostController extends ApiController
             }
             DB::commit();
 
-            $post = $this->getItem($post, $this->transformer, 'user,rating');
-            return $this->responseSuccess($post, Response::HTTP_CREATED);
+            $post = $this->transformerResource($post, 'user,rating');
+            return $this->responseResource($post, Response::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollBack();
             throw new ModelNotFoundException();

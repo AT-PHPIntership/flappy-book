@@ -18,22 +18,27 @@ Get Posts with status review for Book
 | code | Number | HTTP status codes |
 | data | Array | Array list posts |
 | id | Number | Id of post |
-| user_id | Number | Id of user create post |
 | content | String | Content of post |
 | status | Number | Status of post |
+| user_id | Number | Id of user create post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| like | Object | Object like |
+| likes | Number | Number of likes |
+| user | Object | Object user |
+| id | Number | Id of user |
 | name | String | Name of user |
 | team | String | Team of user |
 | avatar_url | String | Url of user's avatar |
 | is_admin | Number | Role of user |
-| picture | String | Picture of book |
-| title | String | Title of book |
-| book_id | Number | Id for book |
-| rating | Number | Rating for book |
-| likes | Number | likes of post |
-| created_at | String | Create book time |
-| updated_at | String | Update book time |
+| rating | Object | Object rating |
+| id | Number | Id of rating |
+| book_id | Number | Id of book |
+| post_id | Number | Id of post |
+| rating | Number | Rating of book |
 | pagination | Object | Object pagination |
 | total | Number | Total posts |
+| count | Number | Total posts in current page |
 | per_page | Number | Posts per page |
 | current_page | Number | Number of current page |
 | total_pages | Number | Total pages |
@@ -44,53 +49,67 @@ Get Posts with status review for Book
 ```json
 {
     "meta": {
-        "status": "successfuly",
-        "code": 200,
+        "status": "Successfully",
+        "code": 200
     },
     "data": [
         {
-            "id": 1,
-            "user_id": 10,
-            "content": "Molestiae voluptas cum ullam accusantium fuga magnam.",
+            "id": 83,
+            "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 2,
-            "name": "Greta Lehner",
-            "team": "SA",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/366/64weew314e61ccc.png",
-            "is_admin": 0,
-            "picture": "http://book.aug/images/books/20180209.jpeg",
-            "title": "Molestiae voluptas",
-            "book_id": 3,
-            "rating": "3.0",
-            "likes": 1,
-            "created_at": "2018-02-08 16:34:10",
-            "updated_at": "2018-02-08 16:34:10",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:27",
+            "updated_at": "2018-03-09 08:41:27",
+            "like": {
+                "likes": 0
+            },
+            "user": {
+                "id": 10,
+                "name": "Mrs. Luz Gorczany",
+                "team": "ANDROID",
+                "avatar_url": "/tmp/1f02d6771e184b83b106fb678405d06b.jpg",
+                "is_admin": 0
+            },
+            "rating": {
+                "id": 36,
+                "book_id": 1,
+                "post_id": 83,
+                "rating": 1
+            }
         },
         {
-            "id": 15,
-            "user_id": 2,
-            "content": "Vel natus quo explicabo cupiditate autem dolor et aliquid.",
+            "id": 84,
+            "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 2,
-            "name": "Mr. Morris Glover V",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/366/3122323e61drf.png",
-            "is_admin": 0,
-            "picture": "http://book.aug/images/books/er345ss34.jpeg",
-            "title": "Molestiae voluptas",
-            "book_id": 3,
-            "rating": "3.0",
-            "likes": 1,
-            "created_at": "2018-02-08 16:34:10",
-            "updated_at": "2018-02-08 16:34:10",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 0
+            },
+            "user": {
+                "id": 10,
+                "name": "Mrs. Luz Gorczany",
+                "team": "ANDROID",
+                "avatar_url": "/tmp/1f02d6771e184b83b106fb678405d06b.jpg",
+                "is_admin": 0
+            },
+            "rating": {
+                "id": 37,
+                "book_id": 1,
+                "post_id": 84,
+                "rating": 1
+            }
         }
     ],
     "pagination": {
-        "total": 12,
+        "total": 32,
+        "count": 2,
         "per_page": 10,
-        "current_page": 2,
-        "total_pages": 2,
+        "current_page": 4,
+        "total_pages": 4,
         "links": {
-            "prev": "http://flappybook.tech/api/books/14/reviews?page=1",
-            "next": null
+            "previous": "http://flappybook.tech/api/books/1/reviews?page=3"
         }
     }
 }
@@ -136,32 +155,37 @@ Get list all posts by user with paginate
 
 ##### Response - Success
 | Field | Type | Description |
-|---|---|---|
-| data | Object | Object posts |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list posts |
 | id | Number | Id of post |
 | content | String | Content of post |
-| status | Number | Post type |
-| user_id | Number | Id of user |
-| name | String | Name of user |
-| team | String | Team of user |
-| avatar_url | String | User's picture |
-| is_admin | Number | Role of user |
+| status | Number | Status of post |
+| user_id | Number | Id of user create post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| like | Object | Object like |
+| likes | Number | Number of likes |
+| book | Object | Object book |
+| id | Number | Id of book |
+| title | String | Name of book |
+| picture | String | Picture of book |
+| rating | Object | Object rating |
+| id | Number | Id of rating |
 | book_id | Number | Id of book |
-| picture | String | Book's picture |
-| title | String | Book's name |
-| rating | Number | Rating for post |
-| like | Number | Likes of posts |
-| created_at | String | Create date of the post |
-| updated_at | String | Update date of the post |
-| meta | Object | Object meta |
-| total | Number | Total item |
-| count | Number | Total item on current page |
-| per_page | Number | Total item on per page |
-| current_page | Number | Current page |
-| total_page | Number | Total page |
-| link | String | Page url |
-| status | String | Status result |
-| code | Number | HTTP status code |
+| post_id | Number | Id of post |
+| rating | Number | Rating of book |
+| pagination | Object | Object pagination |
+| total | Number | Total posts |
+| count | Number | Total posts in current page |
+| per_page | Number | Posts per page |
+| current_page | Number | Number of current page |
+| total_pages | Number | Total pages |
+| links | Object | Object Links |
+| prev | String | Link of previous page |
+| next | String | Link of next page |
 
 ```json
 {
@@ -171,62 +195,77 @@ Get list all posts by user with paginate
     },
     "data": [
         {
-            "id": 1,
+            "id": 84,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 1,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": null,
-            "picture": null,
-            "title": null,
-            "rating": null,
-            "like": 1,
-            "created_at": "2018-02-22 07:17:06",
-            "updated_at": "2018-02-22 07:17:06",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": {
+                "id": 37,
+                "book_id": 1,
+                "post_id": 84,
+                "rating": 1
+            }
         },
         {
-            "id": 3,
-            "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
-            "status": 0,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": null,
-            "picture": null,
-            "title": null,
-            "rating": null,
-            "like": 1,
-            "created_at": "2018-02-22 07:17:06",
-            "updated_at": "2018-02-22 07:17:06",
-        },
-        {
-            "id": 8,
+            "id": 84,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 2,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": 3,
-            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            "title": "CSS3",
-            "rating": 5.0,
-            "like": 1,
-            "created_at": "2018-02-22 07:17:06",
-            "updated_at": "2018-02-22 07:17:06",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": {
+                "id": 37,
+                "book_id": 1,
+                "post_id": 84,
+                "rating": 1
+            }
+        },
+        {
+            "id": 86,
+            "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
+            "status": 2,
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 18,
+                "title": "IOS",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": {
+                "id": 37,
+                "book_id": 18,
+                "post_id": 86,
+                "rating": 3
+            }
         }
     ],
     "pagination": {
-        "total": 25,
-        "count": 20,
+        "total": 23,
+        "count": 3,
         "per_page": 20,
-        "curent_page": 1,
+        "curent_page": 2,
         "total_page": 2,
         "link": {
             "prev": null,
@@ -290,49 +329,49 @@ Get list all posts by user with paginate
     },
     "data": [
         {
-            "id": 3,
+            "id": 84,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 0,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": null,
-            "picture": null,
-            "title": null,
-            "rating": null,
-            "like": 1,
-            "created_at": "2018-02-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": null
         },
         {
-            "id": 10,
+            "id": 86,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 0,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": null,
-            "picture": null,
-            "title": null,
-            "rating": null,
-            "like": 2,
-            "created_at": "2018-02-22 07:17:06",
-            "updated_at": "2018-02-22 07:17:06",
-        },
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": null
+        }
     ],
     "pagination": {
-        "total": 22,
-        "count": 20,
+        "total": 2,
+        "count": 2,
         "per_page": 20,
         "curent_page": 1,
         "total_page": 1,
         "link": {
             "prev": null,
-            "next": "http://flappybook.tech/users/1/posts?status=0&page=2",
+            "next": null,
         }
     }
 }
@@ -353,43 +392,43 @@ Get list all posts by user with paginate
     },
     "data": [
         {
-            "id": 2,
+            "id": 84,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 1,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": null,
-            "picture": null,
-            "title": null,
-            "rating": null,
-            "like": 1,
-            "created_at": "2018-02-22 07:17:06",
-            "updated_at": "2018-02-22 07:17:06",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": null
         },
         {
-            "id": 4,
+            "id": 84,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 1,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": null,
-            "picture": null,
-            "title": null,
-            "rating": null,
-            "like": 1,
-            "created_at": "2018-02-22 07:17:06",
-            "updated_at": "2018-02-22 07:17:06",
-        },
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": null
+        }
     ],
     "pagination": {
-        "total": 5,
-        "count": 5,
+        "total": 2,
+        "count": 2,
         "per_page": 20,
         "curent_page": 1,
         "total_page": 1,
@@ -417,42 +456,53 @@ Get list all posts by user with paginate
     },
     "data": [
         {
-            "id": 5,
+            "id": 84,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 2,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": 3,
-            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            "title": "CSS3",
-            "rating": 5.0,
-            "like": 2,
-            "created_at": "2018-02-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 10,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": {
+                "id": 37,
+                "book_id": 10,
+                "post_id": 84,
+                "rating": 1
+            }
         },
         {
-            "id": 9,
+            "id": 85,
             "content": "Et excepturi ipsa iusto repellat molestiae. Aut esse voluptatum omnis dignissimos pariatur et.",
             "status": 2,
-            "user_id": 1,
-            "name": "Tram Pham T.M.",
-            "team": "PHP",
-            "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-            "is_admin": 1,
-            "book_id": 3,
-            "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            "title": "CSS3",
-            "rating": 5.0,
-            "like": 2,
-            "created_at": "2018-01-08 07:35:34",
-            "updated_at": "2018-02-10 08:35:30",
-        },
+            "user_id": 10,
+            "created_at": "2018-03-09 08:41:36",
+            "updated_at": "2018-03-09 08:41:36",
+            "like": {
+                "likes": 5
+            },
+            "book": {
+                "id": 11,
+                "title": "ANDROID",
+                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+            },
+            "rating": {
+                "id": 37,
+                "book_id": 11,
+                "post_id": 85,
+                "rating": 1
+            }
+        }
     ],
     "pagination": {
-        "count": 12,
+        "total": 2,
+        "count": 2,
         "per_page": 20,
         "curent_page": 1,
         "total_page": 1,
@@ -531,22 +581,21 @@ Create new post
         "user_id": 1,
         "created_at": "2018-03-06 08:53:31",
         "updated_at": "2018-03-06 08:53:31",
+        "like": {
+            "likes": 0
+        },
         "user": {
             "id": 1,
             "name": "Cao Nguyen V.",
-            "employ_code": "AT0470",
-            "email": "cao.nguyen@asiantech.vn",
             "team": "PHP",
             "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
             "is_admin": 0,
-            "created_at": "2018-03-06 02:22:53",
-            "updated_at": "2018-03-06 02:37:02"
         },
         "rating": {
             "id": 51,
-            "rating": 3,
             "book_id": 1,
-            "post_id":145
+            "post_id":145,
+            "rating": 3
         }
     }
 }
