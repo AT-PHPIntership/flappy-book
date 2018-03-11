@@ -12,7 +12,7 @@ class UserIncludeTransformer extends TransformerAbstract
      *
      * @param User $user user
      *
-     * @return Array
+     * @return array
      */
     public function transform(User $user)
     {

@@ -46,7 +46,7 @@ class PostController extends ApiController
         $posts = PostService::getPosts($request)
                     ->where('posts.user_id', $userId)
                     ->paginate(config('define.posts.limit_rows_posts_of_user'));
-        $posts = $this->transformerResource($posts, 'book,rating');
+        $posts = $this->transformerResource($posts, ['book','rating']);
         return $this->responseResource($posts);
     }
 
@@ -62,7 +62,7 @@ class PostController extends ApiController
         $posts = PostService::getPosts()
                     ->where([['posts.status', Post::TYPE_REVIEW_BOOK],['books.id', $id]])
                     ->paginate(config('define.posts.limit_rows'));
-        $posts = $this->transformerResource($posts, 'user,rating');
+        $posts = $this->transformerResource($posts, ['user','rating']);
         return $this->responseResource($posts);
     }
 
@@ -85,15 +85,15 @@ class PostController extends ApiController
             // Create rating when post's status is review
             if ($request->status == Post::TYPE_REVIEW_BOOK) {
                 Rating::create([
-                        'post_id' => $post->id,
-                        'book_id' => $request->book_id,
-                        'rating' => $request->rating,
-                    ]);
+                    'post_id' => $post->id,
+                    'book_id' => $request->book_id,
+                    'rating' => $request->rating,
+                ]);
             }
             DB::commit();
 
-            $post = $this->transformerResource($post, 'user,rating');
-            return $this->responseResource($post, Response::HTTP_CREATED);
+            $post = $this->transformerResource($post, ['user','rating']);
+            return $this->responseSuccess($post, Response::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollBack();
             throw new ModelNotFoundException();

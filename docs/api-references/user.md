@@ -25,15 +25,24 @@ Get information of user
 | code | Number | HTTP status codes |
 | data | Object | Object user |
 | id | Number | Id of user |
-| employ_code | String | Employee code of user |
 | name | String | Name of user |
-| team | String | Team of user |
+| employ_code | String | Employee code of user |
 | email | String | Email of user |
-| is_admin | Number | Are user an administrator |
+| team | String | Team of user |
 | avatar_url | String | Url for avatar of user |
-| book_borrowing | String | The book, which user is borrowing |
-| donated | Number | Number of books donated by user |
-| borrowed | Number | Number of books borrowed by user |
+| is_admin | Number | Are user an administrator |
+| created_at | String | Create user time |
+| updated_at | String | Update user time |
+| book_borrowing | Object | The book, which user is borrowing |
+| id | Number | id of book |
+| title | String | title of book |
+| picture | String | picture of book |
+| total_rating | Number | total rating of book |
+| rating | Number | rating of book |
+| donated | Object | Object books donated by user |
+| amount | Number | Number of books donated by user |
+| borrowed | Object | Object books borrowed by user |
+| amount | Object | Number of books donated by user |
 
 ```json
 {
@@ -43,15 +52,27 @@ Get information of user
     },
     "data": {
         "id": 1,
-        "employ_code": "AT0069",
         "name": "Thanh Nguyen V.",
-        "team": "PHP",
+        "employ_code": "AT0069",
         "email": "thanh.nguyen@asiantech.vn",
-        "is_admin": 0,
+        "team": "PHP",
         "avatar_url": "http://172.16.110.17/images/user/avatar/379/af86cf4f12.png",
-        "book_borrowing": "What up!",
-        "donated": 2,
-        "borrowed": 5,
+        "is_admin": 0,
+        "created_at": "2018-03-09 08:41:36",
+        "updated_at": "2018-03-09 08:41:36",
+        "book_borrowing": {
+            "id": 11,
+            "title": "Nicolas Cruickshank",
+            "picture": "http://flappybook.tech/images/books//tmp/f740094a2657ee1518ea33cf24510c27.jpg",
+            "total_rating": 11,
+            "rating": 4
+        },
+        "donated": {
+            "amount": 2
+        },
+        "borrowed": {
+            "amount": 1
+        }
     }
 }
 ```

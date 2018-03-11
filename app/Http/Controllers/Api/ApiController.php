@@ -36,11 +36,11 @@ class ApiController extends Controller
      * Create a resource item transformer and Transform data
      *
      * @param Model|LengthAwarePaginator $resource resource
-     * @param String                     $include  table include
+     * @param array                      $include  table include
      *
-     * @return Array
+     * @return array
      */
-    public function transformerResource($resource, $include = '')
+    public function transformerResource($resource, $include = [])
     {
         if ($resource instanceof Model) {
             $resource = new Item($resource, $this->transformer);

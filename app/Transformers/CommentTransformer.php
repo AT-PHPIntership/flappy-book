@@ -4,8 +4,6 @@ namespace App\Transformers;
 
 use App\Model\Comment;
 use League\Fractal\TransformerAbstract;
-use League\Fractal\Serializer\ArraySerializer;
-use League\Fractal\Serializer\DataArraySerializer;
 use Illuminate\Support\Facades\App;
 
 class CommentTransformer extends TransformerAbstract
@@ -24,7 +22,7 @@ class CommentTransformer extends TransformerAbstract
      *
      * @param Comment $comment Comment
      *
-     * @return Array
+     * @return array
      */
     public function transform(Comment $comment)
     {
@@ -41,7 +39,7 @@ class CommentTransformer extends TransformerAbstract
     }
 
     /**
-     * Transform
+     * Include user
      *
      * @param Comment $comment Comment
      *
@@ -49,6 +47,6 @@ class CommentTransformer extends TransformerAbstract
      */
     public function includeUser(Comment $comment)
     {
-        return $this->item($comment->users, App::make(UserTransformer::class));
+        return $this->item($comment->users, App::make(UserIncludeTransformer::class));
     }
 }

@@ -2,43 +2,38 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\User;
-use App\Model\Borrow;
-use DB;
+use League\Fractal\Manager;
+use App\Transformers\UserTransformer;
 
 class UserController extends ApiController
 {
+    /**
+     * UserController construct
+     *
+     * @param Manager         $fractal     fractal
+     * @param UserTransformer $transformer transformer
+     *
+     * @return void
+     */
+    public function __construct(Manager $fractal, UserTransformer $transformer)
+    {
+        $this->fractal = $fractal;
+        $this->transformer = $transformer;
+    }
+
     /**
      * API get info user
      *
      * @param int $id id of user
      *
-     * @return void
+     * @return Illuminate\Http\Response
      */
     public function show($id)
     {
-        $fields = [
-            'users.id',
-            'users.employ_code',
-            'users.name',
-            'users.team',
-            'users.email',
-            'users.is_admin',
-            'users.avatar_url',
-            'books.title AS book_borrowing'
-        ];
-
-        $user = User::select($fields)
-                    ->leftJoin('borrows', function ($query) {
-                        return $query->on('borrows.user_id', 'users.id')->where('borrows.status', Borrow::BORROWING);
-                    })
-                    ->leftJoin('books', 'books.id', 'borrows.book_id')
-                    ->withCount(['books AS donated', 'borrows AS borrowed'])
-                    ->where('users.id', $id)
-                    ->firstOrFail();
-
+        $user = User::findOrFail($id);
+        $user = $this->transformerResource($user, ['book_borrowing', 'borrowed', 'donated']);
         return $this->responseSuccess($user);
     }
 }

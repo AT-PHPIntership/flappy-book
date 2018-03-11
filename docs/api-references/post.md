@@ -21,10 +21,10 @@ Get Posts with status review for Book
 | content | String | Content of post |
 | status | Number | Status of post |
 | user_id | Number | Id of user create post |
-| created_at | String | Create book time |
-| updated_at | String | Update book time |
+| created_at | String | Create post time |
+| updated_at | String | Update post time |
 | like | Object | Object like |
-| likes | Number | Number of likes |
+| amount | Number | Number of likes |
 | user | Object | Object user |
 | id | Number | Id of user |
 | name | String | Name of user |
@@ -61,7 +61,7 @@ Get Posts with status review for Book
             "created_at": "2018-03-09 08:41:27",
             "updated_at": "2018-03-09 08:41:27",
             "like": {
-                "likes": 0
+                "amount": 0
             },
             "user": {
                 "id": 10,
@@ -85,7 +85,7 @@ Get Posts with status review for Book
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 0
+                "amount": 0
             },
             "user": {
                 "id": 10,
@@ -164,14 +164,16 @@ Get list all posts by user with paginate
 | content | String | Content of post |
 | status | Number | Status of post |
 | user_id | Number | Id of user create post |
-| created_at | String | Create book time |
-| updated_at | String | Update book time |
+| created_at | String | Create post time |
+| updated_at | String | Update post time |
 | like | Object | Object like |
-| likes | Number | Number of likes |
+| amount | Number | Number of likes |
 | book | Object | Object book |
 | id | Number | Id of book |
 | title | String | Name of book |
 | picture | String | Picture of book |
+| total_rating | Number | The total number of reviews of a book |
+| rating | Number | Average review of a book |
 | rating | Object | Object rating |
 | id | Number | Id of rating |
 | book_id | Number | Id of book |
@@ -202,12 +204,14 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
             "book": {
                 "id": 10,
                 "title": "ANDROID",
                 "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+                "total_rating": 11,
+                "rating": 4
             },
             "rating": {
                 "id": 37,
@@ -224,12 +228,14 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
             "book": {
                 "id": 10,
                 "title": "ANDROID",
                 "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+                "total_rating": 21,
+                "rating": 4.6
             },
             "rating": {
                 "id": 37,
@@ -246,12 +252,14 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
             "book": {
                 "id": 18,
                 "title": "IOS",
                 "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+                "total_rating": 15,
+                "rating": 4.1
             },
             "rating": {
                 "id": 37,
@@ -294,33 +302,39 @@ Get list all posts by user with paginate
 
 ##### Response - Success
 | Field | Type | Description |
-|---|---|---|
-| data | Object | Object posts |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list posts |
 | id | Number | Id of post |
 | content | String | Content of post |
-| status | Number | Post type |
-| user_id | Number | Id of user |
-| name | String | Name of user |
-| team | String | Team of user |
-| avatar_url | String | User's picture |
-| is_admin | Number | Role of user |
+| status | Number | Status of post |
+| user_id | Number | Id of user create post |
+| created_at | String | Create post time |
+| updated_at | String | Update post time |
+| like | Object | Object like |
+| amount | Number | Number of likes |
+| book | Object | Object book |
+| id | Number | Id of book |
+| title | String | Name of book |
+| picture | String | Picture of book |
+| total_rating | Number | The total number of reviews of a book |
+| rating | Number | Average review of a book |
+| rating | Object | Object rating |
+| id | Number | Id of rating |
 | book_id | Number | Id of book |
-| picture | String | Book's picture |
-| title | String | Book's name |
-| rating | Number | Rating for post |
-| like | Number | Likes of posts |
-| created_at | String | Create date of the post |
-| updated_at | String | Update date of the post |
-| meta | Object | Object meta |
-| total | Number | Total item |
-| count | Number | Total item on current page |
-| per_page | Number | Total item on per page |
-| current_page | Number | Current page |
-| total_page | Number | Total page |
-| link | String | Page url |
-| status | String | Status result |
-| code | Number | HTTP status code |
-
+| post_id | Number | Id of post |
+| rating | Number | Rating of book |
+| pagination | Object | Object pagination |
+| total | Number | Total posts |
+| count | Number | Total posts in current page |
+| per_page | Number | Posts per page |
+| current_page | Number | Number of current page |
+| total_pages | Number | Total pages |
+| links | Object | Object Links |
+| prev | String | Link of previous page |
+| next | String | Link of next page |
 ```json
 {
     "meta": {
@@ -336,13 +350,9 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
-            "book": {
-                "id": 10,
-                "title": "ANDROID",
-                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            },
+            "book": null,
             "rating": null
         },
         {
@@ -353,13 +363,9 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
-            "book": {
-                "id": 10,
-                "title": "ANDROID",
-                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            },
+            "book": null,
             "rating": null
         }
     ],
@@ -399,13 +405,9 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
-            "book": {
-                "id": 10,
-                "title": "ANDROID",
-                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            },
+            "book": null,
             "rating": null
         },
         {
@@ -416,13 +418,9 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
-            "book": {
-                "id": 10,
-                "title": "ANDROID",
-                "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
-            },
+            "book": null,
             "rating": null
         }
     ],
@@ -463,12 +461,14 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
             "book": {
                 "id": 10,
                 "title": "ANDROID",
                 "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+                "total_rating": 11,
+                "rating": 3.9
             },
             "rating": {
                 "id": 37,
@@ -485,12 +485,14 @@ Get list all posts by user with paginate
             "created_at": "2018-03-09 08:41:36",
             "updated_at": "2018-03-09 08:41:36",
             "like": {
-                "likes": 5
+                "amount": 5
             },
             "book": {
                 "id": 11,
                 "title": "ANDROID",
                 "picture": "http://book.aug/images/books/20180226-j9WeHiBsR1xypnStXGJ54ttvulu7RK0USbDBtEVM.jpeg",
+                "total_rating": 27,
+                "rating": 3.4
             },
             "rating": {
                 "id": 37,
@@ -563,8 +565,8 @@ Create new post
 | data | Array | Array list posts |
 | id | Number | Id of post |
 | content | String | Content of post |
-| created_at | String | Create book time |
-| updated_at | String | Update book time |
+| created_at | String | Create post time |
+| updated_at | String | Update post time |
 | user | Object | Object user |
 | rating | Object | Object rating |
 
@@ -582,7 +584,7 @@ Create new post
         "created_at": "2018-03-06 08:53:31",
         "updated_at": "2018-03-06 08:53:31",
         "like": {
-            "likes": 0
+            "amount": 0
         },
         "user": {
             "id": 1,

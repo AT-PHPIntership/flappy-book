@@ -36,7 +36,7 @@ class PostTransformer extends TransformerAbstract
      *
      * @param Post $post post
      *
-     * @return Array
+     * @return array
      */
     public function transform(Post $post)
     {
@@ -51,7 +51,7 @@ class PostTransformer extends TransformerAbstract
     }
 
     /**
-     * Transform
+     * Include user
      *
      * @param Post $post post
      *
@@ -63,7 +63,7 @@ class PostTransformer extends TransformerAbstract
     }
 
     /**
-     * Transform
+     * Include amount of rating
      *
      * @param Post $post post
      *
@@ -80,7 +80,7 @@ class PostTransformer extends TransformerAbstract
     }
 
     /**
-     * Transform
+     * Include amount of likes
      *
      * @param Post $post post
      *
@@ -91,12 +91,12 @@ class PostTransformer extends TransformerAbstract
         $likes = Like::where('post_id', $post->id)->count();
 
         return $this->item($likes, function ($likes) {
-            return ['likes' => $likes];
+            return ['amount' => $likes];
         });
     }
 
     /**
-     * Transform
+     * Include book
      *
      * @param Post $post post
      *

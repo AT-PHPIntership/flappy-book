@@ -14,10 +14,10 @@ use App\Model\Comment;
 class CommentController extends ApiController
 {
     /**
-     * PostController construct
+     * CommentController construct
      *
-     * @param Manager         $fractal     fractal
-     * @param PostTransformer $transformer transformer
+     * @param Manager            $fractal     fractal
+     * @param CommentTransformer $transformer transformer
      *
      * @return void
      */
@@ -42,7 +42,7 @@ class CommentController extends ApiController
                            ->paginate(config('define.comments.limit_rows'))
                            ->appends($request->except('page'));
 
-        $comments = $this->transformerResource($comments, 'user');
+        $comments = $this->transformerResource($comments, ['user']);
         return $this->responseResource($comments);
     }
 
@@ -58,7 +58,7 @@ class CommentController extends ApiController
         $request['user_id'] = Auth::id();
         $comment = Comment::create($request->all());
 
-        $comment = $this->transformerResource($comment, 'user');
-        return $this->responseResource($comment, Response::HTTP_CREATED);
+        $comment = $this->transformerResource($comment, ['user']);
+        return $this->responseSuccess($comment, Response::HTTP_CREATED);
     }
 }

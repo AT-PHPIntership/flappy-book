@@ -32,7 +32,7 @@ class ApiSerializers extends SerializerAbstract
      */
     public function item($resourceKey, array $data)
     {
-        return $resourceKey?: $data;
+        return $resourceKey ?: $data;
     }
 
     /**
@@ -57,7 +57,7 @@ class ApiSerializers extends SerializerAbstract
     {
         return $resource?: $data;
     }
-    
+
     /**
      * Serialize the meta.
      *
@@ -72,7 +72,7 @@ class ApiSerializers extends SerializerAbstract
         }
         return $meta;
     }
-    
+
     /**
      * Serialize the paginator.
      *
@@ -84,7 +84,7 @@ class ApiSerializers extends SerializerAbstract
     {
         $currentPage = (int) $paginator->getCurrentPage();
         $lastPage = (int) $paginator->getLastPage();
-        
+
         $pagination = [
             'total' => (int) $paginator->getTotal(),
             'count' => (int) $paginator->getCount(),

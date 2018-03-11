@@ -12,7 +12,7 @@ class BookIncludeTransformer extends TransformerAbstract
      *
      * @param Book $book Book
      *
-     * @return Array
+     * @return array
      */
     public function transform(Book $book)
     {
@@ -20,6 +20,8 @@ class BookIncludeTransformer extends TransformerAbstract
             'id' => (int) $book->id,
             'title' => (string) $book->title,
             'picture' => (string) $book->picture,
+            'total_rating' => (int) $book->total_rating,
+            'rating' => $book->rating
         ];
     }
 }

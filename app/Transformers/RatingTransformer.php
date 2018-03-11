@@ -4,9 +4,6 @@ namespace App\Transformers;
 
 use App\Model\Rating;
 use League\Fractal\TransformerAbstract;
-use League\Fractal\Serializer\ArraySerializer;
-use League\Fractal\Serializer\DataArraySerializer;
-use Illuminate\Support\Facades\App;
 
 class RatingTransformer extends TransformerAbstract
 {
@@ -15,7 +12,7 @@ class RatingTransformer extends TransformerAbstract
      *
      * @param Rating $rating rating
      *
-     * @return Array
+     * @return array
      */
     public function transform(Rating $rating)
     {
