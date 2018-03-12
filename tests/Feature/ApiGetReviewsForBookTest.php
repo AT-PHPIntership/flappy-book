@@ -52,7 +52,7 @@ class ApiGetReviewsForBookTest extends TestCase
                     'created_at',
                     'updated_at',
                     'like' => [
-                        'likes',
+                        'amount',
                     ],
                     'user' => [
                         'id',
