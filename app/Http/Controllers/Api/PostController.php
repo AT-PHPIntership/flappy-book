@@ -92,12 +92,12 @@ class PostController extends ApiController
                     'rating' => $request->rating,
                 ]);
 
-                //Update rating in book
+                //Update rating in table books
                 $book = Book::find($request->book_id);
-                $rating = ($book->rating * $book->total_rating + $request->rating) / ($book->total_rating + 1);
+                $rating = ($book->rating * $book->total_rating++ + $request->rating) / $book->total_rating;
                 $book = $book->update([
                     'rating' => $rating,
-                    'total_rating' => $book->total_rating + 1
+                    'total_rating' => $book->total_rating
                 ]);
             }
             DB::commit();
