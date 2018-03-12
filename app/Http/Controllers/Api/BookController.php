@@ -10,6 +10,18 @@ use App\Service\BookService;
 
 class BookController extends ApiController
 {
+    private $bookService;
+
+    /**
+     * Contructor function
+     *
+     * @param BookService $bookService Book Service
+     */
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
+
     /**
      * Get list of books
      *
@@ -19,8 +31,8 @@ class BookController extends ApiController
      */
     public function index(Request $request)
     {
-        $books = BookService::getBooks($request)
-                    ->paginate(config('define.books.limit_item'));
+        $books = $this->bookService->getBooks($request)
+            ->paginate(config('define.books.limit_item'));
 
         return $this->responsePaginate($books);
     }

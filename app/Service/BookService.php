@@ -14,7 +14,7 @@ class BookService
      *
      * @return Illuminate\Database\Eloquent\Builder
      */
-    public static function getBooks(Request $request = null)
+    public function getBooks(Request $request = null)
     {
         $fields = [
             'books.id',
