@@ -22,7 +22,6 @@ Route::group(['namespace' => 'Api'], function(){
     Route::get('books/top-review', 'BookController@topBooksReview');    
     Route::get('books/top-borrows', 'BookController@topBooksBorrow');
     Route::get('books/{book}', 'BookController@show');
-    Route::get('users/{user}', 'UserController@show')->middleware('tokenAuthentication');
     Route::get('books', 'BookController@index');
     Route::get('books/{id}/reviews', 'PostController@reviews');
     Route::get('comments', 'CommentController@comments');
@@ -31,6 +30,8 @@ Route::group(['namespace' => 'Api'], function(){
     Route::group(['middleware' => 'tokenAuthentication'], function(){
         Route::post('posts', 'PostController@store');
         Route::get('/users/{id}/posts', 'PostController@getPostsOfUser');
+        Route::get('users/{user}/donated', 'UserController@getBooksDonated');        
+        Route::get('users/{user}', 'UserController@show');
         Route::post('comments', 'CommentController@store');
     });
 });
