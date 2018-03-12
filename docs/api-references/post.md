@@ -561,6 +561,10 @@ Delete the post
 |---|---|
 |Accept|application\json|
 |Authorization|{token_type} {access_token}
+#### Parameters
+| Field | Type | Description |
+| --- | --- | --- |
+| id | Number | Id of post |
 #### Response
 | Field | Type | Description |
 |---|---|---|
