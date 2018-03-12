@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Api'], function(){
     Route::get('books', 'BookController@index');
     Route::get('books/{id}/reviews', 'PostController@reviews');
     Route::get('comments', 'CommentController@comments');
+    Route::post('login', 'LoginController@login');
 
     Route::group(['middleware' => 'tokenAuthentication'], function(){
         Route::post('posts', 'PostController@store');
