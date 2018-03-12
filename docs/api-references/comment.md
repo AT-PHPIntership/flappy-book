@@ -204,3 +204,33 @@ Create new Comment
     }
 }
 ```
+### `DELETE` Comments of Book or Post
+```
+/api/comments/{id}
+```
+Delete comment
+#### Request header
+| Key | Value |
+|---|---|
+|Accept|application\json|
+|Authorization|{token_type} {access_token}
+
+#### Parameters
+| Key | Type | Description |
+|---|---|---|
+| id | Number | Id of comment |
+
+#### Response
+| Field | Type | Description |
+|---|---|---|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status code |
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 200
+    },
+}
+```
