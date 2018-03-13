@@ -565,7 +565,7 @@ Delete the post
 | Field | Type | Description |
 | --- | --- | --- |
 | id | Number | Id of post |
-#### Response
+#### Response success
 | Field | Type | Description |
 |---|---|---|
 | meta | Object | Object meta |
@@ -577,5 +577,17 @@ Delete the post
         "status": "Successfully",
         "code": 200
     },
+}
+```
+#### Response fail
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 404,
+    },
+    "error": {
+        "message": "Data not found!",
+    }
 }
 ```
