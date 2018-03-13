@@ -17,7 +17,14 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        return view('backend.languages.index');
+        $fields = [
+            'languages.id',
+            'languages.language',
+        ];
+        $languages = Language::select($fields)
+                        ->paginate(config('define.languages.limit_rows'));
+
+        return view('backend.languages.index', compact('languages'));
     }
 
     /**
