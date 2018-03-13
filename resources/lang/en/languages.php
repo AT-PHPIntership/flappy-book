@@ -15,4 +15,11 @@ return [
     'confirm_edit' => 'Confirm edit!',
     'are_you_sure_to_edit_this_language' => 'Are you sure to edit this language from',
     'to' => 'to',
+    'confirm_deletion' => 'Confirm deletion!',
+    'close' => 'Close',
+    'delete' => 'Delete',
+    'confirm_content' => 'Are you sure to delete this language, <b>:name</b> ?',
+    'delete_language_success' => 'Successfully deleted the "<b>:name</b>" language!',
+    'delete_language_fail' => 'Delete "<b>:name</b>" language failure!',
+    'delete_default_language_failure' => 'Can not delete default language!',
 ];
