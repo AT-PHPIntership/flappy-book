@@ -204,3 +204,75 @@ Create new Comment
     }
 }
 ```
+
+### `PUT` Edit Comment
+```
+/api/comments/{id}
+```
+Edit Comment
+
+#### Parameters
+| Key | Type | Description |
+|---|---|---|
+| id | Number | Id of Comment |
+| comment | String | Comment |
+
+#### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array list comments |
+| id | Number | Id of comment |
+| comment | String | Comment |
+| commentable_id | Number | Id of object |
+| commentable_type | String | Type of object |
+| parent_id | Number | Parent comment id |
+| user_id | Number | Id of user create comment |
+| created_at | String | Create comment time |
+| updated_at | String | Update comment time |
+
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 200
+    },
+    "data": {
+        "id": 1,
+        "comment": "nguyen van cao",
+        "commentable_id": 3,
+        "commentable_type": "post",
+        "parent_id": null,
+        "user_id": 13,
+        "created_at": "2018-03-13 07:27:03",
+        "updated_at": "2018-03-13 07:28:41"
+    }
+}
+```
+#### Response - Failure validate
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | Object | Object message |
+| comment | Array | Error comment |
+
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 422
+    },
+    "error": {
+        "message": {
+            "comment": [
+                "The comment field is required."
+            ],
+        }
+    }
+}
+```
