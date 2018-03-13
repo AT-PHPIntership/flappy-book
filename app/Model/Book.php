@@ -5,10 +5,11 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Libraries\Traits\SearchTrait;
+use Kyslik\ColumnSortable\Sortable;
 
 class Book extends Model
 {
-    use SoftDeletes, SearchTrait;
+    use SoftDeletes, SearchTrait, Sortable;
     
     /**
      * Book currency unit
@@ -24,7 +25,21 @@ class Book extends Model
     const TYPE_AUTHOR = 'author';
     const TYPE_BORROWED = 'borrowed';
     const TYPE_DONATED = 'donated';
+    const VIETNAMESE = 'Vietnamese';
+    const ENGLISH = 'English';
+    const JAPANESE = 'Japanese';
+    const DEFAULT_PAGE_NUMBER = null;
+    const DEFAULT_YEAR = null;
+    const DEFAULT_AUTHOR = 'null';
+    const DEFAULT_DESCRIPTION = 'null';
+    const DEFAULT_PRICE = 0;
+    const DEFAULT_UNIT = 'null';
     
+    /**
+     * Commentable type
+     */
+    const COMMENTABLE_TYPE = 'book';
+
     /**
      * Declare table
      *
@@ -56,8 +71,42 @@ class Book extends Model
         'from_person',
         'total_rating',
         'rating',
+        'language',
+        'page_number',
+        'status',
+        'language_id',
     ];
-    
+
+    /**
+    * Declare table sort
+    *
+    * @var array $sortable table sort
+    */
+    public $sortable = [
+        'title',
+        'author',
+        'rating',
+    ];
+
+    /**
+     * Declare table sort
+     *
+     * @var string $sortableAs
+     */
+    protected $sortableAs = [
+        'total_borrowed',
+    ];
+
+    /**
+     * Declare casts
+     *
+     * @var array
+     */
+    protected $casts = [
+        'rating'=> 'real',
+        'price' => 'real',
+    ];
+
     /**
      * Relationship belongsTo with Category
      *
@@ -66,6 +115,16 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Relationship belongsTo with Category
+     *
+     * @return array
+     */
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     /**
@@ -109,6 +168,16 @@ class Book extends Model
     }
 
     /**
+     * Relationship hasMany with Post
+     *
+     * @return array
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Override parent boot and Call deleting borrows and comments
      *
      * @return void
@@ -120,6 +189,7 @@ class Book extends Model
         static::deleting(function ($books) {
             $books->borrows()->delete();
             $books->comments()->delete();
+            $books->qrcode()->delete();
         });
     }
 
@@ -137,4 +207,14 @@ class Book extends Model
             'borrows' => ['books.id', 'borrows.book_id']
         ]
     ];
+
+    /**
+     * Get the book's picture.
+     *
+     * @return string
+     */
+    public function getPictureAttribute()
+    {
+        return url('/').'/'.config('define.books.folder_store_books').$this->attributes['picture'];
+    }
 }

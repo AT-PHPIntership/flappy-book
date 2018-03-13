@@ -10,6 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/api-docs', function () {
+    return view('api-docs');
+});
+
+Route::get('/api-doc-builders', function () {
+    return view('api-doc-builders.index');
+});
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -22,6 +31,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin' , 'middleware' => 'adm
     Route::resource('/borrows', 'BorrowController');
     Route::resource('/categories', 'CategoryController');
     Route::resource('/posts', 'PostController');
+    Route::post('/borrows/{borrow}/sendmail', 'BorrowController@reminderSendMail')->name('borrows.sendmail');
+    Route::post('/books/import', 'BookController@import')->name('books.import');
+    Route::resource('/qrcodes', 'QrcodeController');
+    Route::resource('/languages', 'LanguageController');
 });
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

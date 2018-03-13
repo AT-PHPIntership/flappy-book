@@ -30,7 +30,9 @@
         <div class="box">
           <div class="box-header">
             <div class="pull-left">
+            @include('backend.books.partials.import-data')
               <a href="{{ route('books.create') }}"><button type="button" name="btn-add" id="btn-add" class="btn btn-success btn-flat">{{ __('books.add_book') }}</button></a>
+              <button type="button" name="btn-import" id="btn-import-data" class="btn btn-warning btn-flat">{{ __('books.import_data') }}</button>
             </div>
             <div class="pull-right col-xs-6">
               <form action="{{ route('books.index') }}" method="GET">
@@ -59,39 +61,21 @@
                   <th class="text-center" width="5%">
                     {{ __('books.no') }}
                   </th>
-                  <th>
-                    {{ __('books.title') }}
-                    <a href="" id="btn-sort-title" name="title" class="pull-right sort-element">
-                      <i class="fa fa-unsorted text-muted" aria-hidden="true"></i>
-                    </a>
+                  <th id="btn-sort-qrcode" class="text-center" width="10%">{{ __('books.qrcode') }}</th>
+                  <th id="btn-sort-title">@sortablelink('title', __('books.title'))</th>
+                  <th id="btn-sort-author">@sortablelink('author', __('books.author'))</th>
+                  <th id="btn-sort-rating" class="text-center" width="7%">@sortablelink('rating', __('books.rating'))</th>
+                  <th id="btn-sort-total_borrowed" class="text-center" width="12%">
+                    @sortablelink('total_borrowed', __('books.total_borrowed'))
                   </th>
-                  <th>
-                   {{ __('books.author') }}
-                    <a href="" id="btn-sort-author" name="author" class="pull-right sort-element">
-                      <i class="fa fa-unsorted text-muted" aria-hidden="true"></i>
-                    </a>
-                  </th>
-                  <th class="text-center">
-                    {{ __('books.rating') }}
-                    <a href="" id="btn-sort-rating" name="rating" class="pull-right sort-element">
-                      <i class="fa fa-unsorted text-muted" aria-hidden="true"></i>
-                    </a>
-                  </th>
-                  <th class="text-center" width="12%">
-                    {{ __('books.total_borrowed') }}
-                    <a href="" id="btn-sort-total_borrowed" name="total_borrowed" class="pull-right sort-element">
-                      <i class="fa fa-unsorted text-muted" aria-hidden="true"></i>
-                    </a>
-                  </th>
-                  <th class="text-center" width="15%">
-                    {{ __('books.options') }}
-                  </th>
+                  <th class="text-center" width="15%">{{ __('books.options') }}</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($books as $index => $book)  
                   <tr class="item-{{ $book->id }}">
                     <td class="text-center">{{ $index + $books->firstItem() }}</td>
+                    <td class="text-center">{{ $book->qrcode->qrcode_book }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
                     <td class="text-center">{{ $book->rating }}</td>
@@ -114,7 +98,7 @@
               </tbody>
             </table>
             <div class="text-right">
-              {{ $books->appends(['search' => Request::get('search'), 'filter' => Request::get('filter')])->links() }}
+              {{ $books->appends(Request::except('page'))->links() }}
             </div>
           </div>
           <!-- /.box-body -->

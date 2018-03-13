@@ -18,4 +18,11 @@ return [
         \App\Model\Borrow::TYPE_NAME => 'Name',
         \App\Model\Borrow::TYPE_TITLE => 'Book Borrowing',
     ],
+    'title_confirm_send_mail' => 'Confirm reminder send mail!',
+    'content_confirm_send_mail' => 'Are you sure to send mail reminder for this user, <b>:name</b> ?',
+    'send' => 'Send',
+    'close' => 'Close',
+    'send_mail_success' => 'Send mail success!',
+    'send_mail_fail' => 'Send mail fail',
+    'subject_mail_reminder' => 'Reminder User Borrowing Book',
 ];

@@ -3,9 +3,21 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
+    use SoftDeletes;
+
+    /**
+     * Book type
+     */
+    const BOOK_TYPE = 'book';
+
+    /**
+     * Post type
+     */
+    const POST_TYPE = 'post';
 
     /**
      * Declare table
@@ -20,8 +32,8 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'comment_id',
-        'comment_table',
+        'commentable_id',
+        'commentable_type',
         'user_id',
         'comment',
         'parent_id'
@@ -44,7 +56,7 @@ class Comment extends Model
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 
     /**

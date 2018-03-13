@@ -1,14 +1,19 @@
 <?php
 return [
+    'delete_post_success' => 'Delete post success!',
+    'delete_post_fail' => 'Delete post failure!',
     'no' => 'No',
-    'user_name' => 'UserName',
+    'user_name' => 'User Name',
     'short_content' => 'Short Content',
     'post_date' => 'Post Date',
     'total_comment' => 'Total Comment',
     'list_posts' => 'List Posts',
-    'detail_post' => 'Detail post',
+    'detail_post' => 'Detail Post',
     'home' => 'Home',
     'posts' => 'Posts',
+    'review' => 'Review',
+    'status' => 'Status',
+    'find_book' => 'Find book',
     'detail' => 'Detail',
     'status' => 'Status',
     'rating' => 'Rating',
@@ -20,4 +25,5 @@ return [
     'options' => 'Options',
     'list_comments' => 'List comments',
     'delete' => 'Delete',
+    'book' => 'Book',
 ];

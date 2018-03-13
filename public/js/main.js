@@ -19,6 +19,22 @@ $(document).ready(function () {
             form.submit();
         })
     });
+    
+    /**
+     * Show send mail reminder for user confimation when click button reminder
+     */
+    $('.btn-reminder-item').bind('click', function (e) {
+        var form = $(this.form);
+        var title = $(this).attr('data-title');
+        var body = '<i>' + $(this).attr('data-confirm') + '</i>';
+        $('#title-content').html(title);
+        $('#body-content').html(body);
+        $('#confirm').modal('show');
+        $('#send-btn').one('click', function () {
+            $("#loading").removeClass("hidden");
+            form.submit();
+        })
+    });
 
     /**
      * Show form add category when click button add category
@@ -26,31 +42,15 @@ $(document).ready(function () {
     $('#btn-add-category').bind('click', function (e) {
         $('#add-category').modal('show');
     });
-});
-$(document).ready(function () {
-    let url = new URL(document.location);
-    let params = url.searchParams;
-    let sort = params.get('sort');
-    let order = params.get('order');
 
-    $('.sort-element').each(function(){
-        let attrName = $(this).attr('name');
-        params.set('sort', attrName);
-        
-        if (sort == attrName) {
-            if (order == 'desc') {
-                $(this).children().attr('class', 'fa fa-sort-desc');
-                params.set('order', 'asc');
-            } else {
-                $(this).children().attr('class', 'fa fa-sort-asc');
-                params.set('order', 'desc');
-            }
-        } else {
-            params.set('order', 'asc');
-        }
-        $(this).attr('href', url);
+    /**
+     * Show form import data when click button import data
+     */
+    $('#btn-import-data').bind('click', function (e) {
+        $('#import-data').modal('show');
     });
 });
+
 $(document).ready(function() {
  // change display picture after select
   $('#picture').change(function (){
@@ -87,16 +87,16 @@ $(document).on('click', '.btn-role', function(e) {
     });
 });
 
-$(document).on('click', '#category-add', function(e) {
-    var form = $(this.form);
+$('#add-category form').on('submit', function (event) {
+    var route = $(this).attr('action')
     var title = $('#title').val()
     var errorMessage = $('#add-category').find('span');
     $.ajax({
-        url: '/admin/categories',
+        url: route,
         type: 'post',
         data: {'title' : title},
-        success: function (data) {
-            form.submit();
+        success: function () {
+            location.reload();
         },
         error: function (error) {
             var errors = error.responseJSON.errors;
@@ -104,6 +104,33 @@ $(document).on('click', '#category-add', function(e) {
             $('#title').focus();
         }
     });
+    event.preventDefault();
+});
+
+$('#import-data form').on('submit', function (event) {
+    var route = $(this).attr('action')
+    var importdata = $('#file')[0].files[0]
+    var errorMessage = $('#import-data').find('span');
+    var data = new FormData();
+    if (importdata) {
+        data.append('file', importdata);
+    }
+
+    $.ajax({
+        url: route,
+        type: 'post',
+        processData: false,
+        contentType: false,
+        data: data,
+        success: function (data) {
+            location.reload();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.file[0] : '');
+        }
+    });
+    event.preventDefault();
 });
 
 $(document).on('click', '.btn-edit-category', function(e) {
@@ -131,7 +158,7 @@ function resetCategoriesInput() {
 function confirmEditCategory(textField, inputField, errorMessage) {
     let title = textField.html();
     let titleEdited = inputField.val();
-    let dataConfirm = categories.you_want_edit
+    let dataConfirm = categories.are_you_sure_to_edit_this_category
                 +' <strong> ' + title + ' </strong> '
                 + categories.to
                 +' <strong> ' + titleEdited +' </strong> ?';
@@ -176,3 +203,5 @@ function confirmEditCategory(textField, inputField, errorMessage) {
         inputField.focus();
     });
 }
+
+$('.textarea').wysihtml5();
