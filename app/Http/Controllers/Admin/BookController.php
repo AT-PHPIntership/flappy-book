@@ -119,17 +119,19 @@ class BookController extends Controller
     private function updateBook($book, $request)
     {
         if (isset($request->picture)) {
-            $oldPath = $book->picture;
+            $oldPath = null;
+
+            $oldPicture = Book::checkDefaultImage($book->picture);
+
+            if ($oldPicture) {
+                $oldPath = config('image.book.path') . $oldPicture;
+            }
+
             $book->picture  = Image::update($request->picture, config('image.book.path'), $oldPath);
         }
 
-        $user = User::where('employ_code', $request->iddonator)->first();
-        if (isset($user)) {
-            $book->from_person = $request->iddonator;
-        }
-        $book->update($request->except(['iddonator', 'picture']));
+        $book->update($request->except('picture'));
     }
-    
 
     /**
      * Show the form for creating a new book.
@@ -154,16 +156,12 @@ class BookController extends Controller
     {
         // create book fields.
         $bookFields = $request->all();
-        $bookFields['unit'] =  __('books.listunit')[$request->unit];
+
         // save book picture
         if ($request->hasFile('picture')) {
-            $picture = $request->picture;
-            $folderStore = config('define.books.folder_store_books');
-            $pictureName = config('define.books.image_name_prefix') . '-' . $picture->hashName();
-            $picture->move($folderStore, $pictureName);
-            $bookFields['picture'] = $pictureName;
+            $bookFields['picture'] = Image::update($request->picture, config('image.book.path'));
         } else {
-            $bookFields['picture'] = config('define.books.default_name_image');
+            $bookFields['picture'] = config('image.book.default_name_image');
         }
         DB::beginTransaction();
         try {
@@ -202,6 +200,10 @@ class BookController extends Controller
     {
         DB::beginTransaction();
         try {
+            $picture = Book::checkDefaultImage($book->picture);
+            if ($picture) {
+                Image::delete(config('image.book.path') . $picture);
+            }
             $book->delete();
             DB::commit();
             flash(__('books.delete_book_success'))->success();

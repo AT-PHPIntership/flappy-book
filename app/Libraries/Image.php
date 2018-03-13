@@ -15,12 +15,12 @@ class Image
      *
      * @return string
      */
-    public static function update($imgFile, $imgPath, $oldPath)
+    public static function update($imgFile, $imgPath, $oldPath = null)
     {
         self::delete($oldPath);
         $name = $imgFile->hashName();
         $imgFile->move($imgPath, $name);
-        return $imgPath . $name;
+        return $name;
     }
     /**
      * Delete images of Book.

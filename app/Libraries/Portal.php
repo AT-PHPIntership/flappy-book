@@ -4,6 +4,9 @@ namespace App\Libraries;
 
 use GuzzleHttp\Client;
 use App\Model\User;
+use App\Model\Book;
+use Exception;
+use DB;
 
 class Portal
 {
