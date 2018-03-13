@@ -28,7 +28,6 @@ class EditCommentRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'parent_id'        => 'integer|exists:comments,id',
             'comment'          => 'required',
         ];
 
