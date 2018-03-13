@@ -127,7 +127,7 @@ class BookController extends Controller
                 $oldPath = config('image.book.path') . $oldPicture;
             }
 
-            $book->picture  = Image::update($request->picture, config('image.book.path'), $oldPath);
+            $book->picture = Image::update($request->picture, config('image.book.path'), $oldPath);
         }
 
         $book->update($request->except('picture'));
@@ -305,7 +305,7 @@ class BookController extends Controller
             'page_number' => isset($attributes['pages']) ? $attributes['pages'] : Book::DEFAULT_PAGE_NUMBER,
             'price'       => Book::DEFAULT_PRICE,
             'unit'        => Book::DEFAULT_UNIT,
-            'picture'     => config('define.books.default_name_image'),
+            'picture'     => config('image.book.default_name_image'),
             'from_person' => ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : User::DEFAULT_EMPLOYEE_CODE,
             'status'      => (isset($attributes['status']) && $attributes['status'] == 'available') ? 1 : 0,
         ];
