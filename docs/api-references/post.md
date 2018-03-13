@@ -551,11 +551,11 @@ Create new post
     }
 }
 ```
-### Update the post
+### PUT Update the post
 ```
 api/posts/{id}
 ```
-Update the post
+Update the post with type include status,find book and review
 
 ####Request header
 | Key | Value |
@@ -563,25 +563,36 @@ Update the post
 |Accept|application\json|
 |Authorization|{token_type} {access_token} |
 
-#### Parameters
+#### Update the post with post's type is review
+##### Parameters
 | Key | Value | Required | Description |
 | --- | --- | --- | --- |
-| status | Number | Non | Type of post |
-| content | String | Non | Content of post |
+| id | Interger | Required | Id of post |
+| content | String | Required | Content of post |
+| rating | Number | Required | Rating for book |
 
-#### Response - Success
+#### Sample Request
+```json
+{
+    "content": "New content",
+    "rating": 4
+}
+```
+
+##### Response - Success
 | Field | Type | Description |
 |-------|------|-------------|
 | meta | Object | Object meta |
 | status | String | Status result |
 | code | Number | HTTP status codes |
-| data | Array | Array list posts |
+| data | Object | Object list posts |
 | id | Number | Id of post |
 | content | String | Content of post |
 | created_at | String | Create book time |
 | updated_at | String | Update book time |
 | user | Object | Object user |
 | rating | Object | Object rating |
+| book | Object | Object book |
 ```json
 {
     "meta": {
@@ -590,7 +601,7 @@ Update the post
     },
     "data": {
         "id": 14,
-        "content": "Et excepturi ipsa iusto repellat molestiae.",
+        "content": "New content",
         "status": 2,
         "user_id": 2,
         "created_at": "2018-03-06 08:53:31",
@@ -611,7 +622,122 @@ Update the post
             "rating": 4,
             "book_id": 2,
             "post_id":14
+        },
+        "book": {
+            "id": 2,
+            "rating": 4.5
         }
+    }
+}```
+#### Update the post with post's type is status or find book
+##### Parameters
+| Key | Value | Required | Description |
+| --- | --- | --- | --- |
+| id | Interger | Required | Id of post |
+| content | String | Required | Content of post |
+
+#### Sample Request
+```json
+{
+    "content": "New content",
+}
+```
+
+##### Response - Success
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Object | Object list posts |
+| id | Number | Id of post |
+| content | String | Content of post |
+| created_at | String | Create book time |
+| updated_at | String | Update book time |
+| user | Object | Object user |
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 200
+    },
+    "data": {
+        "id": 14,
+        "content": "New content",
+        "status": 2,
+        "user_id": 2,
+        "created_at": "2018-03-06 08:53:31",
+        "updated_at": "2018-03-06 08:53:31",
+        "user": {
+            "id": 2,
+            "name": "Tram Pham T.M.",
+            "employ_code": "ATI0282",
+            "email": "tram.pham@asiantech.vn",
+            "team": "PHP",
+            "avatar_url": "http://172.16.110.158/public/uploads/images/image/file/248/b041cdd0181519816611.png",
+            "is_admin": 0,
+            "created_at": "2018-03-06 02:22:53",
+            "updated_at": "2018-03-06 02:37:02"
+        },
+    }
+}```
+
+##### Response - Fail
+| Field | Type | Description |
+|---|---|---|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status code |
+| error | Object | Object error |
+| message | String | Error message |
+
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 404,
+    },
+    "error": {
+        "message": "Data not found!",
     }
 }
 ```
+
+### `PUT` Post - Validation
+```
+/api/posts/{id}
+```
+Update the post error validation
+#### Request Headers
+| Key | Value |
+|---|---|
+|Accept|application\json
+|Authorization|{token_type} {access_token}|
+
+#### Parameters
+| Key | Type | Required | Description |
+|---|---|---|---|
+| id | Interger | Required | Id of post |
+| content | String | required | Content of post |
+| rating | Number | required | Rating for book (When type is review) |
+
+#### Sample Request
+```json
+{
+    "content": "",
+    "rating": 4,
+}
+```
+
+#### Response
+```json
+{
+    "error": {
+        "content": [
+            "The content field is required."
+        ],
+    },
+    "code": 422
+}
+```
+
