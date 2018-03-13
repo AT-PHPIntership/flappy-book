@@ -109,4 +109,24 @@ class PostController extends ApiController
             throw new ModelNotFoundException();
         }
     }
+
+    /**
+     * Delete a post and relationship.
+     *
+     * @param Post $post object post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
+    {
+        DB::beginTransaction();
+        try {
+            $post->delete();
+            DB::commit();
+            return $this->responseDeleteSuccess(Response::HTTP_OK);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new ModelNotFoundException();
+        }
+    }
 }
