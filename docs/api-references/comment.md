@@ -212,7 +212,6 @@ Delete comment
 #### Request header
 | Key | Value |
 |---|---|
-|Accept|application\json|
 |Authorization|{token_type} {access_token}
 
 #### Parameters
@@ -220,7 +219,7 @@ Delete comment
 |---|---|---|
 | id | Number | Id of comment |
 
-#### Response
+#### Response - Success
 | Field | Type | Description |
 |---|---|---|
 | meta | Object | Object meta |
@@ -232,5 +231,35 @@ Delete comment
         "status": "Successfully",
         "code": 200
     },
+}
+```
+#### Response - Failure
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | Object | Message error |
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Data not found"
+    }
+}
+```
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 500
+    },
+    "error": {
+        "message": "Server error"
+    }
 }
 ```
