@@ -8,6 +8,7 @@ use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
 
 class Handler extends ExceptionHandler
 {
@@ -66,6 +67,10 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof ValidationException) {
                 $code = Response::HTTP_UNPROCESSABLE_ENTITY;
                 $msg = $exception->errors();
+                return $this->reponseError($code, $msg);
+            } elseif ($exception instanceof UnauthorizedException) {
+                $code = Response::HTTP_UNAUTHORIZED;
+                $msg = __('api.error.unauthorized');
                 return $this->reponseError($code, $msg);
             }
         }

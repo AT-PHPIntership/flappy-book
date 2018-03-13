@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Transformers\CommentTransformer;
 use League\Fractal\Manager;
 use App\Model\Comment;
+use App\Model\User;
+use App\Http\Requests\Api\EditCommentRequest;
+use Illuminate\Validation\UnauthorizedException;
 
 class CommentController extends ApiController
 {
@@ -64,7 +67,7 @@ class CommentController extends ApiController
     /**
      * Store new resource
      *
-     * @param CreatePostRequest $request request
+     * @param CreateCommentRequest $request request
      *
      * @return \Illuminate\Http\Response
      */
@@ -74,5 +77,23 @@ class CommentController extends ApiController
         $comment = Comment::create($request->all());
         $comment = $this->getItem($comment, $this->transformer, 'user');
         return $this->responseSuccess($comment, Response::HTTP_CREATED);
+    }
+
+    /**
+     * Update resource
+     *
+     * @param Comment            $comment comment
+     * @param EditCommentRequest $request request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Comment $comment, EditCommentRequest $request)
+    {
+        if ($comment->user_id == Auth::id() || Auth::user()->is_admin == User::ROLE_ADMIN) {
+            $comment->update($request->only('comment'));
+            $comment = $this->getItem($comment, $this->transformer);
+            return $this->responseSuccess($comment);
+        }
+        throw new UnauthorizedException();
     }
 }
