@@ -33,5 +33,6 @@ Route::group(['namespace' => 'Api'], function(){
         Route::get('users/{user}/donated', 'UserController@getBooksDonated');        
         Route::get('users/{user}', 'UserController@show');
         Route::post('comments', 'CommentController@store');
+        Route::put('comments/{comment}', 'CommentController@update');
     });
 });
