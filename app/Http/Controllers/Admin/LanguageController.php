@@ -46,5 +46,30 @@ class LanguageController extends Controller
             \Log::error($e);
             flash(__('languages.add_language_fail', ['name' => $language]))->error();
         }
+     }
+
+    /**
+     * Delete a language and return book to language default.
+     *
+     * @param Language $language object language
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Language $language)
+    {
+        // Can't delete default language
+        if ($language->id == Language::LANGUAGE_DEFAULT) {
+            flash(__('languages.delete_default_language_failure'))->warning();
+            return redirect()->back();
+        }
+        $languageName = $language->language;
+        try {
+            $language->delete();
+            flash(__('languages.delete_language_success', ['name' => $languageName]))->success();
+        } catch (Exception $e) {
+            \Log::error($e);
+            flash(__('languages.delete_language_fail', ['name' => $languageName]))->error();
+        }
+        return redirect()->back();
     }
 }

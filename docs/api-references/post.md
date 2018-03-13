@@ -551,3 +551,43 @@ Create new post
     }
 }
 ```
+### `DELETE` Post
+```
+api/posts/{id}
+```
+Delete the post
+#### Request header
+| Key | Value |
+|---|---|
+|Accept|application\json|
+|Authorization|{token_type} {access_token}
+#### Parameters
+| Field | Type | Description |
+| --- | --- | --- |
+| id | Number | Id of post |
+#### Response success
+| Field | Type | Description |
+|---|---|---|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status code |
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 200
+    },
+}
+```
+#### Response fail
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 404,
+    },
+    "error": {
+        "message": "Data not found!",
+    }
+}
+```
