@@ -46,7 +46,7 @@ class LanguageController extends Controller
             \Log::error($e);
             flash(__('languages.add_language_fail', ['name' => $language]))->error();
         }
-     }
+    }
 
     /**
      * Delete a language and return book to language default.
