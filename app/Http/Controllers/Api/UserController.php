@@ -56,7 +56,7 @@ class UserController extends ApiController
             'books.id',
             'books.title',
             'books.description',
-            'books.language',
+            'languages.language',
             'books.rating',
             'books.total_rating',
             'books.picture',
@@ -68,6 +68,7 @@ class UserController extends ApiController
         ];
 
         $books = Book::select($fields)
+                    ->join('languages', 'books.language_id', 'languages.id')
                     ->join('users', 'users.employ_code', 'books.from_person')
                     ->where('users.id', $id)
                     ->orderBy('books.created_at', 'DESC')
