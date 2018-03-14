@@ -44,6 +44,13 @@ $(document).ready(function () {
     });
 
     /**
+     * Show form add language when click button add language
+     */
+    $('#btn-add-language').bind('click', function (e) {
+        $('#add-language').modal('show');
+    });
+
+    /**
      * Show form import data when click button import data
      */
     $('#btn-import-data').bind('click', function (e) {
@@ -102,6 +109,26 @@ $('#add-category form').on('submit', function (event) {
             var errors = error.responseJSON.errors;
             errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
             $('#title').focus();
+        }
+    });
+    event.preventDefault();
+});
+
+$('#add-language form').on('submit', function (event) {
+    var route = $(this).attr('action')
+    var language = $('#language').val()
+    var errorMessage = $('#add-language').find('span');
+    $.ajax({
+        url: route,
+        type: 'post',
+        data: {'language' : language},
+        success: function () {
+            location.reload();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.language : '');
+            $('#language').focus();
         }
     });
     event.preventDefault();
