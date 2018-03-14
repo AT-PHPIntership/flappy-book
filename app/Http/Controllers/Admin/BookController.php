@@ -110,8 +110,8 @@ class BookController extends Controller
             return redirect()->route("books.index");
         } catch (Exception $e) {
             if ($oldPicturePath != $book->picture) {
-                $arrUrl = explode('/', $book->picture);
-                Image::delete(end($arrUrl));
+                $picture = Image::getImageNameFromUrl('$book->picture');
+                Image::delete($picture);
             }
             DB::rollBack();
             flash(__('books.books_edit_failed'))->error();

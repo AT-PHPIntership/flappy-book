@@ -35,4 +35,17 @@ class Image
             File::delete($oldPath);
         }
     }
+
+    /**
+     * Get images name from url.
+     *
+     * @param string $imageUrl url of image
+     *
+     * @return string
+     */
+    public static function getImageNameFromUrl($imageUrl)
+    {
+        $arrUrl = explode(asset(config('image.book.path')) . '/', $imageUrl);
+        return end($arrUrl);
+    }
 }
