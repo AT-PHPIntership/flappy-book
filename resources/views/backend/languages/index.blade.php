@@ -23,8 +23,9 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header" id="btn-modified">
+              @include('backend.languages.partials.add-language')
               <div class="pull-left">
-                <button type="button" name="btn-add" id="btn-add-languages" class="btn btn-success btn-flat">{{ __('languages.add_language') }}</button>
+                <button type="button" name="btn-add" id="btn-add-language" class="btn btn-success btn-flat">{{ __('languages.add_language') }}</button>
               </div>
             </div>
             <!-- /.box-header -->
