@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Libraries\Traits\SearchTrait;
 use Kyslik\ColumnSortable\Sortable;
+use App\Libraries\Traits\FilterTrait;
 
 class Book extends Model
 {
-    use SoftDeletes, SearchTrait, Sortable;
+    use SoftDeletes, SearchTrait, Sortable, FilterTrait;
     
     /**
      * Book currency unit
@@ -232,4 +233,17 @@ class Book extends Model
 
         return ($image == config('image.book.default_name_image')) ? null : $image;
     }
+
+    /**
+     * The attributes that can be search.
+     *
+     * @var array $fieldSearchable
+     */
+    protected $fieldSearchable = [
+        'category' => ['books.category_id' => '='],
+        'borrow' => ['books.status' => '='],
+        'title' => ['books.title' => 'like'],
+        'author' => ['books.author' => 'like'],
+        'language' => ['books.language_id' => '=']
+    ];
 }

@@ -3,6 +3,9 @@
     {{ __('languages.list_languages') }}
 @endsection
 @section('content')
+<script type="text/javascript">
+  languages = {!! json_encode(trans('languages')) !!};
+</script>
  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -18,16 +21,20 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      @include('flash::message')
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header" id="btn-modified">
+              @include('backend.languages.partials.add-language')
               <div class="pull-left">
-                <button type="button" name="btn-add" id="btn-add-languages" class="btn btn-success btn-flat">{{ __('languages.add_language') }}</button>
+                <button type="button" name="btn-add" id="btn-add-language" class="btn btn-success btn-flat">{{ __('languages.add_language') }}</button>
               </div>
             </div>
             <!-- /.box-header -->
+            @include('backend.languages.partials.confirm-edit-language')
             <div class="box-body" id="table-modified">
+              @include('backend.layouts.partials.modal')
               <table id="list-languages" class="table table-bordered table-hover">
                 <thead>
                  <tr>
@@ -44,16 +51,22 @@
                       <td class="text-center">{{ $index + $languages->firstItem() }}</td>
                       <td class="language-title-field">
                         <p>{{ $language->language }}</p>
-                        <input type="text" language-id="" value="" spellcheck="false" hidden>
+                        <input type="text" language-id="{{ $language->id }}" value="" spellcheck="false" hidden>
                         <span class="text-danger"></span>
                       </td>
                       <td class="text-center">
                         <div class="btn-option text-center">
                           <button type="button" class="btn btn-primary btn-flat fa fa-pencil btn-edit-language"></button>
-                          <form method="" action="" class="inline">
-                            <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item">
-                            </button>
-                          </form> 
+                          @if ($language->id != App\Model\Language::LANGUAGE_DEFAULT)
+                            <form method="POST" action="{{ route('languages.destroy', $language->id) }}" class="inline">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                              <button type="button" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item"
+                              data-title="{{ __('languages.confirm_deletion') }}"
+                              data-confirm="{{ __('languages.confirm_content', ['name' => $language->language]) }}">
+                              </button>
+                            </form>
+                          @endif
                         </div>
                       </td>
                     </tr>
