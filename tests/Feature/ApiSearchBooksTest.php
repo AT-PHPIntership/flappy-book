@@ -2,24 +2,21 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Faker\Factory as Faker;
-use App\Model\Category;
-use App\Model\User;
-use App\Model\Language;
-use DB;
 use App\Model\Book;
+use App\Model\Category;
+use App\Model\Language;
+use App\Model\User;
+use Faker\Factory as Faker;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Response;
+use Tests\TestCase;
 
 class ApiSearchBooksTest extends TestCase
 {
     use DatabaseMigrations;
 
     const NUMBER_RECORD_CREATE = 5;
-    
+
     /**
      * Receive status code 200 when search books success.
      *
@@ -102,7 +99,6 @@ class ApiSearchBooksTest extends TestCase
         $this->assertTrue(count($data->data) === 1);
     }
 
-
     /**
      * Make data for test
      *
@@ -116,7 +112,7 @@ class ApiSearchBooksTest extends TestCase
             'employ_code' => 'AT0123',
         ]);
         $language = factory(Language::class)->create([
-            'language' =>  $faker->randomElement(Language::LANGUAGES),
+            'language' => $faker->randomElement(Language::LANGUAGES),
         ]);
         for ($i = 0; $i < $row; $i++) {
             factory(Book::class)->create([

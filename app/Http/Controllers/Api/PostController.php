@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Transformers\PostTransformer;
 use League\Fractal\Manager;
 use App\Model\Rating;
+use App\Model\Book;
 use App\Http\Requests\Api\CreatePostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\Handler;
@@ -86,15 +87,43 @@ class PostController extends ApiController
             // Create rating when post's status is review
             if ($request->status == Post::TYPE_REVIEW_BOOK) {
                 Rating::create([
-                        'post_id' => $post->id,
-                        'book_id' => $request->book_id,
-                        'rating' => $request->rating,
-                    ]);
+                    'post_id' => $post->id,
+                    'book_id' => $request->book_id,
+                    'rating' => $request->rating,
+                ]);
+
+                //Update rating in table books
+                $book = Book::find($request->book_id);
+                $rating = ($book->rating * $book->total_rating++ + $request->rating) / $book->total_rating;
+                $book = $book->update([
+                    'rating' => $rating,
+                    'total_rating' => $book->total_rating
+                ]);
             }
             DB::commit();
 
             $post = $this->getItem($post, $this->transformer, 'user,rating');
             return $this->responseSuccess($post, Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new ModelNotFoundException();
+        }
+    }
+
+    /**
+     * Delete a post and relationship.
+     *
+     * @param Post $post object post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
+    {
+        DB::beginTransaction();
+        try {
+            $post->delete();
+            DB::commit();
+            return $this->responseDeleteSuccess(Response::HTTP_OK);
         } catch (Exception $e) {
             DB::rollBack();
             throw new ModelNotFoundException();

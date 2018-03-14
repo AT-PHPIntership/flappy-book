@@ -14,7 +14,7 @@ class BookService
      *
      * @return Illuminate\Database\Eloquent\Builder
      */
-    public static function getBooks(Request $request = null)
+    public function getBooks(Request $request)
     {
         $fields = [
             'books.id',
@@ -22,8 +22,6 @@ class BookService
             'books.picture',
             'books.total_rating',
             'books.rating',
-            'books.category_id',
-            'books.status'
         ];
 
         $params = $request ? $request->all() : null;
