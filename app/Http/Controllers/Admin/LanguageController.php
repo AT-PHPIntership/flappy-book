@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\EditLanguageRequest;
 use App\Http\Requests\Backend\CreateLanguageRequest;
 use App\Model\Language;
 
@@ -71,5 +72,19 @@ class LanguageController extends Controller
             flash(__('languages.delete_language_fail', ['name' => $languageName]))->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Update infomation of Language.
+     *
+     * @param App\Http\Requests\Backend\EditLanguageRequest $request  request
+     * @param App\Model\Language                            $language language
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditLanguageRequest $request, Language $language)
+    {
+        $result = $language->update($request->only('language'));
+        return response(array('result' => $result));
     }
 }
