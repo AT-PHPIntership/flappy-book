@@ -9,7 +9,8 @@ return [
     'title' => 'Title',
     'price' => 'Price',
     'unit' => 'Unit',
-    'vnd' => 'VND',
+    'page_number' => 'Page Number',
+    'language' => 'Language',
     'description' => 'Description',
     'from_person' => 'From Person',
     'category' => 'Category',
@@ -38,11 +39,22 @@ return [
     'books_edit_failed' => 'Edit book failed!',
     'delete_book_success' => 'Delete Book Success!',
     'delete_book_fail' => 'Delete Book Fail!',
+    'qrcode' => 'QR Code',
+    'import_data' => 'Import Data',
+    'import' => 'Import',
+    'validate_file_type' => 'Only support csv file type',
+    'import_book_success' => 'Import Book Success!',
+    'import_book_fail' => 'Import Book Fail!',
     'listunit' => [
         \App\Model\Book::TYPE_VND => 'VND',
         \App\Model\Book::TYPE_DOLAR => '$',
         \App\Model\Book::TYPE_EURO => '€',
         \App\Model\Book::TYPE_YEN => '¥'
+    ],
+    'listlanguage' => [
+        \App\Model\Book::VIETNAMESE => 'Vietnamese',
+        \App\Model\Book::ENGLISH => 'English',
+        \App\Model\Book::JAPANESE => 'Japanese',
     ],
     'list_search' =>[
         \App\Model\Book::TYPE_ALL => 'Title or Author',

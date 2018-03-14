@@ -9,3 +9,12 @@
 .btn-confirm-edit {
   width: 80px;
 }
+
+#table-modified {
+  padding: 10px 220px 10px 220px;
+}
+
+#btn-modified {
+  margin: 10px 0 0 50px;
+}
+

@@ -24,6 +24,7 @@ $factory->define(App\Model\Book::class, function (Faker $faker) {
         'description' => $faker->text,
         'year' => $faker->year(),
         'author' => $faker->name,
+        'page_number' => $faker->numberBetween(50,1000),
         'price' => $faker->numberBetween(1000,9000),
         'unit' => $faker->randomElement([\App\Model\Book::TYPE_VND, \App\Model\Book::TYPE_DOLAR,\App\Model\Book::TYPE_YEN, \App\Model\Book::TYPE_EURO]),
         'picture' => $faker->image,
@@ -69,7 +70,7 @@ $factory->define(App\Model\User::class, function (Faker $faker) {
 });
 $factory->define(App\Model\Qrcode::class, function (Faker $faker) {
     return [
-        'prefix' => 'ATB',
+        'prefix' => 'ATB-',
         'code_id' => $faker->numberBetween(0, 5000),
         'status' => $faker->numberBetween(0, 1),
     ];
@@ -77,5 +78,10 @@ $factory->define(App\Model\Qrcode::class, function (Faker $faker) {
 $factory->define(App\Model\Rating::class, function (Faker $faker) {
     return [
         'rating' => $faker->numberBetween(1,5),
+    ];
+});
+$factory->define(App\Model\Language::class, function (Faker $faker) {
+    return [
+        
     ];
 });

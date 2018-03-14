@@ -42,6 +42,13 @@ $(document).ready(function () {
     $('#btn-add-category').bind('click', function (e) {
         $('#add-category').modal('show');
     });
+
+    /**
+     * Show form import data when click button import data
+     */
+    $('#btn-import-data').bind('click', function (e) {
+        $('#import-data').modal('show');
+    });
 });
 
 $(document).ready(function() {
@@ -95,6 +102,32 @@ $('#add-category form').on('submit', function (event) {
             var errors = error.responseJSON.errors;
             errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
             $('#title').focus();
+        }
+    });
+    event.preventDefault();
+});
+
+$('#import-data form').on('submit', function (event) {
+    var route = $(this).attr('action')
+    var importdata = $('#file')[0].files[0]
+    var errorMessage = $('#import-data').find('span');
+    var data = new FormData();
+    if (importdata) {
+        data.append('file', importdata);
+    }
+
+    $.ajax({
+        url: route,
+        type: 'post',
+        processData: false,
+        contentType: false,
+        data: data,
+        success: function (data) {
+            location.reload();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.file[0] : '');
         }
     });
     event.preventDefault();
@@ -170,3 +203,5 @@ function confirmEditCategory(textField, inputField, errorMessage) {
         inputField.focus();
     });
 }
+
+$('.textarea').wysihtml5();
