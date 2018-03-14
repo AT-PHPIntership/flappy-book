@@ -15,7 +15,9 @@ class SearchBorrowsTest extends DuskTestCase
 {
     use DatabaseMigrations;
     
-    const NUMBER_BORROWS = 6;
+    const NUMBER_BORROWS = 5;
+
+    const NUMBER_BOOKS = 10;
 
     /**
      * Override function setUp()
@@ -29,89 +31,56 @@ class SearchBorrowsTest extends DuskTestCase
        $this->makeData(self::NUMBER_BORROWS);
     }
 
-     /**
-     * A Dusk test looking input search null with select name
-     *
-     * @return void
-     */
-    public function testSeeInputNullSelectName()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs($this->user)
-                ->visit('/admin/borrows')
-                ->resize(1200,1600)
-                ->assertSee('List Borrower')
-                ->assertInputValue('search', '')
-                ->select('filter', 'name')
-                ->click('#btn-search')
-                ->visit('/admin/borrows?search=&filter=name')
-                ->assertQueryStringHas('search', '')
-                ->assertQueryStringHas('filter', 'name');
-            $elements = $browser->elements('#list-borrows tbody tr');
-            $this->assertCount(self::NUMBER_BORROWS, $elements);
-        });
-    }
-
     /**
-     * A Dusk test looking input search null with select title
+     * A Dusk test search borrows with filter name of book
      *
      * @return void
      */
-    public function testSeeInputNullSelectBook(){
+    public function testSearchFilterNameOfBook() {
+        // create hard data for test search
+        factory(Book::class)->create([
+            'from_person' => $this->user->employ_code,
+            'category_id' => 1,
+            'title' => 'No name 123456789'
+        ]);
+
+        factory(Borrow::class)->create([
+            'book_id' => self::NUMBER_BOOKS + 1,
+            'user_id' => $this->user->id,
+            'status' => Borrow::BORROWING
+        ]);
+
         $this->browse(function (Browser $browser){
             $browser->loginAs($this->user)
                 ->visit('/admin/borrows')
                 ->resize(1200,1600)
                 ->assertSee('List Borrower')
-                ->assertInputValue('search', '')
+                ->type('search', '123456789')
                 ->select('filter', 'title')
                 ->click('#btn-search')
-                ->visit('/admin/borrows?search=&filter=title')
-                ->assertQueryStringHas('search', '')
-                ->assertQueryStringHas('filter', 'title');
+                ->assertQueryStringHas('search', '123456789')
+                ->assertQueryStringHas('filter', 'title')
+                ->assertSee('No name 123456789');
             $elements = $browser->elements('#list-borrows tbody tr');
-            $this->assertCount(self::NUMBER_BORROWS, $elements);
+            $this->assertCount(1, $elements);
         });
     }
 
     /**
-     * A Dusk test when input search username with select name not result
+     * A Dusk test search borrows with filter name of book but no result
      *
      * @return void
      */
-    public function testSearchSelectNameNotResult(){
+    public function testSearchFilterNameOfBookNoResult() {
         $this->browse(function (Browser $browser){
             $browser->loginAs($this->user)
                 ->visit('/admin/borrows')
                 ->resize(1200,1600)
                 ->assertSee('List Borrower')
-                ->type('search', 'Hello')
-                ->select('filter', 'name')
-                ->click('#btn-search')
-                ->visit('/admin/borrows?search=Hello&filter=name')
-                ->assertQueryStringHas('search', 'Hello')
-                ->assertQueryStringHas('filter', 'name');
-            $elements = $browser->elements('#list-borrows tbody tr');
-            $this->assertCount(0, $elements);
-        });
-    }
-
-    /**
-     * A Dusk test when input search titlebook with select title not result
-     *
-     * @return void
-     */
-    public function testSearchSelectBookNotResult(){
-        $this->browse(function (Browser $browser){
-            $browser->loginAs($this->user)
-                ->visit('/admin/borrows')
-                ->resize(1200,1600)
-                ->assertSee('List Borrower')
-                ->type('search', 'Hello')
+                ->type('search', '123456789')
                 ->select('filter', 'title')
                 ->click('#btn-search')
-                ->visit('/admin/borrows?search=Hello&filter=title')
-                ->assertQueryStringHas('search', 'Hello')
+                ->assertQueryStringHas('search', '123456789')
                 ->assertQueryStringHas('filter', 'title');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(0, $elements);
@@ -119,83 +88,60 @@ class SearchBorrowsTest extends DuskTestCase
     }
 
     /**
-     * A Dusk test when input search username incorrect with select name
+     * A Dusk test search borrows with filter name of user
      *
      * @return void
      */
-    public function testSearchSelectName(){
-        $faker = Faker::create();
-        $users = factory(User::class, 4)->create();
-        $userId = $users->pluck('id')->toArray();
-        $employeeCode = $users->pluck('employ_code')->toArray();
-        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        factory(Book::class)->create([
-            'from_person' => $faker->randomElement($employeeCode),
-            'category_id' => $faker->randomElement($categoryId),
-            'id' => 7,
-            'title' => 'Java'
+    public function testSearchFilterNameOfUser() {
+        // create hard data for test search
+        $user = factory(User::class)->create([
+            'name' => 'User name xyz'
         ]);
         factory(Borrow::class)->create([
-            'book_id' => 7,
-            'user_id' => 1,
+            'book_id' => 1,
+            'user_id' => $user->id,
             'status' => Borrow::BORROWING
         ]);
+
         $this->browse(function (Browser $browser){
             $browser->loginAs($this->user)
                 ->visit('/admin/borrows')
                 ->resize(1200,1600)
                 ->assertSee('List Borrower')
-                ->type('search', 'Minh Dao T.')
+                ->type('search', 'xyz')
                 ->select('filter', 'name')
                 ->click('#btn-search')
-                ->visit('/admin/borrows?search=Minh Dao T.&filter=name')
-                ->assertQueryStringHas('search', 'Minh Dao T.')
-                ->assertQueryStringHas('filter', 'name');
+                ->assertQueryStringHas('search', 'xyz')
+                ->assertQueryStringHas('filter', 'name')
+                ->assertSee('User name xyz');
             $elements = $browser->elements('#list-borrows tbody tr');
             $this->assertCount(1, $elements);
         });
     }
 
     /**
-     * A Dusk test when input search titlebook incorrect with select title
+     * A Dusk test search borrows with filter name of user but no result
      *
      * @return void
      */
-    public function testSearchSelectBook(){
-        $faker = Faker::create();
-        $users = factory(User::class, 4)->create();
-        $userId = $users->pluck('id')->toArray();
-        $employeeCode = $users->pluck('employ_code')->toArray();
-        $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        factory(Book::class)->create([
-            'from_person' => $faker->randomElement($employeeCode),
-            'category_id' => $faker->randomElement($categoryId),
-            'id' => 7,
-            'title' => 'Java'
-            ]);
-        factory(Borrow::class)->create([
-            'book_id' => 7,
-            'user_id' => 1,
-            'status' => Borrow::BORROWING
-        ]);
+    public function testSearchFilterNameOfUserNoResult() {
         $this->browse(function (Browser $browser){
             $browser->loginAs($this->user)
                 ->visit('/admin/borrows')
                 ->resize(1200,1600)
                 ->assertSee('List Borrower')
-                ->type('search', 'Java')
-                ->select('filter', 'title')
+                ->type('search', 'xyz')
+                ->select('filter', 'name')
                 ->click('#btn-search')
-                ->visit('/admin/borrows?search=Java&filter=title')
-                ->assertQueryStringHas('search', 'Java')
-                ->assertQueryStringHas('filter', 'title');
+                ->assertQueryStringHas('search', 'xyz')
+                ->assertQueryStringHas('filter', 'name');
             $elements = $browser->elements('#list-borrows tbody tr');
-            $this->assertCount(1, $elements);
+            $this->assertCount(0, $elements);
         });
     }
     
     /**
-     * A Data test for users, books and borrows
+     * Make data for dusk test
      *
      * @return void
      */
@@ -206,7 +152,7 @@ class SearchBorrowsTest extends DuskTestCase
         $userId = $users->pluck('id')->toArray();
         $employeeCode = $users->pluck('employ_code')->toArray();
         $categoryId = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        for ($i = 0; $i < $row; $i++) {
+        for ($i = 0; $i < self::NUMBER_BOOKS; $i++) {
             $books[] = factory(Book::class)->create([
                 'from_person' => $faker->randomElement($employeeCode),
                 'category_id' => $faker->randomElement($categoryId),
