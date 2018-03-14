@@ -215,7 +215,7 @@ class Book extends Model
      */
     public function getPictureAttribute()
     {
-        return url('/').'/'.config('image.book.path').$this->attributes['picture'];
+        return asset(config('image.book.path').$this->attributes['picture']);
     }
 
     /**

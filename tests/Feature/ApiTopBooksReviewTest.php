@@ -78,7 +78,7 @@ class ApiTopBooksReviewTest extends TestCase
         $this->makeData(self::NUMBER_RECORD_CREATE);
         $response = $this->json('GET', '/api/books/top-review');
         $data = json_decode($response->getContent());
-        $imagePath = explode(url('/') . '/' . config('image.book.path'), $data->data[0]->picture)[1];
+        $imagePath = explode(asset(config('image.book.path')) . '/', $data->data[0]->picture)[1];
         $arrayCompare = [
             'id' => $data->data[0]->id,
             'title' => $data->data[0]->title,

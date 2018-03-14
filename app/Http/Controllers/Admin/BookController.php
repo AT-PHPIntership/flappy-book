@@ -88,49 +88,35 @@ class BookController extends Controller
      * Update infomation of Book.
      *
      * @param App\Http\Requests\EditBookRequest $request form edit book
-     * @param App\Model\Book                    $id      pass id object
+     * @param App\Model\Book                    $book    object book
      *
      * @return void
      */
-    public function update(EditBookRequest $request, $id)
+    public function update(EditBookRequest $request, Book $book)
     {
-        $book = Book::findOrFail($id);
         DB::beginTransaction();
+        $oldPicturePath = $book->picture;
         try {
-            $this->updateBook($book, $request);
-            flash(__('books.books_edit_success'))->success();
+            if ($request->hasFile('picture')) {
+                $book->picture = Image::update($request->picture);
+            }
+            $book->update($request->except('picture'));
+            $oldPicture = Book::checkDefaultImage($oldPicturePath);
+            if ($oldPicture) {
+                Image::delete($oldPicture);
+            }
             DB::commit();
+            flash(__('books.books_edit_success'))->success();
             return redirect()->route("books.index");
         } catch (Exception $e) {
-            flash(__('books.books_edit_failed'))->error();
+            if ($oldPicturePath != $book->picture) {
+                $arrUrl = explode('/', $book->picture);
+                Image::delete(end($arrUrl));
+            }
             DB::rollBack();
+            flash(__('books.books_edit_failed'))->error();
             return redirect()->back()->withInput();
         }
-    }
-
-    /**
-     * Save infomation of Book.
-     *
-     * @param App\Model\Book                    $book    pass book object
-     * @param App\Http\Requests\EditBookRequest $request picture and iddonator edit book
-     *
-     * @return void
-     */
-    private function updateBook($book, $request)
-    {
-        if (isset($request->picture)) {
-            $oldPath = null;
-
-            $oldPicture = Book::checkDefaultImage($book->picture);
-
-            if ($oldPicture) {
-                $oldPath = config('image.book.path') . $oldPicture;
-            }
-
-            $book->picture = Image::update($request->picture, config('image.book.path'), $oldPath);
-        }
-
-        $book->update($request->except('picture'));
     }
 
     /**
@@ -159,7 +145,7 @@ class BookController extends Controller
 
         // save book picture
         if ($request->hasFile('picture')) {
-            $bookFields['picture'] = Image::update($request->picture, config('image.book.path'));
+            $bookFields['picture'] = Image::update($request->picture);
         } else {
             $bookFields['picture'] = config('image.book.default_name_image');
         }
@@ -202,7 +188,7 @@ class BookController extends Controller
         try {
             $picture = Book::checkDefaultImage($book->picture);
             if ($picture) {
-                Image::delete(config('image.book.path') . $picture);
+                Image::delete($picture);
             }
             $book->delete();
             DB::commit();
