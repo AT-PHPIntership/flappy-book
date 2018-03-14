@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\CreateLanguageRequest;
 use App\Http\Requests\Backend\EditLanguageRequest;
+use App\Http\Requests\Backend\CreateLanguageRequest;
 use App\Model\Language;
-use DB;
 
 class LanguageController extends Controller
 {
@@ -49,27 +48,6 @@ class LanguageController extends Controller
             flash(__('languages.add_language_fail', ['name' => $language]))->error();
         }
     }
-    
-    /**
-     * Update infomation of Language.
-     *
-     * @param App\Http\Requests\Backend\EditLanguageRequest $request  request
-     * @param App\Model\Language                            $language language
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(EditLanguageRequest $request, Language $language)
-    {
-        DB::beginTransaction();
-        $result = false;
-        try {
-            $result = $language->update($request->only('language'));
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-        }
-        return response(array('result' => $result));
-    }
 
     /**
      * Delete a language and return book to language default.
@@ -94,5 +72,19 @@ class LanguageController extends Controller
             flash(__('languages.delete_language_fail', ['name' => $languageName]))->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Update infomation of Language.
+     *
+     * @param App\Http\Requests\Backend\EditLanguageRequest $request  request
+     * @param App\Model\Language                            $language language
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditLanguageRequest $request, Language $language)
+    {
+        $result = $language->update($request->only('language'));
+        return response(array('result' => $result));
     }
 }
