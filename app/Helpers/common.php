@@ -33,13 +33,13 @@ function showComment($comments, $parentId = null, $char = '')
 
     foreach ($comments as $comment) {
         if ($comment->parent_id == $parentId) {
-            $body .= '<tr>';
+            $body .= '<tr id="comment-item-'.$comment->id.'">';
                 $body .= '<td>'.$char.$comment->comment.'</td>';
                 $body .= '<td class="text-center">'.$comment->created_at.'</td>';
                 $body .= '<td class="text-center" width="15%">';
                 $body .= '<a href="#" class="btn btn-danger btn-flat fa fa-trash-o btn-delete-item confirm-delete" data-id="'.$comment->id.'"';
-                    $body .= 'data-title=" '._('Confirm Delete !').'"';
-                    $body .= 'data-confirm=" '._('Do you want to delete this comment').'">';
+                    $body .= 'data-title="' . trans("common.confirm.title") . '"';
+                    $body .= 'data-confirm="' . trans("common.confirm.delete_comment") . '">';
                 $body .= '</a>';
                 $body .= '</td>';
             $body .= '</tr>';

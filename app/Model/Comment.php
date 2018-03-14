@@ -80,7 +80,7 @@ class Comment extends Model
     }
 
     /**
-      * Deleting comment hw_Children(connection, objectID)
+      * Deleting child comment
       *
       * @return void
     */
@@ -89,7 +89,7 @@ class Comment extends Model
         parent::boot();
 
         static::deleting(function (Comment $comment) {
-            $comment->comment()->delete();
+            $comment->comments()->delete();
         });
     }
 }
