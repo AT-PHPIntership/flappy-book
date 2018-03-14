@@ -38,14 +38,7 @@ class LanguageController extends Controller
      */
     public function update(EditLanguageRequest $request, Language $language)
     {
-        DB::beginTransaction();
-        $result = false;
-        try {
-            $result = $language->update($request->only('language'));
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-        }
+        $result = $language->update($request->only('language'));
         return response(array('result' => $result));
     }
 }
