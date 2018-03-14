@@ -7,6 +7,7 @@ use League\Fractal\TransformerAbstract;
 use League\Fractal\Serializer\ArraySerializer;
 use League\Fractal\Serializer\DataArraySerializer;
 use Illuminate\Support\Facades\App;
+use App\Model\Rating;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -17,7 +18,8 @@ class PostTransformer extends TransformerAbstract
      */
     protected $availableIncludes = [
         'user',
-        'rating'
+        'rating',
+        'book',
     ];
 
     /**
@@ -65,5 +67,22 @@ class PostTransformer extends TransformerAbstract
         }
 
         return $this->item($post->rating, App::make(RatingTransformer::class));
+    }
+
+    /**
+     * Include book
+     *
+     * @param Post $post post
+     *
+     * @return Item
+     */
+    public function includeBook(Post $post)
+    {
+        $rating = Rating::where('post_id', $post->id)->firstOrFail();
+
+        if (!$rating) {
+            return $this->null();
+        }
+        return $this->item($rating->books, App::make(RatingOfBookTransformer::class));
     }
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Exceptions\Handler;
 use Exception;
 use DB;
+use App\Http\Requests\Api\UpdatePostRequest;
 
 class PostController extends ApiController
 {
@@ -108,5 +109,44 @@ class PostController extends ApiController
             DB::rollBack();
             throw new ModelNotFoundException();
         }
+    }
+
+    /**
+     * Update the post
+     *
+     * @param UpdatePostRequest $request request
+     * @param Post              $post    object post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdatePostRequest $request, Post $post)
+    {
+        if ($post->user_id == Auth::id()) {
+            DB::beginTransaction();
+            try {
+                $typePost = $post->status;
+                $params = $request->only(['content', 'rating']);
+                $post->content = $params['content'];
+                $post->save();
+                if ($typePost == Post::TYPE_REVIEW_BOOK) {
+                    $rating = Rating::where('post_id', $post->id)->firstOrFail();
+                    if ($request->has('rating')) {
+                        $book = Book::findOrFail($rating->book_id);
+                        $book->rating = ($book->rating * $book->total_rating - $rating->rating + $request->rating) / $book->total_rating;
+                        $rating->rating = $request->rating;
+                        $rating->save();
+                        $book->save();
+                    }
+                }
+                DB::commit();
+
+                $post = $this->getItem($post, $this->transformer, 'user,rating,book');
+                return $this->responseSuccess($post, Response::HTTP_OK);
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new ModelNotFoundException();
+            }
+        }
+        throw new ModelNotFoundException();
     }
 }
