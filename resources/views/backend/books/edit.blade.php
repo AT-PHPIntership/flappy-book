@@ -130,12 +130,16 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="InputFile">{{ __('books.picture') }}</label>
-                <input type="file" name="picture" id="picture">
-                @if($errors->first('picture')) 
-                  <span class="text-danger">{{ $errors->first('picture') }}</span>
-                @endif
-                <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <label for="InputFile">{{ __('books.picture') }}</label>
+                    <img id="picture-display" width="150" height="200" src="{{ asset($book->picture) }}" alt="book-picture">
+                    <input type="file" name="picture" id="picture">
+                    @if($errors->first('picture')) 
+                      <span class="text-danger">{{ $errors->first('picture') }}</span>
+                    @endif
+                  </div>
+                </div>
               </div>
             </div>
             <div class="box-footer">

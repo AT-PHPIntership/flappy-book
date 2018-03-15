@@ -123,14 +123,19 @@
                     </div>
                   </div>
                 </div>
-                  <div class="form-group">
-                    <label for="InputFile">{{ __('books.picture') }}</label>
-                    <input type="file" name="picture" value="{!! old('picture') !!}">
-                    @if($errors->first('picture')) 
-                      <span class="text-danger">{{ $errors->first('picture') }}</span>
-                    @endif
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <label for="InputFile">{{ __('books.picture') }}</label>
+                      <img id="picture-display" width="150" height="200" src="{{ url('/').'/'.config('image.book.path').config('image.book.default_name_image') }}" alt="book-picture" hidden>
+                      <input type="file" name="picture" id="picture">
+                      @if($errors->first('picture')) 
+                        <span class="text-danger">{{ $errors->first('picture') }}</span>
+                      @endif
+                    </div>
                   </div>
                 </div>
+              </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary btn-flat">{{ __('books.create') }}</button>&nbsp;&nbsp;
                 <button type="button" class="btn btn-flat " onclick="window.history.back();">{{ __('books.back') }}</button>

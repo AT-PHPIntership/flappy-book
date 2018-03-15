@@ -88,48 +88,36 @@ class BookController extends Controller
      * Update infomation of Book.
      *
      * @param App\Http\Requests\EditBookRequest $request form edit book
-     * @param App\Model\Book                    $id      pass id object
+     * @param App\Model\Book                    $book    object book
      *
      * @return void
      */
-    public function update(EditBookRequest $request, $id)
+    public function update(EditBookRequest $request, Book $book)
     {
-        $book = Book::findOrFail($id);
         DB::beginTransaction();
+        $oldPicturePath = $book->picture;
         try {
-            $this->updateBook($book, $request);
-            flash(__('books.books_edit_success'))->success();
+            if ($request->hasFile('picture')) {
+                $book->picture = Image::update($request->picture);
+            }
+            $book->update($request->except('picture'));
+            $oldPicture = Book::checkDefaultImage($oldPicturePath);
+            if ($oldPicture) {
+                Image::delete($oldPicture);
+            }
             DB::commit();
+            flash(__('books.books_edit_success'))->success();
             return redirect()->route("books.index");
         } catch (Exception $e) {
-            flash(__('books.books_edit_failed'))->error();
+            if ($oldPicturePath != $book->picture) {
+                $picture = Image::getImageNameFromUrl('$book->picture');
+                Image::delete($picture);
+            }
             DB::rollBack();
+            flash(__('books.books_edit_failed'))->error();
             return redirect()->back()->withInput();
         }
     }
-
-    /**
-     * Save infomation of Book.
-     *
-     * @param App\Model\Book                    $book    pass book object
-     * @param App\Http\Requests\EditBookRequest $request picture and iddonator edit book
-     *
-     * @return void
-     */
-    private function updateBook($book, $request)
-    {
-        if (isset($request->picture)) {
-            $oldPath = $book->picture;
-            $book->picture  = Image::update($request->picture, config('image.book.path'), $oldPath);
-        }
-
-        $user = User::where('employ_code', $request->iddonator)->first();
-        if (isset($user)) {
-            $book->from_person = $request->iddonator;
-        }
-        $book->update($request->except(['iddonator', 'picture']));
-    }
-    
 
     /**
      * Show the form for creating a new book.
@@ -154,16 +142,12 @@ class BookController extends Controller
     {
         // create book fields.
         $bookFields = $request->all();
-        $bookFields['unit'] =  __('books.listunit')[$request->unit];
+
         // save book picture
         if ($request->hasFile('picture')) {
-            $picture = $request->picture;
-            $folderStore = config('define.books.folder_store_books');
-            $pictureName = config('define.books.image_name_prefix') . '-' . $picture->hashName();
-            $picture->move($folderStore, $pictureName);
-            $bookFields['picture'] = $pictureName;
+            $bookFields['picture'] = Image::update($request->picture);
         } else {
-            $bookFields['picture'] = config('define.books.default_name_image');
+            $bookFields['picture'] = config('image.book.default_name_image');
         }
         DB::beginTransaction();
         try {
@@ -202,6 +186,10 @@ class BookController extends Controller
     {
         DB::beginTransaction();
         try {
+            $picture = Book::checkDefaultImage($book->picture);
+            if ($picture) {
+                Image::delete($picture);
+            }
             $book->delete();
             DB::commit();
             flash(__('books.delete_book_success'))->success();
@@ -303,7 +291,7 @@ class BookController extends Controller
             'page_number' => isset($attributes['pages']) ? $attributes['pages'] : Book::DEFAULT_PAGE_NUMBER,
             'price'       => Book::DEFAULT_PRICE,
             'unit'        => Book::DEFAULT_UNIT,
-            'picture'     => config('define.books.default_name_image'),
+            'picture'     => config('image.book.default_name_image'),
             'from_person' => ($attributes['employee_code'] != "NULL") ? $attributes['employee_code'] : User::DEFAULT_EMPLOYEE_CODE,
             'status'      => (isset($attributes['status']) && $attributes['status'] == 'available') ? 1 : 0,
         ];

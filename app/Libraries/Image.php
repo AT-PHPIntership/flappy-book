@@ -10,29 +10,42 @@ class Image
      * Update images of Book.
      *
      * @param string $imgFile file image
-     * @param string $imgPath path image
-     * @param string $oldPath oldpath image
      *
      * @return string
      */
-    public static function update($imgFile, $imgPath, $oldPath)
+    public static function update($imgFile)
     {
-        self::delete($oldPath);
         $name = $imgFile->hashName();
-        $imgFile->move($imgPath, $name);
-        return $imgPath . $name;
+        $path = config('image.book.path');
+        $imgFile->move($path, $name);
+        return $name;
     }
+
     /**
      * Delete images of Book.
      *
-     * @param string $oldPath oldpath image
+     * @param string $imgName Name of image
      *
      * @return void
      */
-    public static function delete($oldPath)
+    public static function delete($imgName)
     {
+        $oldPath = config('image.book.path') . $imgName;
         if (File::exists($oldPath)) {
             File::delete($oldPath);
         }
+    }
+
+    /**
+     * Get images name from url.
+     *
+     * @param string $imageUrl url of image
+     *
+     * @return string
+     */
+    public static function getImageNameFromUrl($imageUrl)
+    {
+        $arrUrl = explode(asset(config('image.book.path')) . '/', $imageUrl);
+        return end($arrUrl);
     }
 }

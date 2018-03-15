@@ -8,9 +8,6 @@ return [
         'limit_rows' => 10,
         'amount_top_books_review' => 10,
         'amount_books_donated' => 10,
-        'image_name_prefix' => date("Ymd"),
-        'folder_store_books' => 'images/books/',
-        'default_name_image' => 'book_image.png',
         'limit_item' => 20,
     ],
     'users' => [
