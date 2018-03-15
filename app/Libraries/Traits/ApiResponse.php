@@ -57,4 +57,21 @@ trait ApiResponse
             ],
         ], $code);
     }
+
+    /**
+     * Response delete data
+     *
+     * @param int $code response status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function responseDeleteSuccess($code = 200)
+    {
+        return response()->json([
+            'meta' => [
+                'status' => __('api.successfully'),
+                'code' => $code
+            ],
+        ], $code);
+    }
 }

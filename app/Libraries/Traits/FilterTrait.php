@@ -19,7 +19,7 @@ trait FilterTrait
     {
         if (isset($fields)) {
             foreach ($fields as $field => $value) {
-                foreach ($this->getColumns($field) as $key => $operator) {
+                foreach ($this->getColummnsFilter($field) as $key => $operator) {
                     $this->addCondition($query, $key, $operator, $value);
                 }
             }
@@ -67,7 +67,7 @@ trait FilterTrait
      *
      * @return mixed
      */
-    protected function getColumns($field)
+    protected function getColummnsFilter($field)
     {
         return array_get($this->fieldSearchable, $field);
     }

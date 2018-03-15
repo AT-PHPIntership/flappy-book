@@ -6,28 +6,35 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\Book;
+use App\Service\BookService;
 
 class BookController extends ApiController
 {
+    private $bookService;
+
+    /**
+     * Contructor function
+     *
+     * @param BookService $bookService Book Service
+     */
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
+
     /**
      * Get list of books
      *
+     * @param Request $request send request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fields = [
-            'id',
-            'title',
-            'picture',
-            'total_rating',
-            'rating',
-        ];
-        $books = Book::select($fields)
-            ->orderBy('created_at', 'DESC')
+        $books = $this->bookService->getBooks($request)
             ->paginate(config('define.books.limit_item'));
 
-            return $this->responsePaginate($books);
+        return $this->responsePaginate($books);
     }
     
     /**
@@ -94,5 +101,28 @@ class BookController extends ApiController
                     ->get();
         
         return $this->responseSuccess($topBooks);
+    }
+
+    /**
+     * Get list top books borrow
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function topBooksBorrow()
+    {
+        $fields =  [
+            'id',
+            'title',
+            'rating',
+            'total_rating',
+            'picture'
+        ];
+
+        $topBooks = Book::select($fields)
+                        ->withCount('borrows AS borrowed')
+                        ->orderBy('borrowed', 'DESC')
+                        ->paginate(config('define.books.limit_item'));
+                
+        return $this->responsePaginate($topBooks);
     }
 }

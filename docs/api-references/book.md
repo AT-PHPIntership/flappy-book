@@ -261,3 +261,78 @@ Get top 10 books review
     ]
 }
 ```
+
+### `GET` Top books borrow
+```
+api/books/top-borrows
+```
+Get top books borrow
+
+#### Response - Success
+| Field | Type | Array |
+|-------|------|-------------|
+| meta | Object | object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| data | Array | Array of list top books borrow |
+| id | Number | Id of book |
+| title | String | Title of book |
+| total_rating | Number | The total number of reviews of a book |
+| picture | String | Url for image of the book |
+| rating | Number | Average review of a book |
+| borrowed | Number | Total borrowed of book |
+
+```json
+{
+    "meta": {
+        "status": "successfully",
+        "code": 200
+    },
+    "data": [
+        {
+            "id": 1,
+            "title": "Luis Krajcik",
+            "picture": "http://flappybook.tech//tmp/b6fefc65117463c5963acfd909ee7214.jpg",
+            "total_rating": 12,
+            "rating": 2,
+            "borrowed": 4
+        },
+        {
+            "id": 5,
+            "title": "Dr. General Kiehn DDS",
+            "picture": "http://flappybook.tech//tmp/48920de5e7c48a6d43468167442d7c15.jpg",
+            "total_rating": 17,
+            "rating": 2,
+            "borrowed": 2
+        },
+        {
+            "id": 8,
+            "title": "Eldon Blick",
+            "picture": "http://flappybook.tech//tmp/fba48ab59a27318b8fc28184e2e1673d.jpg",
+            "total_rating": 10,
+            "rating": 3,
+            "borrowed": 1
+        },
+        {
+            "id": 3,
+            "title": "Mariano Mayer",
+            "rating": 4,
+            "total_rating": 6,
+            "picture": "http://flappybook.tech//tmp/b06495378012d94197a6d3e4fb3bd306.jpg",
+            "borrowed": 1
+        },
+    ],
+    "pagination": {
+        "total": 32,
+        "per_page": 20,
+        "count": 20,
+        "current_page": 1,
+        "total_pages": 2,
+        "links": {
+            "prev": null,
+            "next": "http://flappybook.tech/api/books/top-borrows?page=2"
+        }
+    }
+}
+```    
+

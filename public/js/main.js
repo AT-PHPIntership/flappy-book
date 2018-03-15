@@ -44,6 +44,13 @@ $(document).ready(function () {
     });
 
     /**
+     * Show form add language when click button add language
+     */
+    $('#btn-add-language').bind('click', function (e) {
+        $('#add-language').modal('show');
+    });
+
+    /**
      * Show form import data when click button import data
      */
     $('#btn-import-data').bind('click', function (e) {
@@ -102,6 +109,26 @@ $('#add-category form').on('submit', function (event) {
             var errors = error.responseJSON.errors;
             errorMessage.html(typeof errors !== 'undefined' ? errors.title : '');
             $('#title').focus();
+        }
+    });
+    event.preventDefault();
+});
+
+$('#add-language form').on('submit', function (event) {
+    var route = $(this).attr('action')
+    var language = $('#language').val()
+    var errorMessage = $('#add-language').find('span');
+    $.ajax({
+        url: route,
+        type: 'post',
+        data: {'language' : language},
+        success: function () {
+            location.reload();
+        },
+        error: function (error) {
+            var errors = error.responseJSON.errors;
+            errorMessage.html(typeof errors !== 'undefined' ? errors.language : '');
+            $('#language').focus();
         }
     });
     event.preventDefault();
@@ -188,6 +215,78 @@ function confirmEditCategory(textField, inputField, errorMessage) {
             error: function (error) {
                 let errors = error.responseJSON.errors;
                 errorMessage.html(typeof errors !== 'undefined' ? errors.title : categories.error_when_edit_category);
+                inputField.focus();
+            }
+        });
+    });
+
+    $('#reset-btn').one('click', function () {
+        errorMessage.html('');
+        textField.show();
+        inputField.hide();
+    });
+
+    $('#cancel-btn').one('click', function () {
+        inputField.focus();
+    });
+}
+
+$(document).on('click', '.btn-edit-language', function(e) {
+    resetLanguageInput();
+    const PRESS_ENTER = 13;
+    let selectedRow = $(this).closest('tr').find('.language-title-field');
+    let textField = selectedRow.find('p');
+    let inputField = selectedRow.find('input');
+    let errorMessage = selectedRow.find('span');
+
+    inputField.val(textField.hide().html()).show().focus().keypress(function(event) {
+        if (event.which == PRESS_ENTER) {
+            confirmEditLanguage(textField, inputField, errorMessage);
+        }
+    });
+});
+
+function resetLanguageInput() {
+    let allRows = $('tbody').find('.language-title-field');
+    allRows.find('span').html('');
+    allRows.find('p').show();
+    allRows.find('input').hide();
+}
+
+function confirmEditLanguage(textField, inputField, errorMessage) {
+    let language = textField.html();
+    let languageEdited = inputField.val();
+    let dataConfirm = languages.are_you_sure_to_edit_this_language
+                +' <strong> ' + language + ' </strong> '
+                + languages.to
+                +' <strong> ' + languageEdited +' </strong> ?';
+
+    $('#body-edit-content').html(dataConfirm);
+    $('#confirm-edit-language').modal('show');
+
+    $('#edit-btn').one('click', function () {
+        let id = inputField.attr('language-id');
+        $.ajax({
+            url: '/admin/languages/' + id,
+            type: 'put',
+            data: {
+                'language': languageEdited,
+                'id': id,
+            },
+            success: function (data) {
+                if (data.result) {
+                    errorMessage.html('');
+                    textField.html(languageEdited).show();
+                    inputField.hide();
+                } else {
+                    errorMessage.html(languages.error_when_edit_language);
+                    inputField.focus();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+                let errors = error.responseJSON.errors;
+                errorMessage.html(typeof errors !== 'undefined' ? errors.language : languages.error_when_edit_language);
                 inputField.focus();
             }
         });

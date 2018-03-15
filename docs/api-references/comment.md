@@ -163,6 +163,8 @@ Create new Comment
         "commentable_type": "book",
         "parent_id": null,
         "user_id": 1,
+        "created_at": "2018-03-06 02:22:53",
+        "updated_at": "2018-03-06 02:37:02",
         "user": {
             "id": 1,
             "name": "Cao Nguyen V.",
@@ -199,6 +201,65 @@ Create new Comment
                 "The comment field is required."
             ],
         }
+    }
+}
+```
+### `DELETE` Comments of Book or Post
+```
+/api/comments/{id}
+```
+Delete comment
+#### Request header
+| Key | Value |
+|---|---|
+|Authorization|{token_type} {access_token}
+
+#### Parameters
+| Key | Type | Description |
+|---|---|---|
+| id | Number | Id of comment |
+
+#### Response - Success
+| Field | Type | Description |
+|---|---|---|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status code |
+```json
+{
+    "meta": {
+        "status": "Successfully",
+        "code": 200
+    },
+}
+```
+#### Response - Failure
+| Field | Type | Description |
+|-------|------|-------------|
+| meta | Object | Object meta |
+| status | String | Status result |
+| code | Number | HTTP status codes |
+| error | Object | Object error |
+| message | Object | Message error |
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 404
+    },
+    "error": {
+        "message": "Data not found"
+    }
+}
+```
+```json
+{
+    "meta": {
+        "status": "Failed",
+        "code": 500
+    },
+    "error": {
+        "message": "Server error"
     }
 }
 ```
