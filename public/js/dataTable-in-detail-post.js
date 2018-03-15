@@ -10,7 +10,7 @@ $(function () {
     'info'        : true,
     'autoWidth'   : false
   })
-});
+})
 
 $('.confirm-delete').click(function(e){
     e.preventDefault();
@@ -19,12 +19,12 @@ $('.confirm-delete').click(function(e){
 
 $('#delete-btn').click(function(){
   token = $('meta[name="csrf_token"]').attr('content');
-  
-	$.ajax({
+
+  $.ajax({
     url : '/admin/comments/'+ id,
-		type : 'DELETE',
-		headers: { 'X-CSRF-TOKEN': token },
-		success: function (data) {
+    type : 'DELETE',
+    headers: { 'X-CSRF-TOKEN': token },
+    success: function (data) {
       dataTable.row('#comment-item-' + id).remove();
       dataTable.rows('.parent-comment-' + id).remove();
       dataTable.draw(false);
@@ -33,8 +33,8 @@ $('#delete-btn').click(function(){
     error: function(error){
       messageFail(error);
     }
-	});
-	$('#confirm').modal('hide');
+  });
+  $('#confirm').modal('hide');
 })
 
 function messageSuccess(message) {

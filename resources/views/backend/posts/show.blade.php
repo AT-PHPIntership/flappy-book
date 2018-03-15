@@ -121,5 +121,4 @@
 @endsection
 @section('script')
 <script src="{{ asset('js/dataTable-in-detail-post.js') }}"></script>
-<script src="{{ asset('js/comment.js') }}"></script>
 @endsection
