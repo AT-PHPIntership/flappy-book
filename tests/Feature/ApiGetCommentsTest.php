@@ -52,7 +52,7 @@ class ApiGetCommentsTest extends TestCase
             'commentable_type' => $commentableType
         ];
 
-        $response = $this->json('GET', 'api/comments', $request);
+        $response = $this->json('GET', '/api/comments', $request);
         $response->assertStatus(Response::HTTP_OK);
     }
 
@@ -70,7 +70,7 @@ class ApiGetCommentsTest extends TestCase
             'commentable_type' => $commentableType
         ];
 
-        $response = $this->json('GET', 'api/comments', $request);
+        $response = $this->json('GET', '/api/comments', $request);
         $response->assertJsonStructure([
             'meta' => [
                 'status',
@@ -102,8 +102,7 @@ class ApiGetCommentsTest extends TestCase
                     'next'
                 ]
             ],
-        ]);
-        $response->assertStatus(Response::HTTP_OK);
+        ])->assertStatus(Response::HTTP_OK);
     }
 
      /**
@@ -120,7 +119,7 @@ class ApiGetCommentsTest extends TestCase
             'commentable_type' => $commentableType
         ];
 
-        $response = $this->json('GET', 'api/comments', $request);
+        $response = $this->json('GET', '/api/comments', $request);
         $comments = json_decode($response->getContent())->data;
         foreach ($comments as $comment) {
             $arrayCompare = [
@@ -148,7 +147,7 @@ class ApiGetCommentsTest extends TestCase
             'commentable_type' => $commentableType
         ];
 
-        $response = $this->json('GET', 'api/comments?page=2', $request);
+        $response = $this->json('GET', '/api/comments?page=2', $request);
         $response->assertJson([
             'pagination' => [
                 'total' => 15,
@@ -156,8 +155,7 @@ class ApiGetCommentsTest extends TestCase
                 'current_page' => 2,
                 'total_pages' => 2,
             ]
-        ]);
-        $response->assertStatus(Response::HTTP_OK);
+        ])->assertStatus(Response::HTTP_OK);
     }
 
     /**
@@ -186,7 +184,7 @@ class ApiGetCommentsTest extends TestCase
     {
         $request[$field] = $content;
 
-        $response = $this->json('GET', 'api/comments', $request);
+        $response = $this->json('GET', '/api/comments', $request);
         $response->assertJson([
             'error' => [
                 'message' => [
@@ -195,8 +193,7 @@ class ApiGetCommentsTest extends TestCase
                     ]
                 ],
             ]
-        ]);
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        ])->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -208,27 +205,21 @@ class ApiGetCommentsTest extends TestCase
     {
         $faker = Faker::create();
 
-        $users = factory(User::class, 2)->create();
-        $employCodes = $users->pluck('employ_code')->toArray();
-        $userIds = $users->pluck('id')->toArray();
+        $user = factory(User::class)->create();
 
-        $categoryIds = factory(Category::class, 2)->create()->pluck('id')->toArray();
-        $language = factory(Language::class)->create([
-            'language' =>  $faker->randomElement(Language::LANGUAGES),
-        ]);
+        $category = factory(Category::class)->create();
         $bookId = factory(Book::class)->create([
-            'category_id' => $faker->randomElement($categoryIds),
-            'from_person' => $faker->randomElement($employCodes),
-            'language_id' => $language->id
+            'category_id' => $category->id,
+            'from_person' => $user->employ_code
         ]);
 
         $postId = factory(Post::class)->create([
-            'user_id' => $faker->randomElement($userIds),
+            'user_id' => $user->id
         ]);
 
         foreach ($this->commentableType() as $commentableType) {
             factory(Comment::class, $row)->create([
-                'user_id' => $faker->randomElement($userIds),
+                'user_id' => $user->id,
                 'commentable_id' => self::COMMENTABLE_ID,
                 'commentable_type' => $commentableType[0],
             ]);
