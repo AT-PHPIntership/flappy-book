@@ -33,7 +33,7 @@ function showComment($comments, $parentId = null, $char = '')
 
     foreach ($comments as $comment) {
         if ($comment->parent_id == $parentId) {
-            $body .= '<tr id="comment-item-'.$comment->id.'">';
+            $body .= '<tr id="comment-item-'.$comment->id.'" class="parent-comment-'.$parentId.'">';
                 $body .= '<td>'.$char.$comment->comment.'</td>';
                 $body .= '<td class="text-center">'.$comment->created_at.'</td>';
                 $body .= '<td class="text-center" width="15%">';

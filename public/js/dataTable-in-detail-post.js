@@ -1,8 +1,8 @@
-var commentTable;
+var dataTable;
 var id;
 
 $(function () {
-  commentTable = $('#list-comments').DataTable({
+  dataTable = $('#list-comments').DataTable({
     'paging'      : true,
     'lengthChange': true,
     'searching'   : false,
@@ -12,7 +12,7 @@ $(function () {
   })
 });
 
-$('.confirm-delete').on('click',function(e){
+$('.confirm-delete').click(function(e){
     e.preventDefault();
     id = $(this).data('id');
 })
@@ -24,12 +24,24 @@ $('#delete-btn').click(function(){
     url : '/admin/comments/'+ id,
 		type : 'DELETE',
 		headers: { 'X-CSRF-TOKEN': token },
-		success: function(data){
-      commentTable.row('#comment-item-' + id).remove().draw(false);
+		success: function (data) {
+      dataTable.row('#comment-item-' + id).remove();
+      dataTable.rows('.parent-comment-' + id).remove();
+      dataTable.draw(false);
+      messageSuccess(data);
     },
     error: function(error){
-      console.log('helo: '+error);
+      messageFail(error);
     }
 	});
 	$('#confirm').modal('hide');
 })
+
+function messageSuccess(message) {
+  $('#message').html('').show();
+  $('#message').append('<div class="alert alert-success">' + message + '</div>').fadeOut(5000);
+}
+
+function messageFail(message) {
+  $('#message').append('<div class="alert alert-danger">' + message + '</div>').fadeOut(5000);
+}
