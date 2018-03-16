@@ -78,4 +78,18 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+      * Deleting child comment
+      *
+      * @return void
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Comment $comment) {
+            $comment->comments()->delete();
+        });
+    }
 }

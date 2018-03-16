@@ -27,6 +27,7 @@
   <!-- Main content -->
   <section class="content">
     @include('flash::message')
+    <div id="message"></div>
     <div class="row">
       <div class="col-md-4">
         <!-- Profile Image -->
